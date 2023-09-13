@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/LayoutMain";
 import Login_Page from "../pages/Login_Page";
 import LoanBeneficiary from "../pages/Dashboard/LoanBeneficiary";
-// import Home from "../pages/Home/Home";
+import LoanBeneficiaryList from "../pages/Dashboard/LoanBeneficiaryList";
+
 
 export const router = createBrowserRouter([
   {
@@ -11,20 +12,16 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        // element: <Home />,
-      },
-      {
-        path: "/login",
         element: <Login_Page />,
       },
       {
         path: "/loan-beneficiary",
         element: <LoanBeneficiary />,
       },
+      {
+        path: "/loan-beneficiarylist",
+        element: <LoanBeneficiaryList />,
+      },
     ],
   },
-  //   {
-  //     path: "*",
-  //     element: <ErrorPage />,
-  //   },
 ]);

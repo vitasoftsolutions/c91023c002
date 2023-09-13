@@ -50,6 +50,12 @@ const formData = [
     isRequired: true,
   },
   {
+    fieldName: "Profile Picture",
+    fieldType: "file",
+    fieldPlaceholder: "Upload Image",
+    isRequired: true,
+  },
+  {
     fieldName: [],
   },
 ];
@@ -148,13 +154,20 @@ const LoanBeneficiaryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full md:w-4/5 mx-auto p-4 grid grid-cols-2 gap-4 rounded-md bg-opacity-50 backdrop-blur-md"
+      className="w-full mx-auto p-4 grid grid-cols-2 gap-4 rounded-md bg-opacity-50 backdrop-blur-md"
     >
-      {formData.map((field, index) => (
-        <div className="col-span-2 md:col-span-1" key={index}>
+      {formData.slice(0, 8).map((field, index) => (
+        <div className={"col-span-2 md:col-span-1"} key={index}>
           {renderField(field)}
         </div>
       ))}
+
+      {/* Render the penultimate field as a single full-width item */}
+      {formData.length % 2 === 0 && (
+        <div className="col-span-2">
+          {renderField(formData[formData.length - 2])}
+        </div>
+      )}
 
       <h5 className="text-black col-span-2 mb-1 font-extrabold text-start">
         Add Phone Numbers
@@ -244,7 +257,7 @@ const LoanBeneficiaryForm = () => {
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="feather feather-x"
+                          className="feather feather-x"
                         >
                           <line x1="18" y1="6" x2="6" y2="18"></line>
                           <line x1="6" y1="6" x2="18" y2="18"></line>

@@ -1,10 +1,16 @@
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { base_url } from "./shared/Url";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
-  const [passwordErrors, setPasswordErrors] = useState([]);
+  // const [passwordErrors, setPasswordErrors] = useState([]);
+  const [loginError, setLoginError] = useState(null);
 
   const {
     register,
@@ -16,19 +22,47 @@ const LoginForm = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const validatePassword = (value) => {
-    const errors = [
-      value.length < 6 && "Password must be at least 6 characters long",
-      !/[A-Z]/.test(value) && "Password must contain a capital letter",
-      !/[!@#$%^&*]/.test(value) && "Password must contain a special character",
-    ].filter(Boolean);
+  // const validatePassword = (value) => {
+  //   const errors = [
+  //     value.length < 6 && "Password must be at least 6 characters long",
+  //     !/[A-Z]/.test(value) && "Password must contain a capital letter",
+  //     !/[!@#$%^&*]/.test(value) && "Password must contain a special character",
+  //   ].filter(Boolean);
 
-    setPasswordErrors(errors);
+  //   setPasswordErrors(errors);
+  // };
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(`${base_url}/login/`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        const jwtToken = response.data.access;
+
+        navigate("/loan-beneficiary");
+
+        // Save the JWT token to session storage
+        sessionStorage.setItem("jwt_token", jwtToken);
+
+        // Redirect or perform other actions on successful login
+        // For example, you can use React Router to navigate to a different page
+
+        // Clear any login error message
+        setLoginError(null);
+      } else {
+        // Handle login error
+        setLoginError("Invalid email or password"); // Set an appropriate error message
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setLoginError("An error occurred during login"); // Set a generic error message
+    }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -40,7 +74,7 @@ const LoginForm = () => {
           Email
         </label>
         <input
-          type="email"
+          type="text"
           {...register("email", { required: true })}
           placeholder="Email"
           className="input input-bordered input-accent w-full"
@@ -62,7 +96,7 @@ const LoginForm = () => {
             {...register("password", { required: true })}
             className="input input-bordered w-full pr-10"
             placeholder="Password"
-            onChange={(e) => validatePassword(e.target.value)}
+            // onChange={(e) => validatePassword(e.target.value)}
           />
           <button
             type="button"
@@ -79,11 +113,11 @@ const LoginForm = () => {
         {errors.password && (
           <span className="text-red-500">Password is required</span>
         )}
-        {passwordErrors.map((error, index) => (
+        {/* {passwordErrors.map((error, index) => (
           <span key={index} className="text-red-500">
             {error}
           </span>
-        ))}
+        ))} */}
       </div>
 
       {/* Submit Button */}
@@ -91,6 +125,7 @@ const LoginForm = () => {
         <input type="submit" value="Enter" className="btn btn-primary w-full" />
       </div>
       {/*  */}
+      {/* <p>{response.data.access}</p> */}
     </form>
   );
 };

@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        erp_primary: "#6777EF",
         erp_bg_main: "#EDE4D9",
         erp_blue: "blue",
       },

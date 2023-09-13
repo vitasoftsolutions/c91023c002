@@ -1,15 +1,13 @@
 import { Outlet } from "react-router-dom";
-// import Footer from "../components/Footer/Footer";
-// import Nav_bar from "../components/shared/Nav_bar";
+import SideBar from "../Components/shared/SideBar";
 
 const LayoutMain = () => {
   return (
-    <div className="min-h-[100vh] bg-erp_bg_main">
-      <h1>Nav</h1>
-      <div className="outlet_height">
+    <div className="min-h-[100vh] flex">
+      <SideBar />
+      <div className="outlet_height flex-1 max-w-full overflow-hidden mx-2 my-10 md:mx-10">
         <Outlet></Outlet>
       </div>
-      <h1>Footer</h1>
     </div>
   );
 };
