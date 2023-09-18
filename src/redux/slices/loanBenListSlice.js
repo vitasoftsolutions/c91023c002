@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { base_url } from "../../Components/shared/Url";
+import jwtDecode from "jwt-decode";
 
 export const fetchLoanBeneList = createAsyncThunk(
   "fetchLoanBeneList",
@@ -18,8 +19,13 @@ export const fetchLoanBeneList = createAsyncThunk(
       headers,
     });
 
+    const response_token = response.data.results.token;
+    const result = jwtDecode(response_token);
+
+    console.log("resultresultresultresult", result.data)
+
     // Return the data from the response
-    return response.data;
+    return result.data;
   }
 );
 

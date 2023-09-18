@@ -11,6 +11,8 @@ const LoanBenListTable = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
+  console.log(state, "____state");
+
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [editLoan, setEditLoan] = useState(null);
 
@@ -23,10 +25,7 @@ const LoanBenListTable = () => {
   }
 
   const handelDelete = (id) => {
-
-
-    console.log(id, "idididididi")
-
+    console.log(id, "idididididi");
 
     dispatch(deleteLoanBeneficiary(id));
 
@@ -34,7 +33,7 @@ const LoanBenListTable = () => {
   };
 
   return (
-    <div className="container mx-auto border-2 border-gray-50 overflow-hidden rounded-xl shadow-xl">
+    <div className="container mx-auto border-2 bg-white mt-5 border-gray-50 overflow-hidden rounded-xl shadow-md shadow-blue-200">
       <div className="overflow-x-auto">
         <div className="flex p-5 items-center justify-between">
           <div>
@@ -45,7 +44,7 @@ const LoanBenListTable = () => {
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="table table-zebra table_border table-compact w-full">
+          <table className="table table-xs table-zebra table_border table-compact w-full">
             {/* head */}
             <thead>
               <tr className="bg-[#F2F2F2]">
@@ -58,15 +57,17 @@ const LoanBenListTable = () => {
               </tr>
             </thead>
             <tbody>
-              {state?.loanBeneList?.data?.results?.map((loan) => {
+              {state?.loanBeneList?.data?.map((loan) => {
                 return (
                   // row
                   <tr key={loan.id}>
-                    <td>{loan.first_name + " " + loan.last_name}</td>
+                    <td className="text-[16px]">
+                      {loan.first_name + " " + loan.last_name}
+                    </td>
                     <td>
                       <div className="flex items-center space-x-3">
                         <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
+                          <div className="mask mask-circle w-10 h-10">
                             <img
                               src={loan.profile_picture}
                               alt={loan.first_name + " " + loan.last_name}

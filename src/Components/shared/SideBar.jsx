@@ -1,11 +1,73 @@
 import { useState } from "react";
+import {
+  FaHandHoldingUsd,
+  FaRegCreditCard,
+  FaRegListAlt,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
   const [open, setOpen] = useState(true);
+  const [expandedMenus, setExpandedMenus] = useState([]);
+
   const Menus = [
-    { title: "Loan Beneficiary", src: "Chart_fill", to: "/loan-beneficiary" },
-    { title: "Beneficiary List", src: "Chat", to: "/loan-beneficiarylist" },
+    {
+      title: "Loan",
+      icons: <FaHandHoldingUsd />,
+      subMenus: [
+        {
+          title: "Beneficiary",
+          icons: <FaRegListAlt />,
+          to: "/loan-beneficiarylist",
+        },
+        {
+          title: "Loan Beneficiary",
+          icons: <FaRegCreditCard />,
+          to: "/loan-beneficiary",
+        },
+      ],
+    },
+    {
+      title: "Menu 2",
+      icons: <FaHandHoldingUsd />,
+      subMenus: [],
+    },
+    {
+      title: "Menu 2",
+      icons: <FaHandHoldingUsd />,
+      subMenus: [],
+    },
+    {
+      title: "Menu 3",
+      icons: <FaHandHoldingUsd />,
+      subMenus: [
+        {
+          title: "Sub menu 3",
+          icons: <FaRegCreditCard />,
+          to: "/",
+        },
+        {
+          title: "Sub menu 3.1",
+          icons: <FaRegListAlt />,
+          to: "/",
+        },
+        {
+          title: "Sub menu 3",
+          icons: <FaRegCreditCard />,
+          to: "/",
+        },
+        {
+          title: "Sub menu 3.1",
+          icons: <FaRegListAlt />,
+          to: "/",
+        },
+      ],
+    },
+    {
+      title: "Menu 2",
+      icons: <FaHandHoldingUsd />,
+      subMenus: [],
+    },
     // { title: "Accounts", src: "User", gap: true },
     // { title: "Schedule ", src: "Calendar" },
     // { title: "Search", src: "Search" },
@@ -13,51 +75,116 @@ const SideBar = () => {
     // { title: "Files ", src: "Folder", gap: true },
     // { title: "Setting", src: "Setting" },
   ];
+
+  const handleToggleSubMenu = (index) => {
+    const expandedMenusCopy = [...expandedMenus];
+    if (expandedMenusCopy.includes(index)) {
+      // Remove index if already expanded
+      expandedMenusCopy.splice(expandedMenusCopy.indexOf(index), 1);
+    } else {
+      // Add index if collapsed
+      expandedMenusCopy.push(index);
+    }
+    setExpandedMenus(expandedMenusCopy);
+  };
+
   return (
-    <div className="flex">
+    <div className="mt-10 bg-white">
       <div
-        className={` ${
-          open ? "w-72" : "w-20 "
-        } bg-gray-800 h-full p-5  pt-8 relative duration-300`}
+        className={`${
+          open ? "w-60" : "w-20 "
+        } shadow-xl shadow-blue-200 h-full relative duration-300`}
       >
         <img
           src="image/control.png"
-          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
+          className={`absolute cursor-pointer -right-3 top-20 w-7 border-dark-purple
            border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
-        <div className="flex gap-x-4 items-center">
-          <img
-            src="image/logo.png"
-            className={`cursor-pointer duration-500 ${
-              open && "rotate-[360deg]"
-            }`}
-          />
-          <h1
-            className={`text-white origin-left font-medium text-xl duration-200 ${
-              !open && "scale-0"
-            }`}
-          >
-            Designer
-          </h1>
-        </div>
-        <ul className="pt-6">
-          {Menus.map((Menu, index) => (
-            <Link key={index} to={Menu.to}>
-              <li
-                className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                  index === 0 && "bg-light-white"
-                } `}
-              >
-                <img src={`image/${Menu.src}.png`} />
-                <span
-                  className={`${!open && "hidden"} origin-left duration-200`}
-                >
-                  {Menu.title}
-                </span>
-              </li>
-            </Link>
+
+        <ul className="pt-10">
+          {Menus?.map((Menu, index) => (
+            <div key={index}>
+              {Menu.subMenus && Menu.subMenus.length > 0 ? (
+                <div>
+                  <div
+                    className={`text-lg w-full font-medium cursor-pointer flex justify-between ${
+                      !open && "justify-center pl-8 py-2"
+                    } py-1 px-4`}
+                    onClick={() => handleToggleSubMenu(index)}
+                  >
+                    <div className="flex items-center gap-2">
+                      {Menu.icons}{" "}
+                      <span
+                        className={`${
+                          !open && "hidden scale-0"
+                        } origin-left duration-200`}
+                      >
+                        {Menu.title}
+                      </span>
+                    </div>
+                    <div>
+                      <span
+                        className={`${
+                          !open && "hidden scale-0"
+                        } origin-left duration-200`}
+                      >
+                        {expandedMenus.includes(index) ? "-" : "+"}
+                      </span>
+                    </div>
+                  </div>
+                  <ul
+                    className={`${
+                      expandedMenus.includes(index)
+                        ? "max-h-screen transition-max-h duration-[2s] ease-in-out"
+                        : "max-h-0 transition-max-h duration-[1s] ease-in-out"
+                    } overflow-hidden`}
+                  >
+                    {Menu.subMenus.map((submenu, subIndex) => (
+                      <Link key={subIndex} to={submenu.to}>
+                        <li
+                          className={`flex pb-1 rounded-md cursor-pointer hover:bg-light-white text-sm items-center gap-x-4 py-1 px-6 ${
+                            subIndex === 0 && "bg-light-white"
+                          }`}
+                        >
+                          <span className="pl-4">{submenu.icons}</span>
+                          <span
+                            className={`${
+                              !open && "hidden scale-0"
+                            } origin-left duration-200`}
+                          >
+                            {submenu.title}
+                          </span>
+                        </li>
+                      </Link>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <Link key={index} to={Menu.to}>
+                  <li
+                    className={"selection:font-medium font-semibold text-lg overflow-hidden"}
+                  >
+                    <div
+                      className={`flex justify-between rounded-2xl py-1 px-4 ${
+                        !open && "justify-center pl-8 py-2"
+                      }`}
+                    >
+                      <div className="flex  items-center gap-2">
+                        {Menu.icons}{" "}
+                        <span
+                          className={`${
+                            !open && "hidden scale-0"
+                          } origin-left duration-200`}
+                        >
+                          {Menu.title}
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                </Link>
+              )}
+            </div>
           ))}
         </ul>
       </div>

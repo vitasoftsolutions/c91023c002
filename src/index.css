@@ -8,6 +8,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+body{
+  background: #F2F6F9;
+}
+
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
