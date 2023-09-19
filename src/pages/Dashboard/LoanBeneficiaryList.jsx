@@ -1,4 +1,4 @@
-import LoanBenListTable from "../../Components/LoanBeneficiaryList/LoanBenListTable";
+import LoanBenListTable from "../../Components/LoanBeneficiary/LoanBenListTable";
 import TableHeader from "../../Components/shared/TableHeader/TableHeader";
 
 const LoanBeneficiaryList = () => {

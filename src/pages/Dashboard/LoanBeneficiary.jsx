@@ -1,5 +1,4 @@
-import React from "react";
-import LoanBeneficiaryForm from "../../Components/LoanBeneficiary/LoanBeneficiaryForm";
+import LoanBeneficiaryForm from "../../Components/LoanBeneficiary/LoanBeneficiaryForm"
 
 const LoanBeneficiary = () => {
   return (

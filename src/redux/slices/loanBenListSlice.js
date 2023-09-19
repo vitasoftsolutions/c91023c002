@@ -3,9 +3,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { base_url } from "../../Components/shared/Url";
 import jwtDecode from "jwt-decode";
 
+
 export const fetchLoanBeneList = createAsyncThunk(
   "fetchLoanBeneList",
-  async () => {
+  async (paginationParams) => {
+   console.log(paginationParams, "paginationParams_=-=-=-=")
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
@@ -14,15 +16,21 @@ export const fetchLoanBeneList = createAsyncThunk(
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+
+    const { limit, offset } = paginationParams;
+
     // Make the Axios GET request with the headers
-    const response = await axios.get(`${base_url}/loan-beneficaries/`, {
-      headers,
-    });
+    const response = await axios.get(
+      `${base_url}/loan-beneficaries/?limit=${limit}&offset=${offset}`,
+      {
+        headers,
+      }
+    );
 
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
 
-    console.log("resultresultresultresult", result.data)
+    console.log("resultresultresultresult", result.data);
 
     // Return the data from the response
     return result.data;

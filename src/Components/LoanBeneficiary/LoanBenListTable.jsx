@@ -6,7 +6,6 @@ import LoanDetailModal from "./LoanDetailModal";
 import { formatDate } from "../../hooks/formatDate";
 import EditLoanSidebar from "./EditLoanSidebar";
 import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiarySlice";
-import TableHeader from "../shared/TableHeader/TableHeader";
 
 const LoanBenListTable = () => {
   const dispatch = useDispatch();
@@ -14,9 +13,118 @@ const LoanBenListTable = () => {
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [editLoan, setEditLoan] = useState(null);
 
+  const [paginationParams, setPaginationParams] = useState({
+    limit: 5, // Number of items per page
+    offset: 0, // Offset to fetch data
+  });
+
   useEffect(() => {
-    dispatch(fetchLoanBeneList());
-  }, [dispatch]);
+    dispatch(fetchLoanBeneList(paginationParams));
+  }, [dispatch, paginationParams]);
+
+  const handlePageChange = (newOffset) => {
+    setPaginationParams({ ...paginationParams, offset: newOffset });
+  };
+
+  const renderPaginationButtons = () => {
+    const totalPages = Math.ceil(
+      state.loanBeneList.data?.length / paginationParams.limit
+    );
+
+    const currentPage = paginationParams.offset / paginationParams.limit + 1;
+
+    const pageButtons = [];
+
+    if (totalPages <= 10) {
+      // If there are 10 or fewer pages, display all page buttons
+      for (let i = 1; i <= totalPages; i++) {
+        pageButtons.push(
+          <button
+            key={i}
+            className={`join-item btn btn-xs ${
+              currentPage === i ? "btn-active" : ""
+            }`}
+            onClick={() => handlePageChange((i - 1) * paginationParams.limit)}
+          >
+            {i}
+          </button>
+        );
+      }
+    } else {
+      // If there are more than 10 pages, display "123...8910" format
+      const pagesToShow = 5;
+      let startPage = currentPage - 2;
+      let endPage = currentPage + 2;
+
+      if (startPage < 1) {
+        startPage = 1;
+        endPage = pagesToShow;
+      }
+
+      if (endPage > totalPages) {
+        endPage = totalPages;
+        startPage = totalPages - pagesToShow + 1;
+      }
+
+      if (startPage > 1) {
+        pageButtons.push(
+          <button
+            key="start"
+            className="join-item btn btn-xs"
+            onClick={() => handlePageChange(0)}
+          >
+            {"<<"}
+          </button>
+        );
+      }
+
+      if (startPage > 2) {
+        pageButtons.push(
+          <button key="dots" className="join-item btn btn-xs">
+            {"..."}
+          </button>
+        );
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pageButtons.push(
+          <button
+            key={i}
+            className={`join-item btn btn-xs ${
+              currentPage === i ? "btn-active" : ""
+            }`}
+            onClick={() => handlePageChange((i - 1) * paginationParams.limit)}
+          >
+            {i}
+          </button>
+        );
+      }
+
+      if (endPage < totalPages - 1) {
+        pageButtons.push(
+          <button key="dots" className="join-item btn btn-xs">
+            {"..."}
+          </button>
+        );
+      }
+
+      if (endPage < totalPages) {
+        pageButtons.push(
+          <button
+            key="end"
+            className="join-item btn btn-xs"
+            onClick={() =>
+              handlePageChange((totalPages - 1) * paginationParams.limit)
+            }
+          >
+            {">>"}
+          </button>
+        );
+      }
+    }
+
+    return pageButtons;
+  };
 
   if (state.loanBeneList.isLoading) {
     return (
@@ -36,8 +144,6 @@ const LoanBenListTable = () => {
   return (
     <div className="container mx-auto border-2 bg-white mt-5 border-gray-50 overflow-hidden rounded-xl shadow-md shadow-blue-200">
       <div className="overflow-x-auto">
-        {/* <div className="flex p-5 items-center justify-between">
-        </div> */}
         <div className="overflow-x-auto">
           <table className="table table-xs table-zebra table_border dark:bg-blue-500 table-compact w-full">
             {/* head */}
@@ -115,16 +221,13 @@ const LoanBenListTable = () => {
             </tbody>
             {/* foot */}
           </table>
+          {/* Pagination */}
           <div className="border-t-2 flex justify-center py-1">
-            <div className="join">
-              <button className="join-item btn btn-xs">«</button>
-              <button className="join-item btn btn-xs">1</button>
-              <button className="join-item btn btn-xs btn-active">2</button>
-              <button className="join-item btn btn-xs">3</button>
-              <button className="join-item btn btn-xs">4</button>
-              <button className="join-item btn btn-xs">»</button>
+            <div className="border-t-2 flex justify-center py-1">
+              <div className="join">{renderPaginationButtons()}</div>
             </div>
           </div>
+          {/* Pagination */}
           {/*  */}
           <LoanDetailModal
             selectedLoan={selectedLoan}
@@ -135,25 +238,6 @@ const LoanBenListTable = () => {
             editLoan={editLoan}
             onClose={() => setEditLoan(null)}
           />
-
-          {/* <div className="drawer drawer-end">
-            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
-              
-              </div>
-            <div className="drawer-side">
-              <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-              <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-
-                <li>
-                  <a>Sidebar Item 1</a>
-                </li>
-                <li>
-                  <a>Sidebar Item 2</a>
-                </li>
-              </ul>
-            </div>
-          </div> */}
 
           {/*  */}
         </div>

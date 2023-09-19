@@ -1,10 +1,6 @@
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import {
-  BsFillCalendarCheckFill,
-  BsFillCaretDownFill,
-  BsFilterCircle,
-  BsSearch,
-} from "react-icons/bs";
+import { FaFileImport, FaFileExport } from "react-icons/fa";
+import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 
@@ -22,21 +18,32 @@ function TableHeader({ title, redirectLink }) {
           </Link>
         </div>
         <div className="flex items-center gap-4 w-full">
+          {/* // Search */}
           <div className="ml-4 w-full relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-white p-2 pl-6 pr-10 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500 w-full"
-            />
-            <button className="absolute inset-y-0 right-0 flex items-center pr-3  text-erp_dark pointer-events-none">
-              <BsSearch />
-            </button>
+            <div className="flex">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="bg-white p-2 pl-6 pr-10 rounded-full border border-gray-300 focus:outline-none w-full"
+              />
+              <button
+                onClick={() => {
+                  // Handle the search button click here
+                }}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+              >
+                <BsSearch />
+              </button>
+            </div>
           </div>
 
           {/*  */}
           <div className="bg-white rounded-lg shadow-md shadow-blue-200">
             <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="m-1 w-max cursor-pointer px-2 py-1 flex items-center gap-2">
+              <label
+                tabIndex={0}
+                className="m-1 w-max cursor-pointer px-2 py-1 flex items-center gap-2"
+              >
                 Created Data <BsFillCaretDownFill />
               </label>
               <ul
@@ -53,22 +60,43 @@ function TableHeader({ title, redirectLink }) {
             </div>
           </div>
           {/*  */}
-
-          {/* <div>
-          <button className="flex flex-col justify-center items-center p-1 text-erp_dark bg-white rounded-md shadow-md shadow-blue-200 hover:shadow-none duration-300">
-            <BsFilterCircle />
-            <p className="w-12">A-Z</p>
-          </button>
-        </div>
-        <div>
-          <button className="flex flex-col justify-center items-center p-1 text-erp_dark bg-white rounded-md shadow-md shadow-blue-200 hover:shadow-none duration-300">
-            <BsFillCalendarCheckFill />
-            <p>Recent</p>
-          </button>
-        </div> */}
         </div>
       </div>
-      <Breadcrumb />
+      <div className="flex items-center justify-between gap-4 mt-3">
+        <Breadcrumb />
+        <div className="flex space-x-4">
+          {/* Import Button */}
+          <label
+            htmlFor="csv-file"
+            className="cursor-pointer bg-erp_primary shadow-lg shadow-blue-200 hover:bg-blue-600 text-white py-2 px-4 rounded-md flex items-center"
+          >
+            <FaFileImport className="mr-2" /> Import
+          </label>
+          <input
+            id="csv-file"
+            type="file"
+            accept=".csv"
+            className="hidden"
+            onChange={(e) => {
+              const selectedFile = e.target.files[0];
+              // Handle the selected CSV file here
+              if (selectedFile) {
+                // Perform the import logic here
+              }
+            }}
+          />
+
+          {/* Export Button */}
+          <button
+            className="bg-green-500 shadow-lg shadow-blue-200 hover:bg-green-600 text-white py-2 px-4 rounded-md flex items-center"
+            onClick={() => {
+              // Perform the export logic here
+            }}
+          >
+            <FaFileExport className="mr-2" /> Export
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
