@@ -10,7 +10,7 @@ const LayoutMain = () => {
       </div>
       <div className="min-h-[100vh] flex">
         <SideBar />
-        <div className="flex-1 max-w-full overflow-hidden mx-2 mt-20 my-10 md:mx-10">
+        <div className="flex-1 max-w-full overflow-hidden mx-2 mt-20 my-0 md:mx-10">
           <Outlet></Outlet>
         </div>
       </div>

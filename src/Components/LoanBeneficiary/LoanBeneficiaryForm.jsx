@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import { useForm, useFieldArray } from "react-hook-form";
+import { createLoanBeneficiary } from "../../redux/slices/createLoanBeneficiarySlice";
 
 const formData = [
   {
@@ -38,22 +40,22 @@ const formData = [
     isRequired: true,
   },
   {
+    fieldName: "Profile Picture",
+    fieldType: "file",
+    fieldPlaceholder: "Upload Image",
+    isRequired: false,
+  },
+  {
     fieldName: "Nid Front Side",
     fieldType: "file",
     fieldPlaceholder: "Upload Image",
-    isRequired: true,
+    isRequired: false,
   },
   {
     fieldName: "Nid Back Side",
     fieldType: "file",
     fieldPlaceholder: "Upload Image",
-    isRequired: true,
-  },
-  {
-    fieldName: "Profile Picture",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: true,
+    isRequired: false,
   },
   {
     fieldName: [],
@@ -61,6 +63,7 @@ const formData = [
 ];
 
 const LoanBeneficiaryForm = () => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -75,6 +78,7 @@ const LoanBeneficiaryForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    dispatch(createLoanBeneficiary(data));
   };
 
   const renderField = (field) => {
@@ -96,7 +100,7 @@ const LoanBeneficiaryForm = () => {
               }
             )}
             placeholder={subField.fieldPlaceholder}
-            className="input input-bordered input-accent w-full"
+            className="w-full"
           />
           {errors[subField.inputPhone.toLowerCase().replace(/\s+/g, "-")] && (
             <span className="text-red-500">This field is required</span>
@@ -119,7 +123,7 @@ const LoanBeneficiaryForm = () => {
                 required: field.isRequired,
               })}
               placeholder={field.fieldPlaceholder}
-              className="input input-bordered input-accent w-full"
+              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
               onInput={(e) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
               }}
@@ -133,8 +137,8 @@ const LoanBeneficiaryForm = () => {
               placeholder={field.fieldPlaceholder}
               className={`${
                 field.fieldType === "file"
-                  ? "file-input file-input-bordered file-input-accent w-full"
-                  : "input input-bordered input-accent w-full"
+                  ? "w-full file-input file-input-bordered file-input-primary file-input-sm"
+                  : "w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
               }`}
             />
           )}
@@ -154,27 +158,27 @@ const LoanBeneficiaryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full mx-auto p-4 grid grid-cols-2 gap-4 rounded-md bg-opacity-50 backdrop-blur-md"
+      className="w-full mx-auto p-4 grid grid-cols-3 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200"
     >
-      {formData.slice(0, 8).map((field, index) => (
-        <div className={"col-span-2 md:col-span-1"} key={index}>
+      {formData.map((field, index) => (
+        <div className={"col-span-3 md:col-span-1"} key={index}>
           {renderField(field)}
         </div>
       ))}
 
       {/* Render the penultimate field as a single full-width item */}
       {formData.length % 2 === 0 && (
-        <div className="col-span-2">
-          {renderField(formData[formData.length - 2])}
+        <div className="col-span-3">
+          {renderField(formData[formData.length - 1])} {/* Add 2 here if last input is one */}
         </div>
       )}
 
-      <h5 className="text-black col-span-2 mb-1 font-extrabold text-start">
+      <h5 className="text-black col-span-3 font-extrabold text-start">
         Add Phone Numbers
       </h5>
 
       {/* Mobile Numbers */}
-      <div className="mb-4 col-span-2">
+      <div className="mb-4 col-span-3">
         {errors.phoneNumbers && (
           <span className="text-red-500">
             At least one phone number is required
@@ -195,9 +199,9 @@ const LoanBeneficiaryForm = () => {
                     required: true,
                   })}
                   placeholder="Phone Number"
-                  className="input input-bordered input-accent w-full"
+                  className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
                 />
-                <div className="mb-4 col-span-2">
+                <div className="mb-4 col-span-3">
                   {errors.phoneNumbers && (
                     <span className="text-red-500">Add a mobile number</span>
                   )}
@@ -216,9 +220,9 @@ const LoanBeneficiaryForm = () => {
                     required: true,
                   })}
                   placeholder="Name"
-                  className="input input-bordered input-accent w-full"
+                  className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
                 />
-                <div className="mb-4 col-span-2">
+                <div className="mb-4 col-span-3">
                   {errors.phoneNumbers && (
                     <span className="text-red-500">Add Name</span>
                   )}
@@ -238,7 +242,7 @@ const LoanBeneficiaryForm = () => {
                       required: true,
                     })}
                     placeholder="Relation"
-                    className="input input-bordered input-accent w-full md:w-[80%]"
+                    className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
                   />
                   {index > 0 && (
                     <div className="md:ml-3 text-center md:mt-0 mt-3">
@@ -266,7 +270,7 @@ const LoanBeneficiaryForm = () => {
                     </div>
                   )}
                 </div>
-                <div className="mb-4 col-span-2">
+                <div className="mb-4 col-span-3">
                   {errors.phoneNumbers && (
                     <span className="text-red-500">Add Relation</span>
                   )}
@@ -287,11 +291,11 @@ const LoanBeneficiaryForm = () => {
       </div>
 
       {/* Submit Button */}
-      <div className="mb-4 col-span-2">
+      <div className="mb-4 col-span-3">
         <input
           type="submit"
           value="Submit"
-          className="btn btn-primary w-full"
+          className="btn bg-erp_primary text-md text-white hover:bg-primary w-full"
         />
       </div>
     </form>

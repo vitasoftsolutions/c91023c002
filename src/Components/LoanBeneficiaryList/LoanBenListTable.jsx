@@ -6,13 +6,11 @@ import LoanDetailModal from "./LoanDetailModal";
 import { formatDate } from "../../hooks/formatDate";
 import EditLoanSidebar from "./EditLoanSidebar";
 import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiarySlice";
+import TableHeader from "../shared/TableHeader/TableHeader";
 
 const LoanBenListTable = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-
-  console.log(state, "____state");
-
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [editLoan, setEditLoan] = useState(null);
 
@@ -21,30 +19,27 @@ const LoanBenListTable = () => {
   }, [dispatch]);
 
   if (state.loanBeneList.isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="min-h-[80vh] flex flex-col justify-center gap-4 items-center">
+        <progress className="progress progress-info w-full"></progress>
+        <progress className="progress progress-info w-full"></progress>
+        <progress className="progress progress-info w-full"></progress>
+      </div>
+    );
   }
 
   const handelDelete = (id) => {
-    console.log(id, "idididididi");
-
     dispatch(deleteLoanBeneficiary(id));
-
     dispatch(fetchLoanBeneList());
   };
 
   return (
     <div className="container mx-auto border-2 bg-white mt-5 border-gray-50 overflow-hidden rounded-xl shadow-md shadow-blue-200">
       <div className="overflow-x-auto">
-        <div className="flex p-5 items-center justify-between">
-          <div>
-            <h3 className="text-xl font-bold">Beneficiary List</h3>
-          </div>
-          <div>
-            <p>Search...</p>
-          </div>
-        </div>
+        {/* <div className="flex p-5 items-center justify-between">
+        </div> */}
         <div className="overflow-x-auto">
-          <table className="table table-xs table-zebra table_border table-compact w-full">
+          <table className="table table-xs table-zebra table_border dark:bg-blue-500 table-compact w-full">
             {/* head */}
             <thead>
               <tr className="bg-[#F2F2F2]">
@@ -119,13 +114,17 @@ const LoanBenListTable = () => {
               })}
             </tbody>
             {/* foot */}
-            <tfoot className="border-t-2">
-              <tr>
-                <th></th>
-                <th></th>
-              </tr>
-            </tfoot>
           </table>
+          <div className="border-t-2 flex justify-center py-1">
+            <div className="join">
+              <button className="join-item btn btn-xs">«</button>
+              <button className="join-item btn btn-xs">1</button>
+              <button className="join-item btn btn-xs btn-active">2</button>
+              <button className="join-item btn btn-xs">3</button>
+              <button className="join-item btn btn-xs">4</button>
+              <button className="join-item btn btn-xs">»</button>
+            </div>
+          </div>
           {/*  */}
           <LoanDetailModal
             selectedLoan={selectedLoan}

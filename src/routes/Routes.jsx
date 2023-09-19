@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
         element: <Login_Page />,
       },
       {
-        path: "/loan-beneficiary",
+        path: "/loan-beneficiary-crete",
         element: (
           <PrivetRoute>
             <LoanBeneficiary />
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/loan-beneficiarylist",
+        path: "/beneficiarylist",
         element: (
           <PrivetRoute>
             <LoanBeneficiaryList />{" "}

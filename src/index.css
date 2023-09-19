@@ -19,3 +19,24 @@ input[type=number] {
 
 
 /*  */
+
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3498db; /* Set your desired scrollbar color here */
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2980b9; /* Set a different color for hover state if desired */
+}

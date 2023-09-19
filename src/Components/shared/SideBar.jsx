@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaHandHoldingUsd,
   FaRegCreditCard,
@@ -6,75 +6,70 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+const Menus = [
+  {
+    title: "Loan",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Beneficiary",
+        icons: <FaRegListAlt />,
+        to: "/beneficiarylist",
+      },
+    ],
+  },
+  {
+    title: "Menu 2",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [],
+  },
+  {
+    title: "Menu 2",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [],
+  },
+  {
+    title: "Menu 3",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Sub menu 3",
+        icons: <FaRegCreditCard />,
+        to: "/",
+      },
+      {
+        title: "Sub menu 3.1",
+        icons: <FaRegListAlt />,
+        to: "/",
+      },
+      {
+        title: "Sub menu 3",
+        icons: <FaRegCreditCard />,
+        to: "/",
+      },
+      {
+        title: "Sub menu 3.1",
+        icons: <FaRegListAlt />,
+        to: "/",
+      },
+    ],
+  },
+  {
+    title: "Menu 2",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [],
+  },
+  // { title: "Accounts", src: "User", gap: true },
+  // { title: "Schedule ", src: "Calendar" },
+  // { title: "Search", src: "Search" },
+  // { title: "Analytics", src: "Chart" },
+  // { title: "Files ", src: "Folder", gap: true },
+  // { title: "Setting", src: "Setting" },
+];
+
 const SideBar = () => {
   const [open, setOpen] = useState(true);
   const [expandedMenus, setExpandedMenus] = useState([]);
-
-  const Menus = [
-    {
-      title: "Loan",
-      icons: <FaHandHoldingUsd />,
-      subMenus: [
-        {
-          title: "Beneficiary",
-          icons: <FaRegListAlt />,
-          to: "/loan-beneficiarylist",
-        },
-        {
-          title: "Loan Beneficiary",
-          icons: <FaRegCreditCard />,
-          to: "/loan-beneficiary",
-        },
-      ],
-    },
-    {
-      title: "Menu 2",
-      icons: <FaHandHoldingUsd />,
-      subMenus: [],
-    },
-    {
-      title: "Menu 2",
-      icons: <FaHandHoldingUsd />,
-      subMenus: [],
-    },
-    {
-      title: "Menu 3",
-      icons: <FaHandHoldingUsd />,
-      subMenus: [
-        {
-          title: "Sub menu 3",
-          icons: <FaRegCreditCard />,
-          to: "/",
-        },
-        {
-          title: "Sub menu 3.1",
-          icons: <FaRegListAlt />,
-          to: "/",
-        },
-        {
-          title: "Sub menu 3",
-          icons: <FaRegCreditCard />,
-          to: "/",
-        },
-        {
-          title: "Sub menu 3.1",
-          icons: <FaRegListAlt />,
-          to: "/",
-        },
-      ],
-    },
-    {
-      title: "Menu 2",
-      icons: <FaHandHoldingUsd />,
-      subMenus: [],
-    },
-    // { title: "Accounts", src: "User", gap: true },
-    // { title: "Schedule ", src: "Calendar" },
-    // { title: "Search", src: "Search" },
-    // { title: "Analytics", src: "Chart" },
-    // { title: "Files ", src: "Folder", gap: true },
-    // { title: "Setting", src: "Setting" },
-  ];
 
   const handleToggleSubMenu = (index) => {
     const expandedMenusCopy = [...expandedMenus];
@@ -87,6 +82,23 @@ const SideBar = () => {
     }
     setExpandedMenus(expandedMenusCopy);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setOpen(window.innerWidth > 768); // Adjust breakpoint as needed
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize once on component mount to set initial state
+    handleResize();
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="mt-10 bg-white">
@@ -118,7 +130,7 @@ const SideBar = () => {
                       <span
                         className={`${
                           !open && "hidden scale-0"
-                        } origin-left duration-200`}
+                        } origin-left duration-200 text-md`}
                       >
                         {Menu.title}
                       </span>
@@ -151,7 +163,7 @@ const SideBar = () => {
                           <span
                             className={`${
                               !open && "hidden scale-0"
-                            } origin-left duration-200`}
+                            } origin-left duration-200 text-md`}
                           >
                             {submenu.title}
                           </span>
@@ -163,7 +175,9 @@ const SideBar = () => {
               ) : (
                 <Link key={index} to={Menu.to}>
                   <li
-                    className={"selection:font-medium font-semibold text-lg overflow-hidden"}
+                    className={
+                      "selection:font-medium font-semibold text-lg overflow-hidden"
+                    }
                   >
                     <div
                       className={`flex justify-between rounded-2xl py-1 px-4 ${
