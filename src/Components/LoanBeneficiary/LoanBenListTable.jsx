@@ -10,120 +10,27 @@ import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiaryS
 const LoanBenListTable = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [editLoan, setEditLoan] = useState(null);
 
-  const [paginationParams, setPaginationParams] = useState({
-    limit: 5, // Number of items per page
-    offset: 0, // Offset to fetch data
-  });
+  const current_page = state.loanBeneList.currentPage;
+  const total_page = state.loanBeneList.totalPages;
+
+  let page_number = [];
+  for (let i = current_page - 3; i <= current_page + 3; i++) {
+    if (i < 1) continue;
+    if (i > total_page) break;
+
+    page_number.push(i);
+  }
 
   useEffect(() => {
-    dispatch(fetchLoanBeneList(paginationParams));
-  }, [dispatch, paginationParams]);
+    dispatch(fetchLoanBeneList(current_page));
+  }, [dispatch, current_page]);
 
-  const handlePageChange = (newOffset) => {
-    setPaginationParams({ ...paginationParams, offset: newOffset });
-  };
-
-  const renderPaginationButtons = () => {
-    const totalPages = Math.ceil(
-      state.loanBeneList.data?.length / paginationParams.limit
-    );
-
-    const currentPage = paginationParams.offset / paginationParams.limit + 1;
-
-    const pageButtons = [];
-
-    if (totalPages <= 10) {
-      // If there are 10 or fewer pages, display all page buttons
-      for (let i = 1; i <= totalPages; i++) {
-        pageButtons.push(
-          <button
-            key={i}
-            className={`join-item btn btn-xs ${
-              currentPage === i ? "btn-active" : ""
-            }`}
-            onClick={() => handlePageChange((i - 1) * paginationParams.limit)}
-          >
-            {i}
-          </button>
-        );
-      }
-    } else {
-      // If there are more than 10 pages, display "123...8910" format
-      const pagesToShow = 5;
-      let startPage = currentPage - 2;
-      let endPage = currentPage + 2;
-
-      if (startPage < 1) {
-        startPage = 1;
-        endPage = pagesToShow;
-      }
-
-      if (endPage > totalPages) {
-        endPage = totalPages;
-        startPage = totalPages - pagesToShow + 1;
-      }
-
-      if (startPage > 1) {
-        pageButtons.push(
-          <button
-            key="start"
-            className="join-item btn btn-xs"
-            onClick={() => handlePageChange(0)}
-          >
-            {"<<"}
-          </button>
-        );
-      }
-
-      if (startPage > 2) {
-        pageButtons.push(
-          <button key="dots" className="join-item btn btn-xs">
-            {"..."}
-          </button>
-        );
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageButtons.push(
-          <button
-            key={i}
-            className={`join-item btn btn-xs ${
-              currentPage === i ? "btn-active" : ""
-            }`}
-            onClick={() => handlePageChange((i - 1) * paginationParams.limit)}
-          >
-            {i}
-          </button>
-        );
-      }
-
-      if (endPage < totalPages - 1) {
-        pageButtons.push(
-          <button key="dots" className="join-item btn btn-xs">
-            {"..."}
-          </button>
-        );
-      }
-
-      if (endPage < totalPages) {
-        pageButtons.push(
-          <button
-            key="end"
-            className="join-item btn btn-xs"
-            onClick={() =>
-              handlePageChange((totalPages - 1) * paginationParams.limit)
-            }
-          >
-            {">>"}
-          </button>
-        );
-      }
-    }
-
-    return pageButtons;
+  const handlePageChange = (newPage) => {
+    dispatch(fetchLoanBeneList(newPage));
   };
 
   if (state.loanBeneList.isLoading) {
@@ -223,8 +130,37 @@ const LoanBenListTable = () => {
           </table>
           {/* Pagination */}
           <div className="border-t-2 flex justify-center py-1">
-            <div className="border-t-2 flex justify-center py-1">
-              <div className="join">{renderPaginationButtons()}</div>
+            <div className="join">
+              {current_page - 1 >= 1 && (
+                <button
+                  onClick={() => handlePageChange(current_page - 1)}
+                  disabled={current_page === 1}
+                  className="join-item btn btn-xs"
+                >
+                  {"<"}
+                </button>
+              )}
+              {page_number.map((num) => {
+                return (
+                  <button
+                    onClick={() => handlePageChange(num)}
+                    key={num}
+                    className="join-item btn btn-xs"
+                    disabled={current_page === num}
+                  >
+                    {num}
+                  </button>
+                );
+              })}
+              {current_page + 1 <= total_page && (
+                <button
+                  onClick={() => handlePageChange(current_page + 1)}
+                  disabled={current_page === state.loanBeneList.totalPages}
+                  className="join-item btn btn-xs"
+                >
+                  {">"}
+                </button>
+              )}
             </div>
           </div>
           {/* Pagination */}

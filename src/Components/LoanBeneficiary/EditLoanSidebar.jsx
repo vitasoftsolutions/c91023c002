@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { updateLoanBeneficiary } from "../../redux/slices/updateLoanBeneficiarySlice";
 import { fetchLoanBeneList } from "../../redux/slices/loanBenListSlice";
@@ -6,6 +6,8 @@ import { fetchLoanBeneList } from "../../redux/slices/loanBenListSlice";
 
 const EditLoanSidebar = ({ editLoan, onClose }) => {
   const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+
 
   const {
     register,
@@ -34,10 +36,12 @@ const EditLoanSidebar = ({ editLoan, onClose }) => {
       );
       // Handle success or update your UI as needed
       console.log("Update successful");
-      onClose(); // Close the sidebar after submission
-
       // Trigger the fetchLoanBeneList action to refresh the data
-      dispatch(fetchLoanBeneList());
+      dispatch(fetchLoanBeneList(state.loanBeneList.currentPage));
+
+      // Close the sidebar after submission
+      onClose(); 
+
     } catch (error) {
       // Handle errors here (e.g., show an error message)
       console.error("Update failed", error);
