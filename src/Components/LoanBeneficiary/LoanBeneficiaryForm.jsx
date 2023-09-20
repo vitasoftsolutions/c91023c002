@@ -16,7 +16,7 @@ const formData = [
     isRequired: true,
   },
   {
-    fieldName: "E-mail",
+    fieldName: "Email",
     fieldType: "email",
     fieldPlaceholder: "example@gmail.com",
     isRequired: true,
@@ -41,19 +41,19 @@ const formData = [
   },
   {
     fieldName: "Profile Picture",
-    fieldType: "file",
+    fieldType: "text",
     fieldPlaceholder: "Upload Image",
     isRequired: false,
   },
   {
     fieldName: "Nid Front Side",
-    fieldType: "file",
+    fieldType: "text",
     fieldPlaceholder: "Upload Image",
     isRequired: false,
   },
   {
     fieldName: "Nid Back Side",
-    fieldType: "file",
+    fieldType: "text",
     fieldPlaceholder: "Upload Image",
     isRequired: false,
   },
@@ -77,7 +77,8 @@ const LoanBeneficiaryForm = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    
+      console.log(data)
     dispatch(createLoanBeneficiary(data));
   };
 
@@ -86,7 +87,7 @@ const LoanBeneficiaryForm = () => {
       return field.fieldName.map((subField, subIndex) => (
         <div className="mb-4" key={subIndex}>
           <label
-            htmlFor={subField.inputPhone.toLowerCase().replace(/\s+/g, "-")}
+            htmlFor={subField.inputPhone.toLowerCase().replace(/\s+/g, "_")}
             className="block text-black mb-1 font-bold"
           >
             {subField.inputPhone}
@@ -94,7 +95,7 @@ const LoanBeneficiaryForm = () => {
           <input
             type={subField.fieldType}
             {...register(
-              subField.inputPhone.toLowerCase().replace(/\s+/g, "-"),
+              subField.inputPhone.toLowerCase().replace(/\s+/g, "_"),
               {
                 required: subField.isRequired,
               }
@@ -102,7 +103,7 @@ const LoanBeneficiaryForm = () => {
             placeholder={subField.fieldPlaceholder}
             className="w-full"
           />
-          {errors[subField.inputPhone.toLowerCase().replace(/\s+/g, "-")] && (
+          {errors[subField.inputPhone.toLowerCase().replace(/\s+/g, "_")] && (
             <span className="text-red-500">This field is required</span>
           )}
         </div>
@@ -111,7 +112,7 @@ const LoanBeneficiaryForm = () => {
       return (
         <div className="mb-4">
           <label
-            htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "-")}
+            htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
             className="block text-black mb-1 font-bold"
           >
             {field.fieldName}
@@ -119,7 +120,7 @@ const LoanBeneficiaryForm = () => {
           {field.fieldType === "number" ? (
             <input
               type="text"
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "-"), {
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
                 required: field.isRequired,
               })}
               placeholder={field.fieldPlaceholder}
@@ -131,7 +132,7 @@ const LoanBeneficiaryForm = () => {
           ) : (
             <input
               type={field.fieldType}
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "-"), {
+              {...register(field.fieldName, {
                 required: field.isRequired,
               })}
               placeholder={field.fieldPlaceholder}
@@ -142,7 +143,7 @@ const LoanBeneficiaryForm = () => {
               }`}
             />
           )}
-          {errors[field.fieldName.toLowerCase().replace(/\s+/g, "-")] && (
+          {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
             <span className="text-red-500">This field is required</span>
           )}
         </div>
@@ -196,7 +197,7 @@ const LoanBeneficiaryForm = () => {
                 </label>
                 <input
                   {...register(`phone_number[${index}].phone_number`, {
-                    required: true,
+                    required: false,
                   })}
                   placeholder="Phone Number"
                   className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
@@ -217,7 +218,7 @@ const LoanBeneficiaryForm = () => {
                 </label>
                 <input
                   {...register(`phone_number[${index}].name`, {
-                    required: true,
+                    required: false,
                   })}
                   placeholder="Name"
                   className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
@@ -239,7 +240,7 @@ const LoanBeneficiaryForm = () => {
                 <div className="md:flex border-b-2 border-gray-400 pb-5 md:pb-0 md:border-none items-center">
                   <input
                     {...register(`phone_number[${index}].relation`, {
-                      required: true,
+                      required: false,
                     })}
                     placeholder="Relation"
                     className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"

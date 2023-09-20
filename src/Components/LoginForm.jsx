@@ -5,6 +5,7 @@ import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { base_url } from "./shared/Url";
 import { useNavigate } from "react-router-dom";
 import Loader from "./shared/Loader/Loader";
+import { toast, ToastContainer } from "react-toastify";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -52,11 +53,23 @@ const LoginForm = () => {
         sessionStorage.setItem("jwt_token", jwtToken);
 
         setLoading(false);
+        toast("🦄 Wow so easy!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
         navigate("/");
+
         setLoginError(null);
       } else {
         // Handle login error
-        setLoginError("Invalid email or password"); // Set an appropriate error message
+        setLoginError("Invalid email or password");
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -140,6 +153,18 @@ const LoginForm = () => {
           {/* <p>{response.data.access}</p> */}
         </form>
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };
