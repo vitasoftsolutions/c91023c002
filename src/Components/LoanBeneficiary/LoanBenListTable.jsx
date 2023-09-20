@@ -131,13 +131,13 @@ const LoanBenListTable = () => {
           {/* Pagination */}
           <div className="border-t-2 flex justify-center py-1">
             <div className="join">
-              {current_page - 1 >= 1 && (
+              {current_page - 3 >= 1 && (
                 <button
-                  onClick={() => handlePageChange(current_page - 1)}
+                  onClick={() => handlePageChange(current_page - 3)}
                   disabled={current_page === 1}
                   className="join-item btn btn-xs"
                 >
-                  {"<"}
+                  {"<<"}
                 </button>
               )}
               {page_number.map((num) => {
@@ -152,13 +152,13 @@ const LoanBenListTable = () => {
                   </button>
                 );
               })}
-              {current_page + 1 <= total_page && (
+              {current_page + 3 <= total_page && (
                 <button
-                  onClick={() => handlePageChange(current_page + 1)}
+                  onClick={() => handlePageChange(current_page + 3)}
                   disabled={current_page === state.loanBeneList.totalPages}
                   className="join-item btn btn-xs"
                 >
-                  {">"}
+                  {">>"}
                 </button>
               )}
             </div>

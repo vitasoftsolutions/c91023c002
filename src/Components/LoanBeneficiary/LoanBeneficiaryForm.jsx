@@ -73,7 +73,7 @@ const LoanBeneficiaryForm = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "phoneNumbers",
+    name: "phone_number",
   });
 
   const onSubmit = (data) => {
@@ -152,7 +152,7 @@ const LoanBeneficiaryForm = () => {
 
   // Add default phone number input set
   if (fields.length === 0) {
-    append({ phoneNumber: "", name: "", relation: "" });
+    append({ phone_number: "", name: "", relation: "" });
   }
 
   return (
@@ -179,7 +179,7 @@ const LoanBeneficiaryForm = () => {
 
       {/* Mobile Numbers */}
       <div className="mb-4 col-span-3">
-        {errors.phoneNumbers && (
+        {errors.phone_number && (
           <span className="text-red-500">
             At least one phone number is required
           </span>
@@ -189,20 +189,20 @@ const LoanBeneficiaryForm = () => {
             <div key={field.id} className="w-full grid grid-cols-3 gap-2">
               <div className="col-span-3 md:col-span-1">
                 <label
-                  htmlFor="phoneNumbers"
+                  htmlFor="phone_number"
                   className="block text-black mb-1 font-bold"
                 >
                   Number
                 </label>
                 <input
-                  {...register(`phoneNumbers[${index}].phoneNumber`, {
+                  {...register(`phone_number[${index}].phone_number`, {
                     required: true,
                   })}
                   placeholder="Phone Number"
                   className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
                 />
                 <div className="mb-4 col-span-3">
-                  {errors.phoneNumbers && (
+                  {errors.phone_number && (
                     <span className="text-red-500">Add a mobile number</span>
                   )}
                 </div>
@@ -210,20 +210,20 @@ const LoanBeneficiaryForm = () => {
 
               <div className="col-span-3 md:col-span-1">
                 <label
-                  htmlFor="phoneNumbers"
+                  htmlFor="phone_number"
                   className="block text-black mb-1 font-bold"
                 >
                   Name
                 </label>
                 <input
-                  {...register(`phoneNumbers[${index}].name`, {
+                  {...register(`phone_number[${index}].name`, {
                     required: true,
                   })}
                   placeholder="Name"
                   className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
                 />
                 <div className="mb-4 col-span-3">
-                  {errors.phoneNumbers && (
+                  {errors.phone_number && (
                     <span className="text-red-500">Add Name</span>
                   )}
                 </div>
@@ -231,14 +231,14 @@ const LoanBeneficiaryForm = () => {
 
               <div className="col-span-3 md:col-span-1">
                 <label
-                  htmlFor="phoneNumbers"
+                  htmlFor="phone_number"
                   className="block text-black mb-1 font-bold"
                 >
                   Relation
                 </label>
                 <div className="md:flex border-b-2 border-gray-400 pb-5 md:pb-0 md:border-none items-center">
                   <input
-                    {...register(`phoneNumbers[${index}].relation`, {
+                    {...register(`phone_number[${index}].relation`, {
                       required: true,
                     })}
                     placeholder="Relation"
@@ -271,7 +271,7 @@ const LoanBeneficiaryForm = () => {
                   )}
                 </div>
                 <div className="mb-4 col-span-3">
-                  {errors.phoneNumbers && (
+                  {errors.phone_number && (
                     <span className="text-red-500">Add Relation</span>
                   )}
                 </div>
@@ -282,7 +282,7 @@ const LoanBeneficiaryForm = () => {
         <div className="flex justify-center">
           <button
             type="button"
-            onClick={() => append({ phoneNumber: "", name: "", relation: "" })}
+            onClick={() => append({ phone_number: "", name: "", relation: "" })}
             className="mt-2 btn mx-auto"
           >
             Add Number +

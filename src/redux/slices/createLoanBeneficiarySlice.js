@@ -11,13 +11,12 @@ export const createLoanBeneficiary = createAsyncThunk(
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const response = await axios.post(`${base_url}/loan-beneficiaries/`, payload.data, { headers });
+      const response = await axios.post(`${base_url}/loan-beneficaries/`, payload.data, { headers });
       return response.data;
     } catch (error) {
       throw new Error("Failed to update loan beneficiary"); // Customize the error message as needed
     }
   }
-  
 );
 
 const createLoanBeneficiarySlice = createSlice({
