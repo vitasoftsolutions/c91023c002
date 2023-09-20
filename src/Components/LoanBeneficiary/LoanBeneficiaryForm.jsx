@@ -41,24 +41,21 @@ const formData = [
   },
   {
     fieldName: "Profile Picture",
-    fieldType: "text",
+    fieldType: null,
     fieldPlaceholder: "Upload Image",
     isRequired: false,
   },
   {
     fieldName: "Nid Front Side",
-    fieldType: "text",
+    fieldType: "text", // Change to "text" for text input
     fieldPlaceholder: "Upload Image",
     isRequired: false,
   },
   {
     fieldName: "Nid Back Side",
-    fieldType: "text",
+    fieldType: "text", // Change to "text" for text input
     fieldPlaceholder: "Upload Image",
     isRequired: false,
-  },
-  {
-    fieldName: [],
   },
 ];
 
@@ -77,8 +74,7 @@ const LoanBeneficiaryForm = () => {
   });
 
   const onSubmit = (data) => {
-    
-      console.log(data)
+    console.log(data);
     dispatch(createLoanBeneficiary(data));
   };
 
@@ -87,23 +83,20 @@ const LoanBeneficiaryForm = () => {
       return field.fieldName.map((subField, subIndex) => (
         <div className="mb-4" key={subIndex}>
           <label
-            htmlFor={subField.inputPhone.toLowerCase().replace(/\s+/g, "_")}
+            htmlFor={subField.toLowerCase().replace(/\s+/g, "_")}
             className="block text-black mb-1 font-bold"
           >
-            {subField.inputPhone}
+            {subField}
           </label>
           <input
-            type={subField.fieldType}
-            {...register(
-              subField.inputPhone.toLowerCase().replace(/\s+/g, "_"),
-              {
-                required: subField.isRequired,
-              }
-            )}
-            placeholder={subField.fieldPlaceholder}
+            type={field.fieldType}
+            {...register(subField.toLowerCase().replace(/\s+/g, "_"), {
+              required: subField.isRequired,
+            })}
+            placeholder={field.fieldPlaceholder}
             className="w-full"
           />
-          {errors[subField.inputPhone.toLowerCase().replace(/\s+/g, "_")] && (
+          {errors[subField.toLowerCase().replace(/\s+/g, "_")] && (
             <span className="text-red-500">This field is required</span>
           )}
         </div>
@@ -132,7 +125,7 @@ const LoanBeneficiaryForm = () => {
           ) : (
             <input
               type={field.fieldType}
-              {...register(field.fieldName, {
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
                 required: field.isRequired,
               })}
               placeholder={field.fieldPlaceholder}
@@ -159,6 +152,7 @@ const LoanBeneficiaryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
+      encType="multipart/form-data"
       className="w-full mx-auto p-4 grid grid-cols-3 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200"
     >
       {formData.map((field, index) => (
@@ -170,7 +164,7 @@ const LoanBeneficiaryForm = () => {
       {/* Render the penultimate field as a single full-width item */}
       {formData.length % 2 === 0 && (
         <div className="col-span-3">
-          {renderField(formData[formData.length - 1])} {/* Add 2 here if last input is one */}
+          {renderField(formData[formData.length - 1])}
         </div>
       )}
 
@@ -190,7 +184,7 @@ const LoanBeneficiaryForm = () => {
             <div key={field.id} className="w-full grid grid-cols-3 gap-2">
               <div className="col-span-3 md:col-span-1">
                 <label
-                  htmlFor="phone_number"
+                  htmlFor={`phone_number[${index}].phone_number`}
                   className="block text-black mb-1 font-bold"
                 >
                   Number
@@ -211,7 +205,7 @@ const LoanBeneficiaryForm = () => {
 
               <div className="col-span-3 md:col-span-1">
                 <label
-                  htmlFor="phone_number"
+                  htmlFor={`phone_number[${index}].name`}
                   className="block text-black mb-1 font-bold"
                 >
                   Name
@@ -232,7 +226,7 @@ const LoanBeneficiaryForm = () => {
 
               <div className="col-span-3 md:col-span-1">
                 <label
-                  htmlFor="phone_number"
+                  htmlFor={`phone_number[${index}].relation`}
                   className="block text-black mb-1 font-bold"
                 >
                   Relation
