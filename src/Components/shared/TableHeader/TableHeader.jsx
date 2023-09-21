@@ -4,8 +4,11 @@ import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { AiOutlinePlus } from "react-icons/ai";
+import ImportModal from "../Modals/ImportModal";
+import { useState } from "react";
 
 function TableHeader({ title, redirectLink }) {
+  const [importModal, setImportModal] = useState(null);
   return (
     <div className="">
       <div className="flex w-full items-center justify-between">
@@ -26,7 +29,7 @@ function TableHeader({ title, redirectLink }) {
                 tabIndex={0}
                 className="m-1 w-max cursor-pointer px-2 py-1 flex items-center gap-2"
               >
-               <GoTasklist /> Created Data <BsFillCaretDownFill />
+                <GoTasklist /> Created Data <BsFillCaretDownFill />
               </label>
               <ul
                 tabIndex={0}
@@ -60,34 +63,18 @@ function TableHeader({ title, redirectLink }) {
               </button>
             </div>
           </div>
-
-          
         </div>
       </div>
       <div className="flex items-center justify-between gap-4 mt-3">
         <Breadcrumb />
         <div className="flex space-x-4">
           {/* Import Button */}
-          <label
-            htmlFor="csv-file"
+          <button
+            onClick={() => setImportModal("loan")}
             className="cursor-pointer bg-erp_primary shadow-lg shadow-blue-200 hover:bg-blue-600 text-white py-2 px-4 rounded-md flex items-center"
           >
             <FaFileImport className="mr-2" /> Import
-          </label>
-          <input
-            id="csv-file"
-            type="file"
-            accept=".csv"
-            className="hidden"
-            onChange={(e) => {
-              const selectedFile = e.target.files[0];
-              // Handle the selected CSV file here
-              if (selectedFile) {
-                // Perform the import logic here
-              }
-            }}
-          />
-
+          </button>
           {/* Export Button */}
           <button
             className="bg-green-500 shadow-lg shadow-blue-200 hover:bg-green-600 text-white py-2 px-4 rounded-md flex items-center"
@@ -98,6 +85,10 @@ function TableHeader({ title, redirectLink }) {
             <FaFileExport className="mr-2" /> Export
           </button>
         </div>
+        <ImportModal
+          importModal={importModal}
+          onClose={() => setImportModal(null)}
+        />
       </div>
     </div>
   );
