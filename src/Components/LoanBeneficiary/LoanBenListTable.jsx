@@ -8,6 +8,7 @@ import EditLoanSidebar from "./EditLoanSidebar";
 import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiarySlice";
 import Swal from "sweetalert2";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import Loader from "../shared/Loader/Loader";
 
 const LoanBenListTable = () => {
   const dispatch = useDispatch();
@@ -38,9 +39,7 @@ const LoanBenListTable = () => {
   if (state.loanBeneList.isLoading) {
     return (
       <div className="min-h-[80vh] flex flex-col justify-center gap-4 items-center">
-        <progress className="progress progress-info w-full"></progress>
-        <progress className="progress progress-info w-full"></progress>
-        <progress className="progress progress-info w-full"></progress>
+        <Loader text={"Gating data..."} />
       </div>
     );
   }
@@ -165,7 +164,7 @@ const LoanBenListTable = () => {
           </table>
           {/* Pagination */}
           <div className="border-t-2 flex justify-center py-1">
-            <div className="join rounded-none">
+            <div className="join flex gap-2 rounded-none py-4">
               <button
                 onClick={() => handlePageChange(current_page - 1)}
                 disabled={current_page === 1}
@@ -178,7 +177,11 @@ const LoanBenListTable = () => {
                   <button
                     onClick={() => handlePageChange(num)}
                     key={num}
-                    className="join-item btn btn-xs"
+                    className={`${
+                      current_page === num
+                        ? "bg-erp_primary px-2 text-erp_light rounded-none"
+                        : "join-item btn btn-xs"
+                    }`}
                     disabled={current_page === num}
                   >
                     {num}

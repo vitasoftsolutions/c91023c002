@@ -1,9 +1,9 @@
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import { GoTasklist } from "react-icons/go";
 import { FaFileImport, FaFileExport } from "react-icons/fa";
 import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
+import { AiOutlinePlus } from "react-icons/ai";
 
 function TableHeader({ title, redirectLink }) {
   return (
@@ -13,9 +13,9 @@ function TableHeader({ title, redirectLink }) {
           <h1 className="text-2xl font-bold">{title}</h1>
           <Link
             to={redirectLink}
-            className="text-4xl text-erp_light rounded-full shadow-blue-400 shadow-md hover:shadow-none duration-300 bg-erp_primary"
+            className="text-2xl font-bold p-1 text-erp_light rounded-full shadow-blue-200 shadow-md hover:shadow-none hover:bg-erp_blue duration-300 bg-erp_primary"
           >
-            <AiOutlinePlusCircle />
+            <AiOutlinePlus />
           </Link>
         </div>
         <div className="flex items-center ml-5 gap-2 w-full">
