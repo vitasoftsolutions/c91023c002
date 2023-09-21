@@ -7,6 +7,7 @@ import { formatDate } from "../../hooks/formatDate";
 import EditLoanSidebar from "./EditLoanSidebar";
 import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiarySlice";
 import Swal from "sweetalert2";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 const LoanBenListTable = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const LoanBenListTable = () => {
   const total_page = state.loanBeneList.totalPages;
 
   let page_number = [];
-  for (let i = current_page - 3; i <= current_page + 3; i++) {
+  for (let i = current_page - 1; i <= current_page + 1; i++) {
     if (i < 1) continue;
     if (i > total_page) break;
 
@@ -45,42 +46,45 @@ const LoanBenListTable = () => {
   }
 
   const handelDelete = (id) => {
-
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteLoanBeneficiary(id));
         dispatch(fetchLoanBeneList(state.loanBeneList.currentPage));
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
-    })
+    });
   };
 
   return (
-    <div className="container mx-auto border-2 bg-white mt-5 border-gray-50 overflow-hidden rounded-xl shadow-md shadow-blue-200">
+    <div className="container mx-auto border-2 bg-white mt-5 border-gray-50 overflow-hidden shadow-md shadow-blue-200">
       <div className="overflow-x-auto">
         <div className="overflow-x-auto">
-          <table className="table table-xs table-zebra table_border dark:bg-blue-500 table-compact w-full">
+          <table className="table table-xs table_border dark:bg-blue-500 table-compact w-full">
             {/* head */}
             <thead>
-              <tr className="bg-[#F2F2F2]">
-                <th className="text-lg">Name</th>
-                <th className="text-lg">Image</th>
-                <th className="text-lg">Created Date</th>
-                <th className="text-lg">E-mail</th>
-                <th className="text-lg">Status</th>
-                <th className="text-lg">Actions</th>
+              <tr className="">
+                <th className="pl-6 pt-4 pb-2">
+                  <label>
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-xs rounded-none"
+                    />
+                  </label>
+                </th>
+                <th className="text-[14px] pt-4 pb-2">Name</th>
+                <th className="text-[14px] pt-4 pb-2">Image</th>
+                <th className="text-[14px] pt-4 pb-2">Created Date</th>
+                <th className="text-[14px] pt-4 pb-2">E-mail</th>
+                <th className="text-[14px] pt-4 pb-2">Status</th>
+                <th className="text-[14px] pt-4 pb-2">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -88,10 +92,18 @@ const LoanBenListTable = () => {
                 return (
                   // row
                   <tr key={loan.id}>
-                    <td className="text-[16px]">
+                    <th className="pl-6">
+                      <label>
+                        <input
+                          type="checkbox"
+                          className="checkbox checkbox-xs rounded-none"
+                        />
+                      </label>
+                    </th>
+                    <td className="text-[14px]">
                       {loan.first_name + " " + loan.last_name}
                     </td>
-                    <td>
+                    <td className="">
                       <div className="flex items-center space-x-3">
                         <div className="avatar">
                           <div className="mask mask-circle w-10 h-10">
@@ -103,25 +115,29 @@ const LoanBenListTable = () => {
                         </div>
                       </div>
                     </td>
-                    <td>{formatDate(loan.created_at)}</td>
-                    <td>{loan.email}</td>
-                    <td>
+                    <td className="text-[14px]">
+                      {formatDate(loan.created_at)}
+                    </td>
+                    <td className="text-[14px]">{loan.email}</td>
+                    <td className="">
                       <span
                         className={`${
-                          loan.status === true ? "bg-[#54CA68]" : "bg-red-500"
-                        } px-3 py-1 rounded-full max-w-fit flex justify-center items-center text-white font-bold`}
+                          loan.status === true
+                            ? "text-erp_success"
+                            : "text-erp_danger"
+                        } px-3 py-1 rounded-full max-w-fit flex justify-center items-center bg-blue-50 font-bold`}
                       >
                         {loan.status === true ? "active" : "inactive"}
                       </span>
                     </td>
                     <td>
                       <div className="flex gap-3 items-center text-lg">
-                        <div className="text-orange-500">
+                        <div className="text-erp_info">
                           <button onClick={() => setSelectedLoan(loan)}>
                             <FaEye />
                           </button>
                         </div>
-                        <div className="text-green-500">
+                        <div className="text-erp_success">
                           <button
                             onClick={() => setEditLoan(loan)}
                             className="cursor-pointer"
@@ -134,7 +150,7 @@ const LoanBenListTable = () => {
                             </label>
                           </button>
                         </div>
-                        <div className="text-red-500">
+                        <div className="text-erp_danger">
                           <button onClick={() => handelDelete(loan.id)}>
                             <FaTrashCan />
                           </button>
@@ -149,16 +165,14 @@ const LoanBenListTable = () => {
           </table>
           {/* Pagination */}
           <div className="border-t-2 flex justify-center py-1">
-            <div className="join">
-              {current_page - 3 >= 1 && (
-                <button
-                  onClick={() => handlePageChange(current_page - 3)}
-                  disabled={current_page === 1}
-                  className="join-item btn btn-xs"
-                >
-                  {"<<"}
-                </button>
-              )}
+            <div className="join rounded-none">
+              <button
+                onClick={() => handlePageChange(current_page - 1)}
+                disabled={current_page === 1}
+                className="join-item btn btn-xs"
+              >
+                <AiOutlineLeft />
+              </button>
               {page_number.map((num) => {
                 return (
                   <button
@@ -171,15 +185,13 @@ const LoanBenListTable = () => {
                   </button>
                 );
               })}
-              {current_page + 3 <= total_page && (
-                <button
-                  onClick={() => handlePageChange(current_page + 3)}
-                  disabled={current_page === state.loanBeneList.totalPages}
-                  className="join-item btn btn-xs"
-                >
-                  {">>"}
-                </button>
-              )}
+              <button
+                onClick={() => handlePageChange(current_page + 1)}
+                disabled={current_page === state.loanBeneList.totalPages}
+                className="join-item btn btn-xs"
+              >
+                <AiOutlineRight />
+              </button>
             </div>
           </div>
           {/* Pagination */}

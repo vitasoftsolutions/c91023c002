@@ -53,19 +53,7 @@ const LoginForm = () => {
         sessionStorage.setItem("jwt_token", jwtToken);
 
         setLoading(false);
-        toast("🦄 Wow so easy!", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-
-        navigate("/");
-
+         navigate("/");
         setLoginError(null);
       } else {
         // Handle login error

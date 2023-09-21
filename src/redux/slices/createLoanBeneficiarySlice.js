@@ -5,15 +5,21 @@ import { base_url } from "../../Components/shared/Url";
 export const createLoanBeneficiary = createAsyncThunk(
   "createLoanBeneficiary",
   async (payload) => {
-    console.log(payload, "_____")
+    // console.log(payload, "_____")
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
+
+
+      // Convert payload data to JSON
+      // const payloadJson = JSON.stringify(payload);
+      // console.log(payloadJson, "______2")
+
+
       const response = await axios.post(`${base_url}/loan-beneficaries/`, payload, { headers });
-      // console.log(response.json(), "______")
       return response.data;
     } catch (error) {
       throw new Error("Failed to update loan beneficiary"); // Customize the error message as needed

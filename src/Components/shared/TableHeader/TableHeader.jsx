@@ -1,4 +1,5 @@
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { GoTasklist } from "react-icons/go";
 import { FaFileImport, FaFileExport } from "react-icons/fa";
 import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -12,12 +13,35 @@ function TableHeader({ title, redirectLink }) {
           <h1 className="text-2xl font-bold">{title}</h1>
           <Link
             to={redirectLink}
-            className="text-4xl p-1 text-erp_light rounded-full shadow-blue-400 shadow-md hover:shadow-none duration-300 bg-erp_primary"
+            className="text-4xl text-erp_light rounded-full shadow-blue-400 shadow-md hover:shadow-none duration-300 bg-erp_primary"
           >
             <AiOutlinePlusCircle />
           </Link>
         </div>
-        <div className="flex items-center gap-4 w-full">
+        <div className="flex items-center ml-5 gap-2 w-full">
+          {/*  */}
+          <div className="bg-white shadow-md shadow-blue-200">
+            <div className="dropdown dropdown-start">
+              <label
+                tabIndex={0}
+                className="m-1 w-max cursor-pointer px-2 py-1 flex items-center gap-2"
+              >
+               <GoTasklist /> Created Data <BsFillCaretDownFill />
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content rounded-none z-[1] menu p-2 shadow bg-base-100 w-max"
+              >
+                <li className="rounded-none">
+                  <button className="rounded-none">Created Date</button>
+                </li>
+                <li className="rounded-none">
+                  <button className="rounded-none">Sort By A to Z</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {/*  */}
           {/* // Search */}
           <div className="ml-4 w-full relative">
             <div className="flex">
@@ -37,29 +61,7 @@ function TableHeader({ title, redirectLink }) {
             </div>
           </div>
 
-          {/*  */}
-          <div className="bg-white rounded-lg shadow-md shadow-blue-200">
-            <div className="dropdown dropdown-end">
-              <label
-                tabIndex={0}
-                className="m-1 w-max cursor-pointer px-2 py-1 flex items-center gap-2"
-              >
-                Created Data <BsFillCaretDownFill />
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content mt-2 z-[1] menu p-2 shadow bg-base-100 rounded-box w-max"
-              >
-                <li>
-                  <button>Created Date</button>
-                </li>
-                <li>
-                  <button>Sort By A to Z</button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          {/*  */}
+          
         </div>
       </div>
       <div className="flex items-center justify-between gap-4 mt-3">
