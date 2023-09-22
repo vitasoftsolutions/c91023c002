@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { GoTasklist } from "react-icons/go";
 import { FaFileImport, FaFileExport } from "react-icons/fa";
 import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
@@ -6,9 +7,94 @@ import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { AiOutlinePlus } from "react-icons/ai";
 import ImportModal from "../Modals/ImportModal";
 import { useState } from "react";
+import { base_url } from "../Url";
+import { useForm } from "react-hook-form";
+
+// redux
+import { useDispatch } from "react-redux";
+import {
+  fetchLoanBeneList,
+  searchLoanBeneficiaries,
+  sortByAZLoanBen,
+  sortByDateLoanBen,
+} from "../../../redux/Actions/loanBenAction";
 
 function TableHeader({ title, redirectLink }) {
+  const { handleSubmit, register } = useForm();
+  //
   const [importModal, setImportModal] = useState(null);
+  const [csvData, setCsvData] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortButtonText, setSortButtonText] = useState("Sort By A to Z");
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    if (data.text === "") {
+      // If the search field is empty, fetch all data
+      dispatch(fetchLoanBeneList(1)); // You may need to adjust the page parameter
+    } else {
+      // Otherwise, perform the search
+      dispatch(searchLoanBeneficiaries(data.text));
+    }
+  };
+
+  // submitDate
+  const handleDateChange = (event) => {
+    const { value } = event.target;
+    if (!value) {
+      dispatch(fetchLoanBeneList(1));
+    } else {
+      dispatch(sortByDateLoanBen(value));
+    }
+  };
+
+  // handleAtoZClick
+  const handleAtoZClick = () => {
+    // Toggle the sorting order
+    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newSortOrder);
+
+    // Toggle the button text
+    const newText =
+      newSortOrder === "asc" ? "Sort By A to Z" : "Sort By Z to A";
+    setSortButtonText(newText);
+
+    // You can now use the `newSortOrder` value in your sorting logic
+    console.log("Sort Order:", newSortOrder);
+    dispatch(sortByAZLoanBen(sortOrder));
+  };
+
+  const fetchData = async () => {
+    try {
+      const token = sessionStorage.getItem("jwt_token");
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await fetch(
+        `${base_url}/export-csv/?model=LoanBeneficaries&app_label=loan`,
+        { headers }
+      );
+      const data = await response.text();
+      setCsvData(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const downloadCsv = () => {
+    fetchData();
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "data.csv";
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
+
   return (
     <div className="">
       <div className="flex w-full items-center justify-between">
@@ -36,33 +122,43 @@ function TableHeader({ title, redirectLink }) {
                 className="dropdown-content rounded-none z-[1] menu p-2 shadow bg-base-100 w-max"
               >
                 <li className="rounded-none">
-                  <button className="rounded-none">Created Date</button>
+                  <input
+                    onChange={handleDateChange}
+                    type="date"
+                    className="cursor-pointer border-none outline-none bg-transparent"
+                    placeholder="Select date"
+                  />
                 </li>
                 <li className="rounded-none">
-                  <button className="rounded-none">Sort By A to Z</button>
+                  <button onClick={handleAtoZClick} className="rounded-none">
+                    {sortButtonText}
+                  </button>
                 </li>
               </ul>
             </div>
           </div>
           {/*  */}
           {/* // Search */}
-          <div className="ml-4 w-full relative">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="ml-4 w-full relative"
+          >
+            {/* <div className="ml-4 w-full relative"> */}
             <div className="flex">
               <input
-                type="text"
+                {...register("text")}
                 placeholder="Search..."
                 className="bg-white p-2 pl-6 pr-10 rounded-full border border-gray-300 focus:outline-none w-full"
               />
               <button
-                onClick={() => {
-                  // Handle the search button click here
-                }}
+                type="submit"
                 className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
               >
                 <BsSearch />
               </button>
             </div>
-          </div>
+            {/* </div> */}
+          </form>
         </div>
       </div>
       <div className="flex items-center justify-between gap-4 mt-3">
@@ -78,9 +174,7 @@ function TableHeader({ title, redirectLink }) {
           {/* Export Button */}
           <button
             className="bg-green-500 shadow-lg shadow-blue-200 hover:bg-green-600 text-white py-2 px-4 rounded-md flex items-center"
-            onClick={() => {
-              // Perform the export logic here
-            }}
+            onClick={downloadCsv}
           >
             <FaFileExport className="mr-2" /> Export
           </button>

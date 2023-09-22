@@ -44,37 +44,6 @@ export const fetchLoanBeneList = createAsyncThunk(
   }
 );
 
-// Define the async action for searching loan beneficiaries by first name
-export const searchLoanBeneficiaries = createAsyncThunk(
-  "searchLoanBeneficiaries",
-  async (firstName) => {
-    // Get the JWT token from session storage
-    const token = sessionStorage.getItem("jwt_token");
-
-    // Define the headers
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-
-    // Make the Axios GET request with the headers
-    const response = await axios.get(
-      `${base_url}/loan-beneficaries/?first_name=${firstName}`,
-      {
-        headers,
-      }
-    );
-
-    const response_token = response.data.results.token;
-    const result = jwtDecode(response_token);
-
-    const data = result.data;
-
-    // Return the data
-    return data;
-  }
-);
-
 const loanBeneListSlice = createSlice({
   name: "loanBeneList",
   initialState: {

@@ -9,25 +9,21 @@ export const createLoanBeneficiary = createAsyncThunk(
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       };
 
-
-      // Convert payload data to JSON
-      // const payloadJson = JSON.stringify(payload);
-      // console.log(payloadJson, "______2")
-
-
-      const response = await axios.post(`${base_url}/loan-beneficaries/`, payload, { headers });
+      const response = await axios.post(
+        `${base_url}/loan-beneficaries/`,
+        payload,
+        { headers }
+      );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to update loan beneficiary"); // Customize the error message as needed
+      throw new Error("Failed to Create loan beneficiary");
     }
   }
 );
-
-
 
 const createLoanBeneficiarySlice = createSlice({
   name: "createLoanBeneficiary",
@@ -40,7 +36,7 @@ const createLoanBeneficiarySlice = createSlice({
     builder
       .addCase(createLoanBeneficiary.pending, (state) => {
         state.isLoading = true;
-        state.isError = false; // Reset the error flag
+        state.isError = false;
       })
       .addCase(createLoanBeneficiary.fulfilled, (state, action) => {
         state.isLoading = false;

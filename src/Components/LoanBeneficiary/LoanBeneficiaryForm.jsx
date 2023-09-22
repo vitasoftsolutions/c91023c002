@@ -41,24 +41,24 @@ const formData = [
     fieldPlaceholder: "Permanent Address (Comma Separated)",
     isRequired: true,
   },
-  // {
-  //   fieldName: "Profile Picture",
-  //   fieldType: null,
-  //   fieldPlaceholder: "Upload Image",
-  //   isRequired: false,
-  // },
-  // {
-  //   fieldName: "Nid Front Side",
-  //   fieldType: "text", // Change to "text" for text input
-  //   fieldPlaceholder: "Upload Image",
-  //   isRequired: false,
-  // },
-  // {
-  //   fieldName: "Nid Back Side",
-  //   fieldType: "text", // Change to "text" for text input
-  //   fieldPlaceholder: "Upload Image",
-  //   isRequired: false,
-  // },
+  {
+    fieldName: "Profile Picture",
+    fieldType: "file",
+    fieldPlaceholder: "Upload Image",
+    isRequired: false,
+  },
+  {
+    fieldName: "Nid Front",
+    fieldType: "file",
+    fieldPlaceholder: "Upload Image",
+    isRequired: false,
+  },
+  {
+    fieldName: "Nid Back",
+    fieldType: "file",
+    fieldPlaceholder: "Upload Image",
+    isRequired: false,
+  },
 ];
 
 const LoanBeneficiaryForm = () => {
@@ -81,8 +81,14 @@ const LoanBeneficiaryForm = () => {
   });
 
   const onSubmit = (data) => {
-    dispatch(createLoanBeneficiary(data));
-    reset();
+    const profile_picture = data.profile_picture[0];
+    const nid_front = data.nid_front[0];
+    const nid_back = data.nid_back[0];
+
+    const submitData = { ...data, profile_picture, nid_front, nid_back };
+    console.log(submitData);
+    dispatch(createLoanBeneficiary(submitData));
+    // reset();
   };
 
   const isLoading = state.isLoading;
@@ -99,8 +105,8 @@ const LoanBeneficiaryForm = () => {
       theme: "light",
     });
   }
-  
-    if(state.isError) {
+
+  if (state.isError) {
     toast.error(state.isError, {
       position: "top-center",
       autoClose: 5000,
@@ -110,7 +116,7 @@ const LoanBeneficiaryForm = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      });
+    });
   }
 
   const renderField = (field) => {
@@ -166,8 +172,8 @@ const LoanBeneficiaryForm = () => {
               placeholder={field.fieldPlaceholder}
               className={`${
                 field.fieldType === "file"
-                  ? "w-full file-input file-input-bordered file-input-primary file-input-sm"
-                  : "w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+                  ? "w-full file-input rounded-sm file-input-bordered file-input-primary file-input-sm"
+                  : "w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
               }`}
             />
           )}
@@ -198,7 +204,6 @@ const LoanBeneficiaryForm = () => {
             {renderField(field)}
           </div>
         ))}
-
         {/* Render the penultimate field as a single full-width item */}
         {formData.length % 2 === 0 && (
           <div className="col-span-3">

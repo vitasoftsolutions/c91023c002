@@ -4,7 +4,7 @@ import TableHeader from "../../Components/shared/TableHeader/TableHeader";
 const LoanBeneficiaryList = () => {
   return (
     <div className="max-w-screen">
-      <TableHeader title={"Beneficiary"} redirectLink={"/loan-beneficiary-crete"} />
+      <TableHeader title={"Beneficiary"} redirectLink={"/beneficiarylist/loan-beneficiary-crete"} />
       <LoanBenListTable />
     </div>
   );

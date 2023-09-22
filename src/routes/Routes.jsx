@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
         element: <Login_Page />,
       },
       {
-        path: "/loan-beneficiary-crete",
+        path: "/beneficiarylist/loan-beneficiary-crete",
         element: (
           <PrivetRoute>
             <LoanBeneficiary />

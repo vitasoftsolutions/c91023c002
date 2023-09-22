@@ -108,7 +108,7 @@ const SideBar = () => {
         } shadow-xl shadow-blue-200 h-full relative duration-300`}
       >
         <img
-          src="image/control.png"
+          src="/image/control.png"
           className={`absolute cursor-pointer -right-3 top-20 w-7 border-dark-purple
            border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}

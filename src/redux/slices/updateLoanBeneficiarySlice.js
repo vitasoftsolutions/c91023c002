@@ -10,7 +10,7 @@ export const updateLoanBeneficiary = createAsyncThunk(
 
     // Define the headers
     const headers = {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     };
 
