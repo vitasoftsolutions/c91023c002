@@ -5,6 +5,7 @@ import LoanBeneficiary from "../pages/Dashboard/LoanBeneficiary";
 import LoanBeneficiaryList from "../pages/Dashboard/LoanBeneficiaryList";
 import HomePage from "../pages/Dashboard/HomePage";
 import PrivetRoute from "./PrivetRoute";
+import CreatePhone from "../pages/Dashboard/CreatePhone";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +36,15 @@ export const router = createBrowserRouter([
         path: "/beneficiarylist",
         element: (
           <PrivetRoute>
-            <LoanBeneficiaryList />{" "}
+            <LoanBeneficiaryList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/addphone",
+        element: (
+          <PrivetRoute>
+            <CreatePhone />
           </PrivetRoute>
         ),
       },

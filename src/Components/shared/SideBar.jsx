@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import {
   FaHandHoldingUsd,
+  FaMobileAlt,
   FaRegCreditCard,
   FaRegListAlt,
 } from "react-icons/fa";
+import { MdInstallMobile } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Menus = [
@@ -19,9 +21,15 @@ const Menus = [
     ],
   },
   {
-    title: "Menu 2",
-    icons: <FaHandHoldingUsd />,
-    subMenus: [],
+    title: "Phone",
+    icons: <FaMobileAlt />,
+    subMenus: [
+      {
+        title: "Add Phone",
+        icons: <MdInstallMobile />,
+        to: "/addphone",
+      },
+    ],
   },
   {
     title: "Menu 2",
