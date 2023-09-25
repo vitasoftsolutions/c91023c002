@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loanBeneListReducer from "./slices/searchLoanSlice";
 import createLoanBeneficiaryReducer from "./slices/createLoanBeneficiarySlice";
-// import searchAdnSortLoanReducer from "./slices/searchLoanSlice"
+import phoneReducers from "./slices/phoneSlice";
 
 export const store = configureStore({
   reducer: {
     loanBeneList: loanBeneListReducer,
     createLoanBeneficiary: createLoanBeneficiaryReducer,
-    // searchAdnSortLoan: searchAdnSortLoanReducer
+    phoneReducers: phoneReducers,
   },
 });

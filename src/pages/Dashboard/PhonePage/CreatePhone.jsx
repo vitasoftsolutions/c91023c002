@@ -1,8 +1,8 @@
 import React from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import CreatePhoneForm from "../../Components/Phone/CreatePhoneForm";
-import Breadcrumb from "../../Components/shared/Breadcrumb/Breadcrumb";
+import CreatePhoneForm from "../../../Components/Phone/CreatePhoneForm";
+import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 
 function CreatePhone() {
   return (

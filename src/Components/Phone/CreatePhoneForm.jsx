@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useForm, useFieldArray } from "react-hook-form";
-import { createLoanBeneficiary } from "../../redux/slices/createLoanBeneficiarySlice";
+import { useForm } from "react-hook-form";
 import Loader from "../shared/Loader/Loader";
 import { toast, ToastContainer } from "react-toastify";
+import { createPhone } from "../../redux/Actions/PhoneAction";
 
 const formData = [
   {
@@ -27,33 +27,28 @@ const formData = [
 
 const CreatePhoneForm = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.createLoanBeneficiary);
+  const state = useSelector((state) => state.phoneReducers);
+
+  console.log(state)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    control,
     reset,
   } = useForm();
 
   const onSubmit = (data) => {
-    // const profile_picture = data.profile_picture[0];
-    // const nid_front = data.nid_front[0];
-    // const nid_back = data.nid_back[0];
-
-    // const submitData = { ...data, profile_picture, nid_front, nid_back };
-    // console.log(submitData);
-    // dispatch(createLoanBeneficiary(submitData));
-    // reset();
+    dispatch(createPhone(data));
+    reset();
   };
 
   const isLoading = state.isLoading;
 
-  if (state.data?.message.length > 0) {
-    toast(state.data?.message, {
+  if (state.massage?.id) {
+    toast("Created successfully", {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

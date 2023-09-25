@@ -25,9 +25,9 @@ const Menus = [
     icons: <FaMobileAlt />,
     subMenus: [
       {
-        title: "Add Phone",
+        title: "Phone",
         icons: <MdInstallMobile />,
-        to: "/addphone",
+        to: "/phone",
       },
     ],
   },
