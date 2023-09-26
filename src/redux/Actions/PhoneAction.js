@@ -3,13 +3,13 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { base_url } from "../../Components/shared/Url";
 
-// Get the JWT token from session storage
-const token = sessionStorage.getItem("jwt_token");
-
 export const fetchPhoneList = createAsyncThunk(
   "fetchPhoneList",
   async (page, { getState }) => {
     const { perPage } = getState().phoneReducers;
+
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
 
     // Define the headers
     const headers = {
@@ -58,26 +58,20 @@ export const deletePhone = createAsyncThunk("deletePhone", async (payload) => {
   return response.data;
 });
 
+// create the phone
+export const createPhone = createAsyncThunk("createPhone", async (payload) => {
+  try {
+    const token = sessionStorage.getItem("jwt_token");
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
 
-// create the phone 
-export const createPhone = createAsyncThunk(
-    "createPhone",
-    async (payload) => {
-      try {
-        const token = sessionStorage.getItem("jwt_token");
-        const headers = {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        };
-  
-        const response = await axios.post(
-          `${base_url}/phone/`,
-          payload,
-          { headers }
-        );
-        return response.data;
-      } catch (error) {
-        throw new Error("Failed to Create loan beneficiary");
-      }
-    }
-  );
+    const response = await axios.post(`${base_url}/phone/`, payload, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to Create loan beneficiary");
+  }
+});

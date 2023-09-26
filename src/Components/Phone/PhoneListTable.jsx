@@ -9,15 +9,15 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Loader from "../shared/Loader/Loader";
 import { deletePhone, fetchPhoneList } from "../../redux/Actions/PhoneAction";
 import DetailsModal from "../shared/Modals/DetailsModal";
+import { Link } from "react-router-dom";
 
 const PhoneListTable = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
-//   console.log(state)
+  //   console.log(state)
 
   const [selectedPhone, setSelectedPhone] = useState(null);
-  const [editLoan, setEditLoan] = useState(null);
 
   const current_page = state.phoneReducers.currentPage;
   const total_page = state.phoneReducers.totalPages;
@@ -125,8 +125,9 @@ const PhoneListTable = () => {
                           </button>
                         </div>
                         <div className="text-erp_success">
-                          <button
-                            onClick={() => setEditLoan(pn)}
+                          <Link
+                            to={"/phone/createphone"}
+                            state={pn}
                             className="cursor-pointer"
                           >
                             <label
@@ -135,7 +136,7 @@ const PhoneListTable = () => {
                             >
                               <FaFilePen />
                             </label>
-                          </button>
+                          </Link>
                         </div>
                         <div className="text-erp_danger">
                           <button onClick={() => handelDelete(pn.id)}>

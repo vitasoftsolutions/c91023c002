@@ -3,33 +3,15 @@ import { useForm } from "react-hook-form";
 import Loader from "../shared/Loader/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import { createPhone } from "../../redux/Actions/PhoneAction";
-
-const formData = [
-  {
-    fieldName: "Name",
-    fieldType: "text",
-    fieldPlaceholder: "Name",
-    isRequired: true,
-  },
-  {
-    fieldName: "Relation",
-    fieldType: "text",
-    fieldPlaceholder: "Relation",
-    isRequired: true,
-  },
-  {
-    fieldName: "Phone Number",
-    fieldType: "number",
-    fieldPlaceholder: "Phone number",
-    isRequired: true,
-  },
-];
+import { useLocation } from "react-router-dom";
 
 const CreatePhoneForm = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.phoneReducers);
+  const reduxState = useSelector((state) => state.phoneReducers);
 
-  console.log(state)
+  let { state } = useLocation();
+
+  console.log(state, "link state");
 
   const {
     register,
@@ -43,9 +25,9 @@ const CreatePhoneForm = () => {
     reset();
   };
 
-  const isLoading = state.isLoading;
+  const isLoading = reduxState.isLoading;
 
-  if (state.massage?.id) {
+  if (reduxState.massage?.id) {
     toast("Created successfully", {
       position: "top-center",
       autoClose: 3000,
@@ -58,7 +40,7 @@ const CreatePhoneForm = () => {
     });
   }
 
-  if (state.isError) {
+  if (reduxState.isError) {
     toast.error(state.isError, {
       position: "top-center",
       autoClose: 5000,
@@ -71,73 +53,6 @@ const CreatePhoneForm = () => {
     });
   }
 
-  const renderField = (field) => {
-    if (Array.isArray(field.fieldName)) {
-      return field.fieldName.map((subField, subIndex) => (
-        <div className="mb-4" key={subIndex}>
-          <label
-            htmlFor={subField.toLowerCase().replace(/\s+/g, "_")}
-            className="block text-black mb-1 font-bold"
-          >
-            {subField}
-          </label>
-          <input
-            type={field.fieldType}
-            {...register(subField.toLowerCase().replace(/\s+/g, "_"), {
-              required: subField.isRequired,
-            })}
-            placeholder={field.fieldPlaceholder}
-            className="w-full"
-          />
-          {errors[subField.toLowerCase().replace(/\s+/g, "_")] && (
-            <span className="text-red-500">This field is required</span>
-          )}
-        </div>
-      ));
-    } else {
-      return (
-        <div className="mb-4">
-          <label
-            htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-            className="block text-black mb-1 font-bold"
-          >
-            {field.fieldName}
-          </label>
-          {field.fieldType === "number" ? (
-            <input
-              type="text"
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-                required: field.isRequired,
-              })}
-              placeholder={field.fieldPlaceholder}
-              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
-              onInput={(e) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, "");
-              }}
-            />
-          ) : (
-            <input
-              type={field.fieldType}
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-                required: field.isRequired,
-              })}
-              placeholder={field.fieldPlaceholder}
-              className={`${
-                field.fieldType === "file"
-                  ? "w-full file-input rounded-sm file-input-bordered file-input-primary file-input-sm"
-                  : "w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
-              }`}
-            />
-          )}
-          {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-            <span className="text-red-500">This field is required</span>
-          )}
-        </div>
-      );
-    }
-  };
-
-
   return isLoading ? (
     <Loader text={"Creating please wait..."} />
   ) : (
@@ -147,12 +62,60 @@ const CreatePhoneForm = () => {
         encType="multipart/form-data"
         className="w-full mx-auto p-4 grid grid-cols-3 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200"
       >
-        {formData.map((field, index) => (
-          <div className={"col-span-3 md:col-span-1"} key={index}>
-            {renderField(field)}
+        {/* Name */}
+        <div className={"col-span-3 md:col-span-1"}>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-black mb-1 font-bold">
+              Name
+            </label>
+            <input
+              defaultValue={state ? state?.name : ""}
+              type="text"
+              {...register("name", { required: true })}
+              placeholder="Name here"
+              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+            />
+            {errors.name && (
+              <span className="text-red-500">This field is required</span>
+            )}
           </div>
-        ))}
-        
+        </div>
+        {/* Phone number */}
+        <div className={"col-span-3 md:col-span-1"}>
+          <div className="mb-4">
+            <label htmlFor="phone_number" className="block text-black mb-1 font-bold">
+            Phone number
+            </label>
+            <input
+              defaultValue={state ? state?.phone_number : ""}
+              type="text"
+              {...register("phone_number", { required: true })}
+              placeholder="Phone Number"
+              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+            />
+            {errors.phone_number && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div>
+        </div>
+        {/* Relation */}
+        <div className={"col-span-3 md:col-span-1"}>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-black mb-1 font-bold">
+            Relation
+            </label>
+            <input
+              defaultValue={state ? state?.relation : ""}
+              type="text"
+              {...register("relation", { required: true })}
+              placeholder="Relation here"
+              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+            />
+            {errors.relation && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div>
+        </div>
 
         {/* Submit Button */}
         <div className="mb-4 col-span-3">
