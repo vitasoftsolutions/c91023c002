@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { GoTasklist } from "react-icons/go";
 import { FaFileImport, FaFileExport } from "react-icons/fa";
 import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { AiOutlinePlus } from "react-icons/ai";
 import ImportModal from "../Modals/ImportModal";
@@ -19,7 +19,9 @@ import {
   sortByDateLoanBen,
 } from "../../../redux/Actions/loanBenAction";
 
-function TableHeader({ title, redirectLink }) {
+function TableHeader({ title, redirectLink, url_endpoint }) {
+  const { pathname } = useLocation();
+  //
   const { handleSubmit, register } = useForm();
   //
   const [importModal, setImportModal] = useState(null);
@@ -30,11 +32,15 @@ function TableHeader({ title, redirectLink }) {
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
+    console.log(pathname, "path");
+
     if (data.text === "") {
       // If the search field is empty, fetch all data
       dispatch(fetchLoanBeneList(1)); // You may need to adjust the page parameter
-    } else {
-      // Otherwise, perform the search
+    }
+    if (pathname === "/beneficiarylist") {
+      console.log(data.text, "data.text");
+
       dispatch(searchLoanBeneficiaries(data.text));
     }
   };
@@ -54,7 +60,6 @@ function TableHeader({ title, redirectLink }) {
     // Toggle the sorting order
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
-
     // Toggle the button text
     const newText =
       newSortOrder === "asc" ? "Sort By A to Z" : "Sort By Z to A";
@@ -72,10 +77,7 @@ function TableHeader({ title, redirectLink }) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const response = await fetch(
-        `${base_url}/export-csv/?model=LoanBeneficaries&app_label=loan`,
-        { headers }
-      );
+      const response = await fetch(`${base_url}${url_endpoint}`, { headers });
       const data = await response.text();
       setCsvData(data);
     } catch (error) {

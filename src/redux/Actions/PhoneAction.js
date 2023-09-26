@@ -29,7 +29,6 @@ export const fetchPhoneList = createAsyncThunk(
     const result = jwtDecode(response_token);
 
     const data = result.data;
-    console.log(data, "phone data");
     const totalData = Math.ceil(response.data.count);
     const totalPages = Math.ceil(totalData / perPage);
 
@@ -46,6 +45,10 @@ export const fetchPhoneList = createAsyncThunk(
 // delete phone action
 export const deletePhone = createAsyncThunk("deletePhone", async (payload) => {
   // Define the headers
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
@@ -70,6 +73,28 @@ export const createPhone = createAsyncThunk("createPhone", async (payload) => {
     const response = await axios.post(`${base_url}/phone/`, payload, {
       headers,
     });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to Create loan beneficiary");
+  }
+});
+
+// update the phone
+export const updatePhone = createAsyncThunk("createPhone", async (payload) => {
+  try {
+    const token = sessionStorage.getItem("jwt_token");
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await axios.patch(
+      `${base_url}/phone/${payload.id}/`,
+      payload,
+      {
+        headers,
+      }
+    );
     return response.data;
   } catch (error) {
     throw new Error("Failed to Create loan beneficiary");

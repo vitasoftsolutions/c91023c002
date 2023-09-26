@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import Loader from "../shared/Loader/Loader";
 import { toast, ToastContainer } from "react-toastify";
-import { createPhone } from "../../redux/Actions/PhoneAction";
-import { useLocation } from "react-router-dom";
+import { createPhone, updatePhone } from "../../redux/Actions/PhoneAction";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CreatePhoneForm = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const CreatePhoneForm = () => {
 
   let { state } = useLocation();
 
-  console.log(state, "link state");
+  let navigate = useNavigate();
 
   const {
     register,
@@ -21,14 +21,23 @@ const CreatePhoneForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    dispatch(createPhone(data));
-    reset();
+    const updatedData = {
+      id: state.id,
+      ...data,
+    };
+    if (state) {
+      dispatch(updatePhone(updatedData));
+      navigate("/phone");
+    } else {
+      dispatch(createPhone(data));
+      reset();
+    }
   };
 
   const isLoading = reduxState.isLoading;
 
   if (reduxState.massage?.id) {
-    toast("Created successfully", {
+    toast("Successfully done", {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -41,7 +50,7 @@ const CreatePhoneForm = () => {
   }
 
   if (reduxState.isError) {
-    toast.error(state.isError, {
+    toast.error("Failed to do", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -83,8 +92,11 @@ const CreatePhoneForm = () => {
         {/* Phone number */}
         <div className={"col-span-3 md:col-span-1"}>
           <div className="mb-4">
-            <label htmlFor="phone_number" className="block text-black mb-1 font-bold">
-            Phone number
+            <label
+              htmlFor="phone_number"
+              className="block text-black mb-1 font-bold"
+            >
+              Phone number
             </label>
             <input
               defaultValue={state ? state?.phone_number : ""}
@@ -102,7 +114,7 @@ const CreatePhoneForm = () => {
         <div className={"col-span-3 md:col-span-1"}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-black mb-1 font-bold">
-            Relation
+              Relation
             </label>
             <input
               defaultValue={state ? state?.relation : ""}

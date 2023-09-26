@@ -3,8 +3,10 @@ import { useState } from "react"; // Import useState from React
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { base_url } from "../Url";
+import { useLocation } from "react-router-dom";
 
 const ImportModal = ({ importModal, onClose }) => {
+    const { pathname } = useLocation();
   const { register, handleSubmit } = useForm();
   const [fileName, setFileName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,13 +23,13 @@ const ImportModal = ({ importModal, onClose }) => {
     return null;
   }
 
+  
   const onSubmit = () => {
     const submittedData = {
-      model_name: "LoanBeneficaries",
-      app_label: "loan",
+      model_name: pathname === "/beneficiarylist" ? "LoanBeneficaries" : pathname === "/phone" ? "PhoneNumber" : "",
+      app_label: pathname === "/beneficiarylist" ? "loan" : pathname === "/phone" ? "globalapp2" : "",
       file: selectedFile,
     };
-    console.log(submittedData, "selectedFileselectedFile")
     const token = sessionStorage.getItem("jwt_token");
 
     // Define the headers
