@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   searchLoanBeneficiaries,
   fetchLoanBeneList,
+  sortByDateLoanBen,
+  sortByAZLoanBen,
 } from "../Actions/loanBenAction";
 
 const loanBeneListSlice = createSlice({
@@ -33,6 +35,41 @@ const loanBeneListSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
+      // Sort by date
+      .addCase(sortByDateLoanBen.pending, (state) => {
+        state.isLoading = true;
+        // Clear previous data when a search is initiated
+        state.data = [];
+        state.currentPage = 1;
+        state.totalPages = 1;
+        state.totalData = 0;
+      })
+      .addCase(sortByDateLoanBen.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(sortByDateLoanBen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Sort by A-Z
+      .addCase(sortByAZLoanBen.pending, (state) => {
+        state.isLoading = true;
+        // Clear previous data when a search is initiated
+        state.data = [];
+        state.currentPage = 1;
+        state.totalPages = 1;
+        state.totalData = 0;
+      })
+      .addCase(sortByAZLoanBen.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(sortByAZLoanBen.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Get beneficiary data
       .addCase(fetchLoanBeneList.pending, (state) => {
         state.isLoading = true;
       })

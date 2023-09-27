@@ -100,3 +100,116 @@ export const updatePhone = createAsyncThunk("createPhone", async (payload) => {
     throw new Error("Failed to Create loan beneficiary");
   }
 });
+
+// Search by name
+export const searchPhoneByName = createAsyncThunk(
+  "searchPhoneByName",
+  async (firstName) => {
+    try {
+      // Get the JWT token from session storage
+      const token = sessionStorage.getItem("jwt_token");
+
+      // Define the headers
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      let apiUrl = `${base_url}/phone/?name=${firstName}`;
+      
+      // Make the Axios GET request with the headers
+      const response = await axios.get(apiUrl, {
+        headers,
+      });
+
+      const response_token = response.data.results.token;
+      const result = jwtDecode(response_token);
+
+      const data = result.data;
+      // Return the data
+      return data;
+    } catch (error) {
+      const massage = (error.response && error.response.data) || error.massage;
+      return massage;
+    }
+  }
+);
+
+// Sort by date  
+export const sortByDatePhone = createAsyncThunk(
+  "sortByDatePhone",
+  async (date) => {
+    try {
+      // Get the JWT token from session storage
+      const token = sessionStorage.getItem("jwt_token");
+
+      // Define the headers
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      let apiUrl = `${base_url}/phone/`;
+
+      // Check if date is not empty, then append the search query
+      if (date) {
+        apiUrl += `?created_at=${date}`;
+      }
+      
+      // Make the Axios GET request with the headers
+      const response = await axios.get(apiUrl, {
+        headers,
+      });
+
+      const response_token = response.data.results.token;
+      const result = jwtDecode(response_token);
+
+      const data = result.data;
+      // Return the data
+      return data;
+    } catch (error) {
+      const massage = (error.response && error.response.data) || error.massage;
+      return massage;
+    }
+  }
+);
+
+// Sort By A-Z Phone
+export const sortByAZPhone = createAsyncThunk(
+  "sortByAZPhone",
+  async (sortOrder) => {
+    try {
+      // Get the JWT token from session storage
+      const token = sessionStorage.getItem("jwt_token");
+
+      // Define the headers
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      let apiUrl = `${base_url}/phone/`;
+
+      // Check if sortOrder is not empty, then append the search query
+      if (sortOrder) {
+        apiUrl += `?order=${sortOrder}`;
+      }
+      
+      // Make the Axios GET request with the headers
+      const response = await axios.get(apiUrl, {
+        headers,
+      });
+
+      const response_token = response.data.results.token;
+      const result = jwtDecode(response_token);
+
+      const data = result.data;
+      // Return the data
+      return data;
+    } catch (error) {
+      const massage = (error.response && error.response.data) || error.massage;
+      return massage;
+    }
+  }
+);
+

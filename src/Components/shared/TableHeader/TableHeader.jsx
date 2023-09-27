@@ -18,6 +18,12 @@ import {
   sortByAZLoanBen,
   sortByDateLoanBen,
 } from "../../../redux/Actions/loanBenAction";
+import {
+  fetchPhoneList,
+  searchPhoneByName,
+  sortByAZPhone,
+  sortByDatePhone,
+} from "../../../redux/Actions/PhoneAction";
 
 function TableHeader({ title, redirectLink, url_endpoint }) {
   const { pathname } = useLocation();
@@ -32,16 +38,16 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
-    console.log(pathname, "path");
-
     if (data.text === "") {
       // If the search field is empty, fetch all data
-      dispatch(fetchLoanBeneList(1)); // You may need to adjust the page parameter
+      dispatch(fetchLoanBeneList(1));
+      dispatch(fetchPhoneList(1));
     }
     if (pathname === "/beneficiarylist") {
-      console.log(data.text, "data.text");
-
       dispatch(searchLoanBeneficiaries(data.text));
+    }
+    if (pathname === "/phone") {
+      dispatch(searchPhoneByName(data.text));
     }
   };
 
@@ -49,9 +55,14 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
   const handleDateChange = (event) => {
     const { value } = event.target;
     if (!value) {
-      dispatch(fetchLoanBeneList(1));
-    } else {
+      pathname === "/beneficiarylist" ? dispatch(fetchLoanBeneList(1)) : "";
+      pathname === "/phone" ? dispatch(fetchPhoneList(1)) : "";
+    }
+    if (pathname === "/beneficiarylist") {
       dispatch(sortByDateLoanBen(value));
+    }
+    if (pathname === "/phone") {
+      dispatch(sortByDatePhone(value));
     }
   };
 
@@ -66,8 +77,8 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
     setSortButtonText(newText);
 
     // You can now use the `newSortOrder` value in your sorting logic
-    console.log("Sort Order:", newSortOrder);
-    dispatch(sortByAZLoanBen(sortOrder));
+    pathname === "/beneficiarylist" ? dispatch(sortByAZLoanBen(sortOrder)) : "";
+    pathname === "/phone" ? dispatch(sortByAZPhone(sortOrder)) : "";
   };
 
   const fetchData = async () => {

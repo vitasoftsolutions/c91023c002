@@ -95,7 +95,7 @@ export const searchLoanBeneficiaries = createAsyncThunk(
 //
 //
 export const sortByDateLoanBen = createAsyncThunk(
-  "searchLoanBeneficiaries",
+  "sortByDateLoanBen",
   async (date) => {
     try {
       // Get the JWT token from session storage
@@ -136,7 +136,7 @@ export const sortByDateLoanBen = createAsyncThunk(
 //
 //
 export const sortByAZLoanBen = createAsyncThunk(
-  "searchLoanBeneficiaries",
+  "sortByAZLoanBen",
   async (sortOrder) => {
     try {
       // Get the JWT token from session storage

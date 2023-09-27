@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPhone, fetchPhoneList } from "../Actions/PhoneAction";
+import {
+  createPhone,
+  fetchPhoneList,
+  searchPhoneByName,
+  sortByAZPhone,
+  sortByDatePhone,
+} from "../Actions/PhoneAction";
 
 const phoneSlice = createSlice({
   name: "phoneSlice",
@@ -42,24 +48,58 @@ const phoneSlice = createSlice({
       .addCase(createPhone.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+      })
+      // Search Phone By Name
+      .addCase(searchPhoneByName.pending, (state) => {
+        state.isLoading = true;
+        // Clear previous data when a search is initiated
+        state.data = [];
+        state.currentPage = 1;
+        state.totalPages = 1;
+        state.totalData = 0;
+      })
+      .addCase(searchPhoneByName.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(searchPhoneByName.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Sort by date
+      .addCase(sortByDatePhone.pending, (state) => {
+        state.isLoading = true;
+        // Clear previous data when a search is initiated
+        state.data = [];
+        state.currentPage = 1;
+        state.totalPages = 1;
+        state.totalData = 0;
+      })
+      .addCase(sortByDatePhone.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(sortByDatePhone.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Sort by A-Z
+      .addCase(sortByAZPhone.pending, (state) => {
+        state.isLoading = true;
+        // Clear previous data when a search is initiated
+        state.data = [];
+        state.currentPage = 1;
+        state.totalPages = 1;
+        state.totalData = 0;
+      })
+      .addCase(sortByAZPhone.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(sortByAZPhone.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
       });
-
-    //   .addCase(searchLoanBeneficiaries.pending, (state) => {
-    //     state.isLoading = true;
-    //     // Clear previous data when a search is initiated
-    //     state.data = [];
-    //     state.currentPage = 1;
-    //     state.totalPages = 1;
-    //     state.totalData = 0;
-    //   })
-    //   .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.data = action.payload;
-    //   })
-    //   .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = action.error.message;
-    //   })
   },
 });
 
