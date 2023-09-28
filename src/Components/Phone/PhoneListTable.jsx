@@ -126,7 +126,7 @@ const PhoneListTable = () => {
                         </div>
                         <div className="text-erp_success">
                           <Link
-                            to={"/phone/createphone"}
+                            to={"/phone/editphone"}
                             state={pn}
                             className="cursor-pointer"
                           >

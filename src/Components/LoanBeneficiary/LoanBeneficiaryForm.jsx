@@ -3,6 +3,8 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { createLoanBeneficiary } from "../../redux/slices/createLoanBeneficiarySlice";
 import Loader from "../shared/Loader/Loader";
 import { toast, ToastContainer } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { updateLoanBeneficiary } from "../../redux/slices/updateLoanBeneficiarySlice";
 
 const formData = [
   {
@@ -63,9 +65,12 @@ const formData = [
 
 const LoanBeneficiaryForm = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.createLoanBeneficiary);
+  const loanState = useSelector((state) => state.createLoanBeneficiary);
 
-  console.log(state, ".......;.......;.");
+  const { state } = useLocation();
+  const defaultValues = state ? state : {};
+
+  console.log(state, ".......;.......;");
 
   const {
     register,
@@ -73,7 +78,9 @@ const LoanBeneficiaryForm = () => {
     formState: { errors },
     control,
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: defaultValues,
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -81,20 +88,56 @@ const LoanBeneficiaryForm = () => {
   });
 
   const onSubmit = (data) => {
-    const profile_picture = data.profile_picture[0];
-    const nid_front = data.nid_front[0];
-    const nid_back = data.nid_back[0];
+    const profile_picture = data.profile_picture ? data.profile_picture[0] : "";
+    const nid_front = data.nid_front ? data.nid_front[0] : "";
+    const nid_back = data.nid_back ? data.nid_back[0] : "";
 
     const submitData = { ...data, profile_picture, nid_front, nid_back };
-    console.log(submitData);
-    dispatch(createLoanBeneficiary(submitData));
-    // reset();
+    if (state) {
+      const updateData = {
+        author_id: data.author_id ? data.author_id : state.author_id,
+        email: data.email ? data.email : state.email,
+        first_name: data.first_name ? data.first_name : state.first_name,
+        is_deleted: data.is_deleted ? data.is_deleted : state.is_deleted,
+        last_name: data.last_name ? data.last_name : state.last_name,
+        nid_number: data.nid_number ? data.nid_number : state.nid_number,
+        permanent_address: data.permanent_address
+          ? data.permanent_address
+          : state.permanent_address,
+        present_address: data.present_address
+          ? data.present_address
+          : state.present_address,
+        status: data.status ? data.status : state.status,
+      };
+
+      if (profile_picture !== "" && nid_front !== "" && nid_back !== "") {
+        // Dispatch the update action
+        dispatch(
+          updateLoanBeneficiary(
+            updateData,
+            profile_picture,
+            nid_front,
+            nid_back
+          )
+        );
+      } else {
+        dispatch(
+          updateLoanBeneficiary({
+            id: state.id,
+            data: updateData,
+          })
+        );
+      }
+    } else {
+      dispatch(createLoanBeneficiary(submitData));
+    }
+    reset();
   };
 
-  const isLoading = state.isLoading;
+  const isLoading = loanState.isLoading;
 
-  if (state.data?.message.length > 0) {
-    toast(state.data?.message, {
+  if (loanState.data?.message.length > 0) {
+    toast(loanState.data?.message, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -106,8 +149,8 @@ const LoanBeneficiaryForm = () => {
     });
   }
 
-  if (state.isError) {
-    toast.error(state.isError, {
+  if (loanState.isError) {
+    toast.error(loanState.isError, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -167,7 +210,7 @@ const LoanBeneficiaryForm = () => {
             <input
               type={field.fieldType}
               {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-                required: field.isRequired,
+                required: !state && field.isRequired,
               })}
               placeholder={field.fieldPlaceholder}
               className={`${
@@ -175,6 +218,7 @@ const LoanBeneficiaryForm = () => {
                   ? "w-full file-input rounded-sm file-input-bordered file-input-primary file-input-sm"
                   : "w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
               }`}
+              defaultValue={defaultValues[field.fieldName.toLowerCase()]}
             />
           )}
           {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
@@ -196,7 +240,6 @@ const LoanBeneficiaryForm = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        encType="multipart/form-data"
         className="w-full mx-auto p-4 grid grid-cols-3 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200"
       >
         {formData.map((field, index) => (
@@ -204,10 +247,26 @@ const LoanBeneficiaryForm = () => {
             {renderField(field)}
           </div>
         ))}
-        {/* Render the penultimate field as a single full-width item */}
-        {formData.length % 2 === 0 && (
-          <div className="col-span-3">
-            {renderField(formData[formData.length - 1])}
+
+        {/* Status */}
+        {state && (
+          <div className="col-span-3 md:col-span-1 mb-4">
+            <label
+              htmlFor="statusInput"
+              className="block text-black mb-1 font-bold"
+            >
+              Status
+            </label>
+            <select
+              id="statusInput"
+              name="status"
+              {...register("status")}
+              defaultValue={state?.status ? "true" : "false"}
+              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+            >
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
           </div>
         )}
 

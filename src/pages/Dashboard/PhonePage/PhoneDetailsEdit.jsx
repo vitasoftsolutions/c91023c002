@@ -1,10 +1,9 @@
-import React from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PhoneForm from "../../../Components/Phone/PhoneForm";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 
-function CreatePhone() {
+function PhoneDetailsEdit() {
   return (
     <>
       <div className="flex items-center justify-between gap-4 mb-4">
@@ -25,4 +24,4 @@ function CreatePhone() {
   );
 }
 
-export default CreatePhone;
+export default PhoneDetailsEdit;

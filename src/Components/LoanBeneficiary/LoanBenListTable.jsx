@@ -9,6 +9,7 @@ import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiaryS
 import Swal from "sweetalert2";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Loader from "../shared/Loader/Loader";
+import { Link } from "react-router-dom";
 
 const LoanBenListTable = () => {
   const dispatch = useDispatch();
@@ -137,17 +138,9 @@ const LoanBenListTable = () => {
                           </button>
                         </div>
                         <div className="text-erp_success">
-                          <button
-                            onClick={() => setEditLoan(loan)}
-                            className="cursor-pointer"
-                          >
-                            <label
-                              htmlFor="my-drawer-4"
-                              className="drawer-button cursor-pointer"
-                            >
-                              <FaFilePen />
-                            </label>
-                          </button>
+                          <Link to={'/beneficiarylist/editloan'} state={loan}>
+                            <FaFilePen />
+                          </Link>
                         </div>
                         <div className="text-erp_danger">
                           <button onClick={() => handelDelete(loan.id)}>

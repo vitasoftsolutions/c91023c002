@@ -1,4 +1,3 @@
-import LoanBenListTable from "../../../Components/LoanBeneficiary/LoanBenListTable";
 import PhoneListTable from "../../../Components/Phone/PhoneListTable";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 

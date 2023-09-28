@@ -5,11 +5,13 @@ import { toast, ToastContainer } from "react-toastify";
 import { createPhone, updatePhone } from "../../redux/Actions/PhoneAction";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const CreatePhoneForm = () => {
+const PhoneForm = () => {
   const dispatch = useDispatch();
   const reduxState = useSelector((state) => state.phoneReducers);
 
   let { state } = useLocation();
+
+  console.log(state);
 
   let navigate = useNavigate();
 
@@ -129,6 +131,28 @@ const CreatePhoneForm = () => {
           </div>
         </div>
 
+        {/* Status */}
+        {state && (
+          <div className="col-span-3 md:col-span-1 mb-4">
+            <label
+              htmlFor="statusInput"
+              className="block text-black mb-1 font-bold"
+            >
+              Status
+            </label>
+            <select
+              id="statusInput"
+              name="status"
+              {...register("status")}
+              defaultValue={state?.status ? "true" : "false"}
+              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+            >
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+        )}
+
         {/* Submit Button */}
         <div className="mb-4 col-span-3">
           <input
@@ -155,4 +179,4 @@ const CreatePhoneForm = () => {
   );
 };
 
-export default CreatePhoneForm;
+export default PhoneForm;

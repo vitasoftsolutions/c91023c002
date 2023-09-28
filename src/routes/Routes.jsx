@@ -7,6 +7,8 @@ import HomePage from "../pages/Dashboard/HomePage";
 import PrivetRoute from "./PrivetRoute";
 import CreatePhone from "../pages/Dashboard/PhonePage/CreatePhone";
 import PhoneList from "../pages/Dashboard/PhonePage/PhoneList";
+import PhoneDetailsEdit from "../pages/Dashboard/PhonePage/PhoneDetailsEdit";
+import EditLoanBen from "../pages/Dashboard/LoanBeneficiary/EditLoanBen";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/beneficiarylist/editloan",
+        element: (
+          <PrivetRoute>
+            <EditLoanBen />
+          </PrivetRoute>
+        ),
+      },
+      {
         path: "/phone",
         element: (
           <PrivetRoute>
@@ -54,6 +64,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <CreatePhone />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/phone/editphone",
+        element: (
+          <PrivetRoute>
+            <PhoneDetailsEdit />
           </PrivetRoute>
         ),
       },
