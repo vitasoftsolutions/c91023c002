@@ -3,7 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { createLoanBeneficiary } from "../../redux/slices/createLoanBeneficiarySlice";
 import Loader from "../shared/Loader/Loader";
 import { toast, ToastContainer } from "react-toastify";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { updateLoanBeneficiary } from "../../redux/slices/updateLoanBeneficiarySlice";
 
 const formData = [
@@ -66,11 +66,10 @@ const formData = [
 const LoanBeneficiaryForm = () => {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.createLoanBeneficiary);
+  const navigate = useNavigate();
 
   const { state } = useLocation();
   const defaultValues = state ? state : {};
-
-  console.log(state, ".......;.......;");
 
   const {
     register,
@@ -110,24 +109,47 @@ const LoanBeneficiaryForm = () => {
         status: data.status ? data.status : state.status,
       };
 
-      if (profile_picture !== "" && nid_front !== "" && nid_back !== "") {
-        // Dispatch the update action
-        dispatch(
-          updateLoanBeneficiary(
-            updateData,
-            profile_picture,
-            nid_front,
-            nid_back
-          )
-        );
-      } else {
+      // Dispatch when profile_picture length is greater than 0
+      if (profile_picture !== "") {
+        console.log("inside 2");
         dispatch(
           updateLoanBeneficiary({
             id: state.id,
-            data: updateData,
+            data: { ...updateData, profile_picture: profile_picture },
           })
         );
+        navigate("/beneficiarylist");
       }
+      // Dispatch when nid_front length is greater than 0
+      if (nid_front !== "") {
+        console.log("inside 3");
+        dispatch(
+          updateLoanBeneficiary({
+            id: state.id,
+            data: { ...updateData, nid_front: nid_front },
+          })
+        );
+        navigate("/beneficiarylist");
+      }
+      // Dispatch when nid_back length is greater than 0
+      if (nid_back !== "") {
+        console.log("inside 4");
+        dispatch(
+          updateLoanBeneficiary({
+            id: state.id,
+            data: { ...updateData, nid_back: nid_back },
+          })
+        );
+        navigate("/beneficiarylist");
+      }
+
+      dispatch(
+        updateLoanBeneficiary({
+          id: state.id,
+          data: updateData,
+        })
+      );
+      navigate("/beneficiarylist");
     } else {
       dispatch(createLoanBeneficiary(submitData));
     }
@@ -180,7 +202,7 @@ const LoanBeneficiaryForm = () => {
             placeholder={field.fieldPlaceholder}
             className="w-full"
           />
-          {errors[subField.toLowerCase().replace(/\s+/g, "_")] && (
+          {errors[subField.toLowerCase().replace(/\s+/g, "_")] || (
             <span className="text-red-500">This field is required</span>
           )}
         </div>

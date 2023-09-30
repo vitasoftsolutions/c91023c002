@@ -9,6 +9,8 @@ import CreatePhone from "../pages/Dashboard/PhonePage/CreatePhone";
 import PhoneList from "../pages/Dashboard/PhonePage/PhoneList";
 import PhoneDetailsEdit from "../pages/Dashboard/PhonePage/PhoneDetailsEdit";
 import EditLoanBen from "../pages/Dashboard/LoanBeneficiary/EditLoanBen";
+import Employee from "../pages/Dashboard/Employee/Employee";
+import CreateEmployee from "../pages/Dashboard/Employee/CreateEmployee";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +74,23 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <PhoneDetailsEdit />
+          </PrivetRoute>
+        ),
+      },
+      // employee
+      {
+        path: "/employee",
+        element: (
+          <PrivetRoute>
+            <Employee />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/employee/createemployee",
+        element: (
+          <PrivetRoute>
+            <CreateEmployee />
           </PrivetRoute>
         ),
       },

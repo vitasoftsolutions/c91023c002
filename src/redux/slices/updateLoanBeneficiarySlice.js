@@ -5,6 +5,8 @@ import { base_url } from "../../Components/shared/Url";
 export const updateLoanBeneficiary = createAsyncThunk(
   "updateLoanBeneficiary",
   async (payload) => {
+
+    console.log(payload, "payload")
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 

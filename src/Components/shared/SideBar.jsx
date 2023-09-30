@@ -5,6 +5,7 @@ import {
   FaRegCreditCard,
   FaRegListAlt,
 } from "react-icons/fa";
+import { GrUserWorker } from "react-icons/gr";
 import { MdInstallMobile } from "react-icons/md";
 import { Link } from "react-router-dom";
 
@@ -32,9 +33,15 @@ const Menus = [
     ],
   },
   {
-    title: "Menu 2",
-    icons: <FaHandHoldingUsd />,
-    subMenus: [],
+    title: "Employee",
+    icons: <GrUserWorker />,
+    subMenus: [
+      {
+        title: "Employee",
+        icons: <GrUserWorker />,
+        to: "/employee",
+      },
+    ],
   },
   {
     title: "Menu 3",
