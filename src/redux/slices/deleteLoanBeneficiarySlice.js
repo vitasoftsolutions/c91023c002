@@ -21,7 +21,7 @@ export const deleteLoanBeneficiary = createAsyncThunk(
     );
 
     // Return the data from the response
-    return response.data;
+    return response.status;
   }
 );
 
@@ -31,20 +31,24 @@ const deleteLoanBeneficiarySlice = createSlice({
     isLoading: false,
     data: null,
     isError: false,
+    isDelete: false,
   },
   extraReducers: (builder) => {
     builder
       .addCase(deleteLoanBeneficiary.pending, (state) => {
         state.isLoading = true;
-        state.isError = false; // Reset the error flag
+        state.isError = false;
+        state.isDelete = false;
       })
       .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isDelete = true;
         state.data = action.payload;
       })
       .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+        state.isDelete = false;
       });
   },
 });

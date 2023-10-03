@@ -73,7 +73,7 @@ export const createPhone = createAsyncThunk("createPhone", async (payload) => {
     const response = await axios.post(`${base_url}/phone/`, payload, {
       headers,
     });
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error("Failed to Create loan beneficiary");
   }

@@ -31,7 +31,7 @@ const LoanBenListTable = () => {
 
   useEffect(() => {
     dispatch(fetchLoanBeneList(current_page));
-  }, [dispatch, current_page]);
+  }, [dispatch, current_page, state.deleteLoanBeneficiary.isDelete]);
 
   const handlePageChange = (newPage) => {
     dispatch(fetchLoanBeneList(newPage));
@@ -45,7 +45,7 @@ const LoanBenListTable = () => {
     );
   }
 
-  const handelDelete = (id) => {
+  const handelDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -57,8 +57,9 @@ const LoanBenListTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteLoanBeneficiary(id));
-        dispatch(fetchLoanBeneList(state.loanBeneList.currentPage));
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        if (state.deleteLoanBeneficiary.isDelete === true) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
       }
     });
   };
@@ -138,7 +139,7 @@ const LoanBenListTable = () => {
                           </button>
                         </div>
                         <div className="text-erp_success">
-                          <Link to={'/beneficiarylist/editloan'} state={loan}>
+                          <Link to={"/beneficiarylist/editloan"} state={loan}>
                             <FaFilePen />
                           </Link>
                         </div>

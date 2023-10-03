@@ -32,7 +32,7 @@ const PhoneListTable = () => {
 
   useEffect(() => {
     dispatch(fetchPhoneList(current_page));
-  }, [dispatch, current_page]);
+  }, [dispatch, current_page, state.phoneReducers.isDelete]);
 
   const handlePageChange = (newPage) => {
     dispatch(fetchPhoneList(newPage));
@@ -58,8 +58,9 @@ const PhoneListTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deletePhone(id));
-        dispatch(fetchPhoneList(state.phoneReducers.currentPage));
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        if (state.phoneReducers.isDelete === true) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
       }
     });
   };

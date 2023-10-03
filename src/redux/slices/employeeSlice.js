@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchEmployeeAction } from "../Actions/employeeAction";
 import {
   createPhone,
   fetchPhoneList,
@@ -21,18 +22,18 @@ const employeeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPhoneList.pending, (state) => {
+      .addCase(fetchEmployeeAction.pending, (state) => {
         state.isLoading = true;
         state.massage = "";
       })
-      .addCase(fetchPhoneList.fulfilled, (state, action) => {
+      .addCase(fetchEmployeeAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload.data;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchPhoneList.rejected, (state, action) => {
+      .addCase(fetchEmployeeAction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })

@@ -23,11 +23,11 @@ const PhoneForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const updatedData = {
-      id: state.id,
-      ...data,
-    };
     if (state) {
+      const updatedData = {
+        id: state.id,
+        ...data,
+      };
       dispatch(updatePhone(updatedData));
       navigate("/phone");
     } else {

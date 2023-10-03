@@ -19,16 +19,18 @@ export const fetchEmployeeAction = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/phone/?limit=${perPage}&offset=${(page - 1) * perPage}`,
+      `${base_url}/employee/?limit=${perPage}&offset=${(page - 1) * perPage}`,
       {
         headers,
       }
     );
 
+    
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
-
+    
     const data = result.data;
+    console.log(data, "responseresponse")
     const totalData = Math.ceil(response.data.count);
     const totalPages = Math.ceil(totalData / perPage);
 

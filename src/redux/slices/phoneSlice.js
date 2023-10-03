@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createPhone,
+  deletePhone,
   fetchPhoneList,
   searchPhoneByName,
   sortByAZPhone,
@@ -18,6 +19,7 @@ const phoneSlice = createSlice({
     perPage: 5,
     totalData: 0,
     massage: "",
+    isDelete: false,
   },
   extraReducers: (builder) => {
     builder
@@ -48,6 +50,22 @@ const phoneSlice = createSlice({
       .addCase(createPhone.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+      })
+      // Delete
+      .addCase(deletePhone.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.isDelete = false;
+      })
+      .addCase(deletePhone.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+        state.isDelete = true;
+      })
+      .addCase(deletePhone.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+        state.isDelete = false;
       })
       // Search Phone By Name
       .addCase(searchPhoneByName.pending, (state) => {
