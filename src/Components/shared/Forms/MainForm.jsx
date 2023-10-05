@@ -17,8 +17,8 @@ const MainForm = ({ formData, defaultValues, isState, submitFunction }) => {
   };
 
   const renderField = (field) => {
-    if (Array.isArray(field.fieldName)) {
-      return field.fieldName.map((subField, subIndex) => (
+    if (Array.isArray(field?.fieldName)) {
+      return field?.fieldName?.map((subField, subIndex) => (
         <div className="mb-4" key={subIndex}>
           <label
             htmlFor={subField.toLowerCase().replace(/\s+/g, "_")}
@@ -56,6 +56,7 @@ const MainForm = ({ formData, defaultValues, isState, submitFunction }) => {
               })}
               placeholder={field.fieldPlaceholder}
               className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+              defaultValue={isState && field.defaultValue}
               onInput={(e) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
               }}
@@ -72,9 +73,7 @@ const MainForm = ({ formData, defaultValues, isState, submitFunction }) => {
                   ? "w-full file-input rounded-sm file-input-bordered file-input-primary file-input-sm"
                   : "w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
               }`}
-              defaultValue={
-                isState && defaultValues[field?.fieldName?.toLowerCase()]
-              }
+              defaultValue={isState && field.defaultValue}
             />
           )}
           {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
@@ -85,13 +84,14 @@ const MainForm = ({ formData, defaultValues, isState, submitFunction }) => {
     }
   };
 
+  console.log(isState, "from main form");
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full mx-auto p-4 grid grid-cols-3 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200"
       >
-        {formData.map((field, index) => (
+        {formData?.map((field, index) => (
           <div className={"col-span-3 md:col-span-1"} key={index}>
             {renderField(field)}
           </div>

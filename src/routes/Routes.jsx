@@ -11,6 +11,7 @@ import PhoneDetailsEdit from "../pages/Dashboard/PhonePage/PhoneDetailsEdit";
 import EditLoanBen from "../pages/Dashboard/LoanBeneficiary/EditLoanBen";
 import Employee from "../pages/Dashboard/Employee/Employee";
 import CreateEmployee from "../pages/Dashboard/Employee/CreateEmployee";
+import EditEmployee from "../pages/Dashboard/Employee/EditEmployee";
 
 export const router = createBrowserRouter([
   {
@@ -91,6 +92,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <CreateEmployee />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/employee/editemployee",
+        element: (
+          <PrivetRoute>
+            <EditEmployee />
           </PrivetRoute>
         ),
       },

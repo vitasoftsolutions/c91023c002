@@ -3,6 +3,7 @@ import {
   createEmployee,
   deleteEmployee,
   fetchEmployeeAction,
+  updateEmployee,
 } from "../Actions/employeeAction";
 import {
   createPhone,
@@ -71,6 +72,21 @@ const employeeSlice = createSlice({
         state.isError = action.error.message;
         state.isDelete = false;
       })
+
+      // update Employee
+      .addCase(updateEmployee.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(updateEmployee.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+      })
+      .addCase(updateEmployee.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+
       // Search Phone By Name
       .addCase(searchPhoneByName.pending, (state) => {
         state.isLoading = true;

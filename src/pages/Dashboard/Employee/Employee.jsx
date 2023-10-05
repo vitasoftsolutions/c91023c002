@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmployeeListTable from "../../../Components/Employee/EmployeeTable";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
-import { deleteEmployee, fetchEmployeeAction } from "../../../redux/Actions/employeeAction";
+import {
+  deleteEmployee,
+  fetchEmployeeAction,
+} from "../../../redux/Actions/employeeAction";
 import Swal from "sweetalert2";
 import { fetchLoanBeneList } from "../../../redux/Actions/loanBenAction";
 
@@ -74,6 +77,7 @@ function Employee() {
         page_number={page_number}
         t_data={state}
         deleteFunction={deleteFunction}
+        editLink={'/employee/editemployee'}
       />
     </div>
   );

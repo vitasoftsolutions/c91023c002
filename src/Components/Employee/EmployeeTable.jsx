@@ -13,6 +13,7 @@ const EmployeeTable = ({
   page_number,
   t_data,
   deleteFunction,
+  editLink
 }) => {
   // const state = useSelector((state) => state);
 
@@ -106,7 +107,11 @@ const EmployeeTable = ({
                           </button>
                         </div>
                         <div className="text-erp_success">
-                          <Link to={"/beneficiarylist/editloan"} t_data={t_dt}>
+                          <Link
+                            to={editLink}
+                            state={t_dt}
+                            className="cursor-pointer"
+                          >
                             <FaFilePen />
                           </Link>
                         </div>

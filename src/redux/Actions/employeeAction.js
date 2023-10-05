@@ -82,6 +82,28 @@ export const deleteEmployee = createAsyncThunk("deleteEmployee", async (payload)
 });
 
 
+// update the phone
+export const updateEmployee = createAsyncThunk("createPhone", async (payload) => {
+  try {
+    const token = sessionStorage.getItem("jwt_token");
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await axios.patch(
+      `${base_url}/employee/${payload.id}/`,
+      payload,
+      {
+        headers,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to update updateEmployee");
+  }
+});
+
 
 
 
@@ -93,28 +115,6 @@ export const deleteEmployee = createAsyncThunk("deleteEmployee", async (payload)
 
 
 
-
-// update the phone
-export const updatePhone = createAsyncThunk("createPhone", async (payload) => {
-  try {
-    const token = sessionStorage.getItem("jwt_token");
-    const headers = {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
-    };
-
-    const response = await axios.patch(
-      `${base_url}/phone/${payload.id}/`,
-      payload,
-      {
-        headers,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to Create loan beneficiary");
-  }
-});
 
 // Search by name
 export const searchPhoneByName = createAsyncThunk(

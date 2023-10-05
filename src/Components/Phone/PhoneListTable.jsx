@@ -131,12 +131,7 @@ const PhoneListTable = () => {
                             state={pn}
                             className="cursor-pointer"
                           >
-                            <label
-                              htmlFor="my-drawer-4"
-                              className="drawer-button cursor-pointer"
-                            >
-                              <FaFilePen />
-                            </label>
+                            <FaFilePen />
                           </Link>
                         </div>
                         <div className="text-erp_danger">
@@ -188,18 +183,13 @@ const PhoneListTable = () => {
               </button>
             </div>
           </div>
-          {/* Pagination */}
+          {/* End Pagination */}
           {/*  */}
           <DetailsModal
             selectedPhone={selectedPhone}
             onClose={() => setSelectedPhone(null)}
           />
           {/*  */}
-          {/* <EditLoanSidebar
-            editLoan={editLoan}
-            onClose={() => setEditLoan(null)}
-          /> */}
-
           {/*  */}
         </div>
       </div>
