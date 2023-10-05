@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createEmployee, fetchEmployeeAction } from "../Actions/employeeAction";
+import {
+  createEmployee,
+  deleteEmployee,
+  fetchEmployeeAction,
+} from "../Actions/employeeAction";
 import {
   createPhone,
   fetchPhoneList,
@@ -19,6 +23,7 @@ const employeeSlice = createSlice({
     perPage: 5,
     totalData: 0,
     massage: "",
+    isDelete: false,
   },
   extraReducers: (builder) => {
     builder
@@ -49,6 +54,22 @@ const employeeSlice = createSlice({
       .addCase(createEmployee.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+      })
+      // Delete Employee
+      .addCase(deleteEmployee.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.isDelete = false;
+      })
+      .addCase(deleteEmployee.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+        state.isDelete = true;
+      })
+      .addCase(deleteEmployee.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+        state.isDelete = false;
       })
       // Search Phone By Name
       .addCase(searchPhoneByName.pending, (state) => {

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmployeeListTable from "../../../Components/Employee/EmployeeTable";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
-import { fetchEmployeeAction } from "../../../redux/Actions/employeeAction";
+import { deleteEmployee, fetchEmployeeAction } from "../../../redux/Actions/employeeAction";
+import Swal from "sweetalert2";
+import { fetchLoanBeneList } from "../../../redux/Actions/loanBenAction";
 
 const t_head = [
   { name: "Name" },
@@ -31,10 +33,29 @@ function Employee() {
 
   useEffect(() => {
     dispatch(fetchEmployeeAction(current_page));
-  }, [dispatch, current_page]);
+  }, [dispatch, current_page, state.isDelete]);
 
   const handlePageChange = (newPage) => {
     dispatch(fetchEmployeeAction(newPage));
+  };
+
+  const deleteFunction = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteEmployee(id));
+        if (state.isDelete === true) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
+      }
+    });
   };
 
   //
@@ -52,6 +73,7 @@ function Employee() {
         current_page={current_page}
         page_number={page_number}
         t_data={state}
+        deleteFunction={deleteFunction}
       />
     </div>
   );

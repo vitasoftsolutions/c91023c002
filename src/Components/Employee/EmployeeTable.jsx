@@ -1,21 +1,23 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLoanBeneList } from "../../redux/slices/loanBenListSlice";
+import { useState } from "react";
 import { FaEye, FaFilePen, FaTrashCan } from "react-icons/fa6";
 // import LoanDetailModal from "./LoanDetailModal";
 import { formatDate } from "../../hooks/formatDate";
-import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiarySlice";
-import Swal from "sweetalert2";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Loader from "../shared/Loader/Loader";
 import { Link } from "react-router-dom";
 
-const EmployeeTable = ({ t_head, handlePageChange, current_page, page_number, t_data }) => {
+const EmployeeTable = ({
+  t_head,
+  handlePageChange,
+  current_page,
+  page_number,
+  t_data,
+  deleteFunction,
+}) => {
   // const state = useSelector((state) => state);
 
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [editLoan, setEditLoan] = useState(null);
-
 
   if (t_data?.isLoading) {
     return (
@@ -26,28 +28,13 @@ const EmployeeTable = ({ t_head, handlePageChange, current_page, page_number, t_
   }
 
   const handelDelete = (id) => {
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     dispatch(deleteLoanBeneficiary(id));
-    //     dispatch(fetchLoanBeneList(state.loanBeneList.currentPage));
-    //     Swal.fire("Deleted!", "Your file has been deleted.", "success");
-    //   }
-    // });
+    deleteFunction(id);
   };
 
   return (
     <div className="container mx-auto border-2 bg-white mt-5 border-gray-50 overflow-hidden shadow-md shadow-blue-200">
       <div className="overflow-x-auto">
         <div className="overflow-x-auto">
-
           {/*  */}
           <table className="table table-xs table_border dark:bg-blue-500 table-compact w-full">
             {/* t head */}
@@ -62,7 +49,9 @@ const EmployeeTable = ({ t_head, handlePageChange, current_page, page_number, t_
                   </label>
                 </th>
                 {t_head?.map((th) => (
-                  <th key={th} className="text-[14px] pt-4 pb-2">{th.name}</th>
+                  <th key={th} className="text-[14px] pt-4 pb-2">
+                    {th.name}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -134,8 +123,6 @@ const EmployeeTable = ({ t_head, handlePageChange, current_page, page_number, t_
             </tbody>
             {/* foot */}
           </table>
-
-
 
           {/* Pagination */}
           <div className="border-t-2 flex justify-center py-1">

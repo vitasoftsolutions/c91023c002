@@ -62,7 +62,24 @@ export const createEmployee = createAsyncThunk("createEmployee", async (payload)
   }
 });
 
+// delete phone action
+export const deleteEmployee = createAsyncThunk("deleteEmployee", async (payload) => {
+  // Define the headers
 
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  const response = await axios.delete(`${base_url}/employee/${payload}/`, {
+    headers,
+  });
+
+  // Return the data from the response
+  return response.data;
+});
 
 
 
@@ -75,26 +92,6 @@ export const createEmployee = createAsyncThunk("createEmployee", async (payload)
 
 
 
-
-
-// delete phone action
-export const deleteEmployee = createAsyncThunk("deleteEmployee", async (payload) => {
-  // Define the headers
-
-  // Get the JWT token from session storage
-  const token = sessionStorage.getItem("jwt_token");
-
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-  const response = await axios.delete(`${base_url}/phone/${payload}/`, {
-    headers,
-  });
-
-  // Return the data from the response
-  return response.data;
-});
 
 
 // update the phone
