@@ -176,7 +176,7 @@ const PhoneListTable = () => {
               })}
               <button
                 onClick={() => handlePageChange(current_page + 1)}
-                disabled={current_page === state.phoneReducers.totalPages}
+                disabled={current_page === state.phoneReducers.totalPages || state.phoneReducers.totalPages <= 0}
                 className="join-item btn btn-xs"
               >
                 <AiOutlineRight />

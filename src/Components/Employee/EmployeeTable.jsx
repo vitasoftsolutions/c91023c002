@@ -157,7 +157,7 @@ const EmployeeTable = ({
               })}
               <button
                 onClick={() => handlePageChange(current_page + 1)}
-                disabled={current_page === t_data.totalPages}
+                disabled={current_page === t_data.totalPages  || t_data.totalPages <= 0}
                 className="join-item btn btn-xs"
               >
                 <AiOutlineRight />

@@ -184,7 +184,7 @@ const LoanBenListTable = () => {
               })}
               <button
                 onClick={() => handlePageChange(current_page + 1)}
-                disabled={current_page === state.loanBeneList.totalPages}
+                disabled={current_page === state.loanBeneList.totalPages || state.loanBeneList.totalPages <= 0}
                 className="join-item btn btn-xs"
               >
                 <AiOutlineRight />
