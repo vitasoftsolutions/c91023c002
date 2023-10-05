@@ -44,6 +44,23 @@ export const fetchEmployeeAction = createAsyncThunk(
   }
 );
 
+// create the Employee
+export const createEmployee = createAsyncThunk("createEmployee", async (payload) => {
+  try {
+    const token = sessionStorage.getItem("jwt_token");
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await axios.post(`${base_url}/employee/`, payload, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to Create loan beneficiary");
+  }
+});
 
 
 
@@ -79,23 +96,6 @@ export const deleteEmployee = createAsyncThunk("deleteEmployee", async (payload)
   return response.data;
 });
 
-// create the Employee
-export const createEmployee = createAsyncThunk("createEmployee", async (payload) => {
-  try {
-    const token = sessionStorage.getItem("jwt_token");
-    const headers = {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
-    };
-
-    const response = await axios.post(`${base_url}/phone/`, payload, {
-      headers,
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to Create loan beneficiary");
-  }
-});
 
 // update the phone
 export const updatePhone = createAsyncThunk("createPhone", async (payload) => {

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchEmployeeAction } from "../Actions/employeeAction";
+import { createEmployee, fetchEmployeeAction } from "../Actions/employeeAction";
 import {
   createPhone,
   fetchPhoneList,
@@ -37,16 +37,16 @@ const employeeSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create
-      .addCase(createPhone.pending, (state) => {
+      // Create Employee
+      .addCase(createEmployee.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createPhone.fulfilled, (state, action) => {
+      .addCase(createEmployee.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
       })
-      .addCase(createPhone.rejected, (state, action) => {
+      .addCase(createEmployee.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })

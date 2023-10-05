@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-const MainForm = ({ formData, defaultValues, isState }) => {
+const MainForm = ({ formData, defaultValues, isState, submitFunction }) => {
   const {
     register,
     handleSubmit,
@@ -12,7 +12,8 @@ const MainForm = ({ formData, defaultValues, isState }) => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    submitFunction(data);
+    reset();
   };
 
   const renderField = (field) => {
@@ -71,7 +72,9 @@ const MainForm = ({ formData, defaultValues, isState }) => {
                   ? "w-full file-input rounded-sm file-input-bordered file-input-primary file-input-sm"
                   : "w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
               }`}
-              defaultValue={isState && defaultValues[field?.fieldName?.toLowerCase()]}
+              defaultValue={
+                isState && defaultValues[field?.fieldName?.toLowerCase()]
+              }
             />
           )}
           {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
@@ -121,7 +124,7 @@ const MainForm = ({ formData, defaultValues, isState }) => {
           <input
             type="submit"
             value="Submit"
-            className="btn bg-erp_primary text-md text-white hover:bg-primary w-full"
+            className="btn rounded-md bg-erp_primary text-md text-white hover:bg-primary w-full"
           />
         </div>
       </form>
