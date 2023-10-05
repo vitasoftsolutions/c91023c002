@@ -25,6 +25,7 @@ const employeeSlice = createSlice({
     totalData: 0,
     massage: "",
     isDelete: false,
+    isUpdate: false,
   },
   extraReducers: (builder) => {
     builder
@@ -77,14 +78,17 @@ const employeeSlice = createSlice({
       .addCase(updateEmployee.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
+        state.isUpdate = false;
       })
       .addCase(updateEmployee.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
+        state.isUpdate = true;
       })
       .addCase(updateEmployee.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+        state.isUpdate = false;
       })
 
       // Search Phone By Name

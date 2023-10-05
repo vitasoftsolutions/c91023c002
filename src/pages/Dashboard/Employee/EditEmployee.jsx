@@ -1,13 +1,16 @@
 import { BsArrowLeftShort } from "react-icons/bs";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateEmployee } from "../../../redux/Actions/employeeAction";
+import { ToastContainer, toast } from "react-toastify";
 
 function EditEmployee() {
   const dispatch = useDispatch();
   let { state } = useLocation();
+  const navigate = useNavigate();
+  const reduxState = useSelector((state) => state.employeeReducers);
 
   const formData = [
     {
@@ -30,13 +33,6 @@ function EditEmployee() {
       fieldPlaceholder: "Type your username",
       isRequired: true,
       defaultValue: state.username,
-    },
-    {
-      fieldName: "password",
-      fieldType: "password",
-      fieldPlaceholder: "Type your password here",
-      isRequired: true,
-      defaultValue: state.password,
     },
     {
       fieldName: "Email",
@@ -69,9 +65,25 @@ function EditEmployee() {
         ...data,
       };
       dispatch(updateEmployee(updatedData));
-      // navigate("/phone");
+      if (reduxState.isUpdate) {
+        toast("Successfully done", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/employee");
+        }, 3000);
+      }
     }
   };
+  console.log(reduxState);
+
   return (
     <>
       <div className="flex items-center justify-between gap-4 mb-4">
@@ -92,6 +104,19 @@ function EditEmployee() {
           isState={state}
         />
       </div>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

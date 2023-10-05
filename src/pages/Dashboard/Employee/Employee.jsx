@@ -68,7 +68,7 @@ function Employee() {
       <TableHeader
         title={"Employee"}
         redirectLink={"/employee/createemployee"}
-        // url_endpoint={"/export-csv/?model=PhoneNumber&app_label=globalapp2"}
+        url_endpoint={"/export-csv/?model=Empployee&app_label=users"}
       />
       <EmployeeListTable
         t_head={t_head}
