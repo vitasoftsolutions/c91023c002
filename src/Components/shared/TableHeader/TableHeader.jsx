@@ -96,7 +96,6 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
       };
       const response = await fetch(`${base_url}${url_endpoint}`, { headers });
       const data = await response.text();
-      console.log(data, "datatatatat");
       setCsvData(data);
     } catch (error) {
       console.error("Error fetching data:", error);

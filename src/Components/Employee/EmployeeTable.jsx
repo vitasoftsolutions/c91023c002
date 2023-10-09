@@ -5,6 +5,7 @@ import { formatDate } from "../../hooks/formatDate";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Loader from "../shared/Loader/Loader";
 import { Link } from "react-router-dom";
+import DetailsModal from "../shared/Modals/DetailsModal";
 
 const EmployeeTable = ({
   t_head,
@@ -13,12 +14,12 @@ const EmployeeTable = ({
   page_number,
   t_data,
   deleteFunction,
-  editLink
+  editLink,
 }) => {
-  // const state = useSelector((state) => state);
+  console.log(t_data.data[0], "from emp table page");
 
-  const [selectedLoan, setSelectedLoan] = useState(null);
-  const [editLoan, setEditLoan] = useState(null);
+  const [selectedDetails, setSelectedDetails] = useState({});
+  const [allData, setAllData] = useState(null);
 
   if (t_data?.isLoading) {
     return (
@@ -49,8 +50,8 @@ const EmployeeTable = ({
                     />
                   </label>
                 </th>
-                {t_head?.map((th) => (
-                  <th key={th} className="text-[14px] pt-4 pb-2">
+                {t_head?.map((th, index) => (
+                  <th key={index} className="text-[14px] pt-4 pb-2">
                     {th.name}
                   </th>
                 ))}
@@ -102,7 +103,20 @@ const EmployeeTable = ({
                     <td>
                       <div className="flex gap-3 items-center text-lg">
                         <div className="text-erp_info">
-                          <button onClick={() => setSelectedLoan(t_dt)}>
+                          <button
+                            onClick={() => {
+                              setSelectedDetails({
+                                "First name": t_dt?.first_name,
+                                "Last name": t_dt?.last_name,
+                                Email: t_dt?.email,
+                                "Joined date": t_dt?.joined_date,
+                                "NID number": t_dt?.nid_number,
+                                "Permanent address": t_dt?.permanent_address,
+                                "Present address": t_dt?.present_address,
+                              });
+                              setAllData(t_dt);
+                            }}
+                          >
                             <FaEye />
                           </button>
                         </div>
@@ -139,11 +153,11 @@ const EmployeeTable = ({
               >
                 <AiOutlineLeft />
               </button>
-              {page_number?.map((num) => {
+              {page_number?.map((num, index) => {
                 return (
                   <button
                     onClick={() => handlePageChange(num)}
-                    key={num}
+                    key={index}
                     className={`${
                       current_page === num
                         ? "bg-erp_primary px-2 text-erp_light rounded-none"
@@ -157,7 +171,9 @@ const EmployeeTable = ({
               })}
               <button
                 onClick={() => handlePageChange(current_page + 1)}
-                disabled={current_page === t_data.totalPages  || t_data.totalPages <= 0}
+                disabled={
+                  current_page === t_data.totalPages || t_data.totalPages <= 0
+                }
                 className="join-item btn btn-xs"
               >
                 <AiOutlineRight />
@@ -166,10 +182,13 @@ const EmployeeTable = ({
           </div>
           {/* Pagination */}
           {/*  */}
-          {/* <LoanDetailModal
-            selectedLoan={selectedLoan}
-            onClose={() => setSelectedLoan(null)}
-          /> */}
+          <DetailsModal
+            allData={allData}
+            selectedDetails={selectedDetails}
+            onClose={() => setAllData(null)}
+            erp_modalCol={6}
+            photoSection={true}
+          />
 
           {/*  */}
         </div>

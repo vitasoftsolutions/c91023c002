@@ -17,7 +17,7 @@ const PhoneListTable = () => {
 
   //   console.log(state)
 
-  const [selectedPhone, setSelectedPhone] = useState(null);
+  const [selectedDetails, setSelectedDetails] = useState(null);
 
   const current_page = state.phoneReducers.currentPage;
   const total_page = state.phoneReducers.totalPages;
@@ -92,6 +92,7 @@ const PhoneListTable = () => {
 
             <tbody>
               {state?.phoneReducers?.data?.map((pn) => {
+                console.log(pn, "from PhoneListTable");
                 return (
                   // row
                   <tr key={pn.id}>
@@ -103,7 +104,9 @@ const PhoneListTable = () => {
                         />
                       </label>
                     </th>
-                    <td className="text-[14px]">{pn.name}</td>
+                    <td className="text-[14px]">
+                      {pn.first_name + " " + pn.last_name}
+                    </td>
                     <td className="text-[14px]">{formatDate(pn.created_at)}</td>
                     <td className="text-[14px]">{pn.relation}</td>
                     <td className="text-[14px]">{pn.phone_number}</td>
@@ -121,7 +124,7 @@ const PhoneListTable = () => {
                     <td>
                       <div className="flex gap-3 items-center text-lg">
                         <div className="text-erp_info">
-                          <button onClick={() => setSelectedPhone(pn)}>
+                          <button onClick={() => setSelectedDetails(pn)}>
                             <FaEye />
                           </button>
                         </div>
@@ -176,7 +179,10 @@ const PhoneListTable = () => {
               })}
               <button
                 onClick={() => handlePageChange(current_page + 1)}
-                disabled={current_page === state.phoneReducers.totalPages || state.phoneReducers.totalPages <= 0}
+                disabled={
+                  current_page === state.phoneReducers.totalPages ||
+                  state.phoneReducers.totalPages <= 0
+                }
                 className="join-item btn btn-xs"
               >
                 <AiOutlineRight />
@@ -186,8 +192,9 @@ const PhoneListTable = () => {
           {/* End Pagination */}
           {/*  */}
           <DetailsModal
-            selectedPhone={selectedPhone}
-            onClose={() => setSelectedPhone(null)}
+            selectedDetails={selectedDetails}
+            onClose={() => setSelectedDetails(null)}
+            erp_modalCol = {3}
           />
           {/*  */}
           {/*  */}

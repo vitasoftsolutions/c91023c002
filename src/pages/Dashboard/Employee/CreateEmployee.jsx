@@ -52,8 +52,6 @@ const formData = [
 ];
 
 function CreateEmployee() {
-  
-  
   const dispatch = useDispatch();
   const reduxState = useSelector((state) => state.employeeReducers);
   let navigate = useNavigate();
@@ -61,7 +59,7 @@ function CreateEmployee() {
   let { state } = useLocation();
 
   const submitFunction = (data) => {
-    console.log(data, "From create [age")
+    console.log(data, "From create [age");
     // if (state) {
     //   const updatedData = {
     //     id: state.id,
@@ -70,7 +68,7 @@ function CreateEmployee() {
     //   dispatch(updatePhone(updatedData));
     //   navigate("/phone");
     // } else {
-      dispatch(createEmployee(data));
+    dispatch(createEmployee(data));
     // }
   };
 
@@ -88,8 +86,11 @@ function CreateEmployee() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        {/* TODO : form er kaj hoy nai just design hoichi */}
-        <MainForm formData={formData} submitFunction={submitFunction} />
+        <MainForm
+          formData={formData}
+          submitFunction={submitFunction}
+          isReset={true}
+        />
       </div>
     </>
   );

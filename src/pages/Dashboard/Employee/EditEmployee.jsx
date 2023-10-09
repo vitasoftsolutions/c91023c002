@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainForm from "../../../Components/shared/Forms/MainForm";
@@ -50,7 +51,7 @@ function EditEmployee() {
     },
     {
       fieldName: "Present Address",
-      fieldType: "number",
+      fieldType: "text",
       fieldPlaceholder: "Your address here",
       isRequired: true,
       defaultValue: state.present_address,
@@ -64,25 +65,31 @@ function EditEmployee() {
         id: state.id,
         ...data,
       };
-      dispatch(updateEmployee(updatedData));
-      if (reduxState.isUpdate) {
-        toast("Successfully done", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setTimeout(() => {
-          navigate("/employee");
-        }, 3000);
-      }
+      dispatch(updateEmployee(updatedData));      
     }
   };
-  console.log(reduxState);
+
+  // In a useEffect or similar, check the updated state
+  useEffect(() => {
+    if (reduxState.isUpdate) {
+      // Perform actions after the update is successful
+      toast("Successfully done", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        navigate("/employee");
+      }, 3000);
+    }
+  }, [reduxState.isUpdate, navigate]);
+
+  console.log(reduxState.isUpdate, "reduxState.isUpdate");
 
   return (
     <>

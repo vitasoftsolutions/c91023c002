@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 
-const MainForm = ({ formData, defaultValues, isState, submitFunction }) => {
+const MainForm = ({ formData, defaultValues, isState, submitFunction, isReset }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    control,
     reset,
   } = useForm({
     defaultValues: defaultValues,
@@ -13,7 +12,7 @@ const MainForm = ({ formData, defaultValues, isState, submitFunction }) => {
 
   const onSubmit = (data) => {
     submitFunction(data);
-    reset();
+    isReset && reset();
   };
 
   const renderField = (field) => {

@@ -39,6 +39,7 @@ const employeeSlice = createSlice({
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
+        state.isUpdate = false;
       })
       .addCase(fetchEmployeeAction.rejected, (state, action) => {
         state.isLoading = false;
