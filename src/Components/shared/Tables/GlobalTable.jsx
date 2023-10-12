@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { FaEye, FaFilePen, FaTrashCan } from "react-icons/fa6";
-// import LoanDetailModal from "./LoanDetailModal";
-import { formatDate } from "../../hooks/formatDate";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import Loader from "../shared/Loader/Loader";
 import { Link } from "react-router-dom";
-import DetailsModal from "../shared/Modals/DetailsModal";
+import { formatDate } from "../../../hooks/formatDate";
+import DetailsModal from "../Modals/DetailsModal";
+import Loader from "../Loader/Loader";
 
-const EmployeeTable = ({
+const GlobalTable = ({
   t_head,
   handlePageChange,
   current_page,
@@ -16,7 +15,7 @@ const EmployeeTable = ({
   deleteFunction,
   editLink,
 }) => {
-  console.log(t_data.data[0], "from emp table page");
+//   console.log(t_data.data[0], "from emp table page");
 
   const [selectedDetails, setSelectedDetails] = useState({});
   const [allData, setAllData] = useState(null);
@@ -86,7 +85,7 @@ const EmployeeTable = ({
                       </div>
                     </td>
                     <td className="text-[14px]">
-                      {formatDate(t_dt.joined_date)}
+                      {formatDate(t_dt.joined_date || t_dt.created_at)}
                     </td>
                     <td className="text-[14px]">{t_dt.email}</td>
                     <td className="">
@@ -109,7 +108,7 @@ const EmployeeTable = ({
                                 "First name": t_dt?.first_name,
                                 "Last name": t_dt?.last_name,
                                 Email: t_dt?.email,
-                                "Joined date": t_dt?.joined_date,
+                                "Joined date": formatDate(t_dt?.joined_date || t_dt?.created_at),
                                 "NID number": t_dt?.nid_number,
                                 "Permanent address": t_dt?.permanent_address,
                                 "Present address": t_dt?.present_address,
@@ -197,4 +196,4 @@ const EmployeeTable = ({
   );
 };
 
-export default EmployeeTable;
+export default GlobalTable;

@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteEmployee, updateEmployee } from "../Actions/employeeAction";
 import {
-  createEmployee,
-  deleteEmployee,
-  fetchEmployeeAction,
-  updateEmployee,
-} from "../Actions/employeeAction";
+  createOwner,
+  deleteOwner,
+  fetchOwnerAction,
+  updateOwner,
+} from "../Actions/ownerBenAction";
 import {
   searchPhoneByName,
   sortByAZPhone,
   sortByDatePhone,
 } from "../Actions/PhoneAction";
 
-const employeeSlice = createSlice({
-  name: "employeeSlice",
+const ownerBeneficiarySlice = createSlice({
+  name: "ownerBeneficiarySlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -24,14 +25,15 @@ const employeeSlice = createSlice({
     massage: "",
     isDelete: false,
     isUpdate: false,
+    isCreated: false,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEmployeeAction.pending, (state) => {
+      .addCase(fetchOwnerAction.pending, (state) => {
         state.isLoading = true;
         state.massage = "";
       })
-      .addCase(fetchEmployeeAction.fulfilled, (state, action) => {
+      .addCase(fetchOwnerAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload.data;
         state.currentPage = action.payload.currentPage;
@@ -39,52 +41,53 @@ const employeeSlice = createSlice({
         state.totalData = action.payload.totalData;
         state.isUpdate = false;
       })
-      .addCase(fetchEmployeeAction.rejected, (state, action) => {
+      .addCase(fetchOwnerAction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // Create Employee
-      .addCase(createEmployee.pending, (state) => {
+      .addCase(createOwner.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createEmployee.fulfilled, (state, action) => {
+      .addCase(createOwner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
+        state.isCreated = true;
       })
-      .addCase(createEmployee.rejected, (state, action) => {
+      .addCase(createOwner.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // Delete Employee
-      .addCase(deleteEmployee.pending, (state) => {
+      .addCase(deleteOwner.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteEmployee.fulfilled, (state, action) => {
+      .addCase(deleteOwner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isDelete = true;
       })
-      .addCase(deleteEmployee.rejected, (state, action) => {
+      .addCase(deleteOwner.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
 
-      // update Employee
-      .addCase(updateEmployee.pending, (state) => {
+      // update Owner
+      .addCase(updateOwner.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateEmployee.fulfilled, (state, action) => {
+      .addCase(updateOwner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateEmployee.rejected, (state, action) => {
+      .addCase(updateOwner.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
@@ -144,4 +147,4 @@ const employeeSlice = createSlice({
   },
 });
 
-export default employeeSlice.reducer;
+export default ownerBeneficiarySlice.reducer;

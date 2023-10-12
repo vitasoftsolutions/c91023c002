@@ -7,6 +7,7 @@ import {
 } from "../../../redux/Actions/employeeAction";
 import Swal from "sweetalert2";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
+import { deleteOwner, fetchOwnerAction } from "../../../redux/Actions/ownerBenAction";
 
 const t_head = [
   { name: "Name" },
@@ -17,9 +18,9 @@ const t_head = [
   { name: "Actions" },
 ];
 
-function Employee() {
+function Owner() {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.employeeReducers);
+  const state = useSelector((state) => state.ownerReducers);
   console.log(state);
   //
   const current_page = state.currentPage;
@@ -34,11 +35,11 @@ function Employee() {
   }
 
   useEffect(() => {
-    dispatch(fetchEmployeeAction(current_page));
+    dispatch(fetchOwnerAction(current_page));
   }, [dispatch, current_page, state.isDelete]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchEmployeeAction(newPage));
+    dispatch(fetchOwnerAction(newPage));
   };
 
   const deleteFunction = (id) => {
@@ -52,7 +53,7 @@ function Employee() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteEmployee(id));
+        dispatch(deleteOwner(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
@@ -64,9 +65,10 @@ function Employee() {
   //
   return (
     <div className="max-w-screen">
+      {/* TODO: need to add owner model and app_label */}
       <TableHeader
-        title={"Employee"}
-        redirectLink={"/employee/createemployee"}
+        title={"Owner"}
+        redirectLink={"/owner/createowner"}
         url_endpoint={"/export-csv/?model=Empployee&app_label=users"}
       />
       <GlobalTable
@@ -76,10 +78,10 @@ function Employee() {
         page_number={page_number}
         t_data={state}
         deleteFunction={deleteFunction}
-        editLink={'/employee/editemployee'}
+        editLink={"/owner/editeowner"}
       />
     </div>
   );
 }
 
-export default Employee;
+export default Owner;

@@ -12,6 +12,9 @@ import EditLoanBen from "../pages/Dashboard/LoanBeneficiary/EditLoanBen";
 import Employee from "../pages/Dashboard/Employee/Employee";
 import CreateEmployee from "../pages/Dashboard/Employee/CreateEmployee";
 import EditEmployee from "../pages/Dashboard/Employee/EditEmployee";
+import Owner from "../pages/Dashboard/Owner/Owner";
+import CreateOwner from "../pages/Dashboard/Owner/CreateOwner";
+import EditOwner from "../pages/Dashboard/Owner/EditOwner";
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +103,31 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditEmployee />
+          </PrivetRoute>
+        ),
+      },
+      // owner
+      {
+        path: "/owner",
+        element: (
+          <PrivetRoute>
+            <Owner />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/owner/createowner",
+        element: (
+          <PrivetRoute>
+            <CreateOwner />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/owner/editeowner",
+        element: (
+          <PrivetRoute>
+            <EditOwner />
           </PrivetRoute>
         ),
       },

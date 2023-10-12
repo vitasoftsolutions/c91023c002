@@ -4,6 +4,7 @@ import createLoanBeneficiaryReducer from "./slices/createLoanBeneficiarySlice";
 import deleteLoanBeneficiaryReducer from "./slices/deleteLoanBeneficiarySlice";
 import phoneReducers from "./slices/phoneSlice";
 import employeeReducers from "./slices/employeeSlice";
+import ownerReducers from "./slices/ownerBeneficiarySlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     deleteLoanBeneficiary: deleteLoanBeneficiaryReducer,
     phoneReducers: phoneReducers,
     employeeReducers: employeeReducers,
+    ownerReducers: ownerReducers,
   },
 });

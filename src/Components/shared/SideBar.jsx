@@ -5,7 +5,7 @@ import {
   FaRegCreditCard,
   FaRegListAlt,
 } from "react-icons/fa";
-import { GrUserWorker } from "react-icons/gr";
+import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
 import { MdInstallMobile } from "react-icons/md";
 import { Link } from "react-router-dom";
 
@@ -44,6 +44,17 @@ const Menus = [
     ],
   },
   {
+    title: "Owner",
+    icons: <GrUserAdmin />,
+    subMenus: [
+      {
+        title: "Owner",
+        icons: <GrUserAdmin />,
+        to: "/owner",
+      },
+    ],
+  },
+  {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
     subMenus: [
@@ -74,12 +85,6 @@ const Menus = [
     icons: <FaHandHoldingUsd />,
     subMenus: [],
   },
-  // { title: "Accounts", src: "User", gap: true },
-  // { title: "Schedule ", src: "Calendar" },
-  // { title: "Search", src: "Search" },
-  // { title: "Analytics", src: "Chart" },
-  // { title: "Files ", src: "Folder", gap: true },
-  // { title: "Setting", src: "Setting" },
 ];
 
 const SideBar = () => {
