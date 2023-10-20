@@ -7,13 +7,40 @@ import { base_url } from "../../Components/shared/Url";
 //
 //
 //
+//
+export const createLoanBen = createAsyncThunk(
+  "createLoanBeneficiary",
+  async (payload) => {
+    // console.log(payload, "_____")
+    try {
+      const token = sessionStorage.getItem("jwt_token");
+      const headers = {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.post(
+        `${base_url}/loan-beneficaries/`,
+        payload,
+        { headers }
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to Create loan beneficiary");
+    }
+  }
+);
+//
+//
+//
+//
 export const fetchLoanBeneList = createAsyncThunk(
   "fetchLoanBeneList",
   async (page, { getState }) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
-    const { perPage } = getState().loanBeneList;
+    const { perPage } = getState().loanBeneficiary;
 
     // Define the headers
     const headers = {
@@ -35,6 +62,7 @@ export const fetchLoanBeneList = createAsyncThunk(
     const result = jwtDecode(response_token);
 
     const data = result.data;
+
     const totalData = Math.ceil(response.data.count);
     const totalPages = Math.ceil(totalData / perPage);
 
@@ -48,6 +76,32 @@ export const fetchLoanBeneList = createAsyncThunk(
   }
 );
 
+//
+//
+//
+//
+export const deleteLoanBeneficiary = createAsyncThunk(
+  "deleteLoanBeneficiary",
+  async (payload) => {
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios PUT request with the headers and payload
+    const response = await axios.delete(
+      `${base_url}/loan-beneficaries/${payload}/`,
+      { headers }
+    );
+
+    // Return the data from the response
+    return response.status;
+  }
+);
 //
 //
 //
@@ -71,7 +125,7 @@ export const searchLoanBeneficiaries = createAsyncThunk(
       if (firstName) {
         apiUrl += `?first_name=${firstName}`;
       }
-      
+
       // Make the Axios GET request with the headers
       const response = await axios.get(apiUrl, {
         headers,
@@ -113,7 +167,7 @@ export const sortByDateLoanBen = createAsyncThunk(
       if (date) {
         apiUrl += `?created_at=${date}`;
       }
-      
+
       // Make the Axios GET request with the headers
       const response = await axios.get(apiUrl, {
         headers,
@@ -154,7 +208,7 @@ export const sortByAZLoanBen = createAsyncThunk(
       if (sortOrder) {
         apiUrl += `?order=${sortOrder}`;
       }
-      
+
       // Make the Axios GET request with the headers
       const response = await axios.get(apiUrl, {
         headers,

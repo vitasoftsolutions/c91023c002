@@ -40,3 +40,11 @@ input[type=number] {
 ::-webkit-scrollbar-thumb:hover {
   background: #2980b9; /* Set a different color for hover state if desired */
 }
+
+
+/*  */
+.min-h-50vh{
+  min-height: 50vh !important;
+}
+
+ 

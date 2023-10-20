@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
-import Swal from "sweetalert2";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
-import { deleteOwner, fetchOwnerAction } from "../../../redux/Actions/ownerBenAction";
-
+import Swal from "sweetalert2";
+import { deleteLoanBeneficiary, fetchLoanBeneList } from "../../../redux/Actions/loanBenAction";
 
 const t_head = [
   { name: "Name" },
@@ -15,9 +14,9 @@ const t_head = [
   { name: "Actions" },
 ];
 
-function Owner() {
+const LoanBeneficiaryList = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.ownerReducers);
+  const state = useSelector((state) => state.loanBeneficiary);
   console.log(state);
   //
   const current_page = state.currentPage;
@@ -32,12 +31,14 @@ function Owner() {
   }
 
   useEffect(() => {
-    dispatch(fetchOwnerAction(current_page));
+    dispatch(fetchLoanBeneList(current_page));
   }, [dispatch, current_page, state.isDelete]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchOwnerAction(newPage));
+    dispatch(fetchLoanBeneList(newPage));
   };
+
+  console.log(state ,"state_ page")
 
   const deleteFunction = (id) => {
     Swal.fire({
@@ -50,7 +51,7 @@ function Owner() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteOwner(id));
+        dispatch(deleteLoanBeneficiary(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
@@ -62,11 +63,10 @@ function Owner() {
   //
   return (
     <div className="max-w-screen">
-      {/* TODO: need to add owner model and app_label */}
       <TableHeader
-        title={"Owner"}
-        redirectLink={"/owner/createowner"}
-        url_endpoint={"/export-csv/?model=Empployee&app_label=users"}
+        title={"Beneficiary"}
+        redirectLink={"/beneficiarylist/loan-beneficiary-crete"}
+        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
       <GlobalTable
         t_head={t_head}
@@ -79,6 +79,6 @@ function Owner() {
       />
     </div>
   );
-}
+};
 
-export default Owner;
+export default LoanBeneficiaryList;

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteEmployee, updateEmployee } from "../Actions/employeeAction";
 import {
   createOwner,
   deleteOwner,

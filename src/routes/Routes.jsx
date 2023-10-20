@@ -1,8 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/LayoutMain";
 import Login_Page from "../pages/Login_Page";
-import LoanBeneficiary from "../pages/Dashboard/LoanBeneficiary";
-import LoanBeneficiaryList from "../pages/Dashboard/LoanBeneficiaryList";
 import HomePage from "../pages/Dashboard/HomePage";
 import PrivetRoute from "./PrivetRoute";
 import CreatePhone from "../pages/Dashboard/PhonePage/CreatePhone";
@@ -15,6 +13,8 @@ import EditEmployee from "../pages/Dashboard/Employee/EditEmployee";
 import Owner from "../pages/Dashboard/Owner/Owner";
 import CreateOwner from "../pages/Dashboard/Owner/CreateOwner";
 import EditOwner from "../pages/Dashboard/Owner/EditOwner";
+import CreateLoanBeneficiary from "../pages/Dashboard/LoanBeneficiary/CreateLoanBeneficiary";
+import LoanBeneficiaryList from "../pages/Dashboard/LoanBeneficiary/LoanBeneficiaryList";
 
 export const router = createBrowserRouter([
   {
@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
         path: "/beneficiarylist/loan-beneficiary-crete",
         element: (
           <PrivetRoute>
-            <LoanBeneficiary />
+            <CreateLoanBeneficiary />
           </PrivetRoute>
         ),
       },
@@ -106,7 +106,7 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
-      // owner
+      // Owner
       {
         path: "/owner",
         element: (

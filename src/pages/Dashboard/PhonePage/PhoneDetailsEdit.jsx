@@ -11,7 +11,7 @@ function PhoneDetailsEdit() {
         <div className="flex space-x-4">
           <Link
             to={"/phone"}
-            className="font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
+            className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
           </Link>

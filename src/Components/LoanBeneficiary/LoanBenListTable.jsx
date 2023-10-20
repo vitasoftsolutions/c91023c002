@@ -4,7 +4,6 @@ import { fetchLoanBeneList } from "../../redux/slices/loanBenListSlice";
 import { FaEye, FaFilePen, FaTrashCan } from "react-icons/fa6";
 import LoanDetailModal from "./LoanDetailModal";
 import { formatDate } from "../../hooks/formatDate";
-import EditLoanSidebar from "./EditLoanSidebar";
 import { deleteLoanBeneficiary } from "../../redux/slices/deleteLoanBeneficiarySlice";
 import Swal from "sweetalert2";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
@@ -18,8 +17,8 @@ const LoanBenListTable = () => {
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [editLoan, setEditLoan] = useState(null);
 
-  const current_page = state.loanBeneList.currentPage;
-  const total_page = state.loanBeneList.totalPages;
+  const current_page = state.loanBeneficiary.currentPage;
+  const total_page = state.loanBeneficiary.totalPages;
 
   let page_number = [];
   for (let i = current_page - 1; i <= current_page + 1; i++) {
@@ -37,7 +36,7 @@ const LoanBenListTable = () => {
     dispatch(fetchLoanBeneList(newPage));
   };
 
-  if (state.loanBeneList.isLoading) {
+  if (state.loanBeneficiary.isLoading) {
     return (
       <div className="min-h-[80vh] flex flex-col justify-center gap-4 items-center">
         <Loader text={"Gating data..."} />
@@ -89,7 +88,7 @@ const LoanBenListTable = () => {
               </tr>
             </thead>
             <tbody>
-              {state?.loanBeneList?.data?.map((loan) => {
+              {state?.loanBeneficiary?.data?.map((loan) => {
                 return (
                   // row
                   <tr key={loan.id}>
@@ -184,7 +183,7 @@ const LoanBenListTable = () => {
               })}
               <button
                 onClick={() => handlePageChange(current_page + 1)}
-                disabled={current_page === state.loanBeneList.totalPages || state.loanBeneList.totalPages <= 0}
+                disabled={current_page === state.loanBeneficiary.totalPages || state.loanBeneficiary.totalPages <= 0}
                 className="join-item btn btn-xs"
               >
                 <AiOutlineRight />
@@ -198,10 +197,7 @@ const LoanBenListTable = () => {
             onClose={() => setSelectedLoan(null)}
           />
           {/*  */}
-          <EditLoanSidebar
-            editLoan={editLoan}
-            onClose={() => setEditLoan(null)}
-          />
+       
 
           {/*  */}
         </div>

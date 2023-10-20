@@ -1,16 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import loanBeneListReducer from "./slices/searchLoanSlice";
-import createLoanBeneficiaryReducer from "./slices/createLoanBeneficiarySlice";
-import deleteLoanBeneficiaryReducer from "./slices/deleteLoanBeneficiarySlice";
+// import loanBeneListReducer from "./slices/searchLoanSlice";
+import loanBeneficiary from "./slices/loanBeneficiarySlice";
 import phoneReducers from "./slices/phoneSlice";
 import employeeReducers from "./slices/employeeSlice";
 import ownerReducers from "./slices/ownerBeneficiarySlice";
 
 export const store = configureStore({
   reducer: {
-    loanBeneList: loanBeneListReducer,
-    createLoanBeneficiary: createLoanBeneficiaryReducer,
-    deleteLoanBeneficiary: deleteLoanBeneficiaryReducer,
+    // loanBeneList: loanBeneListReducer,
+    loanBeneficiary: loanBeneficiary,
     phoneReducers: phoneReducers,
     employeeReducers: employeeReducers,
     ownerReducers: ownerReducers,
