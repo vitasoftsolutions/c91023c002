@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createPhone,
   deletePhone,
+  fetchPhone,
   fetchPhoneList,
   searchPhoneByName,
   sortByAZPhone,
   sortByDatePhone,
+  updatePhone,
 } from "../Actions/PhoneAction";
 
 const phoneSlice = createSlice({
@@ -13,19 +15,25 @@ const phoneSlice = createSlice({
   initialState: {
     isLoading: false,
     data: [],
+    sData: [],
     isError: false,
     currentPage: 1,
     totalPages: 1,
-    perPage: 5,
+    perPage: 10,
     totalData: 0,
     massage: "",
     isDelete: false,
+    isUpdate: false,
+    isCreated: false,
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPhoneList.pending, (state) => {
         state.isLoading = true;
+        state.isCreated = false;
         state.massage = "";
+        state.isUpdate = false;
+        state.isError = false;
       })
       .addCase(fetchPhoneList.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -33,10 +41,32 @@ const phoneSlice = createSlice({
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
+        state.isCreated = false;
+        state.isError = false;
       })
       .addCase(fetchPhoneList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+        state.isError = false;
+      })
+      // Single data
+      .addCase(fetchPhone.pending, (state) => {
+        state.isLoading = true;
+        state.isCreated = false;
+        state.massage = "";
+        state.isUpdate = false;
+        state.isError = false;
+      })
+      .addCase(fetchPhone.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sData = action.payload.data;
+        state.isCreated = false;
+        state.isError = false;
+      })
+      .addCase(fetchPhone.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+        state.isError = false;
       })
       // Create
       .addCase(createPhone.pending, (state) => {
@@ -46,10 +76,29 @@ const phoneSlice = createSlice({
       .addCase(createPhone.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
+        state.isError = false;
+        state.isCreated = true;
       })
       .addCase(createPhone.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.massage = action.error.message;
+      })
+      // Update phone
+      .addCase(updatePhone.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.isUpdate = false;
+      })
+      .addCase(updatePhone.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+        state.isUpdate = true;
+      })
+      .addCase(updatePhone.rejected, (state, action) => {
+        state.isLoading = false;
         state.isError = action.error.message;
+        state.isUpdate = false;
       })
       // Delete
       .addCase(deletePhone.pending, (state) => {

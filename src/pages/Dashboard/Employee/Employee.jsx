@@ -21,6 +21,21 @@ function Employee() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.employeeReducers);
   console.log(state);
+  // allDataList
+  const allDataList = state.data;
+  const newData = state?.data?.map((item) => ({
+    id: item.id,
+    first_name: item.first_name + " " + item.last_name,
+    image: item.profile_picture,
+    date: item.joined_date,
+    email: item.email,
+    status: item.status,
+  }));
+  const tableData = {
+    ...state,
+    data: newData,
+  };
+
   //
   const current_page = state.currentPage;
   const total_page = state.totalPages;
@@ -71,12 +86,15 @@ function Employee() {
       />
       <GlobalTable
         t_head={t_head}
+        t_data={tableData}
+        allDataList={allDataList}
         handlePageChange={handlePageChange}
         current_page={current_page}
         page_number={page_number}
-        t_data={state}
         deleteFunction={deleteFunction}
-        editLink={'/employee/editemployee'}
+        editLink={"/employee/editemployee"}
+        erp_modalCol={6}
+        photoSection={true}
       />
     </div>
   );

@@ -44,6 +44,33 @@ export const fetchEmployeeAction = createAsyncThunk(
   }
 );
 
+
+// fetch Single Employee
+export const fetchSingleEmployee = createAsyncThunk("fetchSingleEmployee", async (id) => {
+  console.log("getState()");
+  console.log(id, "getState()");
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/employee/${id}/`, {
+    headers,
+  });
+
+  const data = response.data;
+
+  console.log(data, "data__");
+
+  // Return the data 
+  return { data };
+});
+
 // create the Employee
 export const createEmployee = createAsyncThunk("createEmployee", async (payload) => {
   try {

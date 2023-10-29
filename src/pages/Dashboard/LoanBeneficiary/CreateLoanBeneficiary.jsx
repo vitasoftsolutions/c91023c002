@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { createLoanBen } from "../../../redux/Actions/loanBenAction";
 
-const formData = [
+const formsData = [
   {
     fieldName: "First Name",
     fieldType: "text",
@@ -68,20 +68,12 @@ const formData = [
 function CreateLoanBeneficiary() {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.loanBeneficiary);
-  console.log(loanState);
-
   const navigate = useNavigate();
 
-  //
-  //
-  //
-
   const submitFunction = (data) => {
-    console.log(data, "Loan From create ");
     dispatch(createLoanBen(data));
   };
 
-  // In a useEffect or similar, check the updated state
   useEffect(() => {
     if (loanState.isCreated) {
       toast("Successfully done", {
@@ -98,7 +90,7 @@ function CreateLoanBeneficiary() {
         navigate("/beneficiarylist");
       }, 3000);
     }
-    // Error
+
     if (loanState.isError) {
       toast.error(loanState.data[0], {
         position: "top-center",
@@ -111,7 +103,7 @@ function CreateLoanBeneficiary() {
         theme: "light",
       });
     }
-  }, [loanState, navigate]);
+  }, [loanState.isError, loanState.data, loanState.isCreated, navigate]);
 
   return (
     <>
@@ -128,7 +120,7 @@ function CreateLoanBeneficiary() {
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
         <BeneficiaryForm
-          formData={formData}
+          formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
         />

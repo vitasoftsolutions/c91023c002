@@ -1,18 +1,11 @@
 import { useLocation } from "react-router-dom";
 import { formatDate } from "../../../hooks/formatDate";
 
-const DetailsModal = ({
-  selectedDetails,
-  onClose,
-  erp_modalCol,
-  photoSection,
-  allData,
-}) => {
+const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
+  console.log(allData, "from modal")
   const { pathname } = useLocation();
   const formattedPathname =
-    pathname.replace("/", "").charAt(0).toUpperCase() + pathname.slice(1);
-
-  console.log(allData, "from DetailsModal");
+    pathname.replace("/", "").charAt(0).toUpperCase() + pathname.slice(2);
 
   if (!allData) {
     return null;
@@ -31,55 +24,88 @@ const DetailsModal = ({
         <div className={`grid grid-cols-1 md:grid-cols-${erp_modalCol}`}>
           <div className="md:col-span-3 col-span-1">
             {photoSection && (
-              <>
-                <div className="bg-gray-100 h-[12rem] w-[12rem] rounded-full overflow-hidden items-center flex justify-center mx-auto">
+              <div className="bg-gray-100 h-[12rem] w-[12rem] rounded-full overflow-hidden items-center flex justify-center mx-auto">
+                <img
+                  className="object-cover"
+                  src={allData.profile_picture}
+                  alt={allData.first_name + " " + allData.last_name}
+                />
+              </div>
+            )}
+
+            <h2 className="text-center my-2 font-bold uppercase">
+              {allData?.first_name + " " + allData?.last_name}
+            </h2>
+            {/* Details */}
+            <div className="mt-5 px-5 py-5 bg-gray-100 h-fit">
+              <h3 className="font-bold text-lg pb-2 border-b mb-1">
+                {formattedPathname} Details
+              </h3>
+              <ul>
+                {Object?.keys(allData)?.map(
+                  (key) =>
+                    key !== "id" &&
+                    key !== "nid_front" &&
+                    key !== "nid_back" &&
+                    key !== "profile_picture" &&
+                    key !== "is_deleted" &&
+                    key !== "ben_id" &&
+                    key !== "author_id" &&
+                    key !== "employee_id" &&
+                    key !== "last_login" &&
+                    key !== "appointment" &&
+                    key !== "is_active" &&
+                    key !== "is_admin" &&
+                    key !== "is_staff" &&
+                    key !== "is_verified" &&
+                    key !== "password" &&
+                    key !== "roles" &&
+                    key !== "status" && (
+                      <li key={key}>
+                        <b>
+                          {" "}
+                          {key
+                            .replace(/_/g, " ")
+                            .split(" ")
+                            .map(
+                              (word) =>
+                                word.charAt(0).toUpperCase() + word.slice(1)
+                            )
+                            .join(" ")}{" "}
+                        </b>
+                        :{" "}
+                        {key === "date" || key === "created_at"
+                          ? formatDate(allData[key])
+                          : allData[key]}
+                      </li>
+                    )
+                )}
+              </ul>
+            </div>
+          </div>
+          {photoSection && (
+            // {/* Grid 2 */}
+            <div className="md:col-span-3 col-span-1">
+              {/*  */}
+              <div className="grid grid-cols-1 overflow-hidden gap-3 w-full mt-10">
+                <div className=" h-[12rem] overflow-hidden bg-gray-100 w-10/12 mx-auto">
                   <img
-                    className="object-cover"
-                    src={allData.profile_picture}
-                    alt={allData.first_name + " " + allData.last_name}
+                    className="h-full w-full object-cover"
+                    src={allData?.nid_front}
+                    alt="Nid Front"
                   />
                 </div>
-
-                <h2 className="text-center my-2 font-bold uppercase">
-                  {allData?.first_name + " " + allData?.last_name}
-                </h2>
-                {/* Details */}
-                <div className="mt-5 px-5 py-5 bg-gray-100 h-fit">
-                  <h3 className="font-bold text-lg">
-                    {formattedPathname} Details
-                  </h3>
-                  <ul>
-                    {Object?.keys(selectedDetails)?.map((key) => (
-                      <li key={key}>
-                        <b> {key} </b>: {selectedDetails[key]}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="h-[12rem] overflow-hidden bg-gray-100 w-10/12 mx-auto">
+                  <img
+                    className="h-full w-full object-cover"
+                    src={allData?.nid_back}
+                    alt="Nid Back"
+                  />
                 </div>
-              </>
-            )}
-          </div>
-          {/* Grid 2 */}
-          <div className="md:col-span-3 col-span-1">
-            {/*  */}
-            <div className="grid grid-cols-1 overflow-hidden gap-3 w-full mt-10">
-              <div className=" h-[12rem] overflow-hidden bg-gray-100 w-10/12 mx-auto">
-                <img
-                  className="h-full w-full object-cover"
-                  src={allData?.nid_front}
-                  alt="Nid Front"
-                />
               </div>
-              <div className="h-[12rem] overflow-hidden bg-gray-100 w-10/12 mx-auto">
-                <img
-                  className="h-full w-full object-cover"
-                  src={allData?.nid_back}
-                  alt="Nid Back"
-                />
-              </div>
+              {/*  */}
             </div>
-            {/*  */}
-          </div>
+          )}
         </div>
         {/* End */}
         <div className="modal-action">

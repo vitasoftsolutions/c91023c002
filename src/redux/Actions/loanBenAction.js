@@ -75,6 +75,34 @@ export const fetchLoanBeneList = createAsyncThunk(
     };
   }
 );
+//
+//
+//
+//
+export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
+  console.log("getState()");
+  console.log(id, "getState()");
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/loan-beneficaries/${id}/`, {
+    headers,
+  });
+
+  const data = response.data;
+
+  console.log(data, "data__");
+
+  // Return the data 
+  return { data };
+});
 
 //
 //
@@ -100,6 +128,34 @@ export const deleteLoanBeneficiary = createAsyncThunk(
 
     // Return the data from the response
     return response.status;
+  }
+);
+//
+//
+//
+//
+export const updateLoanBeneficiary = createAsyncThunk(
+  "updateLoanBeneficiary",
+  async (payload) => {
+    console.log(payload, "payload");
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios PUT request with the headers and payload
+    const response = await axios.patch(
+      `${base_url}/loan-beneficaries/${payload.id}/`,
+      payload.data,
+      { headers }
+    );
+
+    // Return the data from the response
+    return response.data;
   }
 );
 //

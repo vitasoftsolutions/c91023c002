@@ -95,13 +95,13 @@ const ImportModal = ({ importModal, onClose }) => {
                   {...register("hiddenFileInput")}
                   value={selectedFile ? selectedFile.name : ""}
                 />
-                <div className="flex gap-2 justify-center my-3">
-                  <button
+                <div className="flex gap-2 justify-center mt-5 mb-3">
+                  {/* <button
                     disabled
                     className="bg-[#5AC192] hover:bg-[#449973] duration-300 py-2 px-3 text-erp_light"
                   >
                     Merge and Upload as one file
-                  </button>
+                  </button> */}
                   <button
                     type="submit"
                     className="bg-[#5AC192] hover:bg-[#449973] duration-300 py-2 px-3 text-erp_light"

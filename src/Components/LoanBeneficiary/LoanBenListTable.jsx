@@ -15,7 +15,6 @@ const LoanBenListTable = () => {
   const state = useSelector((state) => state);
 
   const [selectedLoan, setSelectedLoan] = useState(null);
-  const [editLoan, setEditLoan] = useState(null);
 
   const current_page = state.loanBeneficiary.currentPage;
   const total_page = state.loanBeneficiary.totalPages;
@@ -30,7 +29,11 @@ const LoanBenListTable = () => {
 
   useEffect(() => {
     dispatch(fetchLoanBeneList(current_page));
-  }, [dispatch, current_page, state.deleteLoanBeneficiary.isDelete]);
+  }, [
+    dispatch,
+    current_page,
+    state.deleteLoanBeneficiary.isDelete,
+  ]);
 
   const handlePageChange = (newPage) => {
     dispatch(fetchLoanBeneList(newPage));
@@ -183,7 +186,10 @@ const LoanBenListTable = () => {
               })}
               <button
                 onClick={() => handlePageChange(current_page + 1)}
-                disabled={current_page === state.loanBeneficiary.totalPages || state.loanBeneficiary.totalPages <= 0}
+                disabled={
+                  current_page === state.loanBeneficiary.totalPages ||
+                  state.loanBeneficiary.totalPages <= 0
+                }
                 className="join-item btn btn-xs"
               >
                 <AiOutlineRight />
@@ -197,7 +203,6 @@ const LoanBenListTable = () => {
             onClose={() => setSelectedLoan(null)}
           />
           {/*  */}
-       
 
           {/*  */}
         </div>

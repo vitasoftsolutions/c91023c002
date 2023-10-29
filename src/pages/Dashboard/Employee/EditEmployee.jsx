@@ -4,14 +4,22 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
-import { updateEmployee } from "../../../redux/Actions/employeeAction";
+import {
+  fetchSingleEmployee,
+  updateEmployee,
+} from "../../../redux/Actions/employeeAction";
 import { ToastContainer, toast } from "react-toastify";
 
 function EditEmployee() {
   const dispatch = useDispatch();
-  let { state } = useLocation();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.employeeReducers);
+  const location = useLocation();
+  const state = reduxState.sData;
+
+  useEffect(() => {
+    dispatch(fetchSingleEmployee(location.state));
+  }, [location.state, dispatch]);
 
   const formData = [
     {
@@ -65,7 +73,7 @@ function EditEmployee() {
         id: state.id,
         ...data,
       };
-      dispatch(updateEmployee(updatedData));      
+      dispatch(updateEmployee(updatedData));
     }
   };
 
@@ -87,7 +95,21 @@ function EditEmployee() {
         navigate("/employee");
       }, 3000);
     }
-  }, [reduxState.isUpdate, navigate]);
+
+    if (reduxState.isError) {
+      // Perform actions after the update is successful
+      toast.error(reduxState.massage, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [reduxState.isUpdate, reduxState.isError, reduxState.massage, navigate]);
 
   console.log(reduxState.isUpdate, "reduxState.isUpdate");
 

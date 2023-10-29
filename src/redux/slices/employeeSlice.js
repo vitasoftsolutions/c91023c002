@@ -3,6 +3,7 @@ import {
   createEmployee,
   deleteEmployee,
   fetchEmployeeAction,
+  fetchSingleEmployee,
   updateEmployee,
 } from "../Actions/employeeAction";
 import {
@@ -16,6 +17,7 @@ const employeeSlice = createSlice({
   initialState: {
     isLoading: false,
     data: [],
+    sData: [],
     isError: false,
     currentPage: 1,
     totalPages: 1,
@@ -40,6 +42,21 @@ const employeeSlice = createSlice({
         state.isUpdate = false;
       })
       .addCase(fetchEmployeeAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // fetch Single Employee
+      .addCase(fetchSingleEmployee.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+      })
+      .addCase(fetchSingleEmployee.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sData = action.payload.data;
+        state.isCreated = false;
+        state.isUpdate = false;
+      })
+      .addCase(fetchSingleEmployee.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })

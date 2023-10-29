@@ -14,10 +14,10 @@ const GlobalTable = ({
   t_data,
   deleteFunction,
   editLink,
+  allDataList,
+  erp_modalCol,
+  photoSection
 }) => {
-  //   console.log(t_data.data[0], "from emp table page");
-
-  const [selectedDetails, setSelectedDetails] = useState({});
   const [allData, setAllData] = useState(null);
 
   if (t_data?.isLoading) {
@@ -32,8 +32,11 @@ const GlobalTable = ({
     deleteFunction(id);
   };
 
-  console.log(t_data, "t_data");
-  
+  // Modal data
+  const getModalData = (id) => {
+    const foundObject = allDataList.find((item) => item.id === id);
+    setAllData(foundObject);
+  };
 
   return (
     <div className="container mx-auto border-2 bg-white mt-5 border-gray-50 overflow-hidden shadow-md shadow-blue-200">
@@ -73,6 +76,7 @@ const GlobalTable = ({
           )}
           <tbody className="relative">
             {t_data?.data?.map((t_dt) => {
+              console.log(t_data, "t_data");
               return (
                 // row
                 <tr key={t_dt.id} className="w-full border-b-[1px]">
@@ -84,25 +88,31 @@ const GlobalTable = ({
                       />
                     </label>
                   </th>
-                  <td className="text-[14px]">
-                    {t_dt.first_name + " " + t_dt.last_name}
-                  </td>
-                  <td className="">
-                    <span className="flex items-center space-x-3">
-                      <span className="avatar">
-                        <span className="mask mask-circle w-10 h-10">
-                          <img
-                            src={t_dt.profile_picture}
-                            alt={t_dt.first_name + " " + t_dt.last_name}
-                          />
-                        </span>
-                      </span>
-                    </span>
-                  </td>
-                  <td className="text-[14px]">
-                    {formatDate(t_dt.joined_date || t_dt.created_at)}
-                  </td>
-                  <td className="text-[14px]">{t_dt.email}</td>
+                  {Object.keys(t_dt).map(
+                    (key, index) =>
+                      key !== "id" &&
+                      key !== "status" && (
+                        <td key={index} className="text-[14px]">
+                          {key === "date" && t_dt[key] ? (
+                            formatDate(t_dt[key])
+                          ) : key === "image" ? (
+                            <span className="flex items-center space-x-3">
+                              <span className="avatar">
+                                <span className="mask mask-circle w-10 h-10">
+                                  <img
+                                    src={t_dt[key]}
+                                    alt={t_dt.first_name + " " + t_dt.last_name}
+                                  />
+                                </span>
+                              </span>
+                            </span>
+                          ) : (
+                            // Handle other data types as needed
+                            t_dt[key]
+                          )}
+                        </td>
+                      )
+                  )}
                   <td className="">
                     <span
                       className={`${
@@ -119,18 +129,7 @@ const GlobalTable = ({
                       <span className="text-erp_info">
                         <button
                           onClick={() => {
-                            setSelectedDetails({
-                              "First name": t_dt?.first_name,
-                              "Last name": t_dt?.last_name,
-                              Email: t_dt?.email,
-                              "Joined date": formatDate(
-                                t_dt?.joined_date || t_dt?.created_at
-                              ),
-                              "NID number": t_dt?.nid_number,
-                              "Permanent address": t_dt?.permanent_address,
-                              "Present address": t_dt?.present_address,
-                            });
-                            setAllData(t_dt);
+                            getModalData(t_dt.id);
                           }}
                         >
                           <FaEye />
@@ -139,7 +138,7 @@ const GlobalTable = ({
                       <span className="text-erp_success">
                         <Link
                           to={editLink}
-                          state={t_dt}
+                          state={t_dt.id}
                           className="cursor-pointer"
                         >
                           <FaFilePen />
@@ -201,10 +200,9 @@ const GlobalTable = ({
         {/*  */}
         <DetailsModal
           allData={allData}
-          selectedDetails={selectedDetails}
           onClose={() => setAllData(null)}
-          erp_modalCol={6}
-          photoSection={true}
+          erp_modalCol={erp_modalCol}
+          photoSection={photoSection}
         />
 
         {/*  */}

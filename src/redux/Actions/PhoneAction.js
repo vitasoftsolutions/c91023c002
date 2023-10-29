@@ -42,6 +42,30 @@ export const fetchPhoneList = createAsyncThunk(
   }
 );
 
+export const fetchPhone = createAsyncThunk("fetchLoanBene", async (id) => {
+  console.log("from sPhone");
+  console.log(id, "getState()");
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/phone/${id}/`, {
+    headers,
+  });
+
+  const data = response.data;
+
+  console.log(data, "data__");
+
+  // Return the data 
+  return { data };
+});
 // delete phone action
 export const deletePhone = createAsyncThunk("deletePhone", async (payload) => {
   // Define the headers
@@ -80,7 +104,9 @@ export const createPhone = createAsyncThunk("createPhone", async (payload) => {
 });
 
 // update the phone
-export const updatePhone = createAsyncThunk("createPhone", async (payload) => {
+export const updatePhone = createAsyncThunk("updatePhone", async (payload) => {
+
+  console.log("payload", payload)
   try {
     const token = sessionStorage.getItem("jwt_token");
     const headers = {
@@ -90,7 +116,7 @@ export const updatePhone = createAsyncThunk("createPhone", async (payload) => {
 
     const response = await axios.patch(
       `${base_url}/phone/${payload.id}/`,
-      payload,
+      payload.data,
       {
         headers,
       }

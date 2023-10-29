@@ -45,8 +45,20 @@ const formData = [
     isRequired: true,
   },
   {
+    fieldName: "Profile Picture",
+    fieldType: "file",
+    fieldPlaceholder: "Profile picture here",
+    isRequired: true,
+  },
+  {
     fieldName: "Present Address",
-    fieldType: "number",
+    fieldType: "text",
+    fieldPlaceholder: "Your address here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Permanent Address",
+    fieldType: "text",
     fieldPlaceholder: "Your address here",
     isRequired: true,
   },
@@ -58,29 +70,44 @@ function CreateOwner() {
   let navigate = useNavigate();
 
   const submitFunction = (data) => {
-    console.log(data, "Owner From create "); 
+    console.log(data, "Owner From create ");
     dispatch(createOwner(data));
   };
 
-    // In a useEffect or similar, check the updated state
-    useEffect(() => {
-      if (reduxState.isCreated) {
-        // Perform actions after the update is successful
-        toast("Successfully done", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setTimeout(() => {
-          navigate("/owner");
-        }, 3000);
-      }
-    }, [reduxState.isCreated, navigate]);
+  // In a useEffect or similar, check the updated state
+  useEffect(() => {
+    if (reduxState.isCreated) {
+      // Perform actions after the update is successful
+      toast("Successfully done", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        navigate("/owner");
+      }, 3000);
+    }
+
+    // Error
+    if (reduxState.isError) {
+      // Perform actions after the update is successful
+      toast.error(reduxState.isError, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [reduxState.isCreated, reduxState.isError, reduxState.massage, navigate]);
 
   return (
     <>

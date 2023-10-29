@@ -1,6 +1,14 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { AiOutlineCloudDownload } from "react-icons/ai";
 
-const MainForm = ({ formData, defaultValues, isState, submitFunction, isReset }) => {
+const MainForm = ({
+  formData,
+  defaultValues,
+  isState,
+  submitFunction,
+  isReset,
+}) => {
   const {
     register,
     handleSubmit,
@@ -10,77 +18,143 @@ const MainForm = ({ formData, defaultValues, isState, submitFunction, isReset })
     defaultValues: defaultValues,
   });
 
+  const [fileName, setFileName] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
+      setSelectedFile(file); // Store the selected file
+    }
+  };
+
   const onSubmit = (data) => {
-    submitFunction(data);
+    const submittedData = {
+      file: selectedFile,
+      ...data,
+    };
+    submitFunction(submittedData);
     isReset && reset();
   };
 
+  // render Fields
   const renderField = (field) => {
-    if (Array.isArray(field?.fieldName)) {
-      return field?.fieldName?.map((subField, subIndex) => (
-        <div className="mb-4" key={subIndex}>
-          <label
-            htmlFor={subField.toLowerCase().replace(/\s+/g, "_")}
-            className="block text-black mb-1 font-bold"
-          >
-            {subField}
-          </label>
-          <input
-            type={field.fieldType}
-            {...register(subField.toLowerCase().replace(/\s+/g, "_"), {
-              required: subField.isRequired,
-            })}
-            placeholder={field.fieldPlaceholder}
-            className="w-full"
-          />
-          {errors[subField.toLowerCase().replace(/\s+/g, "_")] || (
-            <span className="text-red-500">This field is required</span>
-          )}
-        </div>
-      ));
-    } else {
-      return (
-        <div className="mb-4">
-          <label
-            htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-            className="block text-black mb-1 font-bold"
-          >
-            {field.fieldName}
-          </label>
-          {field.fieldType === "number" ? (
-            <input
-              type="text"
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-                required: field.isRequired,
-              })}
-              placeholder={field.fieldPlaceholder}
-              className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
-              defaultValue={isState && field.defaultValue}
-              onInput={(e) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, "");
-              }}
-            />
-          ) : (
-            <input
-              type={field.fieldType}
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-                required: !isState && field.isRequired,
-              })}
-              placeholder={field.fieldPlaceholder}
-              className={`${
-                field.fieldType === "file"
-                  ? "w-full file-input rounded-sm file-input-bordered file-input-primary file-input-sm"
-                  : "w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
-              }`}
-              defaultValue={isState && field.defaultValue}
-            />
-          )}
-          {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-            <span className="text-red-500">This field is required</span>
-          )}
-        </div>
-      );
-    }
+    return (
+      <div
+        className={`mb-4${
+          Array.isArray(field.fieldName) ? " col-span-3 md:col-span-1" : ""
+        }`}
+      >
+        {Array.isArray(field.fieldName) ? (
+          field.fieldName.map((subField, subIndex) => (
+            <div key={subIndex}>
+              <label
+                htmlFor={subField.toLowerCase().replace(/\s+/g, "_")}
+                className="block text-black mb-1 font-bold"
+              >
+                {subField}
+              </label>
+              <input
+                type={field.fieldType}
+                {...register(subField.toLowerCase().replace(/\s+/g, "_"), {
+                  required: subField.isRequired,
+                })}
+                defaultValue={isState && field.defaultValue}
+                placeholder={field.fieldPlaceholder}
+                className="w-full"
+              />
+              {errors[subField.toLowerCase().replace(/\s+/g, "_")] && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+          ))
+        ) : (
+          <div>
+            <label
+              htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+              className="block text-black mb-1 font-bold"
+            >
+              {field.fieldName}
+            </label>
+            {field.fieldType === "select" ? (
+              <select
+                name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+                {...register(
+                  field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+                  {
+                    required: field.isRequired,
+                  }
+                )}
+                defaultValue={isState && field.defaultValue}
+                className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+              >
+                <option value="" disabled>
+                  Choose an option
+                </option>
+                {field.options.map((option, index) => (
+                  <option key={index} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            ) : field.fieldType === "number" ? (
+              <input
+                type="text"
+                {...register(
+                  field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+                  {
+                    required: field.isRequired,
+                  }
+                )}
+                placeholder={field.fieldPlaceholder}
+                className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+                defaultValue={isState && field.defaultValue}
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                }}
+              />
+            ) : field.fieldType === "file" ? (
+              <label
+                className="border-2 border-erp_primary border-dashed text-erp_dark text-center w-full rounded-sm py-[5px] px-2 inline-flex gap-1 justify-center items-center cursor-pointer"
+                htmlFor="fileInput" // Add htmlFor attribute to link label and input
+              >
+                <span className="text-xl">
+                  <AiOutlineCloudDownload />
+                </span>
+                <p className="font-semibold text-md">
+                  {fileName ? fileName : "Drop files here or click to upload."}
+                </p>
+                {/* Use standard file input element */}
+                <input
+                  {...register("fileInput")}
+                  type="file"
+                  id="fileInput"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+            ) : (
+              <input
+                type={field.fieldType}
+                {...register(
+                  field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+                  {
+                    required: !isState && field.isRequired,
+                  }
+                )}
+                placeholder={field.fieldPlaceholder}
+                className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
+                defaultValue={isState && field.defaultValue}
+              />
+            )}
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
+              <span className="text-red-500">This field is required</span>
+            )}
+          </div>
+        )}
+      </div>
+    );
   };
 
   console.log(isState, "from main form");
