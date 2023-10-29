@@ -2,7 +2,7 @@
 # For work update
 *.sh
 /work_reports
-/temp_report.txt
+temp_report.txt
 
 # Dependency directories
 /node_modules
