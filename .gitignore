@@ -1,3 +1,8 @@
+
+# For work update
+*.sh
+/work_reports
+
 # Dependency directories
 /node_modules
 

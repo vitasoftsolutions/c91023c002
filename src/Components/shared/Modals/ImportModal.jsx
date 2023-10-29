@@ -24,6 +24,7 @@ const ImportModal = ({ importModal, onClose }) => {
   }
 
   
+  
   const onSubmit = () => {
     const submittedData = {
       model_name: pathname === "/beneficiarylist" ? "LoanBeneficaries" : pathname === "/phone" ? "PhoneNumber" : "",
