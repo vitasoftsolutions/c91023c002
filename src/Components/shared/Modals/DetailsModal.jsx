@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { formatDate } from "../../../hooks/formatDate";
 
 const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
-  console.log(allData, "from modal")
+  // console.log(allData, "from modal")
   const { pathname } = useLocation();
   const formattedPathname =
     pathname.replace("/", "").charAt(0).toUpperCase() + pathname.slice(2);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { AiOutlineCloudUpload } from "react-icons/ai";
+import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 
 const BeneficiaryForm = ({
@@ -25,8 +25,33 @@ const BeneficiaryForm = ({
 
   const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});
+  const [dragging, setDragging] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState({});
 
-  // console.log(fileData?.profile_picture?.name)
+  // Handel Drop
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragging(false);
+  };
+
+  const handleDrop = (e, fieldName) => {
+    e.preventDefault();
+    setDragging(false);
+    const file = e.dataTransfer.files[0];
+
+    setSelectedFiles((prevSelectedFiles) => ({
+      ...prevSelectedFiles,
+      [fieldName]: file,
+    }));
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
 
   useEffect(() => {
     // Retrieve file previews and data from local storage on component mount
@@ -39,7 +64,11 @@ const BeneficiaryForm = ({
   }, []);
 
   const onSubmit = (data) => {
+
+    console.log(data, "data")
+    
     const formDataWithFiles = { ...data, ...fileData };
+    console.log(formDataWithFiles, "formDataWithFiles")
     submitFunction(formDataWithFiles);
     // Clear files from local storage after submission
     localStorage.removeItem("filePreviews");
@@ -48,17 +77,16 @@ const BeneficiaryForm = ({
 
   const handleFileChange = (fieldName, e) => {
     const file = e.target.files[0];
-    console.log(file, "File changed");
-    const newFilePreviews = {
-      ...filePreviews,
-      [fieldName]: URL.createObjectURL(file),
-    };
+
     const newFileData = { ...fileData, [fieldName]: file };
 
-    localStorage.setItem("filePreviews", JSON.stringify(newFilePreviews));
-    localStorage.setItem("fileData", JSON.stringify(newFileData));
+    setSelectedFiles((prevSelectedFiles) => ({
+      ...prevSelectedFiles,
+      [fieldName]: file,
+    }));
 
-    setFilePreviews(newFilePreviews);
+    console.log(newFileData)
+
     setFileData(newFileData);
   };
 
@@ -68,9 +96,11 @@ const BeneficiaryForm = ({
 
     const newFileData = { ...fileData };
     delete newFileData[fieldName];
-
-    localStorage.setItem("filePreviews", JSON.stringify(newFilePreviews));
-    localStorage.setItem("fileData", JSON.stringify(newFileData));
+    setSelectedFiles((prevSelectedFiles) => {
+      const updatedSelectedFiles = { ...prevSelectedFiles };
+      delete updatedSelectedFiles[fieldName];
+      return updatedSelectedFiles;
+    });
 
     setFilePreviews(newFilePreviews);
     setFileData(newFileData);
@@ -82,111 +112,56 @@ const BeneficiaryForm = ({
         htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
         className="block text-black mb-1 font-bold"
       >
-        {field.fieldName}
+        {field.fieldName.toLowerCase().replace(/\s+/g, "_")}
       </label>
       {field.fieldType === "file" ? (
         <div
-          onDragOver={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-          onDragEnter={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-          onDragLeave={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-          onDrop={(e) => {
-            console.log(e.target, "Inside");
-            e.preventDefault();
-            e.stopPropagation();
-            handleFileChange(
-              field.fieldName.toLowerCase().replace(/\s+/g, "_"),
-              e
-            );
-
-            const droppedFiles = e.dataTransfer.files;
-
-            if (droppedFiles && droppedFiles.length > 0) {
-              const file = droppedFiles[0];
-              const reader = new FileReader();
-
-              reader.onload = (event) => {
-                const filePreview = event.target.result;
-
-                // Display the dropped file preview
-                setFilePreviews({
-                  ...filePreviews,
-                  [field.fieldName.toLowerCase().replace(/\s+/g, "_")]:
-                    filePreview,
-                });
-
-                // Store the file preview in local storage
-                const newFilePreviews = {
-                  ...filePreviews,
-                  [field.fieldName.toLowerCase().replace(/\s+/g, "_")]:
-                    filePreview,
-                };
-                localStorage.setItem(
-                  "filePreviews",
-                  JSON.stringify(newFilePreviews)
-                );
-              };
-
-              reader.readAsDataURL(file);
-            }
-          }}
+          className={`relative border-2 border-dashed border-gray-300 p-4 ${
+            dragging ? "bg-gray-100" : ""
+          }`}
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={(e) => handleDrop(e, field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
         >
-          <input
-            type="file"
-            onChange={(e) =>
-              handleFileChange(
-                field.fieldName.toLowerCase().replace(/\s+/g, "_"),
-                e
-              )
-            }
-            className="hidden"
-            id={`fileInput_${index}`}
-            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-          />
-          {filePreviews[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-            <div className="relative bg-red-500 h-36 p-2">
-              <img
-                src={
-                  filePreviews[
-                    field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                  ]
-                }
-                alt="File Preview"
-                className="w-16 h-16 object-contain"
-              />
+          {selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")] ? (
+            <div>
+              <p>Selected File: {selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")].name}</p>
+              <div className="w-full h-[150px] rounded-md overflow-hidden">
+                <img
+                  src={URL.createObjectURL(selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")])}
+                  alt="Selected File"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <button
-                className="absolute top-0 right-0 w-5 h-5 flex items-center justify-center p-1 bg-red-500 text-white rounded-full"
-                onClick={() =>
-                  removeFile(field.fieldName.toLowerCase().replace(/\s+/g, "_"))
-                }
+                className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
+                type="button"
+                onClick={() => removeFile(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
               >
-                X
+                Remove
               </button>
             </div>
+          ) : (
+            <div>
+              <p className="flex justify-start items-center gap-2">
+              <AiOutlineDrag /> Drag & Drop a File Here or
+              </p>
+              <label className="text-blue-500 cursor-pointer">
+                <span className="bg-erp_primary text-white btn btn-sm hover:bg-blue-600 p-2 rounded-md  justify-start items-center gap-2">
+                <AiOutlineCloudUpload /> Browse
+                </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+                  id={`fileInput_${index}`}
+                  onChange={(e) => handleFileChange(field.fieldName.toLowerCase().replace(/\s+/g, "_"), e)}
+                  className="hidden"
+                />
+              </label>
+            </div>
           )}
-          <label
-            htmlFor={`fileInput_${index}`}
-            className="border-2 border-erp_primary border-dashed text-erp_dark text-center w-full rounded-sm py-[5px] px-2 inline-flex gap-1 justify-center items-center cursor-pointer"
-          >
-            <span className="text-xl">
-              <AiOutlineCloudUpload />
-            </span>
-            <p className="font-semibold text-md">
-              {fileData?.profile_picture
-                ? fileData.profile_picture.name
-                : fileData?.nid_front
-                ? fileData.nid_front.name
-                : "Drop files here or click to upload."}
-            </p>
-          </label>
         </div>
       ) : (
         <input

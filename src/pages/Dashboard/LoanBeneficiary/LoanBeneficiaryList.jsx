@@ -36,7 +36,7 @@ const LoanBeneficiaryList = () => {
   };
   //
 
-  console.log(tableData, "tableData");
+  // console.log(tableData, "tableData");
 
   const current_page = state.currentPage;
   const total_page = state.totalPages;
@@ -57,7 +57,7 @@ const LoanBeneficiaryList = () => {
     dispatch(fetchLoanBeneList(newPage));
   };
 
-  console.log(state, "state_ page");
+  // console.log(state, "state_ page");
 
   const deleteFunction = (id) => {
     Swal.fire({
