@@ -65,7 +65,7 @@ const BeneficiaryForm = ({
 
   const onSubmit = (data) => {
 
-    console.log(data, "data")
+    // console.log(data, "data")
     
     const formDataWithFiles = { ...data, ...fileData };
     console.log(formDataWithFiles, "formDataWithFiles")
@@ -85,7 +85,7 @@ const BeneficiaryForm = ({
       [fieldName]: file,
     }));
 
-    console.log(newFileData)
+    // console.log(newFileData)
 
     setFileData(newFileData);
   };
@@ -112,7 +112,7 @@ const BeneficiaryForm = ({
         htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
         className="block text-black mb-1 font-bold"
       >
-        {field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+        {field.fieldName}
       </label>
       {field.fieldType === "file" ? (
         <div

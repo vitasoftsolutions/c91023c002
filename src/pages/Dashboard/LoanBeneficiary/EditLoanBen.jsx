@@ -23,7 +23,7 @@ function EditLoanBen() {
     dispatch(fetchLoanBene(location.state));
   }, [location.state, dispatch]);
 
-  const formData = [
+  const formsData = [
     {
       fieldName: "First Name",
       fieldType: "text",
@@ -81,9 +81,9 @@ function EditLoanBen() {
   ];
 
   const submitFunction = (data) => {
-    const profile_picture = data.profile_picture ? data.profile_picture[0] : "";
-    const nid_front = data.nid_front ? data.nid_front[0] : "";
-    const nid_back = data.nid_back ? data.nid_back[0] : "";
+    const profile_picture = data.profile_picture ? data.profile_picture : "";
+    const nid_front = data.nid_front ? data.nid_front : "";
+    const nid_back = data.nid_back ? data.nid_back : "";
 
     if (state) {
       const updateData = {
@@ -174,8 +174,9 @@ function EditLoanBen() {
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
         <BeneficiaryForm
-          formData={formData}
+          formsData={formsData}
           submitFunction={submitFunction}
+          isReset={true}
           isState={state}
         />
       </div>
