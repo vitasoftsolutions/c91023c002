@@ -18,7 +18,7 @@ const BeneficiaryForm = ({
     defaultValues: defaultValues,
   });
 
-  console.log(formsData, "is formsData");
+  // console.log(formsData, "is formsData");
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -55,25 +55,14 @@ const BeneficiaryForm = ({
     e.preventDefault();
   };
 
-  useEffect(() => {
-    // Retrieve file previews and data from local storage on component mount
-    const storedFilePreviews =
-      JSON.parse(localStorage.getItem("filePreviews")) || {};
-    setFilePreviews(storedFilePreviews);
-
-    const storedFileData = JSON.parse(localStorage.getItem("fileData")) || {};
-    setFileData(storedFileData);
-  }, []);
-
   const onSubmit = (data) => {
-    // console.log(data, "data")
+    console.log(data, "data");
 
     const formDataWithFiles = { ...data, ...fileData };
-    // console.log(formDataWithFiles, "formDataWithFiles")
+
+    console.log(formDataWithFiles, "formDataWithFiles");
+
     submitFunction(formDataWithFiles);
-    // Clear files from local storage after submission
-    localStorage.removeItem("filePreviews");
-    localStorage.removeItem("fileData");
   };
 
   const handleFileChange = (fieldName, e) => {
@@ -92,23 +81,24 @@ const BeneficiaryForm = ({
   };
 
   const removeFile = (fieldName) => {
+    // Create a copy of the existing state objects
     const newFilePreviews = { ...filePreviews };
-    delete newFilePreviews[fieldName];
-
     const newFileData = { ...fileData };
-    delete newFileData[fieldName];
-    setSelectedFiles((prevSelectedFiles) => {
-      const updatedSelectedFiles = { ...prevSelectedFiles };
-      delete updatedSelectedFiles[fieldName];
-      return updatedSelectedFiles;
-    });
+    const updatedSelectedFiles = { ...selectedFiles };
 
+    // Remove the field from the copied state objects
+    delete newFilePreviews[fieldName];
+    delete newFileData[fieldName];
+    delete updatedSelectedFiles[fieldName];
+
+    // Update the state with the modified objects
     setFilePreviews(newFilePreviews);
     setFileData(newFileData);
+    setSelectedFiles(updatedSelectedFiles);
   };
 
   const renderField = (field, index) => {
-    console.log(field.defaultValue);
+    // console.log(field.defaultValue);
     return (
       <div className="mb-4" key={index}>
         <label
@@ -135,19 +125,19 @@ const BeneficiaryForm = ({
               <div>
                 <p>
                   Selected File:
-                  {selectedFiles[
-                    field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                  ].name || field.fieldName}
+                  {
+                    selectedFiles[
+                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                    ].name
+                  }
                 </p>
                 <div className="w-full h-[150px] rounded-md overflow-hidden">
                   <img
-                    src={
-                      URL.createObjectURL(
-                        selectedFiles[
-                          field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                        ]
-                      ) || field.fieldName
-                    }
+                    src={URL.createObjectURL(
+                      selectedFiles[
+                        field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                      ]
+                    )}
                     alt="Selected File"
                     className="w-full h-full object-cover"
                   />
@@ -164,9 +154,9 @@ const BeneficiaryForm = ({
                   Remove
                 </button>
               </div>
-            ) : isState ? (
+            ) : field.defaultValue ? (
               <div>
-                <p>Selected File:{field.fieldName}</p>
+                <p>Selected File: {field.fieldName}</p>
                 <div className="w-full h-[150px] rounded-md overflow-hidden">
                   <img
                     src={field.defaultValue}
@@ -178,44 +168,14 @@ const BeneficiaryForm = ({
                   className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
                   type="button"
                   onClick={() => {
+                    // Clear the image by updating the state
+                    const newFileData = { ...fileData };
                     field.defaultValue = "";
-                    removeFile(
-                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                    );
+                    setFileData(newFileData);
                   }}
                 >
                   Remove
                 </button>
-
-                {field.defaultValue === "" ? (
-                  <div>
-                    <p className="flex justify-start items-center gap-2">
-                      <AiOutlineDrag /> Drag & Drop a File Here or
-                    </p>
-                    <label className="text-blue-500 cursor-pointer">
-                      <span className="bg-erp_primary text-white btn btn-sm hover:bg-blue-600 p-2 rounded-md  justify-start items-center gap-2">
-                        <AiOutlineCloudUpload /> Browse
-                      </span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        name={field.fieldName
-                          .toLowerCase()
-                          .replace(/\s+/g, "_")}
-                        id={`fileInput_${index}`}
-                        onChange={(e) =>
-                          handleFileChange(
-                            field.fieldName.toLowerCase().replace(/\s+/g, "_"),
-                            e
-                          )
-                        }
-                        className="hidden"
-                      />
-                    </label>
-                  </div>
-                ) : (
-                  ""
-                )}
               </div>
             ) : (
               <div>
