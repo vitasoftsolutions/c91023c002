@@ -33,6 +33,7 @@ const loanBeneficiarySlice = createSlice({
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
+        state.sData = [];
       })
       .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
         state.isLoading = false;
