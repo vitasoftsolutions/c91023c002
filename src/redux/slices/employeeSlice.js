@@ -16,6 +16,7 @@ const employeeSlice = createSlice({
   name: "employeeSlice",
   initialState: {
     isLoading: false,
+    isCreated: false,
     data: [],
     sData: [],
     isError: false,
@@ -32,6 +33,7 @@ const employeeSlice = createSlice({
       .addCase(fetchEmployeeAction.pending, (state) => {
         state.isLoading = true;
         state.massage = "";
+        state.isCreated = false;
       })
       .addCase(fetchEmployeeAction.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -40,6 +42,7 @@ const employeeSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
         state.isUpdate = false;
+        state.isCreated = false;
       })
       .addCase(fetchEmployeeAction.rejected, (state, action) => {
         state.isLoading = false;
@@ -48,11 +51,13 @@ const employeeSlice = createSlice({
       // fetch Single Employee
       .addCase(fetchSingleEmployee.pending, (state) => {
         state.isLoading = true;
+        state.isCreated = false;
         state.isUpdate = false;
       })
       .addCase(fetchSingleEmployee.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
+        state.isCreated = false;
         state.isCreated = false;
         state.isUpdate = false;
       })
@@ -64,14 +69,17 @@ const employeeSlice = createSlice({
       .addCase(createEmployee.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
+        state.isCreated = false;
       })
       .addCase(createEmployee.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
+        state.isCreated = true;
       })
       .addCase(createEmployee.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+        state.isCreated = false;
       })
       // Delete Employee
       .addCase(deleteEmployee.pending, (state) => {

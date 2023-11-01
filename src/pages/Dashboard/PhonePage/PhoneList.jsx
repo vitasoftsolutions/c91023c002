@@ -37,6 +37,7 @@ function PhoneList() {
     ...state,
     data: newData,
   };
+  console.log(tableData)
   //
   const current_page = state.currentPage;
   const total_page = state.totalPages;

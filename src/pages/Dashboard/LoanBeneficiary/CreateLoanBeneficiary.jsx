@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-// import { createLoanBeneficiary } from "../../../redux/Actions/ownerBenAction";
 import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { createLoanBen } from "../../../redux/Actions/loanBenAction";
 

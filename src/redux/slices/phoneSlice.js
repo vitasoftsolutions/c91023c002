@@ -29,6 +29,7 @@ const phoneSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPhoneList.pending, (state) => {
+        state.sData = [];
         state.isLoading = true;
         state.isCreated = false;
         state.massage = "";
@@ -37,6 +38,7 @@ const phoneSlice = createSlice({
       })
       .addCase(fetchPhoneList.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.sData = [];
         state.data = action.payload.data;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
@@ -52,6 +54,7 @@ const phoneSlice = createSlice({
       // Single data
       .addCase(fetchPhone.pending, (state) => {
         state.isLoading = true;
+        state.sData = [];
         state.isCreated = false;
         state.massage = "";
         state.isUpdate = false;

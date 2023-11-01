@@ -18,6 +18,7 @@ const GlobalTable = ({
   erp_modalCol,
   photoSection
 }) => {
+  
   const [allData, setAllData] = useState(null);
 
   if (t_data?.isLoading) {

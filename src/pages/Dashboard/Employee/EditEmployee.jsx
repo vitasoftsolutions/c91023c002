@@ -9,6 +9,7 @@ import {
   updateEmployee,
 } from "../../../redux/Actions/employeeAction";
 import { ToastContainer, toast } from "react-toastify";
+import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 
 function EditEmployee() {
   const dispatch = useDispatch();
@@ -17,11 +18,13 @@ function EditEmployee() {
   const location = useLocation();
   const state = reduxState.sData;
 
+  console.log(state, "sattate")
+
   useEffect(() => {
     dispatch(fetchSingleEmployee(location.state));
   }, [location.state, dispatch]);
 
-  const formData = [
+  const formsData = [
     {
       fieldName: "First Name",
       fieldType: "text",
@@ -37,13 +40,6 @@ function EditEmployee() {
       defaultValue: state.last_name,
     },
     {
-      fieldName: "Username",
-      fieldType: "text",
-      fieldPlaceholder: "Type your username",
-      isRequired: true,
-      defaultValue: state.username,
-    },
-    {
       fieldName: "Email",
       fieldType: "email",
       fieldPlaceholder: "example@gmail.com",
@@ -51,18 +47,59 @@ function EditEmployee() {
       defaultValue: state.email,
     },
     {
-      fieldName: "NID Number",
+      fieldName: "Password",
+      fieldType: "password",
+      fieldPlaceholder: "Type your password here",
+      isRequired: true,
+    },
+    {
+      fieldName: "Username",
+      fieldType: "text",
+      fieldPlaceholder: "Type username here",
+      isRequired: true,
+      defaultValue: state.username,
+    },
+    {
+      fieldName: "Nid Number",
       fieldType: "number",
-      fieldPlaceholder: "Your NID number here",
+      fieldPlaceholder: "Nid Number",
       isRequired: true,
       defaultValue: state.nid_number,
     },
     {
+      fieldName: "Profile Picture",
+      fieldType: "file",
+      fieldPlaceholder: "Upload Image",
+      isRequired: false,
+      defaultValue: state.profile_picture,
+    },
+    {
+      fieldName: "Nid Front",
+      fieldType: "file",
+      fieldPlaceholder: "Upload Image",
+      isRequired: false,
+      defaultValue: state.nid_front,
+    },
+    {
+      fieldName: "Nid Back",
+      fieldType: "file",
+      fieldPlaceholder: "Upload Image",
+      isRequired: false,
+      defaultValue: state.nid_back,
+    },
+    {
       fieldName: "Present Address",
       fieldType: "text",
-      fieldPlaceholder: "Your address here",
+      fieldPlaceholder: "Present Address (Comma Separated)",
       isRequired: true,
       defaultValue: state.present_address,
+    },
+    {
+      fieldName: "Permanent Address",
+      fieldType: "text",
+      fieldPlaceholder: "Permanent Address (Comma Separated)",
+      isRequired: true,
+      defaultValue: state.permanent_address,
     },
   ];
 
@@ -127,9 +164,10 @@ function EditEmployee() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <MainForm
-          formData={formData}
+        <BeneficiaryForm
+          formsData={formsData}
           submitFunction={submitFunction}
+          isReset={true}
           isState={state}
         />
       </div>

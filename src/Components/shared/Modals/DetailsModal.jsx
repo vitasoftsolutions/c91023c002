@@ -59,6 +59,9 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
                     key !== "is_staff" &&
                     key !== "is_verified" &&
                     key !== "password" &&
+                    key !== "groups" &&
+                    key !== "user_permissions" &&
+                    key !== "is_superuser" &&
                     key !== "roles" &&
                     key !== "status" && (
                       <li key={key}>
@@ -74,7 +77,9 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
                             .join(" ")}{" "}
                         </b>
                         :{" "}
-                        {key === "date" || key === "created_at"
+                        {key === "date" ||
+                        key === "created_at" ||
+                        key === "joined_date"
                           ? formatDate(allData[key])
                           : allData[key]}
                       </li>
