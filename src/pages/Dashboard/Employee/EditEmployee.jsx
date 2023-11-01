@@ -18,7 +18,7 @@ function EditEmployee() {
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state, "sattate")
+  console.log(state, "sattate");
 
   useEffect(() => {
     dispatch(fetchSingleEmployee(location.state));
@@ -132,7 +132,6 @@ function EditEmployee() {
         navigate("/employee");
       }, 3000);
     }
-    
 
     if (reduxState.isError) {
       // Perform actions after the update is successful
