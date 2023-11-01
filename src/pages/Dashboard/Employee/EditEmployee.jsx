@@ -132,6 +132,7 @@ function EditEmployee() {
         navigate("/employee");
       }, 3000);
     }
+    
 
     if (reduxState.isError) {
       // Perform actions after the update is successful
