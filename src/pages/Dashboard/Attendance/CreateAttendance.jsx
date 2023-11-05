@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
+import MainForm from "../../../Components/shared/Forms/MainForm";
 import { createLoanBen } from "../../../redux/Actions/loanBenAction";
 
 const formsData = [
@@ -13,54 +13,6 @@ const formsData = [
     fieldType: "text",
     fieldPlaceholder: "First Name",
     isRequired: true,
-  },
-  {
-    fieldName: "Last Name",
-    fieldType: "text",
-    fieldPlaceholder: "Last Name",
-    isRequired: true,
-  },
-  {
-    fieldName: "Email",
-    fieldType: "email",
-    fieldPlaceholder: "example@gmail.com",
-    isRequired: true,
-  },
-  {
-    fieldName: "Nid Number",
-    fieldType: "number",
-    fieldPlaceholder: "Nid Number",
-    isRequired: true,
-  },
-  {
-    fieldName: "Present Address",
-    fieldType: "text",
-    fieldPlaceholder: "Present Address (Comma Separated)",
-    isRequired: true,
-  },
-  {
-    fieldName: "Permanent Address",
-    fieldType: "text",
-    fieldPlaceholder: "Permanent Address (Comma Separated)",
-    isRequired: true,
-  },
-  {
-    fieldName: "Profile Picture",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
-  },
-  {
-    fieldName: "Nid Front",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
-  },
-  {
-    fieldName: "Nid Back",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
   },
 ];
 
@@ -118,7 +70,7 @@ function CreateAttendance() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <BeneficiaryForm
+      <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
