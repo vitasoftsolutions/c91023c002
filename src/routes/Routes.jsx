@@ -18,6 +18,7 @@ import LoanBeneficiaryList from "../pages/Dashboard/LoanBeneficiary/LoanBenefici
 import CreateAttendance from "../pages/Dashboard/Attendance/CreateAttendance";
 import Attendance from "../pages/Dashboard/Attendance/Attendance";
 import EditAttendance from "../pages/Dashboard/Attendance/EditAttendance";
+import Floors from "../pages/Dashboard/Floors/Floors";
 
 export const router = createBrowserRouter([
   {
@@ -156,6 +157,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditAttendance />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/floors",
+        element: (
+          <PrivetRoute>
+            <Floors />
           </PrivetRoute>
         ),
       },

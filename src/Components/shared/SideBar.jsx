@@ -8,6 +8,7 @@ import {
 import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
 import { MdInstallMobile } from "react-icons/md";
 import { BsCalendar2Check } from "react-icons/bs";
+import { SiFlatpak } from "react-icons/si";
 import { Link } from "react-router-dom";
 
 const Menus = [
@@ -63,6 +64,17 @@ const Menus = [
         title: "Attendance",
         icons: <BsCalendar2Check />,
         to: "/attendance",
+      },
+    ],
+  },
+  {
+    title: "Floors",
+    icons: <SiFlatpak />,
+    subMenus: [
+      {
+        title: "Floors",
+        icons: <SiFlatpak />,
+        to: "/floors",
       },
     ],
   },
