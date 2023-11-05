@@ -1,11 +1,11 @@
 import React from "react";
 
 const floors = [
-  { info: "in the name of pending", status: "pending" },
-  { info: "in the name of sold", status: "sold" },
-  { info: "in the name of pending", status: "pending" },
-  { info: "in the name of sold", status: "sold" },
-  { info: "in the name of under", status: "under" },
+  { info: "pending", status: "pending" },
+  { info: "sold", status: "sold" },
+  { info: "pending", status: "pending" },
+  { info: "sold", status: "sold" },
+  { info: "construction", status: "construction" },
 ];
 
 function Floors() {
@@ -21,7 +21,7 @@ function Floors() {
                   ? "bg-blue-400"
                   : dt.status === "sold"
                   ? "bg-green-600"
-                  : dt.status === "under"
+                  : dt.status === "construction"
                   ? "bg-red-400"
                   : ""
               }
