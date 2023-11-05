@@ -131,6 +131,31 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
+      // attendance
+      {
+        path: "/attendance",
+        element: (
+          <PrivetRoute>
+            <Owner />
+          </PrivetRoute>
+        ),
+      },
+      // {
+      //   path: "/attendance/createattendance",
+      //   element: (
+      //     <PrivetRoute>
+      //       <CreateOwner />
+      //     </PrivetRoute>
+      //   ),
+      // },
+      // {
+      //   path: "/owner/editeattendance",
+      //   element: (
+      //     <PrivetRoute>
+      //       <EditOwner />
+      //     </PrivetRoute>
+      //   ),
+      // },
     ],
   },
 ]);
