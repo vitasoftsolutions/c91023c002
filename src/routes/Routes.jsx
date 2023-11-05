@@ -15,6 +15,9 @@ import CreateOwner from "../pages/Dashboard/Owner/CreateOwner";
 import EditOwner from "../pages/Dashboard/Owner/EditOwner";
 import CreateLoanBeneficiary from "../pages/Dashboard/LoanBeneficiary/CreateLoanBeneficiary";
 import LoanBeneficiaryList from "../pages/Dashboard/LoanBeneficiary/LoanBeneficiaryList";
+import CreateAttendance from "../pages/Dashboard/Attendance/CreateAttendance";
+import Attendance from "../pages/Dashboard/Attendance/Attendance";
+import EditAttendance from "../pages/Dashboard/Attendance/EditAttendance";
 
 export const router = createBrowserRouter([
   {
@@ -136,26 +139,26 @@ export const router = createBrowserRouter([
         path: "/attendance",
         element: (
           <PrivetRoute>
-            <Owner />
+            <Attendance />
           </PrivetRoute>
         ),
       },
-      // {
-      //   path: "/attendance/createattendance",
-      //   element: (
-      //     <PrivetRoute>
-      //       <CreateOwner />
-      //     </PrivetRoute>
-      //   ),
-      // },
-      // {
-      //   path: "/owner/editeattendance",
-      //   element: (
-      //     <PrivetRoute>
-      //       <EditOwner />
-      //     </PrivetRoute>
-      //   ),
-      // },
+      {
+        path: "/attendance/createattendance",
+        element: (
+          <PrivetRoute>
+            <CreateAttendance />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/owner/editeattendance",
+        element: (
+          <PrivetRoute>
+            <EditAttendance />
+          </PrivetRoute>
+        ),
+      },
     ],
   },
 ]);
