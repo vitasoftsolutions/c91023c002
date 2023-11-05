@@ -22,7 +22,7 @@ function PhoneDetailsEdit() {
     dispatch(fetchPhone(location.state));
   }, [location.state, dispatch]);
 
-  const formData = [
+  const formsData = [
     {
       fieldName: "First Name",
       fieldType: "text",
@@ -121,7 +121,7 @@ function PhoneDetailsEdit() {
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
         <MainForm
-          formData={formData}
+          formsData={formsData}
           submitFunction={submitFunction}
           isState={state}
         />

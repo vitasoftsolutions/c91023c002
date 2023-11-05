@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { createPhone } from "../../../redux/Actions/PhoneAction";
 
-const formData = [
+const formsData = [
   {
     fieldName: "First Name",
     fieldType: "text",
@@ -109,7 +109,7 @@ function CreatePhone() {
 
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
         <MainForm
-          formData={formData}
+          formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
         />

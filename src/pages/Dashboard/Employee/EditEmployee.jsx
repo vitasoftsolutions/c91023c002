@@ -148,7 +148,7 @@ function EditEmployee() {
     }
   }, [reduxState.isUpdate, reduxState.isError, reduxState.massage, navigate]);
 
-  console.log(reduxState.isUpdate, "reduxState.isUpdate");
+  // console.log(reduxState.isUpdate, "reduxState.isUpdate");
 
   return (
     <>

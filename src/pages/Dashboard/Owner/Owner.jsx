@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import Swal from "sweetalert2";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
-import { deleteOwner, fetchOwnerAction } from "../../../redux/Actions/ownerBenAction";
-
+import {
+  deleteOwner,
+  fetchOwnerAction,
+} from "../../../redux/Actions/ownerBenAction";
 
 const t_head = [
   { name: "Name" },
@@ -18,7 +20,21 @@ const t_head = [
 function Owner() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.ownerReducers);
-  console.log(state);
+  // allDataList
+  const allDataList = state.data;
+  // Data
+  const newData = state?.data?.map((item) => ({
+    id: item.id,
+    first_name: item.first_name + " " + item.last_name,
+    image: item.profile_picture,
+    date: item.created_at,
+    email: item.email,
+    status: item.status,
+  }));
+  const tableData = {
+    ...state,
+    data: newData,
+  };
   //
   const current_page = state.currentPage;
   const total_page = state.totalPages;
@@ -68,14 +84,18 @@ function Owner() {
         redirectLink={"/owner/createowner"}
         url_endpoint={"/export-csv/?model=Empployee&app_label=users"}
       />
+      
       <GlobalTable
         t_head={t_head}
+        t_data={tableData}
+        allDataList={allDataList}
         handlePageChange={handlePageChange}
         current_page={current_page}
         page_number={page_number}
-        t_data={state}
         deleteFunction={deleteFunction}
         editLink={"/owner/editeowner"}
+        erp_modalCol={6}
+        photoSection={true}
       />
     </div>
   );

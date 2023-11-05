@@ -1,174 +1,236 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { AiOutlineCloudDownload } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
+import { ToastContainer } from "react-toastify";
 
-const MainForm = ({
-  formData,
-  defaultValues,
-  isState,
-  submitFunction,
-  isReset,
-}) => {
+const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    control,
   } = useForm({
     defaultValues: defaultValues,
   });
 
-  const [fileName, setFileName] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [filePreviews, setFilePreviews] = useState({});
+  const [fileData, setFileData] = useState({});
+  const [dragging, setDragging] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState({});
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFileName(file.name);
-      setSelectedFile(file); // Store the selected file
-    }
+  // Handel Drop
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragging(false);
+  };
+
+  const handleDrop = (e, fieldName) => {
+    e.preventDefault();
+    setDragging(false);
+    const file = e.dataTransfer.files[0];
+
+    setSelectedFiles((prevSelectedFiles) => ({
+      ...prevSelectedFiles,
+      [fieldName]: file,
+    }));
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
   };
 
   const onSubmit = (data) => {
-    const submittedData = {
-      file: selectedFile,
-      ...data,
-    };
-    submitFunction(submittedData);
-    isReset && reset();
+    console.log(data, "data");
+
+    const formDataWithFiles = { ...data, ...fileData };
+
+    console.log(formDataWithFiles, "formDataWithFiles");
+
+    submitFunction(formDataWithFiles);
   };
 
-  // render Fields
-  const renderField = (field) => {
+  const handleFileChange = (fieldName, e) => {
+    const file = e.target.files[0];
+
+    const newFileData = { ...fileData, [fieldName]: file };
+
+    setSelectedFiles((prevSelectedFiles) => ({
+      ...prevSelectedFiles,
+      [fieldName]: file,
+    }));
+
+    // console.log(newFileData)
+
+    setFileData(newFileData);
+  };
+
+  const removeFile = (fieldName) => {
+    // Create a copy of the existing state objects
+    const newFilePreviews = { ...filePreviews };
+    const newFileData = { ...fileData };
+    const updatedSelectedFiles = { ...selectedFiles };
+
+    // Remove the field from the copied state objects
+    delete newFilePreviews[fieldName];
+    delete newFileData[fieldName];
+    delete updatedSelectedFiles[fieldName];
+
+    // Update the state with the modified objects
+    setFilePreviews(newFilePreviews);
+    setFileData(newFileData);
+    setSelectedFiles(updatedSelectedFiles);
+  };
+
+  const renderField = (field, index) => {
+    // console.log(field.defaultValue);
     return (
-      <div
-        className={`mb-4${
-          Array.isArray(field.fieldName) ? " col-span-3 md:col-span-1" : ""
-        }`}
-      >
-        {Array.isArray(field.fieldName) ? (
-          field.fieldName.map((subField, subIndex) => (
-            <div key={subIndex}>
-              <label
-                htmlFor={subField.toLowerCase().replace(/\s+/g, "_")}
-                className="block text-black mb-1 font-bold"
-              >
-                {subField}
-              </label>
-              <input
-                type={field.fieldType}
-                {...register(subField.toLowerCase().replace(/\s+/g, "_"), {
-                  required: subField.isRequired,
-                })}
-                defaultValue={isState && field.defaultValue}
-                placeholder={field.fieldPlaceholder}
-                className="w-full"
-              />
-              {errors[subField.toLowerCase().replace(/\s+/g, "_")] && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
-          ))
-        ) : (
-          <div>
-            <label
-              htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-              className="block text-black mb-1 font-bold"
-            >
-              {field.fieldName}
-            </label>
-            {field.fieldType === "select" ? (
-              <select
-                name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-                {...register(
-                  field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+      <div className="mb-4" key={index}>
+        <label
+          htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+          className="block text-black mb-1 font-bold"
+        >
+          {field.fieldName}
+        </label>
+        {field.fieldType === "select" ? (
+          <select
+            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+            {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+              required: field.isRequired,
+            })}
+            defaultValue={isState && field.defaultValue}
+            className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+          >
+            <option value="" disabled>
+              Choose an option
+            </option>
+            {field.options.map((option, index) => (
+              <option key={index} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        ) : field.fieldType === "file" ? (
+          <div
+            className={`relative border-2 border-dashed border-gray-300 p-4 ${
+              dragging ? "bg-gray-100" : ""
+            }`}
+            onDragEnter={handleDragEnter}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={(e) =>
+              handleDrop(e, field.fieldName.toLowerCase().replace(/\s+/g, "_"))
+            }
+          >
+            {selectedFiles[
+              field.fieldName.toLowerCase().replace(/\s+/g, "_")
+            ] ? (
+              <div>
+                <p>
+                  Selected File:
                   {
-                    required: field.isRequired,
+                    selectedFiles[
+                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                    ].name
                   }
-                )}
-                defaultValue={isState && field.defaultValue}
-                className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
-              >
-                <option value="" disabled>
-                  Choose an option
-                </option>
-                {field.options.map((option, index) => (
-                  <option key={index} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            ) : field.fieldType === "number" ? (
-              <input
-                type="text"
-                {...register(
-                  field.fieldName.toLowerCase().replace(/\s+/g, "_"),
-                  {
-                    required: field.isRequired,
-                  }
-                )}
-                placeholder={field.fieldPlaceholder}
-                className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
-                defaultValue={isState && field.defaultValue}
-                onInput={(e) => {
-                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                }}
-              />
-            ) : field.fieldType === "file" ? (
-              <label
-                className="border-2 border-erp_primary border-dashed text-erp_dark text-center w-full rounded-sm py-[5px] px-2 inline-flex gap-1 justify-center items-center cursor-pointer"
-                htmlFor="fileInput" // Add htmlFor attribute to link label and input
-              >
-                <span className="text-xl">
-                  <AiOutlineCloudDownload />
-                </span>
-                <p className="font-semibold text-md">
-                  {fileName ? fileName : "Drop files here or click to upload."}
                 </p>
-                {/* Use standard file input element */}
-                <input
-                  {...register("fileInput")}
-                  type="file"
-                  id="fileInput"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-              </label>
-            ) : (
-              <input
-                type={field.fieldType}
-                {...register(
-                  field.fieldName.toLowerCase().replace(/\s+/g, "_"),
-                  {
-                    required: !isState && field.isRequired,
+                <div className="w-full h-[150px] rounded-md overflow-hidden">
+                  <img
+                    src={URL.createObjectURL(
+                      selectedFiles[
+                        field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                      ]
+                    )}
+                    alt="Selected File"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <button
+                  className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
+                  type="button"
+                  onClick={() =>
+                    removeFile(
+                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                    )
                   }
-                )}
-                placeholder={field.fieldPlaceholder}
-                className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
-                defaultValue={isState && field.defaultValue}
-              />
-            )}
-            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-              <span className="text-red-500">This field is required</span>
+                >
+                  Remove
+                </button>
+              </div>
+            ) : field.defaultValue ? (
+              <div>
+                <p>Selected File: {field.fieldName}</p>
+                <div className="w-full h-[150px] rounded-md overflow-hidden">
+                  <img
+                    src={field.defaultValue}
+                    alt={field.fieldName}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <button
+                  className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
+                  type="button"
+                  onClick={() => {
+                    // Clear the image by updating the state
+                    const newFileData = { ...fileData };
+                    field.defaultValue = "";
+                    setFileData(newFileData);
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p className="flex justify-start items-center gap-2">
+                  <AiOutlineDrag /> Drag & Drop a File Here or
+                </p>
+                <label className="text-blue-500 cursor-pointer">
+                  <span className="bg-erp_primary text-white btn btn-sm hover:bg-blue-600 p-2 rounded-md  justify-start items-center gap-2">
+                    <AiOutlineCloudUpload /> Browse
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+                    id={`fileInput_${index}`}
+                    onChange={(e) =>
+                      handleFileChange(
+                        field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+                        e
+                      )
+                    }
+                    className="hidden"
+                  />
+                </label>
+              </div>
             )}
           </div>
+        ) : (
+          <input
+            type={field.fieldType}
+            {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+              required: !isState && field.isRequired,
+            })}
+            placeholder={field.fieldPlaceholder}
+            className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
+            defaultValue={isState && field.defaultValue}
+          />
         )}
       </div>
     );
   };
 
-  console.log(isState, "from main form");
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full mx-auto p-4 grid grid-cols-3 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200"
       >
-        {formData?.map((field, index) => (
-          <div className={"col-span-3 md:col-span-1"} key={index}>
-            {renderField(field)}
-          </div>
-        ))}
+        {formsData?.map((field, index) => renderField(field, index))}
 
         {/* Status */}
         {isState && (
@@ -197,10 +259,23 @@ const MainForm = ({
           <input
             type="submit"
             value="Submit"
-            className="btn rounded-md bg-erp_primary text-md text-white hover:bg-primary w-full"
+            className="btn bg-erp_primary text-md text-white hover-bg-primary w-full"
           />
         </div>
       </form>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };

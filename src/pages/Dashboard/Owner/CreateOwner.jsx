@@ -7,7 +7,7 @@ import MainForm from "../../../Components/shared/Forms/MainForm";
 import { ToastContainer, toast } from "react-toastify";
 import { createOwner } from "../../../redux/Actions/ownerBenAction";
 
-const formData = [
+const formsData = [
   {
     fieldName: "First Name",
     fieldType: "text",
@@ -90,7 +90,7 @@ function CreateOwner() {
       });
       setTimeout(() => {
         navigate("/owner");
-      }, 3000);
+      }, 2000);
     }
 
     // Error
@@ -124,7 +124,7 @@ function CreateOwner() {
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
         <MainForm
-          formData={formData}
+          formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
         />

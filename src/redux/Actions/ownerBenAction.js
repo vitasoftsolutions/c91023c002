@@ -44,6 +44,30 @@ export const fetchOwnerAction = createAsyncThunk(
   }
 );
 
+// S data
+export const fetchOwner = createAsyncThunk("fetchOwner", async (id) => {
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/owner-beneficaries/${id}/`, {
+    headers,
+  });
+
+  const data = response.data;
+
+  console.log(data, "data__");
+
+  // Return the data 
+  return { data };
+});
+
 // create the Owner
 export const createOwner = createAsyncThunk("createOwner", async (payload) => {
   try {
@@ -62,8 +86,10 @@ export const createOwner = createAsyncThunk("createOwner", async (payload) => {
   }
 });
 
-// update the phone
+// update the Owner
 export const updateOwner = createAsyncThunk("updateOwner", async (payload) => {
+  console.log("payload")
+  console.log(payload, "payload")
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
@@ -73,10 +99,10 @@ export const updateOwner = createAsyncThunk("updateOwner", async (payload) => {
   
       const response = await axios.patch(
         `${base_url}/owner-beneficaries/${payload.id}/`,
-        payload,
+        payload.data,
         {
           headers,
-        }
+        } 
       );
       return response.data;
     } catch (error) {

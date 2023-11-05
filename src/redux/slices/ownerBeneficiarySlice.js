@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createOwner,
   deleteOwner,
+  fetchOwner,
   fetchOwnerAction,
   updateOwner,
 } from "../Actions/ownerBenAction";
@@ -16,6 +17,7 @@ const ownerBeneficiarySlice = createSlice({
   initialState: {
     isLoading: false,
     data: [],
+    sData: [],
     isError: false,
     currentPage: 1,
     totalPages: 1,
@@ -31,6 +33,8 @@ const ownerBeneficiarySlice = createSlice({
       .addCase(fetchOwnerAction.pending, (state) => {
         state.isLoading = true;
         state.massage = "";
+        state.isCreated = false;
+        state.sData = [];
       })
       .addCase(fetchOwnerAction.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -39,8 +43,26 @@ const ownerBeneficiarySlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
         state.isUpdate = false;
+        state.isCreated = false;
       })
       .addCase(fetchOwnerAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // S Data
+      .addCase(fetchOwner.pending, (state) => {
+        state.isLoading = true;
+        state.massage = "";
+        state.isCreated = false;
+        state.sData = [];
+      })
+      .addCase(fetchOwner.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sData = action.payload.data;
+        state.isUpdate = false;
+        state.isCreated = false;
+      })
+      .addCase(fetchOwner.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
