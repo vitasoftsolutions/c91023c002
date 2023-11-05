@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
 import { MdInstallMobile } from "react-icons/md";
+import { BsCalendar2Check } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const Menus = [
@@ -51,6 +52,17 @@ const Menus = [
         title: "Owner",
         icons: <GrUserAdmin />,
         to: "/owner",
+      },
+    ],
+  },
+  {
+    title: "Attendance",
+    icons: <BsCalendar2Check />,
+    subMenus: [
+      {
+        title: "Attendance",
+        icons: <BsCalendar2Check />,
+        to: "/attendance",
       },
     ],
   },
