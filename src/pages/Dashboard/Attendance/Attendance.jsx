@@ -96,7 +96,7 @@ function Attendance() {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        // editLink={"/beneficiarylist/editloan"}
+        editLink={"/attendance/editeattendance"}
         erp_modalCol={6}
         photoSection={true}
       />

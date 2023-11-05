@@ -152,7 +152,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/owner/editeattendance",
+        path: "/attendance/editeattendance",
         element: (
           <PrivetRoute>
             <EditAttendance />
