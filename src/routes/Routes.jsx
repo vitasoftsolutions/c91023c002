@@ -19,6 +19,8 @@ import CreateAttendance from "../pages/Dashboard/Attendance/CreateAttendance";
 import Attendance from "../pages/Dashboard/Attendance/Attendance";
 import EditAttendance from "../pages/Dashboard/Attendance/EditAttendance";
 import Floors from "../pages/Dashboard/Floors/Floors";
+import CreateFloors from "../pages/Dashboard/Floors/CreateFloors";
+import FloorsDetails from "../pages/Dashboard/Floors/FloorsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -165,6 +167,22 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <Floors />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/floors/floors-crete",
+        element: (
+          <PrivetRoute>
+            <CreateFloors />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/floors/:floorId",
+        element: (
+          <PrivetRoute>
+            <FloorsDetails />
           </PrivetRoute>
         ),
       },
