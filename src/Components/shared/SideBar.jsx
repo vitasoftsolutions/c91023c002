@@ -68,13 +68,13 @@ const Menus = [
     ],
   },
   {
-    title: "Floors",
+    title: "Projects",
     icons: <SiFlatpak />,
     subMenus: [
       {
-        title: "Floors",
+        title: "Projects",
         icons: <SiFlatpak />,
-        to: "/floors",
+        to: "/projects",
       },
     ],
   },

@@ -5,11 +5,13 @@ import phoneReducers from "./slices/phoneSlice";
 import employeeReducers from "./slices/employeeSlice";
 import ownerReducers from "./slices/ownerBeneficiarySlice";
 import attendanceReducers from "./slices/AttendanceSlice";
+import projectsReducer from "./slices/ProjectsSlice";
 
 export const store = configureStore({
   reducer: {
     // loanBeneList: loanBeneListReducer,
     loanBeneficiary: loanBeneficiary,
+    projectsReducer: projectsReducer,
     phoneReducers: phoneReducers,
     employeeReducers: employeeReducers,
     ownerReducers: ownerReducers,

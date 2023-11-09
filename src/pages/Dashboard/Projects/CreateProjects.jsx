@@ -1,0 +1,246 @@
+import { useEffect } from "react";
+import { BsArrowLeftShort } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
+import { ToastContainer, toast } from "react-toastify";
+import { createLoanBen } from "../../../redux/Actions/loanBenAction";
+import MainForm from "../../../Components/shared/Forms/MainForm";
+
+
+const formsData = [
+  {
+    fieldName: "Name",
+    fieldType: "text",
+    fieldPlaceholder: "project Name",
+    isRequired: true,
+  },
+  {
+    fieldName: "Address",
+    fieldType: "text",
+    fieldPlaceholder: "Type address here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Area",
+    fieldType: "text",
+    fieldPlaceholder: "Project area",
+    isRequired: true,
+  },
+  {
+    fieldName: "Division",
+    fieldType: "text",
+    fieldPlaceholder: "Project division",
+    isRequired: true,
+  },
+  {
+    fieldName: "City",
+    fieldType: "text",
+    fieldPlaceholder: "Type city name here",
+    isRequired: true,
+  },
+  {
+    fieldName: "City Corporation",
+    fieldType: "text",
+    fieldPlaceholder: "City corporation name",
+    isRequired: true,
+  },
+  {
+    fieldName: "Ward No",
+    fieldType: "text",
+    fieldPlaceholder: "Word no here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Post Office",
+    fieldType: "text",
+    fieldPlaceholder: "Post Office here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Police station",
+    fieldType: "text",
+    fieldPlaceholder: "Police station here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Zip Code",
+    fieldType: "text",
+    fieldPlaceholder: "Zip Code here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Project size",
+    fieldType: "number",
+    fieldPlaceholder: "Project size here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Basement no",
+    fieldType: "number",
+    fieldPlaceholder: "Basement no here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Number of elevator",
+    fieldType: "number",
+    fieldPlaceholder: "Number of elevator here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Number of stairs",
+    fieldType: "number",
+    fieldPlaceholder: "Number of stairs here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Number of parking",
+    fieldType: "number",
+    fieldPlaceholder: "Number of parking here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Number of shops",
+    fieldType: "number",
+    fieldPlaceholder: "Number of shops here",
+    isRequired: true,
+  },
+  {
+    fieldName: "Work start date",
+    fieldType: "date",
+    fieldPlaceholder: "Work start date",
+    isRequired: true,
+  },
+  {
+    fieldName: "Expected handover date",
+    fieldType: "date",
+    fieldPlaceholder: "Expected handover date",
+    isRequired: true,
+  },
+  {
+    fieldName: "Commarcial floor",
+    fieldType: "number",
+    fieldPlaceholder: "Number of commercial floor",
+    isRequired: true,
+  },
+  {
+    fieldName: "Commarcial unit",
+    fieldType: "number",
+    fieldPlaceholder: "Number of commercial units",
+    isRequired: true,
+  },
+  {
+    fieldName: "Residential floor",
+    fieldType: "number",
+    fieldPlaceholder: "Number of Residential floor",
+    isRequired: true,
+  },
+  {
+    fieldName: "Residential unit",
+    fieldType: "number",
+    fieldPlaceholder: "Number of Residential floor",
+    isRequired: true,
+  },
+  {
+    fieldName: "Project size type",
+    fieldType: "number",
+    fieldPlaceholder: "Project size type",
+    isRequired: true,
+  },
+  {
+    fieldName: "Project type",
+    fieldType: "select",
+    fieldPlaceholder: "Select a role",
+    isRequired: true,
+    options: [
+      { value: "Contractor", label: "Contractor" },
+      { value: "Suppliers", label: "Suppliers" },
+      { value: "Employee", label: "Employee" },
+      { value: "Land Owners", label: "Land Owners" },
+      { value: "Company Owners", label: "Owner" },
+      { value: "Loan Beneficaries", label: "Loan" },
+    ],
+  },
+];
+
+
+function CreateProjects() {
+  const dispatch = useDispatch();
+  const loanState = useSelector((state) => state.loanBeneficiary);
+  const navigate = useNavigate();
+
+  const submitFunction = (data) => {
+    dispatch(createLoanBen(data));
+  };
+
+  useEffect(() => {
+    if (loanState.isCreated) {
+      toast("Successfully done", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        navigate("/beneficiarylist");
+      }, 3000);
+    }
+
+    if (loanState.isError) {
+      toast.error(loanState.data[0], {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [loanState.isError, loanState.data, loanState.isCreated, navigate]);
+
+  return (
+    <>
+      <div className="flex items-center justify-between gap-4 mb-4">
+        <Breadcrumb />
+        <div className="flex space-x-4">
+          <Link
+            to={"/beneficiarylist"}
+            className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
+          >
+            <BsArrowLeftShort /> Back
+          </Link>
+        </div>
+      </div>
+
+
+      <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
+        <MainForm
+          formsData={formsData}
+          submitFunction={submitFunction}
+          isReset={true}
+        />
+      </div>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
+  );
+}
+
+export default CreateProjects;
