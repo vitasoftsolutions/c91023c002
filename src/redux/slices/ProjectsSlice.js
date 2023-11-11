@@ -29,7 +29,7 @@ const projectsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch LoanBen list
+      // Fetch Projects list
       .addCase(fetchProjects.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
@@ -51,23 +51,23 @@ const projectsSlice = createSlice({
         state.isError = action.error.message;
       })
       // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
-        state.isLoading = true;
-        state.isUpdate = false;
-        state.isError = false;
-      })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.sData = action.payload.data;
-        state.isCreated = false;
-        state.isError = false;
-        state.isUpdate = false;
-      })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = action.error.message;
-      })
-      // Create loan
+      // .addCase(fetchLoanBene.pending, (state) => {
+      //   state.isLoading = true;
+      //   state.isUpdate = false;
+      //   state.isError = false;
+      // })
+      // .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.sData = action.payload.data;
+      //   state.isCreated = false;
+      //   state.isError = false;
+      //   state.isUpdate = false;
+      // })
+      // .addCase(fetchLoanBene.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = action.error.message;
+      // })
+      // Create Projects
       .addCase(createProjects.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
