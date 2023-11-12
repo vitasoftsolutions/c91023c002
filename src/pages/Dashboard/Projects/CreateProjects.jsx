@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { createProjects } from "../../../redux/Actions/ProjectsAction";
 import MultiStepForm from "../../../Components/shared/Forms/MultiStepForm";
 import { fetchTypes } from "../../../redux/Actions/TypesAction";
+import Loader from "../../../Components/shared/Loader/Loader";
 
 function CreateProjects() {
   const dispatch = useDispatch();
@@ -20,7 +21,6 @@ function CreateProjects() {
     dispatch(fetchTypes("Project Type"));
   }, [dispatch]);
 
-  console.log(typesState, "typesState");
   const formsData = [
     {
       fieldName: "Name",
@@ -135,6 +135,8 @@ function CreateProjects() {
       fieldType: "number",
       fieldPlaceholder: "Number of commercial floor",
       isRequired: true,
+      maxValue: 21,
+      minValue: 0,
     },
     {
       fieldName: "Commarcial unit",
@@ -212,6 +214,17 @@ function CreateProjects() {
     projectState.isCreated,
     navigate,
   ]);
+
+  
+  if (projectState?.isLoading) {
+    return (
+      <div className="min-h-[80vh] flex flex-col justify-center gap-4 items-center">
+        <Loader text={"Creating data..."} />
+      </div>
+    );
+  }
+
+
 
   return (
     <>

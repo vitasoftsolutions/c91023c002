@@ -19,6 +19,8 @@ const MultiStepForm = ({
     mode: "onChange",
   });
 
+  console.log(errors, "errors");
+
   const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});
   const [dragging, setDragging] = useState(false);
@@ -105,7 +107,8 @@ const MultiStepForm = ({
   };
 
   const renderField = (field, index) => {
-    // console.log(field.defaultValue);
+    const hasMinMaxValues =
+      field.maxValue !== undefined && field.minValue !== undefined;
     return (
       <div
         className={`${
@@ -148,21 +151,74 @@ const MultiStepForm = ({
               <span className="text-red-600">This field is required.</span>
             )}
           </>
+        ) : field.fieldType === "number" && hasMinMaxValues ? (
+          <>
+            <input
+              type="number"
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+                required: !isState && field.isRequired,
+                valueAsNumber: true,
+                validate: {
+                  positiveNumber: (value) =>
+                    parseFloat(value) >= (field?.minValue || 0),
+                  lessThanHundred: (value) =>
+                    parseFloat(value) <= (field?.maxValue || 100),
+                },
+              })}
+              placeholder={field.fieldPlaceholder}
+              className={`w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none ${
+                errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                  ? "border-red-500"
+                  : ""
+              }`}
+              defaultValue={isState && field.defaultValue}
+            />
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
+              <span className="text-red-600">
+                {
+                  errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                    .message
+                }
+              </span>
+            )}
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+              ?.type === "required" && (
+                <span className="text-red-600">{field?.fieldName} is required.</span>
+            )}
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+              ?.type === "positiveNumber" && (
+              <span className="text-red-600">
+                Number must be greater than or equal to {field?.minValue || 0}.
+              </span>
+            )}
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+              ?.type === "lessThanHundred" && (
+              <span className="text-red-600">
+                Number must be less than or equal to {field?.maxValue || 100}.
+              </span>
+            )}
+          </>
         ) : field.fieldType === "number" ? (
-          <input
-            type="number"
-            {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-              required: !isState && field.isRequired,
-              valueAsNumber: true,
-            })}
-            placeholder={field.fieldPlaceholder}
-            className={`w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none ${
-              errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
-                ? "border-red-500"
-                : ""
-            }`}
-            defaultValue={isState && field.defaultValue}
-          />
+          <>
+            {/* // Render a regular number input without validation */}
+            <input
+              type="number"
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+                required: !isState && field.isRequired,
+              })}
+              placeholder={field.fieldPlaceholder}
+              className={`w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none ${
+                errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                  ? "border-red-500"
+                  : ""
+              }`}
+              defaultValue={isState && field.defaultValue}
+            />
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+              ?.type === "required" && (
+              <span className="text-red-600">{field?.fieldName} is required.</span>
+            )}
+          </>
         ) : field.fieldType === "file" ? (
           <div
             className={`relative border-2 border-dashed border-gray-300 p-4 ${
@@ -299,7 +355,7 @@ const MultiStepForm = ({
       setCurrentPage(currentPage + 1);
     }
   };
-  console.log(hasFormErrors);
+  console.log(hasFormErrors, "hasFormErrors");
 
   return (
     <>
