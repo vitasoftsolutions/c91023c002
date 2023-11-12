@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 
@@ -18,8 +18,6 @@ const MultiStepForm = ({
     defaultValues: defaultValues,
     mode: "onChange",
   });
-
-  console.log(errors, "errors");
 
   const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});

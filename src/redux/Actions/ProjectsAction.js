@@ -20,7 +20,9 @@ export const createProjects = createAsyncThunk(
         payload,
         { headers }
       );
+      console.log(response,"response")
       return response.data;
+
     } catch (error) {
       throw new Error("Failed to Create loan beneficiary");
     }
