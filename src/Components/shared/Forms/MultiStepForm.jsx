@@ -13,7 +13,7 @@ const MultiStepForm = ({
     register,
     handleSubmit,
     formState: { errors },
-    trigger
+    trigger,
   } = useForm({
     defaultValues: defaultValues,
     mode: "onChange",
@@ -66,7 +66,7 @@ const MultiStepForm = ({
       // Check if there are errors
       if (Object.keys(errors).length === 0) {
         submitFunction(updatedFormData);
-      } 
+      }
     }
   };
 
@@ -107,7 +107,14 @@ const MultiStepForm = ({
   const renderField = (field, index) => {
     // console.log(field.defaultValue);
     return (
-      <div className="mb-4" key={index}>
+      <div
+        className={`${
+          "hasWidth" in field && field.hasWidth
+            ? `col-span-${field.hasWidth}`
+            : "col-span-default"
+        } mb-4`}
+        key={index}
+      >
         <label
           htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
           className="block text-black mb-1 font-bold"
@@ -278,7 +285,7 @@ const MultiStepForm = ({
       setCurrentPage(currentPage + 1);
     }
   };
-  console.log(hasFormErrors)
+  console.log(hasFormErrors);
 
   return (
     <>

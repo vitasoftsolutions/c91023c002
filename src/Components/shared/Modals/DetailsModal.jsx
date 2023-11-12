@@ -34,14 +34,16 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
             )}
 
             <h2 className="text-center my-2 font-bold uppercase">
-              {allData?.first_name + " " + allData?.last_name}
+              {allData?.first_name && allData?.last_name
+                ? allData?.first_name + " " + allData?.last_name
+                : allData?.name}
             </h2>
             {/* Details */}
             <div className="mt-5 px-5 py-5 bg-gray-100 h-fit">
               <h3 className="font-bold text-lg pb-2 border-b mb-1">
                 {formattedPathname} Details
               </h3>
-              <ul>
+              <ul className={`${!photoSection && 'grid grid-cols-2'}`}>
                 {Object?.keys(allData)?.map(
                   (key) =>
                     key !== "id" &&

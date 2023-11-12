@@ -14,8 +14,7 @@ function CreateProjects() {
   const navigate = useNavigate();
   const typesState = useSelector((state) => state.typesReducers.data);
 
-  console.log(projectState, "projectState")
-
+  console.log(projectState, "projectState");
 
   useEffect(() => {
     dispatch(fetchTypes("Project Type"));
@@ -161,7 +160,7 @@ function CreateProjects() {
     //   fieldPlaceholder: "Project size type",
     //   isRequired: false,
     // },
-    
+
     // {
     //   fieldName: "Project type",
     //   fieldType: "select",
@@ -207,7 +206,12 @@ function CreateProjects() {
         theme: "light",
       });
     }
-  }, [projectState.isError, projectState.data, projectState.isCreated, navigate]);
+  }, [
+    projectState.isError,
+    projectState.data,
+    projectState.isCreated,
+    navigate,
+  ]);
 
   return (
     <>
@@ -222,7 +226,7 @@ function CreateProjects() {
           </Link>
         </div>
       </div>
-      
+
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
         <MultiStepForm
           formsData={formsData}

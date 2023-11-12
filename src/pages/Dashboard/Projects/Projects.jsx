@@ -1,26 +1,27 @@
 import { useEffect } from "react";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import Swal from "sweetalert2";
-import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
+// import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProjects, fetchProjects } from "../../../redux/Actions/ProjectsAction";
+import {
+  deleteProjects,
+  fetchProjects,
+} from "../../../redux/Actions/ProjectsAction";
+import DisplayProjects from "../../../Components/Projects/DisplayProjects";
 
-
-
-const t_head = [
-  { name: "Name" },
-  { name: "Address" },
-  { name: "Area" },
-  { name: "Start Date" },
-  { name: "Status" },
-  { name: "Actions" },
-];
-
+// const t_head = [
+//   { name: "Name" },
+//   { name: "Address" },
+//   { name: "Area" },
+//   { name: "Start Date" },
+//   { name: "Status" },
+//   { name: "Actions" },
+// ];
 
 function Projects() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.projectsReducer);
-  console.log(state)
+  console.log(state);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
@@ -86,7 +87,19 @@ function Projects() {
         redirectLink={"/projects/crete-projects"}
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
-      <GlobalTable
+      <DisplayProjects
+        allDataList={allDataList}
+        editLink={"/projects/editprojects"}
+        handlePageChange={handlePageChange}
+        current_page={current_page}
+        page_number={page_number}
+        photoSection={false}
+        erp_modalCol={12}
+        tableData={tableData}
+        deleteFunction={deleteFunction}
+      />
+
+      {/* <GlobalTable
         t_head={t_head}
         t_data={tableData}
         allDataList={allDataList}
@@ -97,7 +110,7 @@ function Projects() {
         editLink={"/projects/editprojects"}
         erp_modalCol={12}
         photoSection={false}
-      />
+      /> */}
     </div>
   );
 }
