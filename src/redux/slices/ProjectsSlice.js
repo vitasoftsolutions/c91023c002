@@ -9,7 +9,7 @@ import {
   sortByDateLoanBen,
   updateLoanBeneficiary,
 } from "../Actions/loanBenAction";
-import { createProjects, deleteProjects, fetchProjects } from "../Actions/ProjectsAction";
+import { createProjects, deleteProjects, fetchProject, fetchProjects, updateProject } from "../Actions/ProjectsAction";
 
 const projectsSlice = createSlice({
   name: "createProjects",
@@ -51,22 +51,22 @@ const projectsSlice = createSlice({
         state.isError = action.error.message;
       })
       // Fetch LoanBen
-      // .addCase(fetchLoanBene.pending, (state) => {
-      //   state.isLoading = true;
-      //   state.isUpdate = false;
-      //   state.isError = false;
-      // })
-      // .addCase(fetchLoanBene.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.sData = action.payload.data;
-      //   state.isCreated = false;
-      //   state.isError = false;
-      //   state.isUpdate = false;
-      // })
-      // .addCase(fetchLoanBene.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.isError = action.error.message;
-      // })
+      .addCase(fetchProject.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+      })
+      .addCase(fetchProject.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sData = action.payload.data;
+        state.isCreated = false;
+        state.isError = false;
+        state.isUpdate = false;
+      })
+      .addCase(fetchProject.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
       // Create Projects
       .addCase(createProjects.pending, (state) => {
         state.isLoading = true;
@@ -82,23 +82,23 @@ const projectsSlice = createSlice({
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      // Update Project
+      .addCase(updateProject.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateProject.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateProject.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete loan
+      // Delete Project
       .addCase(deleteProjects.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
@@ -113,6 +113,8 @@ const projectsSlice = createSlice({
         state.isError = action.error.message;
         state.isDelete = false;
       })
+
+      // TODO:
       // Search by name
       .addCase(searchLoanBeneficiaries.pending, (state) => {
         state.isLoading = true;

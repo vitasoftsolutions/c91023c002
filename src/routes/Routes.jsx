@@ -23,6 +23,7 @@ import CreateFloors from "../pages/Dashboard/Floors/CreateFloors";
 import FloorsDetails from "../pages/Dashboard/Floors/FloorsDetails";
 import Projects from "../pages/Dashboard/Projects/Projects";
 import CreateProjects from "../pages/Dashboard/Projects/CreateProjects";
+import EditProjects from "../pages/Dashboard/Projects/EditProjects";
 
 export const router = createBrowserRouter([
   {
@@ -179,6 +180,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <CreateProjects />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/projects/editprojects",
+        element: (
+          <PrivetRoute>
+            <EditProjects />
           </PrivetRoute>
         ),
       },

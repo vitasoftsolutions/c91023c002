@@ -47,10 +47,10 @@ input[type=number] {
   overflow: hidden;
   transition: opacity 0.3s, max-height 0.3s;
 }
-
 .hover-container:hover .child-div {
   opacity: 1;
   max-height: 100px; /* Adjust the value as needed */
+  transition: opacity 0.3s, max-height 0.3s;
   padding: 8px 0;
 }
 

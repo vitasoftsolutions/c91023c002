@@ -148,6 +148,21 @@ const MultiStepForm = ({
               <span className="text-red-600">This field is required.</span>
             )}
           </>
+        ) : field.fieldType === "number" ? (
+          <input
+            type="number"
+            {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+              required: !isState && field.isRequired,
+              valueAsNumber: true,
+            })}
+            placeholder={field.fieldPlaceholder}
+            className={`w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none ${
+              errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                ? "border-red-500"
+                : ""
+            }`}
+            defaultValue={isState && field.defaultValue}
+          />
         ) : field.fieldType === "file" ? (
           <div
             className={`relative border-2 border-dashed border-gray-300 p-4 ${
@@ -211,7 +226,6 @@ const MultiStepForm = ({
                   onClick={() => {
                     // Clear the image by updating the state
                     const newFileData = { ...fileData };
-                    field.defaultValue = "";
                     setFileData(newFileData);
                   }}
                 >

@@ -39,13 +39,13 @@ function DisplayProjects({
 
   return (
     <div className="container border-2 bg-white mt-5 border-gray-50 overflow-hidden shadow-md shadow-blue-200">
-      <div className="min-h-[60vh] grid grid-cols-5 gap-3">
+      <div className="min-h-[60vh] grid lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 gap-3">
         {/* Content */}
         {allDataList?.map((dt) => {
           return (
             <div
               key={dt.id}
-              className="hover-container card w-40 h-min bg-base-100 shadow-xl hover:shadow-md duration-200 mx-5 mt-5 mb-10 rounded-md"
+              className="hover-container card w-40 h-min mx-auto bg-base-100 shadow-xl hover:shadow-md duration-200 mt-5 mb-10 rounded-md"
             >
               <button
                 onClick={() => {

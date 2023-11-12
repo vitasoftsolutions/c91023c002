@@ -9,14 +9,6 @@ import {
 } from "../../../redux/Actions/ProjectsAction";
 import DisplayProjects from "../../../Components/Projects/DisplayProjects";
 
-// const t_head = [
-//   { name: "Name" },
-//   { name: "Address" },
-//   { name: "Area" },
-//   { name: "Start Date" },
-//   { name: "Status" },
-//   { name: "Actions" },
-// ];
 
 function Projects() {
   const dispatch = useDispatch();
@@ -85,6 +77,7 @@ function Projects() {
       <TableHeader
         title={"Projects"}
         redirectLink={"/projects/crete-projects"}
+        // TODO:Need to add app_label
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
       <DisplayProjects
@@ -98,19 +91,6 @@ function Projects() {
         tableData={tableData}
         deleteFunction={deleteFunction}
       />
-
-      {/* <GlobalTable
-        t_head={t_head}
-        t_data={tableData}
-        allDataList={allDataList}
-        handlePageChange={handlePageChange}
-        current_page={current_page}
-        page_number={page_number}
-        deleteFunction={deleteFunction}
-        editLink={"/projects/editprojects"}
-        erp_modalCol={12}
-        photoSection={false}
-      /> */}
     </div>
   );
 }
