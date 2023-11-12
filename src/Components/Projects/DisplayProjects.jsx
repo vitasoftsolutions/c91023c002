@@ -45,7 +45,7 @@ function DisplayProjects({
           return (
             <div
               key={dt.id}
-              className="card w-40 h-min bg-base-100 shadow-xl hover:shadow-md duration-200 mx-5 mt-5 mb-10 rounded-md"
+              className="hover-container card w-40 h-min bg-base-100 shadow-xl hover:shadow-md duration-200 mx-5 mt-5 mb-10 rounded-md"
             >
               <button
                 onClick={() => {
@@ -76,7 +76,7 @@ function DisplayProjects({
                 </div>
 
                 <div className="absolute bottom-[-32px] left-0 rounded-sm bg-gray-200 shadow-xl w-40">
-                  <div className="flex justify-center py-2">
+                  <div className="child-div flex justify-center">
                     <Link
                       to={editLink}
                       state={dt.id}
