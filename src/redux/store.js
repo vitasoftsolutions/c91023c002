@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loanBeneficiary from "./slices/loanBeneficiarySlice";
+import floorsReducer from "./slices/floorSlice";
 import businessProfileReducer from "./slices/BusinessProfileSlice";
 import phoneReducers from "./slices/phoneSlice";
 import employeeReducers from "./slices/employeeSlice";
@@ -18,6 +19,7 @@ export const store = configureStore({
   reducer: {
     loanBeneficiary: loanBeneficiary,
     businessProfileReducer: businessProfileReducer,
+    floorsReducer: floorsReducer,
     projectsReducer: projectsReducer,
     phoneReducers: phoneReducers,
     employeeReducers: employeeReducers,
