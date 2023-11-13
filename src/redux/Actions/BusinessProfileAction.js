@@ -20,7 +20,7 @@ export const createBusinessProfile = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${base_url}/____/`,
+        `${base_url}/business-profile/`,
         payload,
         { headers }
       );
@@ -50,7 +50,7 @@ export const fetchBusinessProfileList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/loan-beneficaries/?limit=${perPage}&offset=${
+      `${base_url}/business-profile/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
@@ -92,7 +92,7 @@ export const fetchBusinessProfile = createAsyncThunk("fetchBusinessProfile", asy
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/loan-beneficaries/${id}/`, {
+  const response = await axios.get(`${base_url}/business-profile/${id}/`, {
     headers,
   });
 
@@ -122,7 +122,7 @@ export const deleteBusinessProfile = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/loan-beneficaries/${payload}/`,
+      `${base_url}/business-profile/${payload}/`,
       { headers }
     );
 
@@ -150,7 +150,7 @@ export const updateBusinessProfile = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/loan-beneficaries/${payload.id}/`,
+      `${base_url}/business-profile/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -177,7 +177,7 @@ export const searchBusinessProfile = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/loan-beneficaries/`;
+      let apiUrl = `${base_url}/business-profile/`;
 
       // Check if firstName is not empty, then append the search query
       if (firstName) {
@@ -219,7 +219,7 @@ export const sortByDateBusinessProfile = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/loan-beneficaries/`;
+      let apiUrl = `${base_url}/business-profile/`;
 
       // Check if date is not empty, then append the search query
       if (date) {
@@ -260,7 +260,7 @@ export const sortByAZBusinessProfile = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/loan-beneficaries/`;
+      let apiUrl = `${base_url}/business-profile/`;
 
       // Check if sortOrder is not empty, then append the search query
       if (sortOrder) {
