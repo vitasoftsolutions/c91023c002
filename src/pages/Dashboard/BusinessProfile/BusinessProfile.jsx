@@ -84,7 +84,8 @@ const BusinessProfile = () => {
     <div className="max-w-screen">
       <TableHeader
         title={"Beneficiary"}
-        redirectLink={"/beneficiarylist/loan-beneficiary-crete"}
+        redirectLink={"/business-profile/crete-business-profile"}
+        // TODO: Need to add app label
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
       <GlobalTable
@@ -95,7 +96,7 @@ const BusinessProfile = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/beneficiarylist/editloan"}
+        editLink={"/business-profile/edit-business-profile"}
         erp_modalCol={6}
         photoSection={true}
       />

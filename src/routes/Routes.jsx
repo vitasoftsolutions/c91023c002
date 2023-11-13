@@ -36,6 +36,9 @@ import ContractorBenEdit from "../pages/Dashboard/ContractorBeneficary/Contracto
 import ContractorAssignList from "../pages/Dashboard/ContractorAssign/ContractorAssignList";
 import ContractorAssignCreate from "../pages/Dashboard/ContractorAssign/ContractorAssignCreate";
 import ContractorAssignEdit from "../pages/Dashboard/ContractorAssign/ContractorAssignEdit";
+import BusinessProfile from "../pages/Dashboard/BusinessProfile/BusinessProfile";
+import CreateBusinessProfile from "../pages/Dashboard/BusinessProfile/CreateBusinessProfile";
+import EditBusinessProfile from "../pages/Dashboard/BusinessProfile/EditBusinessProfile";
 
 export const router = createBrowserRouter([
   {
@@ -203,6 +206,33 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
+      // Business profile
+      {
+
+        path: "/business-profile",
+        element: (
+          <PrivetRoute>
+            <BusinessProfile />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/business-profile/crete-business-profile",
+        element: (
+          <PrivetRoute>
+            <CreateBusinessProfile />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/business-profile/edit-business-profile",
+        element: (
+          <PrivetRoute>
+            <EditBusinessProfile />
+          </PrivetRoute>
+        ),
+      },
+      // floors
       {
         path: "/floors",
         element: (
