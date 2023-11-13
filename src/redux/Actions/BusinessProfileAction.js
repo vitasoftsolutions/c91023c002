@@ -34,3 +34,72 @@ export const createBusinessProfile = createAsyncThunk(
 //
 //
 //
+export const fetchBusinessProfileList = createAsyncThunk(
+  "fetchBusinessProfileList",
+  async (page, { getState }) => {
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    const { perPage } = getState().loanBeneficiary;
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios GET request with the headers
+    const response = await axios.get(
+      `${base_url}/loan-beneficaries/?limit=${perPage}&offset=${
+        (page - 1) * perPage
+      }`,
+      {
+        headers,
+      }
+    );
+
+    const response_token = response.data.results.token;
+    const result = jwtDecode(response_token);
+
+    const data = result.data;
+
+    const totalData = Math.ceil(response.data.count);
+    const totalPages = Math.ceil(totalData / perPage);
+
+    // Return the data and pagination information
+    return {
+      data,
+      currentPage: page,
+      totalPages,
+      totalData,
+    };
+  }
+);
+//
+//
+//
+//
+export const fetchBusinessProfile = createAsyncThunk("fetchBusinessProfile", async (id) => {
+  console.log("getState()");
+  console.log(id, "getState()");
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/loan-beneficaries/${id}/`, {
+    headers,
+  });
+
+  const data = response.data;
+
+  console.log(data, "data__");
+
+  // Return the data 
+  return { data };
+});
