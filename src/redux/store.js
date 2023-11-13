@@ -5,6 +5,7 @@ import phoneReducers from "./slices/phoneSlice";
 import employeeReducers from "./slices/employeeSlice";
 import ownerReducers from "./slices/ownerBeneficiarySlice";
 import attendanceReducers from "./slices/AttendanceSlice";
+import applabelReducer from "./slices/AppLabelSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,7 @@ export const store = configureStore({
     employeeReducers: employeeReducers,
     ownerReducers: ownerReducers,
     attendanceReducers: attendanceReducers,
+    applabelReducer: applabelReducer,
+
   },
 });

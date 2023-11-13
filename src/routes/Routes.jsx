@@ -21,6 +21,8 @@ import EditAttendance from "../pages/Dashboard/Attendance/EditAttendance";
 import Floors from "../pages/Dashboard/Floors/Floors";
 import CreateFloors from "../pages/Dashboard/Floors/CreateFloors";
 import FloorsDetails from "../pages/Dashboard/Floors/FloorsDetails";
+import AppLabel from "../pages/Dashboard/AppLabel/AppLabel";
+import CreateApplabel from "../pages/Dashboard/AppLabel/CreateApplabel";
 
 export const router = createBrowserRouter([
   {
@@ -183,6 +185,22 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <FloorsDetails />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/app-label",
+        element: (
+          <PrivetRoute>
+            <AppLabel></AppLabel>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/app-label/create",
+        element: (
+          <PrivetRoute>
+            <CreateApplabel></CreateApplabel>
           </PrivetRoute>
         ),
       },

@@ -105,9 +105,16 @@ const Menus = [
     ],
   },
   {
-    title: "Menu 2",
+    title: "Settings",
     icons: <FaHandHoldingUsd />,
-    subMenus: [],
+    subMenus: [
+      {
+        title: "App Label",
+        icons: <FaRegListAlt />,
+        to: "/app-label",
+      },
+    ]
+    ,
   },
 ];
 

@@ -30,16 +30,22 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
                   src={allData.profile_picture}
                   alt={allData.first_name + " " + allData.last_name}
                 />
+
               </div>
             )}
 
             <h2 className="text-center my-2 font-bold uppercase">
-              {allData?.first_name + " " + allData?.last_name}
+              {allData.first_name
+                ? allData.first_name + " " + allData.last_name
+                : allData.name
+              }
+
             </h2>
             {/* Details */}
             <div className="mt-5 px-5 py-5 bg-gray-100 h-fit">
               <h3 className="font-bold text-lg pb-2 border-b mb-1">
                 {formattedPathname} Details
+                
               </h3>
               <ul>
                 {Object?.keys(allData)?.map(
@@ -78,8 +84,8 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
                         </b>
                         :{" "}
                         {key === "date" ||
-                        key === "created_at" ||
-                        key === "joined_date"
+                          key === "created_at" ||
+                          key === "joined_date"
                           ? formatDate(allData[key])
                           : allData[key]}
                       </li>
