@@ -83,7 +83,7 @@ const BusinessProfile = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Beneficiary"}
+        title={"Business Profile"}
         redirectLink={"/business-profile/crete-business-profile"}
         // TODO: Need to add app label
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
