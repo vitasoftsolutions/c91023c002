@@ -88,7 +88,14 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
   const renderField = (field, index) => {
     // console.log(field.defaultValue);
     return (
-      <div className="mb-4" key={index}>
+      <div
+        className={`${
+          "hasWidth" in field && field.hasWidth
+            ? `col-span-${field.hasWidth}`
+            : "col-span-default"
+        } mb-4`}
+        key={index}
+      >
         <label
           htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
           className="block text-black mb-1 font-bold"

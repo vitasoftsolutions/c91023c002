@@ -81,11 +81,9 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
     pathname === "/phone" ? dispatch(sortByAZPhone(sortOrder)) : "";
   };
 
-
   useEffect(() => {
     fetchData();
   }, []);
-
 
   const fetchData = async () => {
     try {

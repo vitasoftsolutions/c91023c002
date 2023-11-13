@@ -41,6 +41,18 @@ input[type=number] {
   background: #2980b9; /* Set a different color for hover state if desired */
 }
 
+.hover-container .child-div {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s, max-height 0.3s;
+}
+.hover-container:hover .child-div {
+  opacity: 1;
+  max-height: 100px; /* Adjust the value as needed */
+  transition: opacity 0.3s, max-height 0.3s;
+  padding: 8px 0;
+}
 
 /*  */
 .min-h-50vh{

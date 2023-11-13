@@ -23,6 +23,9 @@ import CreateFloors from "../pages/Dashboard/Floors/CreateFloors";
 import FloorsDetails from "../pages/Dashboard/Floors/FloorsDetails";
 import AppLabel from "../pages/Dashboard/AppLabel/AppLabel";
 import CreateApplabel from "../pages/Dashboard/AppLabel/CreateApplabel";
+import Projects from "../pages/Dashboard/Projects/Projects";
+import CreateProjects from "../pages/Dashboard/Projects/CreateProjects";
+import EditProjects from "../pages/Dashboard/Projects/EditProjects";
 
 export const router = createBrowserRouter([
   {
@@ -161,6 +164,32 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditAttendance />
+          </PrivetRoute>
+        ),
+      },
+      // Projects
+      {
+
+        path: "/projects",
+        element: (
+          <PrivetRoute>
+            <Projects />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/projects/crete-projects",
+        element: (
+          <PrivetRoute>
+            <CreateProjects />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/projects/editprojects",
+        element: (
+          <PrivetRoute>
+            <EditProjects />
           </PrivetRoute>
         ),
       },

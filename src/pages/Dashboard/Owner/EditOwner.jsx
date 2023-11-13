@@ -133,6 +133,10 @@ function EditOwner() {
   ]
 
   const submitFunction = (data) => {
+    const profile_picture = data.profile_picture ? data.profile_picture : "";
+
+
+
     if (state) {
       console.log(data, "From update page");
       const updatedData = {
@@ -143,13 +147,25 @@ function EditOwner() {
         nid_number: data.nid_number ? data.nid_number : state.nid_number,
         present_address: data.present_address ? data.present_address : state.present_address,
         permanent_address: data.permanent_address ? data.permanent_address : state.permanent_address,
-        profile_picture: data.profile_picture ? data.profile_picture : state.profile_picture,
         phone_number: data.phone_number
           ? data.phone_number
           : state.phone_number,
         role: data.role ? data.role : state.role,
       };
+
       console.log(updatedData, "updatedData page");
+
+
+           // Dispatch when profile_picture length is greater than 0
+           if (profile_picture !== "") {
+            dispatch(
+              updateOwner({
+                id: state.id,
+                data: { ...updatedData, profile_picture: profile_picture },
+              })
+            );
+          }
+
       dispatch(
         updateOwner({
           id: state.id,
