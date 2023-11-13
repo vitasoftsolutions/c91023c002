@@ -1,15 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBusinessProfile, deleteBusinessProfile, fetchBusinessProfile, fetchBusinessProfileList, updateBusinessProfile } from "../Actions/BusinessProfileAction";
 import {
-  createLoanBen,
-  deleteLoanBeneficiary,
-  fetchLoanBene,
-  fetchLoanBeneList,
-  searchLoanBeneficiaries,
-  sortByAZLoanBen,
-  sortByDateLoanBen,
-  updateLoanBeneficiary,
-} from "../Actions/loanBenAction";
+  createBusinessProfile,
+  deleteBusinessProfile,
+  fetchBusinessProfile,
+  fetchBusinessProfileList,
+  searchBusinessProfile,
+  sortByAZBusinessProfile,
+  sortByDateBusinessProfile,
+  updateBusinessProfile,
+} from "../Actions/BusinessProfileAction";
 
 const businessProfileSlice = createSlice({
   name: "businessProfileSlice",
@@ -114,49 +113,49 @@ const businessProfileSlice = createSlice({
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLoanBeneficiaries.pending, (state) => {
+      .addCase(searchBusinessProfile.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
+      .addCase(searchBusinessProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
+      .addCase(searchBusinessProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateLoanBen.pending, (state) => {
+      .addCase(sortByDateBusinessProfile.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByDateBusinessProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateLoanBen.rejected, (state, action) => {
+      .addCase(sortByDateBusinessProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZLoanBen.pending, (state) => {
+      .addCase(sortByAZBusinessProfile.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByAZBusinessProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZLoanBen.rejected, (state, action) => {
+      .addCase(sortByAZBusinessProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
