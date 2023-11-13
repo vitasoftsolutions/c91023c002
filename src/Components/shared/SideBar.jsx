@@ -8,7 +8,7 @@ import {
 import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
 import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
-import { MdInstallMobile, MdOutlineManageAccounts } from "react-icons/md";
+import { MdInstallMobile, MdOutlineAddBusiness, MdOutlineManageAccounts } from "react-icons/md";
 import { BsCalendar2Check, BsFiles, BsFillPersonPlusFill } from "react-icons/bs";
 import { SiFlatpak } from "react-icons/si";
 import { Link } from "react-router-dom";
@@ -77,6 +77,17 @@ const Menus = [
         title: "Projects",
         icons: <SiFlatpak />,
         to: "/projects",
+      },
+    ],
+  },
+  {
+    title: "Business Profile",
+    icons: <MdOutlineAddBusiness />,
+    subMenus: [
+      {
+        title: "Business Profile",
+        icons: <MdOutlineAddBusiness />,
+        to: "/business-profile",
       },
     ],
   },
