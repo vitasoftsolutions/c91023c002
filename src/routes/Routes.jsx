@@ -39,6 +39,7 @@ import ContractorAssignEdit from "../pages/Dashboard/ContractorAssign/Contractor
 import BusinessProfile from "../pages/Dashboard/BusinessProfile/BusinessProfile";
 import CreateBusinessProfile from "../pages/Dashboard/BusinessProfile/CreateBusinessProfile";
 import EditBusinessProfile from "../pages/Dashboard/BusinessProfile/EditBusinessProfile";
+import ProjectsDetails from "../pages/Dashboard/Projects/ProjectsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -187,6 +188,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <Projects />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/projects/:projectId",
+        element: (
+          <PrivetRoute>
+            <ProjectsDetails />
           </PrivetRoute>
         ),
       },

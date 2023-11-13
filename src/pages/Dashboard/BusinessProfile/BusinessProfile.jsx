@@ -19,7 +19,7 @@ const t_head = [
 
 const BusinessProfile = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.loanBeneficiary);
+  const state = useSelector((state) => state.businessProfileReducer);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
