@@ -40,9 +40,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
                 : allData.name
               }
 
-              {allData?.first_name && allData?.last_name
-                ? allData?.first_name + " " + allData?.last_name
-                : allData?.name}
+              
             </h2>
             {/* Details */}
             <div className="mt-5 px-5 py-5 bg-gray-100 h-fit">

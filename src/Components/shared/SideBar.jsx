@@ -116,6 +116,35 @@ const Menus = [
     ]
     ,
   },
+  {
+    title: "Work Progress",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Work Progress",
+        icons: <FaRegListAlt />,
+        to: "/work-progress",
+      },
+    ]
+    ,
+  },
+  {
+    title: "Contractors",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Beneficaries",
+        icons: <FaRegListAlt />,
+        to: "/contractor-beneficaries",
+      },
+      {
+        title: "Assign Contractor",
+        icons: <FaRegListAlt />,
+        to: "/contractor-assign",
+      },
+    ]
+    ,
+  },
 ];
 
 const SideBar = () => {

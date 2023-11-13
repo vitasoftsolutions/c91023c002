@@ -5,9 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
-import { createLoanBen } from "../../../redux/Actions/AppLabelAction";
+import { createLoanBen } from "../../../redux/Actions/WorkProgressAction";
 import MainForm from '../../../Components/shared/Forms/MainForm';
-
 const formsData = [
     {
         fieldName: "Name",
@@ -16,11 +15,18 @@ const formsData = [
         isRequired: true,
         hasWidth:3
     },
+    {
+        fieldName: "Percentage",
+        fieldType: "text",
+        fieldPlaceholder: "Percentage(%)",
+        isRequired: true,
+        hasWidth:3
+    },
     
 ];
-const CreateApplabel = () => {
+const WorkProgressCreate = () => {
     const dispatch = useDispatch();
-    const loanState = useSelector((state) => state.applabelReducer);
+    const loanState = useSelector((state) => state.workprogressReducers);
     const navigate = useNavigate();
 
     const submitFunction = (data) => {
@@ -39,7 +45,7 @@ const CreateApplabel = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/app-label");
+                navigate("/work-progress");
             }, 3000);
         }
 
@@ -63,7 +69,7 @@ const CreateApplabel = () => {
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/app-label"}
+                        to={"/work-progress"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
@@ -95,4 +101,4 @@ const CreateApplabel = () => {
     );
 };
 
-export default CreateApplabel;
+export default WorkProgressCreate;

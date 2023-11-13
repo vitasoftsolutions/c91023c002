@@ -8,16 +8,17 @@ import { ToastContainer, toast } from "react-toastify";
 import {
     fetchLoanBene,
     updateLoanBeneficiary,
-} from "../../../redux/Actions/AppLabelAction";
+} from "../../../redux/Actions/WorkProgressAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-const EditAppLabel = () => {
+
+const WorkProgressEdit = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const reduxState = useSelector((state) => state.applabelReducer);
+    const reduxState = useSelector((state) => state.workprogressReducers);
     const location = useLocation();
     const state = reduxState.sData;
 
-    console.log("sate:",location.state)
+    console.log(state)
 
     useEffect(() => {
         dispatch(fetchLoanBene(location.state));
@@ -29,7 +30,15 @@ const EditAppLabel = () => {
             fieldPlaceholder: "Name",
             isRequired: true,
             hasWidth: 3
-        }];
+        },
+        {
+            fieldName: "Percentage",
+            fieldType: "text",
+            fieldPlaceholder: "Percentage(%)",
+            isRequired: true,
+            hasWidth:3
+        },
+    ];
     const submitFunction = (data) => {
         if (state) {
             console.log(data, "From update page");
@@ -37,7 +46,8 @@ const EditAppLabel = () => {
                 id: state.id,
                 status: data.status ? data.status : state.status,
                 name: data.name ? data.name : state.name,
-                
+                percentage: data.percentage ? data.percentage : state.percentage,
+
             };
             dispatch(
                 updateLoanBeneficiary({
@@ -61,7 +71,7 @@ const EditAppLabel = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/app-label");
+                navigate("/work-progress");
             }, 3000);
         }
     }, [reduxState.isUpdate, navigate]);
@@ -73,7 +83,7 @@ const EditAppLabel = () => {
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/app-label"}
+                        to={"/work-progress"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
@@ -104,4 +114,4 @@ const EditAppLabel = () => {
     );
 };
 
-export default EditAppLabel;
+export default WorkProgressEdit;

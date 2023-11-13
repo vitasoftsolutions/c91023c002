@@ -26,6 +26,16 @@ import CreateApplabel from "../pages/Dashboard/AppLabel/CreateApplabel";
 import Projects from "../pages/Dashboard/Projects/Projects";
 import CreateProjects from "../pages/Dashboard/Projects/CreateProjects";
 import EditProjects from "../pages/Dashboard/Projects/EditProjects";
+import EditAppLabel from "../pages/Dashboard/AppLabel/EditAppLabel";
+import WorkProgressLists from "../pages/Dashboard/WorkProgress/WorkProgressLists";
+import WorkProgressCreate from "../pages/Dashboard/WorkProgress/WorkProgressCreate";
+import WorkProgressEdit from "../pages/Dashboard/WorkProgress/WorkProgressEdit";
+import ContractorBenLists from "../pages/Dashboard/ContractorBeneficary/ContractorBenLists";
+import ContractorBenCreate from "../pages/Dashboard/ContractorBeneficary/ContractorBenCreate";
+import ContractorBenEdit from "../pages/Dashboard/ContractorBeneficary/ContractorBenEdit";
+import ContractorAssignList from "../pages/Dashboard/ContractorAssign/ContractorAssignList";
+import ContractorAssignCreate from "../pages/Dashboard/ContractorAssign/ContractorAssignCreate";
+import ContractorAssignEdit from "../pages/Dashboard/ContractorAssign/ContractorAssignEdit";
 
 export const router = createBrowserRouter([
   {
@@ -230,6 +240,86 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <CreateApplabel></CreateApplabel>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/app-label/edit",
+        element: (
+          <PrivetRoute>
+            <EditAppLabel></EditAppLabel>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/work-progress",
+        element: (
+          <PrivetRoute>
+            <WorkProgressLists></WorkProgressLists>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/work-progress/create",
+        element: (
+          <PrivetRoute>
+            <WorkProgressCreate></WorkProgressCreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/work-progress/edit",
+        element: (
+          <PrivetRoute>
+            <WorkProgressEdit></WorkProgressEdit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-beneficaries",
+        element: (
+          <PrivetRoute>
+            <ContractorBenLists></ContractorBenLists>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-beneficaries/create",
+        element: (
+          <PrivetRoute>
+            <ContractorBenCreate></ContractorBenCreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-beneficaries/edit",
+        element: (
+          <PrivetRoute>
+            <ContractorBenEdit></ContractorBenEdit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-assign",
+        element: (
+          <PrivetRoute>
+            <ContractorAssignList></ContractorAssignList>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-assign/create",
+        element: (
+          <PrivetRoute>
+            <ContractorAssignCreate></ContractorAssignCreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-assign/edit",
+        element: (
+          <PrivetRoute>
+            <ContractorAssignEdit></ContractorAssignEdit>
           </PrivetRoute>
         ),
       },

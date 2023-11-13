@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLoanBeneficiary, fetchLoanBeneList } from '../../../redux/Actions/AppLabelAction';
+import { deleteLoanBeneficiary, fetchLoanBeneList } from '../../../redux/Actions/WorkProgressAction';
 import Swal from 'sweetalert2';
 import TableHeader from '../../../Components/shared/TableHeader/TableHeader';
 import GlobalTable from '../../../Components/shared/Tables/GlobalTable';
 const t_head = [
     { name: "Name" },
+    { name: "Percentage" },
     { name: "Date" },
     { name: "Status" },
     
     { name: "Actions" },
 ];
-const AppLabel = () => {
+const WorkProgressLists = () => {
     const dispatch = useDispatch();
-    const state = useSelector((state) => state.applabelReducer);
+    const state = useSelector((state) => state.workprogressReducers);
     // allDataList
     const allDataList = state.data;
     const newData = state?.data?.map((item) => ({
         id: item.id,
         first_name: item.name,
+        percentage:item.percentage,
         date: item.created_at,
         status: item.status,
     }));
@@ -72,8 +74,8 @@ const AppLabel = () => {
     return (
         <div>
             <TableHeader
-                title={"Label"}
-                redirectLink={"/app-label/create"}
+                title={"Work Progress"}
+                redirectLink={"/work-progress/create"}
                 url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
             />
             <GlobalTable
@@ -84,7 +86,7 @@ const AppLabel = () => {
                 current_page={current_page}
                 page_number={page_number}
                 deleteFunction={deleteFunction}
-                editLink={"/app-label/edit"}
+                editLink={"/work-progress/edit"}
                 erp_modalCol={12}
                 photoSection={false}
             />
@@ -92,4 +94,4 @@ const AppLabel = () => {
     );
 };
 
-export default AppLabel;
+export default WorkProgressLists;

@@ -8,7 +8,9 @@ import attendanceReducers from "./slices/AttendanceSlice";
 import applabelReducer from "./slices/AppLabelSlice";
 import projectsReducer from "./slices/ProjectsSlice";
 import typesReducers from "./slices/TypesSlice";
-
+import workprogressReducers from "./slices/WorkprogressSlice";
+import ContractorBenReducers from "./slices/ContractorBenSlice";
+import assignContractorSlice from "./slices/AssignContractorSlice";
 export const store = configureStore({
   reducer: {
     // loanBeneList: loanBeneListReducer,
@@ -21,5 +23,8 @@ export const store = configureStore({
     applabelReducer: applabelReducer,
 
     typesReducers: typesReducers,
+    workprogressReducers:workprogressReducers,
+    ContractorBenReducers:ContractorBenReducers,
+    assignContractorSlice:assignContractorSlice
   },
 });
