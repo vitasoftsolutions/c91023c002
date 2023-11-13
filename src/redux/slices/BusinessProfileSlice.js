@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBusinessProfile, fetchBusinessProfileList } from "../Actions/BusinessProfileAction";
+import { createBusinessProfile, deleteBusinessProfile, fetchBusinessProfile, fetchBusinessProfileList, updateBusinessProfile } from "../Actions/BusinessProfileAction";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
@@ -68,47 +68,47 @@ const businessProfileSlice = createSlice({
         state.isError = action.error.message;
       })
       // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      .addCase(createBusinessProfile.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createBusinessProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createBusinessProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
       // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      .addCase(updateBusinessProfile.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateBusinessProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateBusinessProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
       // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      .addCase(deleteBusinessProfile.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteBusinessProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteBusinessProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
