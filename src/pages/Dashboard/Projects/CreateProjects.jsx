@@ -163,16 +163,16 @@ function CreateProjects() {
     //   isRequired: false,
     // },
 
-    // {
-    //   fieldName: "Project type",
-    //   fieldType: "select",
-    //   fieldPlaceholder: "Select a role",
-    //   isRequired: true,
-    //   options: typesState.map((type) => ({
-    //     value: type.id,
-    //     label: type.name,
-    //   })),
-    // },
+    {
+      fieldName: "Project type",
+      fieldType: "select",
+      fieldPlaceholder: "Select a role",
+      isRequired: true,
+      options: typesState.map((type) => ({
+        value: type.id,
+        label: type.name,
+      })),
+    },
   ];
 
   const submitFunction = (data) => {

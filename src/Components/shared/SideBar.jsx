@@ -5,9 +5,11 @@ import {
   FaRegCreditCard,
   FaRegListAlt,
 } from "react-icons/fa";
+import { FiSettings } from "react-icons/fi";
+import { GiProgression } from "react-icons/gi";
 import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
-import { MdInstallMobile } from "react-icons/md";
-import { BsCalendar2Check } from "react-icons/bs";
+import { MdInstallMobile, MdOutlineManageAccounts } from "react-icons/md";
+import { BsCalendar2Check, BsFiles, BsFillPersonPlusFill } from "react-icons/bs";
 import { SiFlatpak } from "react-icons/si";
 import { Link } from "react-router-dom";
 
@@ -106,23 +108,23 @@ const Menus = [
   },
   {
     title: "Settings",
-    icons: <FaHandHoldingUsd />,
+    icons: <FiSettings />,
     subMenus: [
       {
         title: "App Label",
-        icons: <FaRegListAlt />,
+        icons: <FiSettings />,
         to: "/app-label",
       },
     ]
     ,
   },
-  {
+  { 
     title: "Work Progress",
-    icons: <FaHandHoldingUsd />,
+    icons: <GiProgression />,
     subMenus: [
       {
         title: "Work Progress",
-        icons: <FaRegListAlt />,
+        icons: <GiProgression />,
         to: "/work-progress",
       },
     ]
@@ -130,7 +132,7 @@ const Menus = [
   },
   {
     title: "Contractors",
-    icons: <FaHandHoldingUsd />,
+    icons: <MdOutlineManageAccounts />,
     subMenus: [
       {
         title: "Beneficaries",
@@ -139,7 +141,7 @@ const Menus = [
       },
       {
         title: "Assign Contractor",
-        icons: <FaRegListAlt />,
+        icons: <BsFillPersonPlusFill />,
         to: "/contractor-assign",
       },
     ]
