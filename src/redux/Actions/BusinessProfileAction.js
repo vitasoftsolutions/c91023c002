@@ -163,3 +163,124 @@ export const updateBusinessProfile = createAsyncThunk(
 //
 //
 //
+
+export const searchBusinessProfile = createAsyncThunk(
+  "searchBusinessProfile",
+  async (firstName) => {
+    try {
+      // Get the JWT token from session storage
+      const token = sessionStorage.getItem("jwt_token");
+
+      // Define the headers
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      let apiUrl = `${base_url}/loan-beneficaries/`;
+
+      // Check if firstName is not empty, then append the search query
+      if (firstName) {
+        apiUrl += `?first_name=${firstName}`;
+      }
+
+      // Make the Axios GET request with the headers
+      const response = await axios.get(apiUrl, {
+        headers,
+      });
+
+      const response_token = response.data.results.token;
+      const result = jwtDecode(response_token);
+
+      const data = result.data;
+      // Return the data
+      return data;
+    } catch (error) {
+      const massage = (error.response && error.response.data) || error.massage;
+      return massage;
+    }
+  }
+);
+
+//
+//
+//
+//
+export const sortByDateBusinessProfile = createAsyncThunk(
+  "sortByDateBusinessProfile",
+  async (date) => {
+    try {
+      // Get the JWT token from session storage
+      const token = sessionStorage.getItem("jwt_token");
+
+      // Define the headers
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      let apiUrl = `${base_url}/loan-beneficaries/`;
+
+      // Check if date is not empty, then append the search query
+      if (date) {
+        apiUrl += `?created_at=${date}`;
+      }
+
+      // Make the Axios GET request with the headers
+      const response = await axios.get(apiUrl, {
+        headers,
+      });
+
+      const response_token = response.data.results.token;
+      const result = jwtDecode(response_token);
+
+      const data = result.data;
+      // Return the data
+      return data;
+    } catch (error) {
+      const massage = (error.response && error.response.data) || error.massage;
+      return massage;
+    }
+  }
+);
+//
+//
+//
+//
+export const sortByAZBusinessProfile = createAsyncThunk(
+  "sortByAZBusinessProfile",
+  async (sortOrder) => {
+    try {
+      // Get the JWT token from session storage
+      const token = sessionStorage.getItem("jwt_token");
+
+      // Define the headers
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      let apiUrl = `${base_url}/loan-beneficaries/`;
+
+      // Check if sortOrder is not empty, then append the search query
+      if (sortOrder) {
+        apiUrl += `?order=${sortOrder}`;
+      }
+
+      // Make the Axios GET request with the headers
+      const response = await axios.get(apiUrl, {
+        headers,
+      });
+
+      const response_token = response.data.results.token;
+      const result = jwtDecode(response_token);
+
+      const data = result.data;
+      // Return the data
+      return data;
+    } catch (error) {
+      const massage = (error.response && error.response.data) || error.massage;
+      return massage;
+    }
+  }
+);
