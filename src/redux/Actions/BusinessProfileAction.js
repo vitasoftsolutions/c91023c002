@@ -103,3 +103,34 @@ export const fetchBusinessProfile = createAsyncThunk("fetchBusinessProfile", asy
   // Return the data 
   return { data };
 });
+
+//
+//
+//
+//
+export const deleteBusinessProfile = createAsyncThunk(
+  "deleteBusinessProfile",
+  async (payload) => {
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios PUT request with the headers and payload
+    const response = await axios.delete(
+      `${base_url}/loan-beneficaries/${payload}/`,
+      { headers }
+    );
+
+    // Return the data from the response
+    return response.status;
+  }
+);
+//
+//
+//
+//
