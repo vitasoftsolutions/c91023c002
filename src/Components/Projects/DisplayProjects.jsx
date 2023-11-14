@@ -30,45 +30,46 @@ function DisplayProjects({
         {/* Content */}
         {allDataList?.map((dt) => {
           return (
-            <Link key={dt.id} to={`/projects/${dt.id}`} state={dt}>
-              <div className="hover-container card w-40 h-min mx-auto bg-base-100 shadow-xl hover:shadow-md duration-200 mt-5 mb-10 rounded-md">
+            <div
+              key={dt.id}
+              className="hover-container card w-40 h-min mx-auto bg-base-100 shadow-xl hover:shadow-md duration-200 mt-5 mb-10 rounded-md"
+            >
+              <Link to={`/projects/${dt.id}`} state={dt}>
                 <figure className="h-36 overflow-hidden bg-gray-200">
-                  <img
-                    src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                    alt="Shoes"
-                  />
+                  <img src="" alt="Shoes" />
                 </figure>
-                <div className="card-body px-3 pt-2 pb-3 relative">
-                  <h2 className="text-lg text-start">
-                    <Link>{dt.name}</Link>
-                  </h2>
+              </Link>
+
+              <div className="card-body px-3 pt-2 pb-3 relative">
+                <Link to={`/projects/${dt.id}`} state={dt}>
+                  <h2 className="text-lg text-start mb-2">{dt.name}</h2>
                   <div className="card-actions">
                     <div className="badge badge-outline">
                       {dt.status === true ? "Complete" : "Working"}
                     </div>
                   </div>
+                </Link>
 
-                  <div className="absolute bottom-[-32px] left-0 rounded-sm bg-gray-200 shadow-xl w-40">
-                    <div className="child-div flex justify-center">
-                      <Link
-                        to={editLink}
-                        state={dt.id}
-                        className="cursor-pointer justify-center flex w-1/2 text-erp_success"
-                      >
-                        <FaFilePen />
-                      </Link>
-                      <div className="divider divider-horizontal w-0 m-0 p-0"></div>
-                      <button
-                        className="flex justify-center w-1/2 text-erp_danger"
-                        onClick={() => handelDelete(dt.id)}
-                      >
-                        <FaTrashCan />
-                      </button>
-                    </div>
+                <div className="absolute bottom-[-32px] left-0 rounded-sm bg-gray-200 shadow-xl w-40">
+                  <div className="child-div flex justify-center">
+                    <Link
+                      to={editLink}
+                      state={dt.id}
+                      className="cursor-pointer justify-center flex w-1/2 text-erp_success"
+                    >
+                      <FaFilePen />
+                    </Link>
+                    <div className="divider divider-horizontal w-0 m-0 p-0"></div>
+                    <button
+                      className="flex justify-center w-1/2 text-erp_danger"
+                      onClick={() => handelDelete(dt.id)}
+                    >
+                      <FaTrashCan />
+                    </button>
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>
