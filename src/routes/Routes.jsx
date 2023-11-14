@@ -40,6 +40,7 @@ import BusinessProfile from "../pages/Dashboard/BusinessProfile/BusinessProfile"
 import CreateBusinessProfile from "../pages/Dashboard/BusinessProfile/CreateBusinessProfile";
 import EditBusinessProfile from "../pages/Dashboard/BusinessProfile/EditBusinessProfile";
 import ProjectsDetails from "../pages/Dashboard/Projects/ProjectsDetails";
+import FloorDetails from "../pages/Dashboard/Projects/FloorDetails";
 
 export const router = createBrowserRouter([
   {
@@ -196,6 +197,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <ProjectsDetails />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/projects/:id/floor-details",
+        element: (
+          <PrivetRoute>
+            <FloorDetails />
           </PrivetRoute>
         ),
       },

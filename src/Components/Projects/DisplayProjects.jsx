@@ -36,7 +36,7 @@ function DisplayProjects({
             >
               <Link to={`/projects/${dt.id}`} state={dt}>
                 <figure className="h-36 overflow-hidden bg-gray-200">
-                  <img src="" alt="Shoes" />
+                  <img src="" alt="" />
                 </figure>
               </Link>
 
