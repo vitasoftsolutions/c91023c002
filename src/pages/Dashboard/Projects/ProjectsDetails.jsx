@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { FaBuilding } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -10,16 +10,25 @@ import { fetchFloors } from "../../../redux/Actions/FloorsAction";
 // Tabs
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import DetailsModal from "../../../Components/shared/Modals/DetailsModal";
 
 function ProjectsDetails() {
   const dispatch = useDispatch();
   let { state } = useLocation();
+
+  const [allData, setAllData] = useState(null);
 
   console.log(state, "state");
 
   useEffect(() => {
     dispatch(fetchFloors(state?.id));
   }, [dispatch, state]);
+
+  // Modal data
+  const getModalData = () => {
+    const foundObject = state;
+    setAllData(foundObject);
+  };
 
   return (
     <>
@@ -39,12 +48,17 @@ function ProjectsDetails() {
       ) : (
         <div className="bg-white shadow-lg shadow-blue-200 md:mx-8 mb-5 mt-5 rounded-lg md:p-4">
           <div
-            className={`w-full mx-auto p-4 bg-gray-200 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200 min-h-[60vh] relative`}
+            className={`w-full mx-auto p-4 bg-gray-200 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md min-h-[60vh] relative`}
           >
             <div>
-              <h3 className="text-erp_primary font-bold text-2xl">
+              <button
+                onClick={() => {
+                  getModalData();
+                }}
+                className="text-erp_primary font-bold text-2xl"
+              >
                 {state?.name}
-              </h3>
+              </button>
               <div className="flex items-center gap-2">
                 <p className="text-erp_danger">
                   <IoLocation />
@@ -103,6 +117,16 @@ function ProjectsDetails() {
           </div>
         </div>
       )}
+
+      {/*  */}
+      <DetailsModal
+        allData={allData}
+        onClose={() => setAllData(null)}
+        erp_modalCol={12}
+        photoSection={false}
+      />
+
+      {/*  */}
     </>
   );
 }
