@@ -10,14 +10,14 @@ import {
 
 const t_head = [
   { name: "Name" },
-  { name: "Image" },
-  { name: "Join Date" },
+  { name: "Logo" },
+  { name: "Date" },
   { name: "E-mail" },
   { name: "Status" },
   { name: "Actions" },
 ];
 
-const Brand = () => {
+const Brands = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.loanBeneficiary);
   // allDataList
@@ -103,4 +103,4 @@ const Brand = () => {
   );
 };
 
-export default Brand;
+export default Brands;
