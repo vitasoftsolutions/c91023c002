@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import loanBeneficiary from "./slices/loanBeneficiarySlice";
 import floorsReducer from "./slices/floorSlice";
 import businessProfileReducer from "./slices/BusinessProfileSlice";
+import brandsReducer from "./slices/brandsSlice";
 import phoneReducers from "./slices/phoneSlice";
 import employeeReducers from "./slices/employeeSlice";
 import ownerReducers from "./slices/ownerBeneficiarySlice";
@@ -18,6 +19,7 @@ import assignContractorSlice from "./slices/AssignContractorSlice";
 export const store = configureStore({
   reducer: {
     loanBeneficiary: loanBeneficiary,
+    brandsReducer: brandsReducer,
     businessProfileReducer: businessProfileReducer,
     floorsReducer: floorsReducer,
     projectsReducer: projectsReducer,
