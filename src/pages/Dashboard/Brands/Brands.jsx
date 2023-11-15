@@ -7,7 +7,7 @@ import {
   deleteLoanBeneficiary,
   fetchLoanBeneList,
 } from "../../../redux/Actions/loanBenAction";
-import { fetchBrands } from "../../../redux/Actions/BrandsAction";
+import { deleteBrands, fetchBrands } from "../../../redux/Actions/BrandsAction";
 
 const t_head = [
   { name: "Name" },
@@ -71,7 +71,7 @@ const Brands = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteLoanBeneficiary(id));
+        dispatch(deleteBrands(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }

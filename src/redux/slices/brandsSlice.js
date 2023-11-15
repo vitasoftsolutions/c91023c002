@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBrand, fetchBrands, updateBrands } from "../Actions/BrandsAction";
+import { deleteBrands, fetchBrand, fetchBrands, updateBrands } from "../Actions/BrandsAction";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
@@ -99,16 +99,16 @@ const brandsSlice = createSlice({
         state.isUpdate = false;
       })
       // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      .addCase(deleteBrands.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteBrands.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteBrands.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;

@@ -146,7 +146,7 @@ export const deleteBrands = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/loan-beneficaries/${payload}/`,
+      `${base_url}/brands/${payload}/`,
       { headers }
     );
 
