@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteBrands, fetchBrand, fetchBrands, updateBrands } from "../Actions/BrandsAction";
+import { createBrands, deleteBrands, fetchBrand, fetchBrands, updateBrands } from "../Actions/BrandsAction";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
@@ -67,17 +67,17 @@ const brandsSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      // Create Brand
+      .addCase(createBrands.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createBrands.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createBrands.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];

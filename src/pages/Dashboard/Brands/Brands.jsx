@@ -85,7 +85,7 @@ const Brands = () => {
     <div className="max-w-screen">
       <TableHeader
         title={"Brands"}
-        redirectLink={"/brands/brands-crete"}
+        redirectLink={"/brands/create-brands"}
         // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />

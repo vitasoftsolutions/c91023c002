@@ -5,59 +5,26 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
-import { createLoanBen } from "../../../redux/Actions/loanBenAction";
+import { createBrands } from "../../../redux/Actions/BrandsAction";
+import MainForm from "../../../Components/shared/Forms/MainForm";
 
 const formsData = [
   {
-    fieldName: "First Name",
+    fieldName: "Name",
     fieldType: "text",
-    fieldPlaceholder: "First Name",
+    fieldPlaceholder: "Type name here",
     isRequired: true,
+    hasWidth:3
   },
   {
-    fieldName: "Last Name",
+    fieldName: "Location",
     fieldType: "text",
-    fieldPlaceholder: "Last Name",
+    fieldPlaceholder: "type the location here",
     isRequired: true,
+    hasWidth:3
   },
   {
-    fieldName: "Email",
-    fieldType: "email",
-    fieldPlaceholder: "example@gmail.com",
-    isRequired: true,
-  },
-  {
-    fieldName: "Nid Number",
-    fieldType: "number",
-    fieldPlaceholder: "Nid Number",
-    isRequired: true,
-  },
-  {
-    fieldName: "Present Address",
-    fieldType: "text",
-    fieldPlaceholder: "Present Address (Comma Separated)",
-    isRequired: true,
-  },
-  {
-    fieldName: "Permanent Address",
-    fieldType: "text",
-    fieldPlaceholder: "Permanent Address (Comma Separated)",
-    isRequired: true,
-  },
-  {
-    fieldName: "Profile Picture",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
-  },
-  {
-    fieldName: "Nid Front",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
-  },
-  {
-    fieldName: "Nid Back",
+    fieldName: "Logo",
     fieldType: "file",
     fieldPlaceholder: "Upload Image",
     isRequired: false,
@@ -66,11 +33,11 @@ const formsData = [
 
 function CreateBrand() {
   const dispatch = useDispatch();
-  const loanState = useSelector((state) => state.loanBeneficiary);
+  const loanState = useSelector((state) => state.brandsReducer);
   const navigate = useNavigate();
 
   const submitFunction = (data) => {
-    dispatch(createLoanBen(data));
+    dispatch(createBrands(data));
   };
 
   useEffect(() => {
@@ -86,7 +53,7 @@ function CreateBrand() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/beneficiarylist");
+        navigate("/brands");
       }, 3000);
     }
 
@@ -110,7 +77,7 @@ function CreateBrand() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/beneficiarylist"}
+            to={"/brands"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -118,7 +85,7 @@ function CreateBrand() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <BeneficiaryForm
+        <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
