@@ -98,6 +98,7 @@ const LoanBeneficiaryList = () => {
         editLink={"/beneficiarylist/editloan"}
         erp_modalCol={6}
         photoSection={true}
+        nidSection={true}
       />
     </div>
   );

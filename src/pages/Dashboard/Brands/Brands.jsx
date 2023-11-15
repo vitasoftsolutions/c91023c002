@@ -7,27 +7,28 @@ import {
   deleteLoanBeneficiary,
   fetchLoanBeneList,
 } from "../../../redux/Actions/loanBenAction";
+import { fetchBrands } from "../../../redux/Actions/BrandsAction";
 
 const t_head = [
   { name: "Name" },
   { name: "Logo" },
   { name: "Date" },
-  { name: "E-mail" },
+  { name: "Location" },
   { name: "Status" },
   { name: "Actions" },
 ];
 
 const Brands = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.loanBeneficiary);
+  const state = useSelector((state) => state.brandsReducer);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    first_name: item.first_name + " " + item.last_name,
-    image: item.profile_picture,
+    first_name: item.name,
+    image: item.logo,
     date: item.created_at,
-    email: item.email,
+    email: item.location,
     status: item.status,
   }));
   const tableData = {
@@ -50,7 +51,7 @@ const Brands = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchLoanBeneList(current_page));
+    dispatch(fetchBrands(current_page));
   }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
   const handlePageChange = (newPage) => {
@@ -83,8 +84,9 @@ const Brands = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Beneficiary"}
-        redirectLink={"/beneficiarylist/loan-beneficiary-crete"}
+        title={"Brands"}
+        redirectLink={"/brands/brands-crete"}
+        // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
       <GlobalTable
@@ -96,8 +98,9 @@ const Brands = () => {
         page_number={page_number}
         deleteFunction={deleteFunction}
         editLink={"/beneficiarylist/editloan"}
-        erp_modalCol={6}
+        erp_modalCol={12}
         photoSection={true}
+        nidSection={false}
       />
     </div>
   );

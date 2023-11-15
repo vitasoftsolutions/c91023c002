@@ -99,7 +99,7 @@ const Menus = [
       {
         title: "Brand",
         icons: <MdOutlineAddBusiness />,
-        to: "/brand",
+        to: "/brands",
       },
     ],
   },

@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { formatDate } from "../../../hooks/formatDate";
 
-const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
+const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData, nidSection }) => {
   // console.log(allData, "from modal")
   const { pathname } = useLocation();
   const formattedPathname =
@@ -27,10 +27,9 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
               <div className="bg-gray-100 h-[12rem] w-[12rem] rounded-full overflow-hidden items-center flex justify-center mx-auto">
                 <img
                   className="object-cover"
-                  src={allData.profile_picture}
-                  alt={allData.first_name + " " + allData.last_name}
+                  src={allData.profile_picture || allData.logo}
+                  alt={allData.first_name + " " + allData.last_name || allData.name}
                 />
-
               </div>
             )}
 
@@ -70,6 +69,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
                     key !== "user_permissions" &&
                     key !== "is_superuser" &&
                     key !== "roles" &&
+                    key !== "logo" &&
                     key !== "status" && (
                       <li key={key}>
                         <b>
@@ -95,7 +95,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData }) => {
               </ul>
             </div>
           </div>
-          {photoSection && (
+          {photoSection && nidSection && (
             // {/* Grid 2 */}
             <div className="md:col-span-3 col-span-1">
               {/*  */}

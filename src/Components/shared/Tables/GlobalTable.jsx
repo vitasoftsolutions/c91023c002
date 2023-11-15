@@ -16,7 +16,8 @@ const GlobalTable = ({
   editLink,
   allDataList,
   erp_modalCol,
-  photoSection
+  photoSection,
+  nidSection
 }) => {
   
   const [allData, setAllData] = useState(null);
@@ -204,6 +205,7 @@ const GlobalTable = ({
           onClose={() => setAllData(null)}
           erp_modalCol={erp_modalCol}
           photoSection={photoSection}
+          nidSection={nidSection}
         />
 
         {/*  */}

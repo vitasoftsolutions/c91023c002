@@ -95,6 +95,7 @@ function Employee() {
         editLink={"/employee/editemployee"}
         erp_modalCol={6}
         photoSection={true}
+        nidSection={true}
       />
     </div>
   );
