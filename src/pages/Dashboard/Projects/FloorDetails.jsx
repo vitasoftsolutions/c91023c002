@@ -70,9 +70,13 @@ function FloorDetails() {
                   </div>
                 ) : dt.type === "Commarcial" ? (
                   <div className="w-full flex">
-                    <div className="bg-gray-400 p-2 rounded-md shadow-lg hover:shadow-sm duration-200 w-1/2">
+                    <Link
+                      to={`/projects/${state.id}/floor-details/${dt.id}`}
+                      state={dt}
+                      className="bg-gray-400 p-2 rounded-md shadow-lg hover:shadow-sm duration-200 w-1/2"
+                    >
                       <h3 className="text-erp_light text-center">{dt.type}</h3>
-                    </div>
+                    </Link>
                     <div className="divider divider-horizontal "></div>
                     <div className="bg-gray-400 p-2 rounded-md shadow-lg hover:shadow-sm duration-200 w-1/2">
                       <h3 className="text-erp_light text-center">{dt.type}</h3>
