@@ -93,11 +93,11 @@ const Menus = [
   },
   // Brand
   {
-    title: "Brand",
+    title: "Brands",
     icons: <MdOutlineAddBusiness />,
     subMenus: [
       {
-        title: "Brand",
+        title: "Brands",
         icons: <MdOutlineAddBusiness />,
         to: "/brands",
       },

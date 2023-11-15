@@ -43,6 +43,7 @@ import ProjectsDetails from "../pages/Dashboard/Projects/ProjectsDetails";
 import FloorDetails from "../pages/Dashboard/Projects/FloorDetails";
 import FloorTypeDetails from "../pages/Dashboard/Projects/FloorTypeDetails";
 import Brands from "../pages/Dashboard/Brands/Brands";
+import EditBrands from "../pages/Dashboard/Brands/EditBrands";
 
 export const router = createBrowserRouter([
   {
@@ -279,10 +280,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/business-profile/edit-business-profile",
+        path: "/brands/edit-brands",
         element: (
           <PrivetRoute>
-            <EditBusinessProfile />
+            <EditBrands />
           </PrivetRoute>
         ),
       },

@@ -55,7 +55,7 @@ const Brands = () => {
   }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchLoanBeneList(newPage));
+    dispatch(fetchBrands(newPage));
   };
 
   // console.log(state, "state_ page");
@@ -97,7 +97,7 @@ const Brands = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/beneficiarylist/editloan"}
+        editLink={"/brands/edit-brands"}
         erp_modalCol={12}
         photoSection={true}
         nidSection={false}

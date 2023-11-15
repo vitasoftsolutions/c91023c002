@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBrands } from "../Actions/BrandsAction";
+import { fetchBrand, fetchBrands, updateBrands } from "../Actions/BrandsAction";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
@@ -51,19 +51,19 @@ const brandsSlice = createSlice({
         state.isError = action.error.message;
       })
       // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      .addCase(fetchBrand.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchBrand.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchBrand.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
@@ -83,17 +83,17 @@ const brandsSlice = createSlice({
         state.data = [action.error.message];
       })
       // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      .addCase(updateBrands.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateBrands.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateBrands.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;

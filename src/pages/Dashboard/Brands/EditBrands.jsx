@@ -1,137 +1,72 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
-import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { ToastContainer, toast } from "react-toastify";
-import {
-  fetchLoanBene,
-  updateLoanBeneficiary,
-} from "../../../redux/Actions/loanBenAction";
+import { fetchBrand, updateBrands } from "../../../redux/Actions/BrandsAction";
+import MainForm from "../../../Components/shared/Forms/MainForm";
 
-function EditBrand() {
+function EditBrands() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.loanBeneficiary);
+  const reduxState = useSelector((state) => state.brandsReducer);
   const location = useLocation();
   const state = reduxState.sData;
 
   console.log(state)
 
   useEffect(() => {
-    dispatch(fetchLoanBene(location.state));
+    dispatch(fetchBrand(location.state));
   }, [location.state, dispatch]);
 
   const formsData = [
     {
-      fieldName: "First Name",
+      fieldName: "Name",
       fieldType: "text",
       fieldPlaceholder: "First Name",
-      defaultValue: state.first_name,
+      defaultValue: state.name,
+      hasWidth:3
     },
     {
-      fieldName: "Last Name",
+      fieldName: "Location",
       fieldType: "text",
-      fieldPlaceholder: "Last Name",
-      defaultValue: state.last_name,
+      fieldPlaceholder: "Location",
+      defaultValue: state.location,
+      hasWidth:3
     },
     {
-      fieldName: "Email",
-      fieldType: "email",
-      fieldPlaceholder: "example@gmail.com",
-      defaultValue: state.email,
-    },
-    {
-      fieldName: "Nid Number",
-      fieldType: "number",
-      fieldPlaceholder: "Nid Number",
-      defaultValue: state.nid_number,
-    },
-    {
-      fieldName: "Present Address",
-      fieldType: "text",
-      fieldPlaceholder: "Present Address (Comma Separated)",
-      defaultValue: state.present_address,
-    },
-    {
-      fieldName: "Permanent Address",
-      fieldType: "text",
-      fieldPlaceholder: "Permanent Address (Comma Separated)",
-      defaultValue: state.permanent_address,
-    },
-    {
-      fieldName: "Profile Picture",
+      fieldName: "Logo",
       fieldType: "file",
       fieldPlaceholder: "Upload Image",
-      defaultValue: state.profile_picture,
-    },
-    {
-      fieldName: "Nid Front",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.nid_front,
-    },
-    {
-      fieldName: "Nid Back",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.nid_back,
+      defaultValue: state.logo,
     },
   ];
 
   const submitFunction = (data) => {
-    const profile_picture = data.profile_picture ? data.profile_picture : "";
-    const nid_front = data.nid_front ? data.nid_front : "";
-    const nid_back = data.nid_back ? data.nid_back : "";
+    const logo = data.logo ? data.logo : "";
 
     if (state) {
       const updateData = {
-        author_id: data.author_id ? data.author_id : state.author_id,
-        email: data.email ? data.email : state.email,
-        first_name: data.first_name ? data.first_name : state.first_name,
+        id: data.id ? data.id : state.id,
+        name: data.name ? data.name : state.name,
+        location: data.location ? data.location : state.location,
         is_deleted: data.is_deleted ? data.is_deleted : state.is_deleted,
-        last_name: data.last_name ? data.last_name : state.last_name,
-        nid_number: data.nid_number ? data.nid_number : state.nid_number,
-        permanent_address: data.permanent_address
-          ? data.permanent_address
-          : state.permanent_address,
-        present_address: data.present_address
-          ? data.present_address
-          : state.present_address,
         status: data.status ? data.status : state.status,
       };
 
-      // Dispatch when profile_picture length is greater than 0
-      if (profile_picture !== "") {
+      // Dispatch when logo length is greater than 0
+      if (logo !== "") {
         dispatch(
-          updateLoanBeneficiary({
+          updateBrands({
             id: state.id,
-            data: { ...updateData, profile_picture: profile_picture },
-          })
-        );
-      }
-      // Dispatch when nid_front length is greater than 0
-      if (nid_front !== "") {
-        dispatch(
-          updateLoanBeneficiary({
-            id: state.id,
-            data: { ...updateData, nid_front: nid_front },
-          })
-        );
-      }
-      // Dispatch when nid_back length is greater than 0
-      if (nid_back !== "") {
-        dispatch(
-          updateLoanBeneficiary({
-            id: state.id,
-            data: { ...updateData, nid_back: nid_back },
+            data: { ...updateData, logo: logo },
           })
         );
       }
 
       dispatch(
-        updateLoanBeneficiary({
+        updateBrands({
           id: state.id,
           data: updateData,
         })
@@ -154,7 +89,7 @@ function EditBrand() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/beneficiarylist");
+        navigate("/brands");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -165,7 +100,7 @@ function EditBrand() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/beneficiarylist"}
+            to={"/brands"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -173,7 +108,7 @@ function EditBrand() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <BeneficiaryForm
+        <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
@@ -197,4 +132,4 @@ function EditBrand() {
   );
 }
 
-export default EditBrand;
+export default EditBrands;
