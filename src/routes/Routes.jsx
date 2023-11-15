@@ -42,6 +42,7 @@ import EditBusinessProfile from "../pages/Dashboard/BusinessProfile/EditBusiness
 import ProjectsDetails from "../pages/Dashboard/Projects/ProjectsDetails";
 import FloorDetails from "../pages/Dashboard/Projects/FloorDetails";
 import FloorTypeDetails from "../pages/Dashboard/Projects/FloorTypeDetails";
+import Brand from "../pages/Dashboard/Brand/Brand";
 
 export const router = createBrowserRouter([
   {
@@ -240,6 +241,32 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <BusinessProfile />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/business-profile/crete-business-profile",
+        element: (
+          <PrivetRoute>
+            <CreateBusinessProfile />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/business-profile/edit-business-profile",
+        element: (
+          <PrivetRoute>
+            <EditBusinessProfile />
+          </PrivetRoute>
+        ),
+      },
+      // Brand
+      {
+
+        path: "/brand",
+        element: (
+          <PrivetRoute>
+            <Brand />
           </PrivetRoute>
         ),
       },

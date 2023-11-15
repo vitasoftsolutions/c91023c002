@@ -91,6 +91,18 @@ const Menus = [
       },
     ],
   },
+  // Brand
+  {
+    title: "Brand",
+    icons: <MdOutlineAddBusiness />,
+    subMenus: [
+      {
+        title: "Brand",
+        icons: <MdOutlineAddBusiness />,
+        to: "/brand",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
