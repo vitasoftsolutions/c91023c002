@@ -4,67 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { createLoanBen } from "../../../redux/Actions/loanBenAction";
+import MainForm from "../../../Components/shared/Forms/MainForm";
 
-const formsData = [
-  {
-    fieldName: "First Name",
-    fieldType: "text",
-    fieldPlaceholder: "First Name",
-    isRequired: true,
-  },
-  {
-    fieldName: "Last Name",
-    fieldType: "text",
-    fieldPlaceholder: "Last Name",
-    isRequired: true,
-  },
-  {
-    fieldName: "Email",
-    fieldType: "email",
-    fieldPlaceholder: "example@gmail.com",
-    isRequired: true,
-  },
-  {
-    fieldName: "Nid Number",
-    fieldType: "number",
-    fieldPlaceholder: "Nid Number",
-    isRequired: true,
-  },
-  {
-    fieldName: "Present Address",
-    fieldType: "text",
-    fieldPlaceholder: "Present Address (Comma Separated)",
-    isRequired: true,
-  },
-  {
-    fieldName: "Permanent Address",
-    fieldType: "text",
-    fieldPlaceholder: "Permanent Address (Comma Separated)",
-    isRequired: true,
-  },
-  {
-    fieldName: "Profile Picture",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
-  },
-  {
-    fieldName: "Nid Front",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
-  },
-  {
-    fieldName: "Nid Back",
-    fieldType: "file",
-    fieldPlaceholder: "Upload Image",
-    isRequired: false,
-  },
-];
-
-function CreateLoanBeneficiary() {
+function CreateSalaries() {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.loanBeneficiary);
   const navigate = useNavigate();
@@ -72,6 +15,80 @@ function CreateLoanBeneficiary() {
   const submitFunction = (data) => {
     dispatch(createLoanBen(data));
   };
+
+  const typesState = [
+    { id: 1, name: "ok" },
+    { id: 2, name: "isok" },
+    { id: 1, name: "notok" },
+  ];
+
+  const formsData = [
+    {
+      fieldName: "First Name",
+      fieldType: "text",
+      fieldPlaceholder: "First Name",
+      isRequired: true,
+    },
+    {
+      fieldName: "Last Name",
+      fieldType: "text",
+      fieldPlaceholder: "Last Name",
+      isRequired: true,
+    },
+    {
+      fieldName: "Email",
+      fieldType: "email",
+      fieldPlaceholder: "example@gmail.com",
+      isRequired: true,
+    },
+    {
+      fieldName: "Nid Number",
+      fieldType: "number",
+      fieldPlaceholder: "Nid Number",
+      isRequired: true,
+    },
+    {
+      fieldName: "Present Address",
+      fieldType: "text",
+      fieldPlaceholder: "Present Address (Comma Separated)",
+      isRequired: true,
+    },
+    {
+      fieldName: "Permanent Address",
+      fieldType: "text",
+      fieldPlaceholder: "Permanent Address (Comma Separated)",
+      isRequired: true,
+    },
+    {
+      fieldName: "Profile Picture",
+      fieldType: "file",
+      fieldPlaceholder: "Upload Image",
+      isRequired: false,
+    },
+    {
+      fieldName: "Nid Front",
+      fieldType: "file",
+      fieldPlaceholder: "Upload Image",
+      isRequired: false,
+    },
+    {
+      fieldName: "Nid Back",
+      fieldType: "file",
+      fieldPlaceholder: "Upload Image",
+      isRequired: false,
+    },
+    {
+      fieldName: "Project type",
+      fieldType: "select",
+      fieldPlaceholder: "Select a role",
+      isRequired: true,
+      multiSelect: true,
+      options: typesState.map((type) => ({
+        value: type.id,
+        label: type.name,
+      })),
+    },
+  ];
 
   useEffect(() => {
     if (loanState.isCreated) {
@@ -86,7 +103,7 @@ function CreateLoanBeneficiary() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/beneficiarylist");
+        navigate("/salary");
       }, 3000);
     }
 
@@ -110,7 +127,7 @@ function CreateLoanBeneficiary() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/beneficiarylist"}
+            to={"/salary"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -118,7 +135,7 @@ function CreateLoanBeneficiary() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <BeneficiaryForm
+        <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
@@ -141,4 +158,4 @@ function CreateLoanBeneficiary() {
   );
 }
 
-export default CreateLoanBeneficiary;
+export default CreateSalaries;

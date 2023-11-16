@@ -40,7 +40,7 @@ export const fetchSalaries = createAsyncThunk(
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
-    const { perPage } = getState().loanBeneficiary;
+    const { perPage } = getState().salaryReducer;
 
     console.log(getState())
 

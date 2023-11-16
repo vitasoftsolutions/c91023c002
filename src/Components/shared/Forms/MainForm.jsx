@@ -102,7 +102,26 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
         >
           {field.fieldName}
         </label>
-        {field.fieldType === "select" ? (
+        {field.fieldType === "select" && field.multiSelect ? (
+          <select
+            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+            {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+              required: field.isRequired,
+            })}
+            defaultValue={isState && field.defaultValue}
+            className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
+            multiple 
+          >
+            <option value="" disabled>
+              Choose an option
+            </option>
+            {field.options.map((option, index) => (
+              <option key={index} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        ) : field.fieldType === "select" ? (
           <select
             name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
             {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {

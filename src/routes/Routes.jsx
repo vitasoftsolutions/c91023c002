@@ -45,7 +45,8 @@ import FloorTypeDetails from "../pages/Dashboard/Projects/FloorTypeDetails";
 import Brands from "../pages/Dashboard/Brands/Brands";
 import EditBrands from "../pages/Dashboard/Brands/EditBrands";
 import CreateBrand from "../pages/Dashboard/Brands/CreateBrands";
-import Salary from "../pages/Dashboard/Salaraies/Salary";
+import Salaries from "../pages/Dashboard/Salaries/Salaries";
+import CreateSalaries from "../pages/Dashboard/Salaries/CreateSalaries";
 
 export const router = createBrowserRouter([
   {
@@ -295,15 +296,15 @@ export const router = createBrowserRouter([
         path: "/salary",
         element: (
           <PrivetRoute>
-            <Salary />
+            <Salaries />
           </PrivetRoute>
         ),
       },
       {
-        path: "/brands/create-brands",
+        path: "/salary/crete-salaries",
         element: (
           <PrivetRoute>
-            <CreateBrand />
+            <CreateSalaries />
           </PrivetRoute>
         ),
       },

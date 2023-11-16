@@ -104,13 +104,13 @@ const Menus = [
       },
     ],
   },
-  // Salary
+  // Salaries
   {
-    title: "Salary",
+    title: "Salaries",
     icons: <FaMoneyCheckDollar />,
     subMenus: [
       {
-        title: "Salary",
+        title: "Salaries",
         icons: <FaMoneyCheckDollar />,
         to: "/salary",
       },

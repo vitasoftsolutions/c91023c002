@@ -4,9 +4,9 @@ import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
 import {
-  deleteLoanBeneficiary,
-  fetchLoanBeneList,
+  deleteLoanBeneficiary,  
 } from "../../../redux/Actions/loanBenAction";
+import { fetchSalaries } from "../../../redux/Actions/salaryAction";
 
 const t_head = [
   { name: "Name" },
@@ -50,11 +50,11 @@ const Salary = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchLoanBeneList(current_page));
+    dispatch(fetchSalaries(current_page));
   }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchLoanBeneList(newPage));
+    dispatch(fetchSalaries(newPage));
   };
 
   // console.log(state, "state_ page");
@@ -83,8 +83,8 @@ const Salary = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Salary"}
-        redirectLink={"/salary/salary-crete"}
+        title={"Salaries"}
+        redirectLink={"/salary/crete-salaries"}
         // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
