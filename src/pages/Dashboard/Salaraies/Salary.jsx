@@ -19,7 +19,7 @@ const t_head = [
 
 const Salary = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.loanBeneficiary);
+  const state = useSelector((state) => state.salaryReducer);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
