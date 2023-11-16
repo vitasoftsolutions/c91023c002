@@ -45,6 +45,7 @@ import FloorTypeDetails from "../pages/Dashboard/Projects/FloorTypeDetails";
 import Brands from "../pages/Dashboard/Brands/Brands";
 import EditBrands from "../pages/Dashboard/Brands/EditBrands";
 import CreateBrand from "../pages/Dashboard/Brands/CreateBrands";
+import Salary from "../pages/Dashboard/Salaraies/Salary";
 
 export const router = createBrowserRouter([
   {
@@ -269,6 +270,32 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <Brands />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/brands/create-brands",
+        element: (
+          <PrivetRoute>
+            <CreateBrand />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/brands/edit-brands",
+        element: (
+          <PrivetRoute>
+            <EditBrands />
+          </PrivetRoute>
+        ),
+      },
+      // Salary
+      {
+
+        path: "/salary",
+        element: (
+          <PrivetRoute>
+            <Salary />
           </PrivetRoute>
         ),
       },

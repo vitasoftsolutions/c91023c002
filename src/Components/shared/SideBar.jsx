@@ -9,6 +9,7 @@ import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
 import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
 import { MdInstallMobile, MdOutlineAddBusiness, MdOutlineManageAccounts } from "react-icons/md";
+import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { BsCalendar2Check, BsFiles, BsFillPersonPlusFill } from "react-icons/bs";
 import { SiFlatpak } from "react-icons/si";
 import { Link } from "react-router-dom";
@@ -100,6 +101,18 @@ const Menus = [
         title: "Brands",
         icons: <MdOutlineAddBusiness />,
         to: "/brands",
+      },
+    ],
+  },
+  // Salary
+  {
+    title: "Salary",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Salary",
+        icons: <FaMoneyCheckDollar />,
+        to: "/salary",
       },
     ],
   },

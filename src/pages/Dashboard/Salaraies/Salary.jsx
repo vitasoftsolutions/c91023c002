@@ -83,7 +83,7 @@ const Salary = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Beneficiary"}
+        title={"Salary"}
         redirectLink={"/beneficiarylist/loan-beneficiary-crete"}
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
