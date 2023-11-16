@@ -84,7 +84,8 @@ const Salary = () => {
     <div className="max-w-screen">
       <TableHeader
         title={"Salary"}
-        redirectLink={"/beneficiarylist/loan-beneficiary-crete"}
+        redirectLink={"/salary/salary-crete"}
+        // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
       <GlobalTable
@@ -95,7 +96,7 @@ const Salary = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/beneficiarylist/editloan"}
+        editLink={"/salary/edit-salary"}
         erp_modalCol={6}
         photoSection={true}
         nidSection={true}
