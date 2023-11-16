@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
+import Select from "react-select";
 
 const BeneficiaryForm = ({
   formsData,
@@ -17,8 +18,27 @@ const BeneficiaryForm = ({
   } = useForm({
     defaultValues: defaultValues,
   });
-
-  // console.log(formsData, "is formsData");
+  // Style
+  const customStyles = {
+    menu: (provided, state) => ({
+      ...provided,
+      width: state.selectProps.width,
+      borderBottom: "1px dotted pink",
+      color: state.selectProps.menuColor,
+    }),
+    control: () => ({
+      width: "100%",
+      backgroundColor: "white",
+      display: "flex",
+      padding: "2px 5px",
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = "opacity 300ms";
+      return { ...provided, opacity, transition };
+    },
+  };
+  // Style
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -114,7 +134,15 @@ const BeneficiaryForm = ({
         >
           {field.fieldName}
         </label>
-        {field.fieldType === "file" ? (
+        {field.fieldType === "select" && field.multiSelect ? (
+          <Select
+            isMulti
+            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+            options={field.options}
+            styles={customStyles}
+            classNamePrefix="select"
+          />
+        ) : field.fieldType === "file" ? (
           <div
             className={`relative border-2 border-dashed border-gray-300 p-4 ${
               dragging ? "bg-gray-100" : ""

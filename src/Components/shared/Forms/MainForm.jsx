@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
+import Select from 'react-select';
 
 const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
   const {
@@ -11,7 +12,29 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
     control,
   } = useForm({
     defaultValues: defaultValues,
-  });
+  });  
+
+  // Style
+  const customStyles = {
+    menu: (provided, state) => ({
+      ...provided,
+      width: state.selectProps.width,
+      borderBottom: '1px dotted pink',
+      color: state.selectProps.menuColor,
+    }),
+    control: () => ({
+      width: "100%",
+      backgroundColor: "white",
+      display: "flex",
+      padding: "2px 5px"
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+      return { ...provided, opacity, transition };
+    }
+  }
+  // Style
 
   const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});
@@ -103,24 +126,13 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
           {field.fieldName}
         </label>
         {field.fieldType === "select" && field.multiSelect ? (
-          <select
-            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-            {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-              required: field.isRequired,
-            })}
-            defaultValue={isState && field.defaultValue}
-            className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
-            multiple 
-          >
-            <option value="" disabled>
-              Choose an option
-            </option>
-            {field.options.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+           <Select
+           isMulti
+           name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+           options={field.options}
+           styles={customStyles}
+           classNamePrefix="select"
+         />
         ) : field.fieldType === "select" ? (
           <select
             name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
+import Select from "react-select";
 
 const MultiStepForm = ({
   formsData,
@@ -18,8 +19,27 @@ const MultiStepForm = ({
     defaultValues: defaultValues,
     mode: "onChange",
   });
-
-  console.log(errors, "errors");
+  // Style
+  const customStyles = {
+    menu: (provided, state) => ({
+      ...provided,
+      width: state.selectProps.width,
+      borderBottom: "1px dotted pink",
+      color: state.selectProps.menuColor,
+    }),
+    control: () => ({
+      width: "100%",
+      backgroundColor: "white",
+      display: "flex",
+      padding: "2px 5px",
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = "opacity 300ms";
+      return { ...provided, opacity, transition };
+    },
+  };
+  // Style
 
   const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});
@@ -124,7 +144,15 @@ const MultiStepForm = ({
         >
           {field.fieldName}
         </label>
-        {field.fieldType === "select" ? (
+        {field.fieldType === "select" && field.multiSelect ? (
+          <Select
+            isMulti
+            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+            options={field.options}
+            styles={customStyles}
+            classNamePrefix="select"
+          />
+        ) : field.fieldType === "select" ? (
           <>
             <select
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
@@ -183,7 +211,9 @@ const MultiStepForm = ({
             )}
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
               ?.type === "required" && (
-                <span className="text-red-600">{field?.fieldName} is required.</span>
+              <span className="text-red-600">
+                {field?.fieldName} is required.
+              </span>
             )}
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
               ?.type === "positiveNumber" && (
@@ -216,7 +246,9 @@ const MultiStepForm = ({
             />
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
               ?.type === "required" && (
-              <span className="text-red-600">{field?.fieldName} is required.</span>
+              <span className="text-red-600">
+                {field?.fieldName} is required.
+              </span>
             )}
           </>
         ) : field.fieldType === "file" ? (
