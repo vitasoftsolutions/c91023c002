@@ -7,18 +7,20 @@ import {
 } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
-import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
+import { GrUserAdmin, GrUserManager, GrUserWorker } from "react-icons/gr";
 import {
   MdInstallMobile,
   MdOutlineAddBusiness,
   MdOutlineManageAccounts,
 } from "react-icons/md";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
+import { TbFileSettings } from "react-icons/tb";
 import {
+  BsCalculator,
   BsCalendar2Check,
-  BsFiles,
   BsFillPersonPlusFill,
 } from "react-icons/bs";
+import { GoPasskeyFill } from "react-icons/go";
 import { SiFlatpak } from "react-icons/si";
 import { Link } from "react-router-dom";
 
@@ -100,7 +102,7 @@ const Menus = [
       },
     ],
   },
-  // Brand
+  // Brands
   {
     title: "Brands",
     icons: <MdOutlineAddBusiness />,
@@ -127,11 +129,11 @@ const Menus = [
   // Customer Beneficiaries
   {
     title: "Customer Ben",
-    icons: <FaMoneyCheckDollar />,
+    icons: <GrUserManager />,
     subMenus: [
       {
         title: "Customer Ben",
-        icons: <FaMoneyCheckDollar />,
+        icons: <GrUserManager />,
         to: "/customer_beneficiaries",
       },
     ],
@@ -139,11 +141,11 @@ const Menus = [
   // Expenses
   {
     title: "Expenses",
-    icons: <FaMoneyCheckDollar />,
+    icons: <TbFileSettings />,
     subMenus: [
       {
         title: "Expenses",
-        icons: <FaMoneyCheckDollar />,
+        icons: <TbFileSettings />,
         to: "/expenses",
       },
     ],
@@ -151,11 +153,11 @@ const Menus = [
   // Flat Installment
   {
     title: "Flat Installment",
-    icons: <FaMoneyCheckDollar />,
+    icons: <BsCalculator />,
     subMenus: [
       {
         title: "Flat Installment",
-        icons: <FaMoneyCheckDollar />,
+        icons: <BsCalculator />,
         to: "/flat_installment",
       },
     ],
@@ -163,11 +165,11 @@ const Menus = [
   // Flat Rent
   {
     title: "Flat Rent",
-    icons: <FaMoneyCheckDollar />,
+    icons: <GoPasskeyFill />,
     subMenus: [
       {
         title: "Flat Rent",
-        icons: <FaMoneyCheckDollar />,
+        icons: <GoPasskeyFill />,
         to: "/flat_rent",
       },
     ],
@@ -348,7 +350,7 @@ const Menus = [
       {
         title: "Renter Beneficiaries",
         icons: <FaMoneyCheckDollar />,
-        to: "/renter_beneficiaries",
+        to: "/renter-beneficiaries",
       },
     ],
   },
@@ -412,18 +414,7 @@ const Menus = [
       },
     ],
   },
-  // Work Progress
-  {
-    title: "Work Progress",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Work Progress",
-        icons: <FaMoneyCheckDollar />,
-        to: "/work_progress",
-      },
-    ],
-  },
+// Menu 3
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,

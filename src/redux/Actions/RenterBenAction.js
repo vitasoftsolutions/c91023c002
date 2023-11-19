@@ -3,37 +3,39 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { base_url } from "../../Components/shared/Url";
 
-// Create Projects
-export const createProjects = createAsyncThunk(
-  "createProjects",
+//
+//
+//
+//
+//
+export const createRenterBene = createAsyncThunk(
+  "createRenterBene",
   async (payload) => {
-
-    console.log(payload, "payload data for submit")
-
+    // console.log(payload, "_____")
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       };
 
       const response = await axios.post(
-        `${base_url}/projects/`,
+        `${base_url}/renter-beneficaries/`,
         payload,
         { headers }
       );
-      console.log(response,"response")
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Projects");
+      throw new Error("Failed to Create renter");
     }
   }
 );
-
-
-// List Projects
-export const fetchProjects = createAsyncThunk(
-  "fetchProjects",
+//
+//
+//
+//
+export const fetchRenterBeneficariesList = createAsyncThunk(
+  "fetchRenterBeneficariesList",
   async (page, { getState }) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -48,7 +50,7 @@ export const fetchProjects = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/projects/?limit=${perPage}&offset=${
+      `${base_url}/renter-beneficaries/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
@@ -73,11 +75,38 @@ export const fetchProjects = createAsyncThunk(
     };
   }
 );
+//
+//
+//
+//
+export const fetchRenterBene = createAsyncThunk("fetchRenterBene", async (id) => {
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
 
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/renter-beneficaries/${id}/`, {
+    headers,
+  });
 
-// Delete Projects
-export const deleteProjects = createAsyncThunk(
-  "deleteProjects",
+  const data = response.data;
+
+  console.log(data, "data__");
+
+  // Return the data 
+  return { data };
+});
+
+//
+//
+//
+//
+export const deleteRenterBen = createAsyncThunk(
+  "deleteRenterBen",
   async (payload) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -90,7 +119,7 @@ export const deleteProjects = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/projects/${payload}/`,
+      `${base_url}/renter-beneficaries/${payload}/`,
       { headers }
     );
 
@@ -98,37 +127,12 @@ export const deleteProjects = createAsyncThunk(
     return response.status;
   }
 );
-
-// single Project
-export const fetchProject = createAsyncThunk("fetchProject", async (id) => {
-  console.log("getState()");
-  console.log(id, "getState()");
-
-  // Get the JWT token from session storage
-  const token = sessionStorage.getItem("jwt_token");
-  // Define the headers
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-
-  // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/projects/${id}/`, {
-    headers,
-  });
-  console.log(response, "data__");
-
-  const data = response.data;
-
-  console.log(data, "data__");
-
-  // Return the data 
-  return { data };
-});
-
-//update Project
-export const updateProject = createAsyncThunk(
-  "updateProject",
+//
+//
+//
+//
+export const updateRentBen = createAsyncThunk(
+  "updateRentBen",
   async (payload) => {
     console.log(payload, "payload");
     // Get the JWT token from session storage
@@ -136,13 +140,13 @@ export const updateProject = createAsyncThunk(
 
     // Define the headers
     const headers = {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     };
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/projects/${payload.id}/`,
+      `${base_url}/renter-beneficaries/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -151,19 +155,6 @@ export const updateProject = createAsyncThunk(
     return response.data;
   }
 );
-
-// TODO: Blow all the function
-//
-//
-//
-//
-//
-//
-
-//
-//
-//
-
 //
 //
 //

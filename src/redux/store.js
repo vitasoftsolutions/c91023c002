@@ -14,12 +14,14 @@ import typesReducers from "./slices/TypesSlice";
 import workprogressReducers from "./slices/WorkprogressSlice";
 import ContractorBenReducers from "./slices/ContractorBenSlice";
 import assignContractorSlice from "./slices/AssignContractorSlice";
+import renterBeneficiaryReducer from "./slices/renterBeneficiarySlice";
 
 
 
 export const store = configureStore({
   reducer: {
     loanBeneficiary: loanBeneficiary,
+    renterBeneficiaryReducer: renterBeneficiaryReducer,
     brandsReducer: brandsReducer,
     salaryReducer: salaryReducer,
     businessProfileReducer: businessProfileReducer,

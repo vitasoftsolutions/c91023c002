@@ -47,6 +47,9 @@ import EditBrands from "../pages/Dashboard/Brands/EditBrands";
 import CreateBrand from "../pages/Dashboard/Brands/CreateBrands";
 import Salaries from "../pages/Dashboard/Salaries/Salaries";
 import CreateSalaries from "../pages/Dashboard/Salaries/CreateSalaries";
+import RenterBeneficiaries from "../pages/Dashboard/RenterBeneficiaries/RenterBeneficiaries";
+import RenterBeneficiariesCrete from "../pages/Dashboard/RenterBeneficiaries/RenterBeneficiariesCrete";
+import EditRenterBeneficiaries from "../pages/Dashboard/RenterBeneficiaries/EditRenterBeneficiaries";
 
 export const router = createBrowserRouter([
   {
@@ -313,6 +316,32 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditBrands />
+          </PrivetRoute>
+        ),
+      },
+      // Salary
+      {
+
+        path: "/renter-beneficiaries",
+        element: (
+          <PrivetRoute>
+            <RenterBeneficiaries />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/renter-beneficiaries/renter-beneficiaries-crete",
+        element: (
+          <PrivetRoute>
+            <RenterBeneficiariesCrete />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/renter-beneficiaries/edit-renter-beneficiaries",
+        element: (
+          <PrivetRoute>
+            <EditRenterBeneficiaries />
           </PrivetRoute>
         ),
       },
