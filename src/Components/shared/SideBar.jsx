@@ -200,6 +200,30 @@ const Menus = [
       },
     ],
   },
+  // Loan Transactions
+  {
+    title: "Loan Transactions",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Loan Transactions",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan_transactions",
+      },
+    ],
+  },
+  // Material Installment
+  {
+    title: "Material Installment",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Material Installment",
+        icons: <FaMoneyCheckDollar />,
+        to: "/material_installment",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
