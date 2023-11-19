@@ -176,6 +176,18 @@ const Menus = [
       },
     ],
   },
+  // Leaves
+  {
+    title: "Leaves",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Leaves",
+        icons: <FaMoneyCheckDollar />,
+        to: "/leaves",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
