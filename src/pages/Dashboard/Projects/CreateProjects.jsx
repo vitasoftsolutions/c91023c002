@@ -168,6 +168,7 @@ function CreateProjects() {
       fieldType: "select",
       fieldPlaceholder: "Select a role",
       isRequired: true,
+      multiSelect: true,
       options: typesState.map((type) => ({
         value: type.id,
         label: type.name,

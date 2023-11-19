@@ -116,6 +116,18 @@ const Menus = [
       },
     ],
   },
+  // Customer Beneficiaries
+  {
+    title: "Customer Ben",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Customer Bene",
+        icons: <FaMoneyCheckDollar />,
+        to: "/customer_beneficiaries",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
