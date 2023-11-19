@@ -140,6 +140,18 @@ const Menus = [
       },
     ],
   },
+  // Flat Installment
+  {
+    title: "Flat Installment",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Flat Installment",
+        icons: <FaMoneyCheckDollar />,
+        to: "/flat_installment",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
