@@ -188,6 +188,18 @@ const Menus = [
       },
     ],
   },
+  // Loan Installment
+  {
+    title: "Loan Installment",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Loan Installment",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan_installment",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
