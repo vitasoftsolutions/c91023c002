@@ -152,6 +152,18 @@ const Menus = [
       },
     ],
   },
+  // Flat Rent
+  {
+    title: "Flat Rent",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Flat Rent",
+        icons: <FaMoneyCheckDollar />,
+        to: "/flat_rent",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
