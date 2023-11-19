@@ -164,6 +164,18 @@ const Menus = [
       },
     ],
   },
+  // Incomes
+  {
+    title: "Incomes",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Incomes",
+        icons: <FaMoneyCheckDollar />,
+        to: "/incomes",
+      },
+    ],
+  },
   {
     title: "Menu 3",
     icons: <FaHandHoldingUsd />,
