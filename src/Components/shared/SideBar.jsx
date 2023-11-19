@@ -122,9 +122,21 @@ const Menus = [
     icons: <FaMoneyCheckDollar />,
     subMenus: [
       {
-        title: "Customer Bene",
+        title: "Customer Ben",
         icons: <FaMoneyCheckDollar />,
         to: "/customer_beneficiaries",
+      },
+    ],
+  },
+  // Expenses
+  {
+    title: "Expenses",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Expenses",
+        icons: <FaMoneyCheckDollar />,
+        to: "/expenses",
       },
     ],
   },
