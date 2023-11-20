@@ -50,8 +50,7 @@ export const fetchLoanBeneList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/assigned-contractor/?limit=${perPage}&offset=${
-        (page - 1) * perPage
+      `${base_url}/assigned-contractor/?limit=${perPage}&offset=${(page - 1) * perPage
       }`,
       {
         headers,
@@ -59,6 +58,7 @@ export const fetchLoanBeneList = createAsyncThunk(
     );
 
     const response_token = response.data.results.token;
+
     const result = jwtDecode(response_token);
 
     const data = result.data;
@@ -67,6 +67,7 @@ export const fetchLoanBeneList = createAsyncThunk(
     const totalPages = Math.ceil(totalData / perPage);
 
     // Return the data and pagination information
+    console.log("responseddata", data)
     return {
       data,
       currentPage: page,
@@ -104,6 +105,81 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   return { data };
 });
 
+
+
+
+
+export const contractorben = createAsyncThunk("contractorben", async () => {
+
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/contructor-beneficaries/`, {
+    headers,
+  });
+
+  const response_token = response.data.results.token;
+
+  const result = jwtDecode(response_token);
+
+  const data = result.data;
+
+  console.log(data, "data__");
+
+  // Return the data 
+  return { data };
+});
+
+
+
+export const projectlist = createAsyncThunk("projectlist", async () => {
+
+
+  // Get the JWT token from session storage
+  const token = sessionStorage.getItem("jwt_token");
+  // Define the headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  // Make the Axios GET request with the headers
+  const response = await axios.get(`${base_url}/projects/`, {
+    headers,
+  });
+
+  const response_token = response.data.results.token;
+
+  const result = jwtDecode(response_token);
+
+  const data = result.data;
+
+  console.log(data, "data__");
+
+  //contractor
+  const response2 = await axios.get(`${base_url}/contructor-beneficaries/`, {
+    headers,
+  });
+
+  const response_token2 = response2.data.results.token;
+
+  const result2 = jwtDecode(response_token2);
+
+  const data2 = result2.data;
+  console.log("data2: ",data2)
+  // Return the data 
+  return { 
+    "project_data":data,
+    "con_data":data2 
+  };
+});
 //
 //
 //

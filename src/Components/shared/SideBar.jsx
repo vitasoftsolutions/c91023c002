@@ -477,6 +477,11 @@ const Menus = [
         icons: <BsFillPersonPlusFill />,
         to: "/contractor-assign",
       },
+      {
+        title: "Contractor Payment",
+        icons: <BsFillPersonPlusFill />,
+        to: "/contractor-payment",
+      },
     ],
   },
 ];

@@ -50,6 +50,9 @@ import CreateSalaries from "../pages/Dashboard/Salaries/CreateSalaries";
 import RenterBeneficiaries from "../pages/Dashboard/RenterBeneficiaries/RenterBeneficiaries";
 import RenterBeneficiariesCrete from "../pages/Dashboard/RenterBeneficiaries/RenterBeneficiariesCrete";
 import EditRenterBeneficiaries from "../pages/Dashboard/RenterBeneficiaries/EditRenterBeneficiaries";
+import ContractorPaymentList from "../pages/Dashboard/ContractorPayment/ContractorPaymentList";
+import ContractorPaymentcreate from "../pages/Dashboard/ContractorPayment/ContractorPaymentcreate";
+import ContractorPaymentEdit from "../pages/Dashboard/ContractorPayment/ContractorPaymentEdit";
 
 export const router = createBrowserRouter([
   {
@@ -463,6 +466,30 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <ContractorAssignEdit></ContractorAssignEdit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-payment",
+        element: (
+          <PrivetRoute>
+            <ContractorPaymentList></ContractorPaymentList>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-payment/create",
+        element: (
+          <PrivetRoute>
+            <ContractorPaymentcreate></ContractorPaymentcreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-payment/edit",
+        element: (
+          <PrivetRoute>
+            <ContractorPaymentEdit></ContractorPaymentEdit>
           </PrivetRoute>
         ),
       },

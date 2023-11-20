@@ -8,6 +8,8 @@ import {
   sortByAZLoanBen,
   sortByDateLoanBen,
   updateLoanBeneficiary,
+  contractorben,
+  projectlist,
 } from "../Actions/AssignContractorAction";
 
 const assignContractorSlice = createSlice({
@@ -15,6 +17,8 @@ const assignContractorSlice = createSlice({
   initialState: {
     isLoading: false,
     data: [],
+    project_data:[],
+    con_data:[],
     sData: [],
     isError: false,
     currentPage: 1,
@@ -28,6 +32,51 @@ const assignContractorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      //projectlist
+      //Conben
+      .addCase(projectlist.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(projectlist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+        state.project_data = action.payload.project_data;
+        state.con_data = action.payload.con_data;
+        state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.totalPages;
+        state.totalData = action.payload.totalData;
+      })
+      .addCase(projectlist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      //Conben
+      .addCase(contractorben.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(contractorben.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+        state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.totalPages;
+        state.totalData = action.payload.totalData;
+      })
+      .addCase(contractorben.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
       // Fetch LoanBen list
       .addCase(fetchLoanBeneList.pending, (state) => {
         state.isLoading = true;
