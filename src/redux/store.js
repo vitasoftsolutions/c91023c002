@@ -17,7 +17,7 @@ import assignContractorReducers from "./slices/AssignContractorSlice";
 import renterBeneficiaryReducer from "./slices/renterBeneficiarySlice";
 import paymentContractorReducers from "./slices/PaymentContractorSlice";
 import guarantorContractorReducers from "./slices/ContractorGurantorSlice";
-
+import supplierBenSliceReducers from "./slices/SupplierBenSlice";
 
 
 export const store = configureStore({
@@ -39,6 +39,7 @@ export const store = configureStore({
     ContractorBenReducers:ContractorBenReducers,
     assignContractorReducers:assignContractorReducers,
     paymentContractorReducers:paymentContractorReducers,
-    guarantorContractorReducers:guarantorContractorReducers
+    guarantorContractorReducers:guarantorContractorReducers,
+    supplierBenSliceReducers:supplierBenSliceReducers
   },
 });

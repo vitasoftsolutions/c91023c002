@@ -489,6 +489,28 @@ const Menus = [
       },
     ],
   },
+  {
+    title: "Suppliers",
+    icons: <MdOutlineManageAccounts />,
+    subMenus: [
+      {
+        title: "Beneficaries",
+        icons: <FaRegListAlt />,
+        to: "/suppliers-beneficaries",
+      },
+      {
+        title: "Brands",
+        icons: <BsFillPersonPlusFill />,
+        to: "/brands",
+      },
+      {
+        title: "Materials",
+        icons: <BsFillPersonPlusFill />,
+        to: "/",
+      },
+      
+    ],
+  },
 ];
 
 const SideBar = () => {
