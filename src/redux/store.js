@@ -15,6 +15,8 @@ import workprogressReducers from "./slices/WorkprogressSlice";
 import ContractorBenReducers from "./slices/ContractorBenSlice";
 import assignContractorReducers from "./slices/AssignContractorSlice";
 import renterBeneficiaryReducer from "./slices/renterBeneficiarySlice";
+import paymentContractorReducers from "./slices/PaymentContractorSlice";
+import guarantorContractorReducers from "./slices/ContractorGurantorSlice";
 
 
 
@@ -36,5 +38,7 @@ export const store = configureStore({
     workprogressReducers:workprogressReducers,
     ContractorBenReducers:ContractorBenReducers,
     assignContractorReducers:assignContractorReducers,
+    paymentContractorReducers:paymentContractorReducers,
+    guarantorContractorReducers:guarantorContractorReducers
   },
 });

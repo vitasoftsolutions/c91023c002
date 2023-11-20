@@ -5,47 +5,40 @@ import Swal from "sweetalert2";
 import {
     deleteLoanBeneficiary,
     fetchLoanBeneList,
-} from "../../../redux/Actions/PaymentContractorAction";
+} from "../../../redux/Actions/ContractorGuarantorAction";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import customName from "../helper"
 const t_head = [
     { name: "Name" },
-    { name: "Project" },
-    
-    { name: "Date" },
-    { name: "Worker" },
-    { name: "Payment" },
+    { name: "Image" },
+    { name: "Join Date" },
+    { name: "E-mail" },
     { name: "Status" },
-    { name: "Action" },
+    { name: "Actions" },
 ];
 
-const ContractorPaymentList = () => {
-    const [name, setName] = useState("")
-    
-    
 
-    console.log("name: ", name)
+const ContractorGurantorLists = () => {
     const dispatch = useDispatch();
-    const state = useSelector((state) => state.assignContractorReducers);
-
+    const state = useSelector((state) => state.loanBeneficiary);
     // allDataList
     const allDataList = state.data;
-    console.log(state.data)
     const newData = state?.data?.map((item) => ({
         id: item.id,
-        first_name: item.contructor_id,
-        project: item.project_id,
+        first_name: item.first_name + " " + item.last_name,
+        image: item.profile_picture,
         date: item.created_at,
-        worker: item.worker,
-        payment: item.payment,
+        email: item.email,
         status: item.status,
     }));
     const tableData = {
         ...state,
         data: newData,
     };
-    console.log(tableData)
     //
+
+    // console.log(tableData, "tableData");
+
     const current_page = state.currentPage;
     const total_page = state.totalPages;
 
@@ -59,11 +52,13 @@ const ContractorPaymentList = () => {
 
     useEffect(() => {
         dispatch(fetchLoanBeneList(current_page));
-    }, [dispatch, current_page, state.isDelete]);
+    }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
     const handlePageChange = (newPage) => {
         dispatch(fetchLoanBeneList(newPage));
     };
+
+    // console.log(state, "state_ page");
 
     const deleteFunction = (id) => {
         Swal.fire({
@@ -84,15 +79,14 @@ const ContractorPaymentList = () => {
         });
     };
 
-
-
-
+    //
+    //
     return (
         <div className="max-w-screen">
             <TableHeader
-                title={"Contractor Payment"}
-                redirectLink={"/contractor-payment/create"}
-                url_endpoint={"/export-csv/?model=PhoneNumber&app_label=globalapp2"}
+                title={"Contractor Guarantor"}
+                redirectLink={"/contractor-guarantor/create"}
+                url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
             />
             <GlobalTable
                 t_head={t_head}
@@ -102,12 +96,13 @@ const ContractorPaymentList = () => {
                 current_page={current_page}
                 page_number={page_number}
                 deleteFunction={deleteFunction}
-                editLink={"/contractor-payment/edit"}
-                erp_modalCol={12}
-                photoSection={false}
+                editLink={"/contractor-guarantor/edit"}
+                erp_modalCol={6}
+                photoSection={true}
+                nidSection={true}
             />
         </div>
     );
 };
 
-export default ContractorPaymentList;
+export default ContractorGurantorLists;

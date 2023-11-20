@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import MainForm from "../../../Components/shared/Forms/MainForm";
-import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
-import { createLoanBen, contractorben, projectlist } from "../../../redux/Actions/PaymentContractorAction";
+import { ToastContainer, toast } from "react-toastify";
+import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
+import { createLoanBen, contractorben, projectlist } from "../../../redux/Actions/ContractorGuarantorAction";
+import MainForm from "../../../Components/shared/Forms/MainForm";
 
-const ContractorPaymentcreate = () => {
+const ContractorGurantorCreate = () => {
     //contractor
     const dispatch = useDispatch();
     // const projectState = useSelector((state) => state.assignContractorReducers);
     // console.log("projectState: ",projectState);
-    const projectState = useSelector((state) => state.assignContractorReducers);
+    const projectState = useSelector((state) => state.guarantorContractorReducers);
     console.log("projectState: ", projectState);
     let navigate = useNavigate();
 
@@ -38,6 +39,66 @@ const ContractorPaymentcreate = () => {
     console.log("projectState: ", projectState)
     const formsData = [
         {
+            fieldName: "First Name",
+            fieldType: "text",
+            fieldPlaceholder: "First Name",
+            isRequired: true,
+        },
+        {
+            fieldName: "Last Name",
+            fieldType: "text",
+            fieldPlaceholder: "Last Name",
+            isRequired: true,
+        },
+        {
+            fieldName: "Email",
+            fieldType: "email",
+            fieldPlaceholder: "example@gmail.com",
+            isRequired: true,
+        },
+        {
+            fieldName: "Nid Number",
+            fieldType: "number",
+            fieldPlaceholder: "Nid Number",
+            isRequired: true,
+        },
+        {
+            fieldName: "Present Address",
+            fieldType: "text",
+            fieldPlaceholder: "Present Address (Comma Separated)",
+            isRequired: true,
+        },
+        {
+            fieldName: "Permanent Address",
+            fieldType: "text",
+            fieldPlaceholder: "Permanent Address (Comma Separated)",
+            isRequired: true,
+        },
+        {
+            fieldName: "Profile Picture",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Nid Front",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Nid Back",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Role",
+            fieldType: "text",
+            fieldPlaceholder: "Role",
+            isRequired: true,
+        },
+        {
             fieldName: "Contructor id",
             fieldType: "select",
             fieldPlaceholder: "Select a contractor",
@@ -46,37 +107,6 @@ const ContractorPaymentcreate = () => {
                 ...optionsArray
             ],
         },
-        {
-            fieldName: "Project id",
-            fieldType: "select",
-            fieldPlaceholder: "Select a project",
-            isRequired: true,
-            options: [
-                ...optionsArray2
-            ],
-        },
-        {
-            fieldName: "Worker",
-            fieldType: "text",
-            fieldPlaceholder: "Worker",
-            isRequired: true,
-        },
-        {
-            fieldName: "Payment",
-            fieldType: "text",
-            fieldPlaceholder: "Payment",
-            isRequired: true,
-        },
-        {
-            fieldName: "Payment Type",
-            fieldType: "select",
-            fieldPlaceholder: "Select a project",
-            isRequired: false,
-            options: [
-                { value: "", label: "No choice"}
-            ],
-        },
-        
     ];
     const submitFunction = (data) => {
         // const modifiedData = {
@@ -104,7 +134,7 @@ const ContractorPaymentcreate = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/contractor-payment");
+                navigate("/contractor-guarantor");
             }, 3000);
         }
 
@@ -122,22 +152,19 @@ const ContractorPaymentcreate = () => {
             });
         }
     }, [projectState, navigate]);
-
-
     return (
         <>
             <div className="flex items-center justify-between gap-4 mb-4">
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/contractor-payment"}
+                        to={"/contractor-guarantor"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
                     </Link>
                 </div>
             </div>
-
             <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
                 <MainForm
                     formsData={formsData}
@@ -162,4 +189,4 @@ const ContractorPaymentcreate = () => {
     );
 };
 
-export default ContractorPaymentcreate;
+export default ContractorGurantorCreate;

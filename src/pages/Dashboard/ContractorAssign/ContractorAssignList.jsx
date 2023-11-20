@@ -11,9 +11,10 @@ import customName from "../helper"
 const t_head = [
     { name: "Name" },
     { name: "Project" },
-    { name: "Payed Amount" },
-    { name: "Due Amount" },
     { name: "Date" },
+    
+    { name: "Due Amount" },
+    { name: "Payed Amount" },
     { name: "Rate" },
     { name: "Status" },
     { name: "Action" },

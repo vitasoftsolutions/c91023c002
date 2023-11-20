@@ -53,6 +53,9 @@ import EditRenterBeneficiaries from "../pages/Dashboard/RenterBeneficiaries/Edit
 import ContractorPaymentList from "../pages/Dashboard/ContractorPayment/ContractorPaymentList";
 import ContractorPaymentcreate from "../pages/Dashboard/ContractorPayment/ContractorPaymentcreate";
 import ContractorPaymentEdit from "../pages/Dashboard/ContractorPayment/ContractorPaymentEdit";
+import ContractorGurantorLists from "../pages/Dashboard/ContractorGurantor/ContractorGurantorLists";
+import ContractorGurantorCreate from "../pages/Dashboard/ContractorGurantor/ContractorGurantorCreate";
+import ContractorGuarantorEdit from "../pages/Dashboard/ContractorGurantor/ContractorGuarantorEdit";
 
 export const router = createBrowserRouter([
   {
@@ -490,6 +493,30 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <ContractorPaymentEdit></ContractorPaymentEdit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-guarantor",
+        element: (
+          <PrivetRoute>
+            <ContractorGurantorLists></ContractorGurantorLists>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-guarantor/create",
+        element: (
+          <PrivetRoute>
+            <ContractorGurantorCreate></ContractorGurantorCreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/contractor-guarantor/edit",
+        element: (
+          <PrivetRoute>
+            <ContractorGuarantorEdit></ContractorGuarantorEdit>
           </PrivetRoute>
         ),
       },
