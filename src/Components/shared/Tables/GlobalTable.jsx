@@ -63,7 +63,7 @@ const GlobalTable = ({
               ))}
             </tr>
           </thead>
-          {t_data?.data.length === 0 && (
+          {t_data?.data?.length === 0 && (
             <span className="absolute flex justify-center items-center w-full text-center min-h-[45vh]">
               <span className="flex flex-col bg-gray-200 px-5 rounded-full">
                 <img

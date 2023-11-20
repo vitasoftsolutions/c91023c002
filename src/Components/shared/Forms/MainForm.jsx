@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
-import Select from 'react-select';
+import Select from "react-select";
 
-const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
+const MainForm = ({
+  formsData,
+  defaultValues,
+  submitFunction,
+  isState,
+  isValue,
+}) => {
   const {
     register,
     handleSubmit,
@@ -12,28 +18,28 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
     control,
   } = useForm({
     defaultValues: defaultValues,
-  });  
+  });
 
   // Style
   const customStyles = {
     menu: (provided, state) => ({
       ...provided,
       width: state.selectProps.width,
-      borderBottom: '1px dotted pink',
+      borderBottom: "1px dotted pink",
       color: state.selectProps.menuColor,
     }),
     control: () => ({
       width: "100%",
       backgroundColor: "white",
       display: "flex",
-      padding: "2px 5px"
+      padding: "2px 5px",
     }),
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
+      const transition = "opacity 300ms";
       return { ...provided, opacity, transition };
-    }
-  }
+    },
+  };
   // Style
 
   const [filePreviews, setFilePreviews] = useState({});
@@ -109,7 +115,9 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
   };
 
   const renderField = (field, index) => {
-    // console.log(field.defaultValue);
+    if (field.isHidden) {
+      return null;
+    }
     return (
       <div
         className={`${
@@ -126,13 +134,13 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
           {field.fieldName}
         </label>
         {field.fieldType === "select" && field.multiSelect ? (
-           <Select
-           isMulti
-           name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-           options={field.options}
-           styles={customStyles}
-           classNamePrefix="select"
-         />
+          <Select
+            isMulti
+            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+            options={field.options}
+            styles={customStyles}
+            classNamePrefix="select"
+          />
         ) : field.fieldType === "select" ? (
           <select
             name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
@@ -255,7 +263,7 @@ const MainForm = ({ formsData, defaultValues, submitFunction, isState }) => {
             })}
             placeholder={field.fieldPlaceholder}
             className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
-            defaultValue={isState && field.defaultValue}
+            defaultValue={isState || isValue ? field.defaultValue : ""}
           />
         )}
       </div>

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createCustomerBen, deleteCustomerBen, fetchCustomerBeneList, fetchCustomersBene, updateCustomerBeneficiary } from "../Actions/CustomerBenAction";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
-  fetchLoanBenAllList,
   fetchLoanBene,
   fetchLoanBeneList,
   searchLoanBeneficiaries,
@@ -11,8 +11,8 @@ import {
   updateLoanBeneficiary,
 } from "../Actions/loanBenAction";
 
-const loanBeneficiarySlice = createSlice({
-  name: "createLoanBeneficiary",
+const customersBeneficiarySlice = createSlice({
+  name: "customersBeneficiarySlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,32 +29,14 @@ const loanBeneficiarySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch LoanBen list
-      .addCase(fetchLoanBenAllList.pending, (state) => {
+      // Fetch Customer BeneList list
+      .addCase(fetchCustomerBeneList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchLoanBenAllList.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isCreated = false;
-        state.isUpdate = false;
-        state.isError = false;
-        state.data = action.payload.data;
-      })
-      .addCase(fetchLoanBenAllList.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = action.error.message;
-      })
-      // Fetch LoanBen list
-      .addCase(fetchLoanBeneList.pending, (state) => {
-        state.isLoading = true;
-        state.isUpdate = false;
-        state.isError = false;
-        state.sData = [];
-      })
-      .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
+      .addCase(fetchCustomerBeneList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -64,69 +46,69 @@ const loanBeneficiarySlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLoanBeneList.rejected, (state, action) => {
+      .addCase(fetchCustomerBeneList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      // Fetch Customer
+      .addCase(fetchCustomersBene.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchCustomersBene.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchCustomersBene.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      // Create Customers
+      .addCase(createCustomerBen.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createCustomerBen.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createCustomerBen.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      // Update Customer
+      .addCase(updateCustomerBeneficiary.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateCustomerBeneficiary.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateCustomerBeneficiary.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
       // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      .addCase(deleteCustomerBen.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteCustomerBen.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteCustomerBen.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
@@ -181,4 +163,4 @@ const loanBeneficiarySlice = createSlice({
   },
 });
 
-export default loanBeneficiarySlice.reducer;
+export default customersBeneficiarySlice.reducer;

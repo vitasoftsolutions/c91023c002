@@ -53,13 +53,14 @@ const LoginForm = () => {
         sessionStorage.setItem("jwt_token", jwtToken);
 
         setLoading(false);
-         navigate("/");
+        navigate("/");
         setLoginError(null);
       } else {
         // Handle login error
         setLoginError("Invalid email or password");
       }
     } catch (error) {
+      setLoading(false);
       console.error("An error occurred:", error);
       setLoginError("An error occurred during login"); // Set a generic error message
     }
@@ -68,7 +69,7 @@ const LoginForm = () => {
   return (
     <>
       {loading ? (
-        <Loader text={"please wait..."} />
+        <Loader text={"Please wait..."} />
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}

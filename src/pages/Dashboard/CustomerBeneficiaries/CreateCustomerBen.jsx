@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
-import { createLoanBen } from "../../../redux/Actions/loanBenAction";
+import { createCustomerBen } from "../../../redux/Actions/CustomerBenAction";
 
 const formsData = [
   {
@@ -64,13 +64,15 @@ const formsData = [
   },
 ];
 
-function CreateLoanBeneficiary() {
+function CreateCustomerBeneficiaries() {
   const dispatch = useDispatch();
-  const loanState = useSelector((state) => state.loanBeneficiary);
+  const loanState = useSelector((state) => state.customersBenReducer);
   const navigate = useNavigate();
 
+  console.log(loanState)
+
   const submitFunction = (data) => {
-    dispatch(createLoanBen(data));
+    dispatch(createCustomerBen(data));
   };
 
   useEffect(() => {
@@ -86,7 +88,7 @@ function CreateLoanBeneficiary() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/beneficiarylist");
+        navigate("/customer-beneficiaries");
       }, 3000);
     }
 
@@ -110,7 +112,7 @@ function CreateLoanBeneficiary() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/beneficiarylist"}
+            to={"/customer-beneficiaries"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -141,4 +143,4 @@ function CreateLoanBeneficiary() {
   );
 }
 
-export default CreateLoanBeneficiary;
+export default CreateCustomerBeneficiaries;

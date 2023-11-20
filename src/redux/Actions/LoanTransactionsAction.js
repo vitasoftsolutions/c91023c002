@@ -8,8 +8,8 @@ import { base_url } from "../../Components/shared/Url";
 //
 //
 //
-export const createLoanBen = createAsyncThunk(
-  "createLoanBeneficiary",
+export const createLoanTransactions = createAsyncThunk(
+  "createLoanTransactions",
   async (payload) => {
     // console.log(payload, "_____")
     try {
@@ -18,9 +18,8 @@ export const createLoanBen = createAsyncThunk(
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       };
-
       const response = await axios.post(
-        `${base_url}/loan-beneficaries/`,
+        `${base_url}/loan-transactions/`,
         payload,
         { headers }
       );
@@ -34,13 +33,13 @@ export const createLoanBen = createAsyncThunk(
 //
 //
 //
-export const fetchLoanBeneList = createAsyncThunk(
-  "fetchLoanBeneList",
+export const fetchLoanTransactions = createAsyncThunk(
+  "fetchLoanTransactions",
   async (page, { getState }) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
-    const { perPage } = getState().loanBeneficiary;
+    const { perPage } = getState().loanTransactionsReducer;
 
     // Define the headers
     const headers = {
@@ -50,18 +49,16 @@ export const fetchLoanBeneList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/loan-beneficaries/?limit=${perPage}&offset=${
+      `${base_url}/loan-transactions/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
         headers,
       }
     );
+    const data = response.data.results;
 
-    const response_token = response.data.results.token;
-    const result = jwtDecode(response_token);
-
-    const data = result.data;
+    console.log(response, "results")
 
     const totalData = Math.ceil(response.data.count);
     const totalPages = Math.ceil(totalData / perPage);
@@ -79,38 +76,6 @@ export const fetchLoanBeneList = createAsyncThunk(
 //
 //
 //
-export const fetchLoanBenAllList = createAsyncThunk(
-  "fetchLoanBenAllList",
-  async (payload) => {
-    console.log(payload, "payload")
-    // Get the JWT token from session storage
-    const token = sessionStorage.getItem("jwt_token");
-
-    // Define the headers
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-
-    // Make the Axios GET request with the headers
-    const response = await axios.get(
-      `${base_url}/loan-beneficaries/`,{headers});
-
-    const response_token = response.data.results.token;
-    const result = jwtDecode(response_token);
-
-    const data = result.data;
-    // Return the data and pagination information
-    return {
-      data,
-    };
-  }
-);
-
-//
-//
-//
-//
 export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   console.log("getState()");
   console.log(id, "getState()");
@@ -124,7 +89,7 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/loan-beneficaries/${id}/`, {
+  const response = await axios.get(`${base_url}/loan-installment/${id}/`, {
     headers,
   });
 
@@ -132,7 +97,7 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
 
   console.log(data, "data__");
 
-  // Return the data
+  // Return the data 
   return { data };
 });
 
@@ -140,8 +105,8 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
 //
 //
 //
-export const deleteLoanBeneficiary = createAsyncThunk(
-  "deleteLoanBeneficiary",
+export const deleteLoanInstallments = createAsyncThunk(
+  "deleteLoanInstallments",
   async (payload) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -154,7 +119,7 @@ export const deleteLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/loan-beneficaries/${payload}/`,
+      `${base_url}/loan-installment/${payload}/`,
       { headers }
     );
 

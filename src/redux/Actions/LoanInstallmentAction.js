@@ -8,8 +8,8 @@ import { base_url } from "../../Components/shared/Url";
 //
 //
 //
-export const createLoanBen = createAsyncThunk(
-  "createLoanBeneficiary",
+export const createLoanInstallment = createAsyncThunk(
+  "createLoanInstallment",
   async (payload) => {
     // console.log(payload, "_____")
     try {
@@ -20,7 +20,7 @@ export const createLoanBen = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${base_url}/loan-beneficaries/`,
+        `${base_url}/loan-installment/`,
         payload,
         { headers }
       );
@@ -34,8 +34,8 @@ export const createLoanBen = createAsyncThunk(
 //
 //
 //
-export const fetchLoanBeneList = createAsyncThunk(
-  "fetchLoanBeneList",
+export const fetchLoanInstallments = createAsyncThunk(
+  "fetchLoanInstallments",
   async (page, { getState }) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -50,7 +50,7 @@ export const fetchLoanBeneList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/loan-beneficaries/?limit=${perPage}&offset=${
+      `${base_url}/loan-installment/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
@@ -79,38 +79,6 @@ export const fetchLoanBeneList = createAsyncThunk(
 //
 //
 //
-export const fetchLoanBenAllList = createAsyncThunk(
-  "fetchLoanBenAllList",
-  async (payload) => {
-    console.log(payload, "payload")
-    // Get the JWT token from session storage
-    const token = sessionStorage.getItem("jwt_token");
-
-    // Define the headers
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-
-    // Make the Axios GET request with the headers
-    const response = await axios.get(
-      `${base_url}/loan-beneficaries/`,{headers});
-
-    const response_token = response.data.results.token;
-    const result = jwtDecode(response_token);
-
-    const data = result.data;
-    // Return the data and pagination information
-    return {
-      data,
-    };
-  }
-);
-
-//
-//
-//
-//
 export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   console.log("getState()");
   console.log(id, "getState()");
@@ -124,7 +92,7 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/loan-beneficaries/${id}/`, {
+  const response = await axios.get(`${base_url}/loan-installment/${id}/`, {
     headers,
   });
 
@@ -132,7 +100,7 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
 
   console.log(data, "data__");
 
-  // Return the data
+  // Return the data 
   return { data };
 });
 
@@ -140,8 +108,8 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
 //
 //
 //
-export const deleteLoanBeneficiary = createAsyncThunk(
-  "deleteLoanBeneficiary",
+export const deleteLoanInstallments = createAsyncThunk(
+  "deleteLoanInstallments",
   async (payload) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -154,7 +122,7 @@ export const deleteLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/loan-beneficaries/${payload}/`,
+      `${base_url}/loan-installment/${payload}/`,
       { headers }
     );
 

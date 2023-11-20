@@ -134,7 +134,7 @@ const Menus = [
       {
         title: "Customer Ben",
         icons: <GrUserManager />,
-        to: "/customer_beneficiaries",
+        to: "/customer-beneficiaries",
       },
     ],
   },
@@ -206,7 +206,7 @@ const Menus = [
       {
         title: "Loan Installment",
         icons: <FaMoneyCheckDollar />,
-        to: "/loan_installment",
+        to: "/loan-installment",
       },
     ],
   },
@@ -218,7 +218,7 @@ const Menus = [
       {
         title: "Loan Transactions",
         icons: <FaMoneyCheckDollar />,
-        to: "/loan_transactions",
+        to: "/loan-transactions",
       },
     ],
   },

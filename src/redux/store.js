@@ -15,6 +15,9 @@ import workprogressReducers from "./slices/WorkprogressSlice";
 import ContractorBenReducers from "./slices/ContractorBenSlice";
 import assignContractorSlice from "./slices/AssignContractorSlice";
 import renterBeneficiaryReducer from "./slices/renterBeneficiarySlice";
+import customersBenReducer from "./slices/customersBeneficiarySlice";
+import loanInstallmentReducer from "./slices/loanInstallmentSlice";
+import loanTransactionsReducer from "./slices/loanTransactionsSlice";
 
 
 
@@ -22,6 +25,9 @@ export const store = configureStore({
   reducer: {
     loanBeneficiary: loanBeneficiary,
     renterBeneficiaryReducer: renterBeneficiaryReducer,
+    loanTransactionsReducer: loanTransactionsReducer,
+    loanInstallmentReducer: loanInstallmentReducer,
+    customersBenReducer: customersBenReducer,
     brandsReducer: brandsReducer,
     salaryReducer: salaryReducer,
     businessProfileReducer: businessProfileReducer,

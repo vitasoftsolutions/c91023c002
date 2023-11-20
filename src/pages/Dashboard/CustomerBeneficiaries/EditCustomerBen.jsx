@@ -9,18 +9,22 @@ import {
   fetchLoanBene,
   updateLoanBeneficiary,
 } from "../../../redux/Actions/loanBenAction";
+import {
+  fetchCustomersBene,
+  updateCustomerBeneficiary,
+} from "../../../redux/Actions/CustomerBenAction";
 
-function EditLoanBen() {
+function EditCustomerBen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.loanBeneficiary);
+  const reduxState = useSelector((state) => state.customersBenReducer);
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state)
+  console.log(state);
 
   useEffect(() => {
-    dispatch(fetchLoanBene(location.state));
+    dispatch(fetchCustomersBene(location.state));
   }, [location.state, dispatch]);
 
   const formsData = [
@@ -105,7 +109,7 @@ function EditLoanBen() {
       // Dispatch when profile_picture length is greater than 0
       if (profile_picture !== "") {
         dispatch(
-          updateLoanBeneficiary({
+          updateCustomerBeneficiary({
             id: state.id,
             data: { ...updateData, profile_picture: profile_picture },
           })
@@ -114,7 +118,7 @@ function EditLoanBen() {
       // Dispatch when nid_front length is greater than 0
       if (nid_front !== "") {
         dispatch(
-          updateLoanBeneficiary({
+          updateCustomerBeneficiary({
             id: state.id,
             data: { ...updateData, nid_front: nid_front },
           })
@@ -123,7 +127,7 @@ function EditLoanBen() {
       // Dispatch when nid_back length is greater than 0
       if (nid_back !== "") {
         dispatch(
-          updateLoanBeneficiary({
+          updateCustomerBeneficiary({
             id: state.id,
             data: { ...updateData, nid_back: nid_back },
           })
@@ -131,7 +135,7 @@ function EditLoanBen() {
       }
 
       dispatch(
-        updateLoanBeneficiary({
+        updateCustomerBeneficiary({
           id: state.id,
           data: updateData,
         })
@@ -154,7 +158,7 @@ function EditLoanBen() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/beneficiarylist");
+        navigate("/customer-beneficiaries");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -165,7 +169,7 @@ function EditLoanBen() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/beneficiarylist"}
+            to={"/customer-beneficiaries"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -197,4 +201,4 @@ function EditLoanBen() {
   );
 }
 
-export default EditLoanBen;
+export default EditCustomerBen;

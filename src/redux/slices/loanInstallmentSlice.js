@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
-  fetchLoanBenAllList,
   fetchLoanBene,
   fetchLoanBeneList,
   searchLoanBeneficiaries,
@@ -10,9 +9,10 @@ import {
   sortByDateLoanBen,
   updateLoanBeneficiary,
 } from "../Actions/loanBenAction";
+import { createLoanInstallment, deleteLoanInstallments, fetchLoanInstallments } from "../Actions/LoanInstallmentAction";
 
-const loanBeneficiarySlice = createSlice({
-  name: "createLoanBeneficiary",
+const loanInstallmentSlice = createSlice({
+  name: "createLoanInstallmentSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -30,31 +30,13 @@ const loanBeneficiarySlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Fetch LoanBen list
-      .addCase(fetchLoanBenAllList.pending, (state) => {
+      .addCase(fetchLoanInstallments.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchLoanBenAllList.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isCreated = false;
-        state.isUpdate = false;
-        state.isError = false;
-        state.data = action.payload.data;
-      })
-      .addCase(fetchLoanBenAllList.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = action.error.message;
-      })
-      // Fetch LoanBen list
-      .addCase(fetchLoanBeneList.pending, (state) => {
-        state.isLoading = true;
-        state.isUpdate = false;
-        state.isError = false;
-        state.sData = [];
-      })
-      .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
+      .addCase(fetchLoanInstallments.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -64,7 +46,7 @@ const loanBeneficiarySlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLoanBeneList.rejected, (state, action) => {
+      .addCase(fetchLoanInstallments.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
@@ -86,16 +68,16 @@ const loanBeneficiarySlice = createSlice({
         state.isError = action.error.message;
       })
       // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      .addCase(createLoanInstallment.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createLoanInstallment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createLoanInstallment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
@@ -117,16 +99,16 @@ const loanBeneficiarySlice = createSlice({
         state.isUpdate = false;
       })
       // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      .addCase(deleteLoanInstallments.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteLoanInstallments.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteLoanInstallments.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
@@ -181,4 +163,4 @@ const loanBeneficiarySlice = createSlice({
   },
 });
 
-export default loanBeneficiarySlice.reducer;
+export default loanInstallmentSlice.reducer;

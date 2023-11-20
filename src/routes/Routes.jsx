@@ -50,6 +50,13 @@ import CreateSalaries from "../pages/Dashboard/Salaries/CreateSalaries";
 import RenterBeneficiaries from "../pages/Dashboard/RenterBeneficiaries/RenterBeneficiaries";
 import RenterBeneficiariesCrete from "../pages/Dashboard/RenterBeneficiaries/RenterBeneficiariesCrete";
 import EditRenterBeneficiaries from "../pages/Dashboard/RenterBeneficiaries/EditRenterBeneficiaries";
+import CustomerBeneficiaries from "../pages/Dashboard/CustomerBeneficiaries/CustomerBeneficiaries";
+import CreateCustomerBeneficiaries from "../pages/Dashboard/CustomerBeneficiaries/CreateCustomerBen";
+import EditCustomerBen from "../pages/Dashboard/CustomerBeneficiaries/EditCustomerBen";
+import LoanInstallment from "../pages/Dashboard/LoanInstallment/LoanInstallment";
+import CreateInstallment from "../pages/Dashboard/LoanInstallment/CreateInstallment";
+import LoanTransactions from "../pages/Dashboard/LoanTransactions/LoanTransactions";
+import CreateTransactions from "../pages/Dashboard/LoanTransactions/CreateTransactions";
 
 export const router = createBrowserRouter([
   {
@@ -319,9 +326,8 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
-      // Salary
+      // renter
       {
-
         path: "/renter-beneficiaries",
         element: (
           <PrivetRoute>
@@ -342,6 +348,82 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditRenterBeneficiaries />
+          </PrivetRoute>
+        ),
+      },
+      // renter
+      {
+        path: "/customer-beneficiaries",
+        element: (
+          <PrivetRoute>
+            <CustomerBeneficiaries />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/customer-beneficiaries/customer-beneficiaries-crete",
+        element: (
+          <PrivetRoute>
+            <CreateCustomerBeneficiaries />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/customer-beneficiaries/edit-customer-beneficiaries",
+        element: (
+          <PrivetRoute>
+            <EditCustomerBen />
+          </PrivetRoute>
+        ),
+      },
+      // loan-installment
+      {
+        path: "/loan-installment",
+        element: (
+          <PrivetRoute>
+            <LoanInstallment />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/loan-installment/create-loan-installment",
+        element: (
+          <PrivetRoute>
+            <CreateInstallment />
+          </PrivetRoute>
+        ),
+      },
+      // TODO:
+      {
+        path: "/customer-beneficiaries/edit-customer-beneficiaries",
+        element: (
+          <PrivetRoute>
+            <EditCustomerBen />
+          </PrivetRoute>
+        ),
+      },
+      // Loan-Transactions
+      {
+        path: "/loan-transactions",
+        element: (
+          <PrivetRoute>
+            <LoanTransactions />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/loan-transactions/create-loan-transactions",
+        element: (
+          <PrivetRoute>
+            <CreateTransactions />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/loan-transactions/edit-loan-transactions",
+        element: (
+          <PrivetRoute>
+            <EditCustomerBen />
           </PrivetRoute>
         ),
       },
