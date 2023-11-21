@@ -365,6 +365,22 @@ const Menus = [
     ],
   },
   {
+    title: "Property (replace)",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Property Installment",
+        icons: <FaRegCreditCard />,
+        to: "/property-installment",
+      },
+      {
+        title: "Incomes",
+        icons: <FaRegListAlt />,
+        to: "/income",
+      }
+    ],
+  },
+  {
     title: "Utilities",
     icons: <FiSettings />,
     subMenus: [
