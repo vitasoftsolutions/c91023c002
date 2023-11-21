@@ -81,6 +81,10 @@ import EditPropertyPurchase from "../pages/Dashboard/PropertyPurchase/EditProper
 import RentCollectionList from "../pages/Dashboard/RentCollection/RentCollectionList";
 import CreateRentCollection from "../pages/Dashboard/RentCollection/CreateRentCollection";
 import EditRentCollection from "../pages/Dashboard/RentCollection/EditRentCollection";
+import ProjectProgressList from "../pages/Dashboard/ProjectProgress/ProjectProgressList";
+import CreateProjectProgress from "../pages/Dashboard/ProjectProgress/CreateProjectProgress";
+import RepairRecordsList from "../pages/Dashboard/RepairRecords/RepairRecordsList";
+import CreateRepairRecords from "../pages/Dashboard/RepairRecords/CreateRepairRecords";
 
 export const router = createBrowserRouter([
   {
@@ -527,6 +531,56 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditPropertyPurchase />
+          </PrivetRoute>
+        ),
+      },      
+      // repear-records
+      {
+        path: "/repear-records",
+        element: (
+          <PrivetRoute>
+            <RepairRecordsList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/repear-records/repear-records-crete",
+        element: (
+          <PrivetRoute>
+            <CreateRepairRecords />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/repear-records/edit-repear-records",
+        element: (
+          <PrivetRoute>
+            <EditRentCollection />
+          </PrivetRoute>
+        ),
+      },      
+      // Project Progress
+      {
+        path: "/project-progress",
+        element: (
+          <PrivetRoute>
+            <ProjectProgressList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/project-progress/project-progress-crete",
+        element: (
+          <PrivetRoute>
+            <CreateProjectProgress />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/project-progress/edit-project-progress",
+        element: (
+          <PrivetRoute>
+            <EditRentCollection />
           </PrivetRoute>
         ),
       },      
