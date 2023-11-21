@@ -25,17 +25,63 @@ import { SiFlatpak } from "react-icons/si";
 import { Link } from "react-router-dom";
 
 const Menus = [
+  // Accounts
   {
-    title: "Loan",
+    title: "Accounts",
     icons: <FaHandHoldingUsd />,
     subMenus: [
       {
-        title: "Beneficiary",
-        icons: <FaRegListAlt />,
-        to: "/beneficiarylist",
+        title: "Expenses",
+        icons: <TbFileSettings />,
+        to: "/expenses",
+      },
+      {
+        title: "Incomes",
+        icons: <FaMoneyCheckDollar />,
+        to: "/incomes",
       },
     ],
   },
+  // Contractors
+  {
+    title: "Contractors",
+    icons: <MdOutlineManageAccounts />,
+    subMenus: [
+      {
+        title: "Beneficiaries",
+        icons: <FaRegListAlt />,
+        to: "/contractor-beneficaries",
+      },
+      {
+        title: "Assign Contractor",
+        icons: <BsFillPersonPlusFill />,
+        to: "/contractor-assign",
+      },
+      {
+        title: "Contractor Payment",
+        icons: <BsFillPersonPlusFill />,
+        to: "/contractor-payment",
+      },
+      {
+        title: "Contractor Guarantors",
+        icons: <BsFillPersonPlusFill />,
+        to: "/contractor-guarantor",
+      },
+    ],
+  },
+  // Customer
+  {
+    title: "Customers",
+    icons: <GrUserManager />,
+    subMenus: [
+      {
+        title: "Customer Ben",
+        icons: <GrUserManager />,
+        to: "/customer-beneficiaries",
+      },
+    ],
+  },
+  // Phone number
   {
     title: "Phone",
     icons: <FaMobileAlt />,
@@ -47,17 +93,51 @@ const Menus = [
       },
     ],
   },
+  // HRM
   {
-    title: "Employee",
-    icons: <GrUserWorker />,
+    title: "Hrm",
+    icons: <FaHandHoldingUsd />,
     subMenus: [
       {
-        title: "Employee",
-        icons: <GrUserWorker />,
-        to: "/employee",
+        title: "Attendance",
+        icons: <BsCalendar2Check />,
+        to: "/attendance",
+      },
+      {
+        title: "Salaries",
+        icons: <FaMoneyCheckDollar />,
+        to: "/salary",
       },
     ],
   },
+  // Loan
+  {
+    title: "Loan",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Beneficiary",
+        icons: <FaRegListAlt />,
+        to: "/beneficiarylist",
+      },
+      {
+        title: "Loan Installment",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan-installment",
+      },
+      {
+        title: "Loan logs",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan-logs",
+      },
+      {
+        title: "Loan Transactions",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan-transactions",
+      },
+    ],
+  },
+  // Owner
   {
     title: "Owner",
     icons: <GrUserAdmin />,
@@ -69,28 +149,7 @@ const Menus = [
       },
     ],
   },
-  {
-    title: "Attendance",
-    icons: <BsCalendar2Check />,
-    subMenus: [
-      {
-        title: "Attendance",
-        icons: <BsCalendar2Check />,
-        to: "/attendance",
-      },
-    ],
-  },
-  {
-    title: "Projects",
-    icons: <SiFlatpak />,
-    subMenus: [
-      {
-        title: "Projects",
-        icons: <SiFlatpak />,
-        to: "/projects",
-      },
-    ],
-  },
+  // Business Profile
   {
     title: "Business Profile",
     icons: <MdOutlineAddBusiness />,
@@ -102,11 +161,68 @@ const Menus = [
       },
     ],
   },
-  // Brands
+  // Projects
   {
-    title: "Brands",
-    icons: <MdOutlineAddBusiness />,
+    title: "Projects",
+    icons: <SiFlatpak />,
     subMenus: [
+      {
+        title: "Projects",
+        icons: <SiFlatpak />,
+        to: "/projects",
+      },
+      {
+        title: "Project Progress",
+        icons: <FaMoneyCheckDollar />,
+        to: "/project-progress",
+      },
+      {
+        title: "Work Progress",
+        icons: <GiProgression />,
+        to: "/work-progress",
+      },
+      {
+        title: "Floors",
+        icons: <GiProgression />,
+        to: "/floors",
+      },
+      {
+        title: "Property",
+        icons: <FaMoneyCheckDollar />,
+        to: "/property",
+      },
+      {
+        title: "Property purchase",
+        icons: <FaMoneyCheckDollar />,
+        to: "/property-purchase",
+      },
+      {
+        title: "Property Installment",
+        icons: <FaMoneyCheckDollar />,
+        to: "/Property-installment",
+      },
+      {
+        title: "Expense by property",
+        icons: <FaMoneyCheckDollar />,
+        to: "/expense-property",
+      },
+    ],
+  },
+  // Suppliers
+  {
+    title: "Suppliers",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Suppliers",
+        icons: <FaMoneyCheckDollar />,
+        to: "/suppliers",
+      },
+      {
+        title: "Materials Dispatch from project",
+        icons: <FaMoneyCheckDollar />,
+        to: "/materials_dispatch_from_project",
+      },
       {
         title: "Brands",
         icons: <MdOutlineAddBusiness />,
@@ -114,267 +230,15 @@ const Menus = [
       },
     ],
   },
-  // Salaries
+  // Employee
   {
-    title: "Salaries",
-    icons: <FaMoneyCheckDollar />,
+    title: "Employee",
+    icons: <GrUserWorker />,
     subMenus: [
       {
-        title: "Salaries",
-        icons: <FaMoneyCheckDollar />,
-        to: "/salary",
-      },
-    ],
-  },
-  // Customer Beneficiaries
-  {
-    title: "Customer Ben",
-    icons: <GrUserManager />,
-    subMenus: [
-      {
-        title: "Customer Ben",
-        icons: <GrUserManager />,
-        to: "/customer-beneficiaries",
-      },
-    ],
-  },
-  // Expenses
-  {
-    title: "Expenses",
-    icons: <TbFileSettings />,
-    subMenus: [
-      {
-        title: "Expenses",
-        icons: <TbFileSettings />,
-        to: "/expenses",
-      },
-    ],
-  },
-  // Flat Installment
-  {
-    title: "Flat Installment",
-    icons: <BsCalculator />,
-    subMenus: [
-      {
-        title: "Flat Installment",
-        icons: <BsCalculator />,
-        to: "/flat_installment",
-      },
-    ],
-  },
-  // Flat Rent
-  {
-    title: "Flat Rent",
-    icons: <GoPasskeyFill />,
-    subMenus: [
-      {
-        title: "Flat Rent",
-        icons: <GoPasskeyFill />,
-        to: "/flat-rent",
-      },
-    ],
-  },
-  // Incomes
-  {
-    title: "Incomes",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Incomes",
-        icons: <FaMoneyCheckDollar />,
-        to: "/incomes",
-      },
-    ],
-  },
-  // Leaves
-  {
-    title: "Leaves",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Leaves",
-        icons: <FaMoneyCheckDollar />,
-        to: "/leaves",
-      },
-    ],
-  },
-  // Loan Installment
-  {
-    title: "Loan Installment",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Loan Installment",
-        icons: <FaMoneyCheckDollar />,
-        to: "/loan-installment",
-      },
-    ],
-  },
-  // Loan Transactions
-  {
-    title: "Loan Transactions",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Loan Transactions",
-        icons: <FaMoneyCheckDollar />,
-        to: "/loan-transactions",
-      },
-    ],
-  },
-  // Loan Logs
-  {
-    title: "Loan logs",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Loan logs",
-        icons: <FaMoneyCheckDollar />,
-        to: "/loan-logs",
-      },
-    ],
-  },
-  // Material Installment
-  {
-    title: "Material Installment",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Material Installment",
-        icons: <FaMoneyCheckDollar />,
-        to: "/material_installment",
-      },
-    ],
-  },
-  // Material Payment Installment
-  {
-    title: "Material Payment Installment ",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Material Payment Installment ",
-        icons: <FaMoneyCheckDollar />,
-        to: "/material_payment_installment ",
-      },
-    ],
-  },
-  // Material Purchase
-  {
-    title: "Material Purchase ",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Material Purchase ",
-        icons: <FaMoneyCheckDollar />,
-        to: "/material_purchase ",
-      },
-    ],
-  },
-  // Material Purchase
-  {
-    title: "Material Purchase ",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Material Purchase ",
-        icons: <FaMoneyCheckDollar />,
-        to: "/material_purchase ",
-      },
-    ],
-  },
-  // Materials
-  {
-    title: "Materials",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Materials",
-        icons: <FaMoneyCheckDollar />,
-        to: "/materials",
-      },
-    ],
-  },
-  // Materials Dispatch from project
-  {
-    title: "Materials Dispatch from project",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Materials Dispatch from project",
-        icons: <FaMoneyCheckDollar />,
-        to: "/materials_dispatch_from_project",
-      },
-    ],
-  },
-  // Materials Dispatch from warehouse
-  {
-    title: "Materials Dispatch from warehouse",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Materials Dispatch from warehouse",
-        icons: <FaMoneyCheckDollar />,
-        to: "/materials_dispatch_from_warehouse",
-      },
-    ],
-  },
-  // Property
-  {
-    title: "Property",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Property",
-        icons: <FaMoneyCheckDollar />,
-        to: "/property",
-      },
-    ],
-  },
-  // Property purchase
-  {
-    title: "Property purchase",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Property purchase",
-        icons: <FaMoneyCheckDollar />,
-        to: "/property-purchase",
-      },
-    ],
-  },
-  // Rent collections
-  {
-    title: "Rent collections",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Rent collections",
-        icons: <FaMoneyCheckDollar />,
-        to: "/rent-collections",
-      },
-    ],
-  },
-  // Renter Beneficiaries
-  {
-    title: "Renter Beneficiaries",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Renter Beneficiaries",
-        icons: <FaMoneyCheckDollar />,
-        to: "/renter-beneficiaries",
-      },
-    ],
-  },
-  // Reaper Records
-  {
-    title: "Reaper Records",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Reaper Records",
-        icons: <FaMoneyCheckDollar />,
-        to: "/repear_records",
+        title: "Employee",
+        icons: <GrUserWorker />,
+        to: "/employee",
       },
     ],
   },
@@ -390,23 +254,92 @@ const Menus = [
       },
     ],
   },
-  // Suppliers
+  // Warehouse
   {
-    title: "Suppliers",
-    icons: <FaMoneyCheckDollar />,
+    title: "Warehouse",
+    icons: <TbFileSettings />,
     subMenus: [
       {
-        title: "Suppliers",
+        title: "Warehouse Items",
         icons: <FaMoneyCheckDollar />,
-        to: "/suppliers",
+        to: "/warehouse-items",
+      },
+      {
+        title: "Material Payment installment",
+        icons: <TbFileSettings />,
+        to: "/material-payment-installment ",
+      },
+      {
+        title: "Material Purchase",
+        icons: <TbFileSettings />,
+        to: "/material-purchase",
+      },
+      {
+        title: "Material Dispatch",
+        icons: <TbFileSettings />,
+        to: "/material-dispatch",
+      },
+      {
+        title: "Material Receive Installment",
+        icons: <TbFileSettings />,
+        to: "/material-recive-installment",
       },
     ],
   },
-  // Types
+  // Inventory
   {
-    title: "Types",
+    title: "Inventory",
+    icons: <TbFileSettings />,
+    subMenus: [
+      {
+        title: "Material Dispatch",
+        icons: <FaMoneyCheckDollar />,
+        to: "/material-dispatch",
+      },
+      {
+        title: "Product Inventory",
+        icons: <TbFileSettings />,
+        to: "/product-inventory",
+      },
+    ],
+  },
+  // Renter
+  {
+    title: "Renter",
     icons: <FaMoneyCheckDollar />,
     subMenus: [
+      {
+        title: "Renter Beneficiaries",
+        icons: <FaMoneyCheckDollar />,
+        to: "/renter-beneficiaries",
+      },
+      {
+        title: "Flat Rent",
+        icons: <GoPasskeyFill />,
+        to: "/flat-rent",
+      },
+      {
+        title: "Rent collections",
+        icons: <FaMoneyCheckDollar />,
+        to: "/rent-collections",
+      },
+      {
+        title: "Repair Records",
+        icons: <FaMoneyCheckDollar />,
+        to: "/repear-records",
+      },
+    ],
+  },
+  // Utilities
+  {
+    title: "Utilities",
+    icons: <FiSettings />,
+    subMenus: [
+      {
+        title: "App Label",
+        icons: <FiSettings />,
+        to: "/app-label",
+      },
       {
         title: "Types",
         icons: <FaMoneyCheckDollar />,
@@ -414,19 +347,7 @@ const Menus = [
       },
     ],
   },
-  // Warehouse Items
-  {
-    title: "Warehouse Items",
-    icons: <FaMoneyCheckDollar />,
-    subMenus: [
-      {
-        title: "Warehouse Items",
-        icons: <FaMoneyCheckDollar />,
-        to: "/warehouse_items",
-      },
-    ],
-  },
-// Menu 3
+  //mnu from ohy
   {
     title: "Accounts",
     icons: <FaHandHoldingUsd />,
@@ -518,6 +439,181 @@ const Menus = [
       
     ],
   },
+
+
+  // // Expenses
+  // {
+  //   title: "Expenses",
+  //   icons: <TbFileSettings />,
+  //   subMenus: [
+  //     {
+  //       title: "Expenses",
+  //       icons: <TbFileSettings />,
+  //       to: "/expenses",
+  //     },
+  //   ],
+  // },
+  // // Flat Installment
+  // {
+  //   title: "Flat Installment",
+  //   icons: <BsCalculator />,
+  //   subMenus: [
+  //     {
+  //       title: "Flat Installment",
+  //       icons: <BsCalculator />,
+  //       to: "/flat_installment",
+  //     },
+  //   ],
+  // },
+
+  // // Incomes
+  // {
+  //   title: "Incomes",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [
+  //     {
+  //       title: "Incomes",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/incomes",
+  //     },
+  //   ],
+  // },
+  // // Leaves
+  // {
+  //   title: "Leaves",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [
+  //     {
+  //       title: "Leaves",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/leaves",
+  //     },
+  //   ],
+  // },
+
+  // // Material Installment
+  // {
+  //   title: "Material Installment",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [
+  //     {
+  //       title: "Material Installment",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/material_installment",
+  //     },
+  //   ],
+  // },
+  // // Material Payment Installment
+  // {
+  //   title: "Material Payment Installment ",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [
+  //     {
+  //       title: "Material Payment Installment ",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/material_payment_installment ",
+  //     },
+  //   ],
+  // },
+  // // Material Purchase
+  // {
+  //   title: "Material Purchase ",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [
+  //     {
+  //       title: "Material Purchase ",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/material_purchase ",
+  //     },
+  //   ],
+  // },
+  // // Material Purchase
+  // {
+  //   title: "Material Purchase ",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [
+  //     {
+  //       title: "Material Purchase ",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/material_purchase ",
+  //     },
+  //   ],
+  // },
+  // // Materials
+  // {
+  //   title: "Materials",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [
+  //     {
+  //       title: "Materials",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/materials",
+  //     },
+  //     {
+  //       title: "Materials Dispatch from warehouse",
+  //       icons: <FaMoneyCheckDollar />,
+  //       to: "/materials_dispatch_from_warehouse",
+  //     },
+      
+  //   ],
+  // },
+
+  // // Warehouse Items
+  // {
+  //   title: "Warehouse Items",
+  //   icons: <FaMoneyCheckDollar />,
+  //   subMenus: [],
+  // },
+  // // Menu 3
+  // {
+  //   title: "Menu 3",
+  //   icons: <FaHandHoldingUsd />,
+  //   subMenus: [
+  //     {
+  //       title: "Sub menu 3",
+  //       icons: <FaRegCreditCard />,
+  //       to: "/",
+  //     },
+  //     {
+  //       title: "Sub menu 3.1",
+  //       icons: <FaRegListAlt />,
+  //       to: "/",
+  //     },
+  //     {
+  //       title: "Sub menu 3",
+  //       icons: <FaRegCreditCard />,
+  //       to: "/",
+  //     },
+  //     {
+  //       title: "Sub menu 3.1",
+  //       icons: <FaRegListAlt />,
+  //       to: "/",
+  //     },
+  //   ],
+  // },
+  
+
+  // {
+  //   title: "Suppliers",
+  //   icons: <MdOutlineManageAccounts />,
+  //   subMenus: [
+  //     {
+  //       title: "Beneficaries",
+  //       icons: <FaRegListAlt />,
+  //       to: "/suppliers-beneficaries",
+  //     },
+  //     {
+  //       title: "Brands",
+  //       icons: <BsFillPersonPlusFill />,
+  //       to: "/brands",
+  //     },
+  //     {
+  //       title: "Materials",
+  //       icons: <BsFillPersonPlusFill />,
+  //       to: "/",
+  //     },
+  //   ],
+  // },
 ];
 
 const SideBar = () => {
@@ -554,7 +650,7 @@ const SideBar = () => {
   }, []);
 
   return (
-    <div className="mt-10 bg-white">
+    <div className="mt-10 bg-white h-full">
       <div
         className={`${
           open ? "w-60" : "w-20 "
