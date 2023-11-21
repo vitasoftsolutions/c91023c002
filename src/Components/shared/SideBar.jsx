@@ -170,7 +170,7 @@ const Menus = [
       {
         title: "Flat Rent",
         icons: <GoPasskeyFill />,
-        to: "/flat_rent",
+        to: "/flat-rent",
       },
     ],
   },
@@ -219,6 +219,18 @@ const Menus = [
         title: "Loan Transactions",
         icons: <FaMoneyCheckDollar />,
         to: "/loan-transactions",
+      },
+    ],
+  },
+  // Loan Logs
+  {
+    title: "Loan logs",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Loan logs",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan-logs",
       },
     ],
   },
@@ -326,7 +338,7 @@ const Menus = [
       {
         title: "Property purchase",
         icons: <FaMoneyCheckDollar />,
-        to: "/property_purchase",
+        to: "/property-purchase",
       },
     ],
   },
@@ -338,7 +350,7 @@ const Menus = [
       {
         title: "Rent collections",
         icons: <FaMoneyCheckDollar />,
-        to: "/rent_collections",
+        to: "/rent-collections",
       },
     ],
   },
@@ -556,7 +568,7 @@ const SideBar = () => {
         <img
           src="/image/control.png"
           className={`absolute cursor-pointer -right-3 top-20 w-7 border-dark-purple
-           border-2 rounded-full  ${!open && "rotate-180"}`}
+           border-2 rounded-full ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
 

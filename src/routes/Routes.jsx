@@ -68,6 +68,19 @@ import SupBenLists from "../pages/Dashboard/SuppliersBeneficary/SupBenLists";
 import SupBencreate from "../pages/Dashboard/SuppliersBeneficary/SupBencreate";
 import SupBenEdit from "../pages/Dashboard/SuppliersBeneficary/SupBenEdit";
 import EditInstallment from "../pages/Dashboard/LoanInstallment/EditInstallment";
+import LoanLogs from "../pages/Dashboard/LoanLogs/LoanLogs";
+import CreateFlateRent from "../pages/Dashboard/FlateRent/CreateFlateRent";
+import FlateRentList from "../pages/Dashboard/FlateRent/FlateRentList";
+import EditFlateRent from "../pages/Dashboard/FlateRent/EditFlateRent";
+import PropertyList from "../pages/Dashboard/Property/PropertyList";
+import CreateProperty from "../pages/Dashboard/Property/CreateProperty";
+import EditProperty from "../pages/Dashboard/Property/EditProperty";
+import PropertyPurchaseList from "../pages/Dashboard/PropertyPurchase/PropertyPurchaseList";
+import CreatePropertyPurchase from "../pages/Dashboard/PropertyPurchase/CreatePropertyPurchase";
+import EditPropertyPurchase from "../pages/Dashboard/PropertyPurchase/EditPropertyPurchase";
+import RentCollectionList from "../pages/Dashboard/RentCollection/RentCollectionList";
+import CreateRentCollection from "../pages/Dashboard/RentCollection/CreateRentCollection";
+import EditRentCollection from "../pages/Dashboard/RentCollection/EditRentCollection";
 
 export const router = createBrowserRouter([
   {
@@ -211,7 +224,6 @@ export const router = createBrowserRouter([
       },
       // Projects
       {
-
         path: "/projects",
         element: (
           <PrivetRoute>
@@ -261,7 +273,6 @@ export const router = createBrowserRouter([
       },
       // Business profile
       {
-
         path: "/business-profile",
         element: (
           <PrivetRoute>
@@ -287,7 +298,6 @@ export const router = createBrowserRouter([
       },
       // Brand
       {
-
         path: "/brands",
         element: (
           <PrivetRoute>
@@ -313,7 +323,6 @@ export const router = createBrowserRouter([
       },
       // Salary
       {
-
         path: "/salary",
         element: (
           <PrivetRoute>
@@ -404,7 +413,6 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
-      // TODO:
       {
         path: "/loan-installment/edit-loan-installment",
         element: (
@@ -438,6 +446,115 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
+      // Loan-Logs
+      {
+        path: "/loan-logs",
+        element: (
+          <PrivetRoute>
+            <LoanLogs />
+          </PrivetRoute>
+        ),
+      },
+      // flat-rent
+      {
+        path: "/flat-rent",
+        element: (
+          <PrivetRoute>
+            <FlateRentList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/flat-rent/flat-rent-crete",
+        element: (
+          <PrivetRoute>
+            <CreateFlateRent />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/flat-rent/edit-flat-rent",
+        element: (
+          <PrivetRoute>
+            <EditFlateRent />
+          </PrivetRoute>
+        ),
+      },      
+      // Property
+      {
+        path: "/property",
+        element: (
+          <PrivetRoute>
+            <PropertyList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/property/property-crete",
+        element: (
+          <PrivetRoute>
+            <CreateProperty />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/property/edit-property",
+        element: (
+          <PrivetRoute>
+            <EditProperty />
+          </PrivetRoute>
+        ),
+      },      
+      // Property
+      {
+        path: "/property-purchase",
+        element: (
+          <PrivetRoute>
+            <PropertyPurchaseList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/property-purchase/property-purchase-crete",
+        element: (
+          <PrivetRoute>
+            <CreatePropertyPurchase />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/property-purchase/edit-property-purchase",
+        element: (
+          <PrivetRoute>
+            <EditPropertyPurchase />
+          </PrivetRoute>
+        ),
+      },      
+      // Property
+      {
+        path: "/rent-collections",
+        element: (
+          <PrivetRoute>
+            <RentCollectionList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/rent-collections/rent-collections-crete",
+        element: (
+          <PrivetRoute>
+            <CreateRentCollection />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/rent-collections/edit-rent-collections",
+        element: (
+          <PrivetRoute>
+            <EditRentCollection />
+          </PrivetRoute>
+        ),
+      },      
       // floors
       {
         path: "/floors",
