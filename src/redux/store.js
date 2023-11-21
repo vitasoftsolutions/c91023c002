@@ -22,6 +22,9 @@ import loanLogsReducer from "./slices/loanLgsSlice";
 import paymentContractorReducers from "./slices/PaymentContractorSlice";
 import guarantorContractorReducers from "./slices/ContractorGurantorSlice";
 import supplierBenSliceReducers from "./slices/SupplierBenSlice";
+import TypesModuleSliceReducers from "./slices/TypesModuleSlice";
+import expenseSliceReducers from "./slices/ExpenseSlice";
+import incomeSliceReducers from "./slices/IncomeSlice";
 // 
 import propertyReducer from "./slices/_propertySlice";
 import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
@@ -63,6 +66,9 @@ export const store = configureStore({
     assignContractorReducers:assignContractorReducers,
     paymentContractorReducers:paymentContractorReducers,
     guarantorContractorReducers:guarantorContractorReducers,
-    supplierBenSliceReducers:supplierBenSliceReducers
+    supplierBenSliceReducers:supplierBenSliceReducers,
+    TypesModuleSliceReducers:TypesModuleSliceReducers,
+    expenseSliceReducers:expenseSliceReducers,
+    incomeSliceReducers:incomeSliceReducers,
   },
 });
