@@ -416,39 +416,34 @@ const Menus = [
   },
 // Menu 3
   {
-    title: "Menu 3",
+    title: "Accounts",
     icons: <FaHandHoldingUsd />,
     subMenus: [
       {
-        title: "Sub menu 3",
+        title: "Expenses",
         icons: <FaRegCreditCard />,
-        to: "/",
+        to: "/expense",
       },
       {
-        title: "Sub menu 3.1",
+        title: "Incomes",
         icons: <FaRegListAlt />,
-        to: "/",
-      },
-      {
-        title: "Sub menu 3",
-        icons: <FaRegCreditCard />,
-        to: "/",
-      },
-      {
-        title: "Sub menu 3.1",
-        icons: <FaRegListAlt />,
-        to: "/",
-      },
+        to: "/income",
+      }
     ],
   },
   {
-    title: "Settings",
+    title: "Utilities",
     icons: <FiSettings />,
     subMenus: [
       {
         title: "App Label",
         icons: <FiSettings />,
         to: "/app-label",
+      },
+      {
+        title: "Types",
+        icons: <FiSettings />,
+        to: "/types",
       },
     ],
   },

@@ -68,6 +68,15 @@ import SupBenLists from "../pages/Dashboard/SuppliersBeneficary/SupBenLists";
 import SupBencreate from "../pages/Dashboard/SuppliersBeneficary/SupBencreate";
 import SupBenEdit from "../pages/Dashboard/SuppliersBeneficary/SupBenEdit";
 import EditInstallment from "../pages/Dashboard/LoanInstallment/EditInstallment";
+import TypesLists from "../pages/Dashboard/Types/TypesLists";
+import TypesEdit from "../pages/Dashboard/Types/TypesEdit";
+import TypesCreate from "../pages/Dashboard/Types/TypesCreate";
+import Expenselist from "../pages/Dashboard/Expenses/Expenselist";
+import Expensecreate from "../pages/Dashboard/Expenses/Expensecreate";
+import Expenseedit from "../pages/Dashboard/Expenses/Expenseedit";
+import IncomeLists from "../pages/Dashboard/Incomes/IncomeLists";
+import Incomescreate from "../pages/Dashboard/Incomes/Incomescreate";
+import Incomesedit from "../pages/Dashboard/Incomes/Incomesedit";
 
 export const router = createBrowserRouter([
   {
@@ -628,6 +637,78 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <SupBenEdit></SupBenEdit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/types",
+        element: (
+          <PrivetRoute>
+            <TypesLists></TypesLists>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/types/create",
+        element: (
+          <PrivetRoute>
+            <TypesCreate></TypesCreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/types/edit",
+        element: (
+          <PrivetRoute>
+            <TypesEdit></TypesEdit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense",
+        element: (
+          <PrivetRoute>
+            <Expenselist></Expenselist>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense/create",
+        element: (
+          <PrivetRoute>
+            <Expensecreate></Expensecreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense/edit",
+        element: (
+          <PrivetRoute>
+            <Expenseedit></Expenseedit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/income",
+        element: (
+          <PrivetRoute>
+            <IncomeLists></IncomeLists>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/income/create",
+        element: (
+          <PrivetRoute>
+            <Incomescreate></Incomescreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/income/edit",
+        element: (
+          <PrivetRoute>
+            <Incomesedit></Incomesedit>
           </PrivetRoute>
         ),
       },

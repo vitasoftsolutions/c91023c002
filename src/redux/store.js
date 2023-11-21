@@ -22,6 +22,9 @@ import loanTransactionsReducer from "./slices/loanTransactionsSlice";
 import paymentContractorReducers from "./slices/PaymentContractorSlice";
 import guarantorContractorReducers from "./slices/ContractorGurantorSlice";
 import supplierBenSliceReducers from "./slices/SupplierBenSlice";
+import TypesModuleSliceReducers from "./slices/TypesModuleSlice";
+import expenseSliceReducers from "./slices/ExpenseSlice";
+import incomeSliceReducers from "./slices/IncomeSlice";
 
 
 export const store = configureStore({
@@ -47,6 +50,9 @@ export const store = configureStore({
     assignContractorReducers:assignContractorReducers,
     paymentContractorReducers:paymentContractorReducers,
     guarantorContractorReducers:guarantorContractorReducers,
-    supplierBenSliceReducers:supplierBenSliceReducers
+    supplierBenSliceReducers:supplierBenSliceReducers,
+    TypesModuleSliceReducers:TypesModuleSliceReducers,
+    expenseSliceReducers:expenseSliceReducers,
+    incomeSliceReducers:incomeSliceReducers,
   },
 });
