@@ -8,15 +8,15 @@ import {
   fetchLoanBeneList,
 } from "../../../redux/Actions/ContractorBenAction";
 const t_head = [
-    { name: "Name" },
-    { name: "Image" },
-    { name: "Join Date" },
-    { name: "E-mail" },
-    { name: "Status" },
-    { name: "Actions" },
-  ];
+  { name: "Name" },
+  { name: "Image" },
+  { name: "Join Date" },
+  { name: "E-mail" },
+  { name: "Status" },
+  { name: "Actions" },
+];
 const ContractorBenLists = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const state = useSelector((state) => state.ContractorBenReducers);
   // allDataList
   const allDataList = state.data;
