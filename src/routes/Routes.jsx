@@ -67,6 +67,7 @@ import ContractorGuarantorEdit from "../pages/Dashboard/ContractorGurantor/Contr
 import SupBenLists from "../pages/Dashboard/SuppliersBeneficary/SupBenLists";
 import SupBencreate from "../pages/Dashboard/SuppliersBeneficary/SupBencreate";
 import SupBenEdit from "../pages/Dashboard/SuppliersBeneficary/SupBenEdit";
+import EditInstallment from "../pages/Dashboard/LoanInstallment/EditInstallment";
 
 export const router = createBrowserRouter([
   {
@@ -405,10 +406,10 @@ export const router = createBrowserRouter([
       },
       // TODO:
       {
-        path: "/customer-beneficiaries/edit-customer-beneficiaries",
+        path: "/loan-installment/edit-loan-installment",
         element: (
           <PrivetRoute>
-            <EditCustomerBen />
+            <EditInstallment />
           </PrivetRoute>
         ),
       },

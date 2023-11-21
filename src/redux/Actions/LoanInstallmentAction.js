@@ -79,7 +79,7 @@ export const fetchLoanInstallments = createAsyncThunk(
 //
 //
 //
-export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
+export const fetchInstallment = createAsyncThunk("fetchInstallment", async (id) => {
   console.log("getState()");
   console.log(id, "getState()");
 
@@ -134,8 +134,8 @@ export const deleteLoanInstallments = createAsyncThunk(
 //
 //
 //
-export const updateLoanBeneficiary = createAsyncThunk(
-  "updateLoanBeneficiary",
+export const updateInstallment = createAsyncThunk(
+  "updateInstallment",
   async (payload) => {
     console.log(payload, "payload");
     // Get the JWT token from session storage
@@ -149,7 +149,7 @@ export const updateLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/loan-beneficaries/${payload.id}/`,
+      `${base_url}/loan-installment/${payload.id}/`,
       payload.data,
       { headers }
     );

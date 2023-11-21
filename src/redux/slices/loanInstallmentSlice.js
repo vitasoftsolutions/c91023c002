@@ -9,7 +9,7 @@ import {
   sortByDateLoanBen,
   updateLoanBeneficiary,
 } from "../Actions/loanBenAction";
-import { createLoanInstallment, deleteLoanInstallments, fetchLoanInstallments } from "../Actions/LoanInstallmentAction";
+import { createLoanInstallment, deleteLoanInstallments, fetchInstallment, fetchLoanInstallments, updateInstallment } from "../Actions/LoanInstallmentAction";
 
 const loanInstallmentSlice = createSlice({
   name: "createLoanInstallmentSlice",
@@ -50,20 +50,20 @@ const loanInstallmentSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      // Fetch Installment
+      .addCase(fetchInstallment.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchInstallment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchInstallment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
@@ -82,18 +82,18 @@ const loanInstallmentSlice = createSlice({
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      // Update loan installment
+      .addCase(updateInstallment.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateInstallment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateInstallment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
