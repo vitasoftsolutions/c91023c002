@@ -76,9 +76,31 @@ export const fetchLoanTransactions = createAsyncThunk(
 //
 //
 //
-export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
-  console.log("getState()");
-  console.log(id, "getState()");
+//
+export const deleteTransaction = createAsyncThunk(
+  "deleteTransaction",
+  async (payload) => {
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios PUT request with the headers and payload
+    const response = await axios.delete(
+      `${base_url}/loan-transactions/${payload}/`,
+      { headers }
+    );
+
+    // Return the data from the response
+    return response.status;
+  }
+);
+
+export const fetchLoanTransaction = createAsyncThunk("fetchLoanTransaction", async (id) => {
 
   // Get the JWT token from session storage
   const token = sessionStorage.getItem("jwt_token");
@@ -89,7 +111,7 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/loan-installment/${id}/`, {
+  const response = await axios.get(`${base_url}/loan-transactions/${id}/`, {
     headers,
   });
 
@@ -105,34 +127,8 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
 //
 //
 //
-export const deleteLoanInstallments = createAsyncThunk(
-  "deleteLoanInstallments",
-  async (payload) => {
-    // Get the JWT token from session storage
-    const token = sessionStorage.getItem("jwt_token");
-
-    // Define the headers
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-
-    // Make the Axios PUT request with the headers and payload
-    const response = await axios.delete(
-      `${base_url}/loan-installment/${payload}/`,
-      { headers }
-    );
-
-    // Return the data from the response
-    return response.status;
-  }
-);
-//
-//
-//
-//
-export const updateLoanBeneficiary = createAsyncThunk(
-  "updateLoanBeneficiary",
+export const updateLoanTransactions = createAsyncThunk(
+  "updateLoanTransactions",
   async (payload) => {
     console.log(payload, "payload");
     // Get the JWT token from session storage
@@ -146,7 +142,7 @@ export const updateLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/loan-beneficaries/${payload.id}/`,
+      `${base_url}/loan-transactions/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -155,6 +151,39 @@ export const updateLoanBeneficiary = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchLoanTransactionAllList = createAsyncThunk(
+  "fetchLoanTransactionAllList",
+  async (payload) => {
+
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios GET request with the headers
+    const response = await axios.get(
+      `${base_url}/loan-transactions/`,{headers});
+
+    console.log(response, "payload")
+
+
+    const response_token = response.data.results;
+
+    const data = response_token;
+    // Return the data and pagination information
+    return {
+      data,
+    };
+  }
+);
+
+//TODO:
+
 //
 //
 //

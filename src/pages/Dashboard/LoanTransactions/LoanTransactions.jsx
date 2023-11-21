@@ -6,7 +6,7 @@ import {
 } from "../../../redux/Actions/employeeAction";
 import Swal from "sweetalert2";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
-import { fetchLoanTransactions } from "../../../redux/Actions/LoanTransactionsAction";
+import { deleteTransaction, fetchLoanTransactions } from "../../../redux/Actions/LoanTransactionsAction";
 
 const t_head = [
   { name: "Amount" },
@@ -69,7 +69,7 @@ function LoanTransactions() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteEmployee(id));
+        dispatch(deleteTransaction(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }

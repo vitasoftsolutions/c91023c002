@@ -27,7 +27,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData, nidSection
               <div className="bg-gray-100 h-[12rem] w-[12rem] rounded-full overflow-hidden items-center flex justify-center mx-auto">
                 <img
                   className="object-cover"
-                  src={allData.profile_picture || allData.logo}
+                  src={allData.profile_picture || allData.logo || allData.document }
                   alt={allData.first_name + " " + allData.last_name || allData.name}
                 />
               </div>
@@ -70,6 +70,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData, nidSection
                     key !== "is_superuser" &&
                     key !== "roles" &&
                     key !== "logo" &&
+                    key !== "document" &&
                     key !== "status" && (
                       <li key={key}>
                         <b>

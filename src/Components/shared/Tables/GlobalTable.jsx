@@ -78,7 +78,6 @@ const GlobalTable = ({
           )}
           <tbody className="relative">
             {t_data?.data?.map((t_dt) => {
-              // console.log(t_data, "t_data");
               return (
                 // row
                 <tr key={t_dt.id} className="w-full border-b-[1px]">

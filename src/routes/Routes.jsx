@@ -57,6 +57,7 @@ import LoanInstallment from "../pages/Dashboard/LoanInstallment/LoanInstallment"
 import CreateInstallment from "../pages/Dashboard/LoanInstallment/CreateInstallment";
 import LoanTransactions from "../pages/Dashboard/LoanTransactions/LoanTransactions";
 import CreateTransactions from "../pages/Dashboard/LoanTransactions/CreateTransactions";
+import EditLoanTransactions from "../pages/Dashboard/LoanTransactions/EditLoanTransactions";
 
 export const router = createBrowserRouter([
   {
@@ -423,7 +424,7 @@ export const router = createBrowserRouter([
         path: "/loan-transactions/edit-loan-transactions",
         element: (
           <PrivetRoute>
-            <EditCustomerBen />
+            <EditLoanTransactions />
           </PrivetRoute>
         ),
       },

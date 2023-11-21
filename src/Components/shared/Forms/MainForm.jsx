@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import Select from "react-select";
@@ -74,14 +74,33 @@ const MainForm = ({
 
   const onSubmit = (data) => {
     console.log(data, "data");
-
+  
+    // Iterate through formsData and add each field to the data object
+    formsData.forEach((field) => {
+      // Check if the field is hidden
+      if (field.isHidden) {
+        // If hidden, set its value from the defaultValue
+        data[field.fieldName] = field.defaultValue;
+      }
+    });
+  
+    // Convert field names with spaces to field names with underscores in the data object
+    Object.keys(data).forEach((key) => {
+      if (key.includes(" ")) {
+        const newKey = key.replace(/ /g, "_").toLowerCase();
+        data[newKey] = data[key];
+        delete data[key];
+      }
+    });
+  
+    // Add file data to the data object
     const formDataWithFiles = { ...data, ...fileData };
-
+  
     console.log(formDataWithFiles, "formDataWithFiles");
-
+  
     submitFunction(formDataWithFiles);
   };
-
+  
   const handleFileChange = (fieldName, e) => {
     const file = e.target.files[0];
 
@@ -142,23 +161,24 @@ const MainForm = ({
             classNamePrefix="select"
           />
         ) : field.fieldType === "select" ? (
-          <select
-            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+          <Controller
+            control={control}
             {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
               required: field.isRequired,
             })}
-            defaultValue={isState && field.defaultValue}
-            className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
-          >
-            <option value="" disabled>
-              Choose an option
-            </option>
-            {field.options.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+            defaultValue={(isState && field.defaultValue) || ""}
+            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+            render={({ field: { onChange, value, ref } }) => (
+              <Select
+                inputRef={ref}
+                classNamePrefix="select"
+                styles={customStyles}
+                options={field.options}
+                value={field.options.find((c) => c.value === value)}
+                onChange={(val) => onChange(val.value)}
+              />
+            )}
+          />
         ) : field.fieldType === "file" ? (
           <div
             className={`relative border-2 border-dashed border-gray-300 p-4 ${

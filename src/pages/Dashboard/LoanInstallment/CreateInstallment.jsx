@@ -6,24 +6,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchLoanBenAllList } from "../../../redux/Actions/loanBenAction";
 import { createLoanInstallment } from "../../../redux/Actions/LoanInstallmentAction";
+import { fetchLoanTransactionAllList } from "../../../redux/Actions/LoanTransactionsAction";
 
 function CreateInstallment() {
   const dispatch = useDispatch();
   const loanBen = useSelector((state) => state.loanInstallmentReducer);
-  console.log(loanBen, "loanBen");
+  const loanState = useSelector((state) => state.loanBeneficiary.data);
+  const loanTran = useSelector((state) => state.loanTransactionsReducer.data);
   const navigate = useNavigate();
 
   const submitFunction = (data) => {
     dispatch(createLoanInstallment(data));
   };
 
+  useEffect(() => {
+    dispatch(fetchLoanBenAllList());
+  }, [dispatch]);
+
+  // fetch Loan Transaction AllList
+  useEffect(() => {
+    dispatch(fetchLoanTransactionAllList());
+  }, [dispatch]);
+
   // Get the user
   const token = sessionStorage.getItem("jwt_token");
   const result = jwtDecode(token);
   const userId = result.user_id;
 
-  console.log(userId);
+  
 
   const formsData = [
     {
@@ -39,22 +51,24 @@ function CreateInstallment() {
       isRequired: true,
     },
     {
-      fieldName: "Giver id",
-      fieldType: "text",
-      fieldPlaceholder: "Giver name",
+      fieldName: "Giver id",      
+      fieldType: "select",
+      fieldPlaceholder: "Select a Giver id",
       isRequired: true,
+      options: loanState.map(user => ({
+        value: user.id.toString(),
+        label: user.first_name,
+      })),
     },
     {
-      fieldName: "Taker id",
-      fieldType: "text",
-      fieldPlaceholder: "Taker id",
+      fieldName: "Taker id",      
+      fieldType: "select",
+      fieldPlaceholder: "Select a Taker id",
       isRequired: true,
-    },
-    {
-      fieldName: "Document",
-      fieldType: "file",
-      fieldPlaceholder: "doc",
-      isRequired: true,
+      options: loanState.map(user => ({
+        value: user.id.toString(),
+        label: user.first_name,
+      })),
     },
     {
       fieldName: "Author id",
@@ -65,9 +79,19 @@ function CreateInstallment() {
       isHidden: true,
     },
     {
-      fieldName: "Loan id",
-      fieldType: "number",
-      fieldPlaceholder: "Loan id",
+      fieldName: "Loan id",      
+      fieldType: "select",
+      fieldPlaceholder: "Select a Loan id",
+      isRequired: true,
+      options: loanTran.map(loan => ({
+        value: loan.id.toString(),
+        label: loan.amount,
+      })),
+    },
+    {
+      fieldName: "Document",
+      fieldType: "file",
+      fieldPlaceholder: "doc",
       isRequired: true,
     },
   ];
@@ -101,12 +125,7 @@ function CreateInstallment() {
         theme: "light",
       });
     }
-  }, [
-    loanBen.isError,
-    loanBen.data,
-    loanBen.isCreated,
-    navigate,
-  ]);
+  }, [loanBen.isError, loanBen.data, loanBen.isCreated, navigate]);
 
   return (
     <>

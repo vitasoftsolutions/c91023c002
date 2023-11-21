@@ -1,19 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
-import {
-  deleteEmployee,
-  fetchEmployeeAction,
-} from "../../../redux/Actions/employeeAction";
 import Swal from "sweetalert2";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import { deleteLoanInstallments, fetchLoanInstallments } from "../../../redux/Actions/LoanInstallmentAction";
 
 const t_head = [
-  { name: "Name" },
-  { name: "Image" },
-  { name: "Join Date" },
-  { name: "E-mail" },
+  { name: "Amount" },
+  { name: "Document" },
+  { name: "Created at" },
+  { name: "Instalment" },
   { name: "Status" },
   { name: "Actions" },
 ];
@@ -26,10 +22,10 @@ function LoanInstallment() {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    first_name: item.first_name + " " + item.last_name,
-    image: item.profile_picture,
-    date: item.joined_date,
-    email: item.email,
+    amount:  item.amount,
+    image: item.document,
+    date: item.created_at,
+    instalment: item.instalment,
     status: item.status,
   }));
   const tableData = {
@@ -95,9 +91,9 @@ function LoanInstallment() {
         page_number={page_number}
         deleteFunction={deleteFunction}
         editLink={"/loan-installment/edit-loan-installment"}
-        erp_modalCol={6}
+        erp_modalCol={12}
         photoSection={true}
-        nidSection={true}
+        nidSection={false}
       />
     </div>
   );

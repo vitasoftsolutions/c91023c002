@@ -9,7 +9,11 @@ import {
 import { deleteLoanInstallments } from "../Actions/LoanInstallmentAction";
 import {
   createLoanTransactions,
+  deleteTransaction,
+  fetchLoanTransaction,
+  fetchLoanTransactionAllList,
   fetchLoanTransactions,
+  updateLoanTransactions,
 } from "../Actions/LoanTransactionsAction";
 
 const loanTransactionsSlice = createSlice({
@@ -30,6 +34,24 @@ const loanTransactionsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Fetch Loan Transaction All List
+      .addCase(fetchLoanTransactionAllList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchLoanTransactionAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchLoanTransactionAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
       // Fetch LoanTran list
       .addCase(fetchLoanTransactions.pending, (state) => {
         state.isLoading = true;
@@ -52,24 +74,24 @@ const loanTransactionsSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      // Fetch Loan Tran
+      .addCase(fetchLoanTransaction.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchLoanTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchLoanTransaction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create loan
+      // Create loan tran
       .addCase(createLoanTransactions.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
@@ -84,33 +106,33 @@ const loanTransactionsSlice = createSlice({
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      // Update loan Transactions
+      .addCase(updateLoanTransactions.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateLoanTransactions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateLoanTransactions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete loan
-      .addCase(deleteLoanInstallments.pending, (state) => {
+      // Delete loan tran
+      .addCase(deleteTransaction.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanInstallments.fulfilled, (state, action) => {
+      .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanInstallments.rejected, (state, action) => {
+      .addCase(deleteTransaction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
