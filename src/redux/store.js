@@ -31,7 +31,7 @@ import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
 import flateRentReducer from "./slices/_flateRentSlice";
 import rentCollectionReducer from "./slices/_rentCollectionSlice";
 import repairRecordsReducer from "./slices/_repairRecordsSlice";
-import projectProgressReducer from "./slices/_projectProgress";
+import projectProgressReducer from "./slices/_projectProgressSlice";
 
 
 export const store = configureStore({

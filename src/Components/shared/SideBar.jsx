@@ -396,7 +396,7 @@ const Menus = [
     icons: <MdOutlineManageAccounts />,
     subMenus: [
       {
-        title: "Beneficaries",
+        title: "Beneficiaries",
         icons: <FaRegListAlt />,
         to: "/contractor-beneficaries",
       },
@@ -417,26 +417,282 @@ const Menus = [
       },
     ],
   },
+  // Customer
   {
-    title: "Suppliers",
-    icons: <MdOutlineManageAccounts />,
+    title: "Customers",
+    icons: <GrUserManager />,
     subMenus: [
       {
-        title: "Beneficaries",
+        title: "Customer Ben",
+        icons: <GrUserManager />,
+        to: "/customer-beneficiaries",
+      },
+    ],
+  },
+  // Phone number
+  {
+    title: "Phone",
+    icons: <FaMobileAlt />,
+    subMenus: [
+      {
+        title: "Phone",
+        icons: <MdInstallMobile />,
+        to: "/phone",
+      },
+    ],
+  },
+  // HRM
+  {
+    title: "Hrm",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Attendance",
+        icons: <BsCalendar2Check />,
+        to: "/attendance",
+      },
+      {
+        title: "Salaries",
+        icons: <FaMoneyCheckDollar />,
+        to: "/salary",
+      },
+    ],
+  },
+  // Loan
+  {
+    title: "Loan",
+    icons: <FaHandHoldingUsd />,
+    subMenus: [
+      {
+        title: "Beneficiary",
         icons: <FaRegListAlt />,
-        to: "/suppliers-beneficaries",
+        to: "/beneficiarylist",
+      },
+      {
+        title: "Loan Installment",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan-installment",
+      },
+      {
+        title: "Loan logs",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan-logs",
+      },
+      {
+        title: "Loan Transactions",
+        icons: <FaMoneyCheckDollar />,
+        to: "/loan-transactions",
+      },
+    ],
+  },
+  // Owner
+  {
+    title: "Owner",
+    icons: <GrUserAdmin />,
+    subMenus: [
+      {
+        title: "Owner",
+        icons: <GrUserAdmin />,
+        to: "/owner",
+      },
+    ],
+  },
+  // Business Profile
+  {
+    title: "Business Profile",
+    icons: <MdOutlineAddBusiness />,
+    subMenus: [
+      {
+        title: "Business Profile",
+        icons: <MdOutlineAddBusiness />,
+        to: "/business-profile",
+      },
+    ],
+  },
+  // Projects
+  {
+    title: "Projects",
+    icons: <SiFlatpak />,
+    subMenus: [
+      {
+        title: "Projects",
+        icons: <SiFlatpak />,
+        to: "/projects",
+      },
+      {
+        title: "Project Progress",
+        icons: <FaMoneyCheckDollar />,
+        to: "/project-progress",
+      },
+      {
+        title: "Work Progress",
+        icons: <GiProgression />,
+        to: "/work-progress",
+      },
+      {
+        title: "Floors",
+        icons: <GiProgression />,
+        to: "/floors",
+      },
+      {
+        title: "Property",
+        icons: <FaMoneyCheckDollar />,
+        to: "/property",
+      },
+      {
+        title: "Property purchase",
+        icons: <FaMoneyCheckDollar />,
+        to: "/property-purchase",
+      },
+      {
+        title: "Property Installment",
+        icons: <FaMoneyCheckDollar />,
+        to: "/Property-installment",
+      },
+      {
+        title: "Expense by property",
+        icons: <FaMoneyCheckDollar />,
+        to: "/expense-property",
+      },
+    ],
+  },
+  // Suppliers
+  {
+    title: "Suppliers",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Suppliers",
+        icons: <FaMoneyCheckDollar />,
+        to: "/suppliers",
+      },
+      {
+        title: "Materials Dispatch from project",
+        icons: <FaMoneyCheckDollar />,
+        to: "/materials_dispatch_from_project",
       },
       {
         title: "Brands",
-        icons: <BsFillPersonPlusFill />,
+        icons: <MdOutlineAddBusiness />,
         to: "/brands",
       },
+    ],
+  },
+  // Employee
+  {
+    title: "Employee",
+    icons: <GrUserWorker />,
+    subMenus: [
       {
-        title: "Materials",
-        icons: <BsFillPersonPlusFill />,
-        to: "/",
+        title: "Employee",
+        icons: <GrUserWorker />,
+        to: "/employee",
       },
-      
+    ],
+  },
+  // Roles
+  {
+    title: "Roles",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Roles",
+        icons: <FaMoneyCheckDollar />,
+        to: "/roles",
+      },
+    ],
+  },
+  // Warehouse
+  {
+    title: "Warehouse",
+    icons: <TbFileSettings />,
+    subMenus: [
+      {
+        title: "Warehouse Items",
+        icons: <FaMoneyCheckDollar />,
+        to: "/warehouse-items",
+      },
+      {
+        title: "Material Payment installment",
+        icons: <TbFileSettings />,
+        to: "/material-payment-installment ",
+      },
+      {
+        title: "Material Purchase",
+        icons: <TbFileSettings />,
+        to: "/material-purchase",
+      },
+      {
+        title: "Material Dispatch",
+        icons: <TbFileSettings />,
+        to: "/material-dispatch",
+      },
+      {
+        title: "Material Receive Installment",
+        icons: <TbFileSettings />,
+        to: "/material-recive-installment",
+      },
+    ],
+  },
+  // Inventory
+  {
+    title: "Inventory",
+    icons: <TbFileSettings />,
+    subMenus: [
+      {
+        title: "Material Dispatch",
+        icons: <FaMoneyCheckDollar />,
+        to: "/material-dispatch",
+      },
+      {
+        title: "Product Inventory",
+        icons: <TbFileSettings />,
+        to: "/product-inventory",
+      },
+    ],
+  },
+  // Renter
+  {
+    title: "Renter",
+    icons: <FaMoneyCheckDollar />,
+    subMenus: [
+      {
+        title: "Renter Beneficiaries",
+        icons: <FaMoneyCheckDollar />,
+        to: "/renter-beneficiaries",
+      },
+      {
+        title: "Flat Rent",
+        icons: <GoPasskeyFill />,
+        to: "/flat-rent",
+      },
+      {
+        title: "Rent collections",
+        icons: <FaMoneyCheckDollar />,
+        to: "/rent-collections",
+      },
+      {
+        title: "Repair Records",
+        icons: <FaMoneyCheckDollar />,
+        to: "/repear-records",
+      },
+    ],
+  },
+  // Utilities
+  {
+    title: "Utilities",
+    icons: <FiSettings />,
+    subMenus: [
+      {
+        title: "App Label",
+        icons: <FiSettings />,
+        to: "/app-label",
+      },
+      {
+        title: "Types",
+        icons: <FaMoneyCheckDollar />,
+        to: "/types",
+      },
     ],
   },
 
