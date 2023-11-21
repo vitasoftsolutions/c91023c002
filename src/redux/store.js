@@ -13,12 +13,15 @@ import projectsReducer from "./slices/ProjectsSlice";
 import typesReducers from "./slices/TypesSlice";
 import workprogressReducers from "./slices/WorkprogressSlice";
 import ContractorBenReducers from "./slices/ContractorBenSlice";
-import assignContractorSlice from "./slices/AssignContractorSlice";
+import assignContractorReducers from "./slices/AssignContractorSlice";
 import renterBeneficiaryReducer from "./slices/renterBeneficiarySlice";
 import customersBenReducer from "./slices/customersBeneficiarySlice";
 import loanInstallmentReducer from "./slices/loanInstallmentSlice";
 import loanTransactionsReducer from "./slices/loanTransactionsSlice";
 
+import paymentContractorReducers from "./slices/PaymentContractorSlice";
+import guarantorContractorReducers from "./slices/ContractorGurantorSlice";
+import supplierBenSliceReducers from "./slices/SupplierBenSlice";
 
 
 export const store = configureStore({
@@ -41,6 +44,9 @@ export const store = configureStore({
     typesReducers: typesReducers,
     workprogressReducers:workprogressReducers,
     ContractorBenReducers:ContractorBenReducers,
-    assignContractorSlice:assignContractorSlice
+    assignContractorReducers:assignContractorReducers,
+    paymentContractorReducers:paymentContractorReducers,
+    guarantorContractorReducers:guarantorContractorReducers,
+    supplierBenSliceReducers:supplierBenSliceReducers
   },
 });

@@ -10,9 +10,9 @@ import {
   updateLoanBeneficiary,
   contractorben,
   projectlist,
-} from "../Actions/AssignContractorAction";
+} from "../Actions/PaymentContractorAction";
 
-const assignContractorSlice = createSlice({
+const paymentContractorSlice = createSlice({
   name: "createLoanBeneficiary",
   initialState: {
     isLoading: false,
@@ -211,4 +211,4 @@ const assignContractorSlice = createSlice({
   },
 });
 
-export default assignContractorSlice.reducer;
+export default paymentContractorSlice.reducer;

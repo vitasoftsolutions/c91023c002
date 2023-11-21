@@ -20,7 +20,7 @@ export const createLoanBen = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${base_url}/assigned-contractor/`,
+        `${base_url}/supplier-beneficaries/`,
         payload,
         { headers }
       );
@@ -50,7 +50,7 @@ export const fetchLoanBeneList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/assigned-contractor/?limit=${perPage}&offset=${(page - 1) * perPage
+      `${base_url}/supplier-beneficaries/?limit=${perPage}&offset=${(page - 1) * perPage
       }`,
       {
         headers,
@@ -93,7 +93,7 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/assigned-contractor/${id}/`, {
+  const response = await axios.get(`${base_url}/supplier-beneficaries/${id}/`, {
     headers,
   });
 
@@ -198,7 +198,7 @@ export const deleteLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/assigned-contractor/${payload}/`,
+      `${base_url}/supplier-beneficaries/${payload}/`,
       { headers }
     );
 
@@ -225,7 +225,7 @@ export const updateLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/assigned-contractor/${payload.id}/`,
+      `${base_url}/supplier-beneficaries/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -251,7 +251,7 @@ export const searchLoanBeneficiaries = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/assigned-contractor/`;
+      let apiUrl = `${base_url}/supplier-beneficaries/`;
 
       // Check if firstName is not empty, then append the search query
       if (firstName) {
@@ -293,7 +293,7 @@ export const sortByDateLoanBen = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/assigned-contractor/`;
+      let apiUrl = `${base_url}/supplier-beneficaries/`;
 
       // Check if date is not empty, then append the search query
       if (date) {
@@ -334,7 +334,7 @@ export const sortByAZLoanBen = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/assigned-contractor/`;
+      let apiUrl = `${base_url}/supplier-beneficaries/`;
 
       // Check if sortOrder is not empty, then append the search query
       if (sortOrder) {

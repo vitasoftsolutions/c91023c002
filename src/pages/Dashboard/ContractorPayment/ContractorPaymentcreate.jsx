@@ -5,19 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import { ToastContainer, toast } from "react-toastify";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
-import { createLoanBen, contractorben, projectlist } from "../../../redux/Actions/AssignContractorAction";
+import { createLoanBen, contractorben, projectlist } from "../../../redux/Actions/PaymentContractorAction";
 
-
-
-
-// Example: Fetch data from a JSON API
-
-
-
-
-
-
-const ContractorAssignCreate = () => {
+const ContractorPaymentcreate = () => {
     //contractor
     const dispatch = useDispatch();
     // const projectState = useSelector((state) => state.assignContractorReducers);
@@ -46,9 +36,6 @@ const ContractorAssignCreate = () => {
 
     });
     console.log("projectState: ", projectState)
-
-
-
     const formsData = [
         {
             fieldName: "Contructor id",
@@ -69,69 +56,28 @@ const ContractorAssignCreate = () => {
             ],
         },
         {
-            fieldName: "Rate",
+            fieldName: "Worker",
             fieldType: "text",
-            fieldPlaceholder: "Rate",
+            fieldPlaceholder: "Worker",
             isRequired: true,
         },
         {
-            fieldName: "Rate per work",
+            fieldName: "Payment",
             fieldType: "text",
-            fieldPlaceholder: "Rate per work",
+            fieldPlaceholder: "Payment",
             isRequired: true,
         },
         {
-            fieldName: "Unit",
-            fieldType: "text",
-            fieldPlaceholder: "Unit",
-            isRequired: true,
+            fieldName: "Payment Type",
+            fieldType: "select",
+            fieldPlaceholder: "Select a project",
+            isRequired: false,
+            options: [
+                { value: "", label: "No choice"}
+            ],
         },
-        {
-            fieldName: "Work order amount",
-            fieldType: "number",
-            fieldPlaceholder: "Work Order Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Payed Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Payed Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Due Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Due Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Workers",
-            fieldType: "number",
-            fieldPlaceholder: "Workers",
-            isRequired: true,
-        },
-        {
-            fieldName: "Worker payement",
-            fieldType: "number",
-            fieldPlaceholder: "Worker payement",
-            isRequired: true,
-        },
-        {
-            fieldName: "Security Money Percentage",
-            fieldType: "number",
-            fieldPlaceholder: "Percentage(%)",
-            isRequired: true,
-        },
-        {
-            fieldName: "Security Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Security Amount",
-            isRequired: true,
-        },
-
+        
     ];
-
-
     const submitFunction = (data) => {
         // const modifiedData = {
         //     ...data,
@@ -158,7 +104,7 @@ const ContractorAssignCreate = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/contractor-assign");
+                navigate("/contractor-payment");
             }, 3000);
         }
 
@@ -177,13 +123,14 @@ const ContractorAssignCreate = () => {
         }
     }, [projectState, navigate]);
 
+
     return (
         <>
             <div className="flex items-center justify-between gap-4 mb-4">
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/contractor-assign"}
+                        to={"/contractor-payment"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
@@ -215,4 +162,4 @@ const ContractorAssignCreate = () => {
     );
 };
 
-export default ContractorAssignCreate;
+export default ContractorPaymentcreate;

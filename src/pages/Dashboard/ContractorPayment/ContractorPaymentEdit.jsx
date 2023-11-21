@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,16 +8,17 @@ import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { ToastContainer, toast } from "react-toastify";
 import {
     createLoanBen, contractorben, projectlist, fetchLoanBene, updateLoanBeneficiary
-} from "../../../redux/Actions/AssignContractorAction";
+} from "../../../redux/Actions/PaymentContractorAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-const ContractorAssignEdit = () => {
+
+const ContractorPaymentEdit = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const reduxState = useSelector((state) => state.assignContractorReducers);
+    const reduxState = useSelector((state) => state.paymentContractorReducers);
     const location = useLocation();
     const state = reduxState.sData;
 
-    console.log("sate: ",state)
+    console.log("sate: ", state)
 
     useEffect(() => {
         dispatch(fetchLoanBene(location.state));
@@ -38,7 +40,7 @@ const ContractorAssignEdit = () => {
         dispatch(projectlist());
     }, [dispatch]);
     const optionsArray2 = reduxState.project_data.map(element => {
-        
+
         return { value: parseInt(element.id), label: element.name };
 
     });
@@ -63,66 +65,27 @@ const ContractorAssignEdit = () => {
             ],
         },
         {
-            fieldName: "Rate",
+            fieldName: "Worker",
             fieldType: "text",
-            fieldPlaceholder: "Rate",
+            fieldPlaceholder: "Worker",
             isRequired: false,
         },
         {
-            fieldName: "Rate per work",
+            fieldName: "Payment",
             fieldType: "text",
-            fieldPlaceholder: "Rate per work",
+            fieldPlaceholder: "Payment",
             isRequired: false,
         },
         {
-            fieldName: "Unit",
-            fieldType: "text",
-            fieldPlaceholder: "Unit",
+            fieldName: "Payment Type",
+            fieldType: "select",
+            fieldPlaceholder: "Select a project",
             isRequired: false,
+            options: [
+                { value: "", label: "No choice"}
+            ],
         },
-        {
-            fieldName: "Work order amount",
-            fieldType: "number",
-            fieldPlaceholder: "Work Order Amount",
-            isRequired: false,
-        },
-        {
-            fieldName: "Payed Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Payed Amount",
-            isRequired: false,
-        },
-        {
-            fieldName: "Due Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Due Amount",
-            isRequired: false,
-        },
-        {
-            fieldName: "Workers",
-            fieldType: "number",
-            fieldPlaceholder: "Workers",
-            isRequired: false,
-        },
-        {
-            fieldName: "Worker payement",
-            fieldType: "number",
-            fieldPlaceholder: "Worker payement",
-            isRequired: false,
-        },
-        {
-            fieldName: "Security Money Percentage",
-            fieldType: "number",
-            fieldPlaceholder: "Percentage(%)",
-            isRequired: false,
-        },
-        {
-            fieldName: "Security Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Security Amount",
-            isRequired: false,
-        },
-
+        
     ];
     const submitFunction = (data) => {
         if (state) {
@@ -132,17 +95,9 @@ const ContractorAssignEdit = () => {
                 status: data.status ? data.status : state.status,
                 contructor_id: data.contructor_id ? data.contructor_id : state.contructor_id,
                 project_id: data.project_id ? data.project_id : state.project_id,
-                rate: data.rate ? data.rate : state.rate,
-                rate_per_work: data.rate_per_work ? data.rate_per_work : state.rate_per_work,
-                unit: data.unit ? data.unit : state.unit,
-                work_order_amount: data.work_order_amount ? data.work_order_amount : state.work_order_amount,
-                payed_amount: data.payed_amount? data.payed_amount : state.payed_amount,
-                due_amount: data.due_amount ? data.due_amount : state.due_amount,
-                workers: data.workers ? data.workers : state.workers,
-                worker_payement: data.worker_payment ? data.worker_payement : state.worker_payement,
-                security_money_percentage: data.security_money_percentage ? data.security_money_percentage : state.security_money_percentage,
-                security_amount: data.security_amount ? data.security_amount : state.security_amount,
-                
+                worker: data.worker ? data.worker : state.worker,
+                payment: data.payment ? data.payment : state.payment,
+
             };
             dispatch(
                 updateLoanBeneficiary({
@@ -168,7 +123,7 @@ const ContractorAssignEdit = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/contractor-assign");
+                navigate("/contractor-payment");
             }, 3000);
         }
     }, [reduxState.isUpdate, navigate]);
@@ -179,7 +134,7 @@ const ContractorAssignEdit = () => {
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/contractor-assign"}
+                        to={"/contractor-payment"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
@@ -210,4 +165,4 @@ const ContractorAssignEdit = () => {
     );
 };
 
-export default ContractorAssignEdit;
+export default ContractorPaymentEdit;

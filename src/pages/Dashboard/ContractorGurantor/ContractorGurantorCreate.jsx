@@ -1,28 +1,19 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import MainForm from "../../../Components/shared/Forms/MainForm";
-import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
-import { createLoanBen, contractorben, projectlist } from "../../../redux/Actions/AssignContractorAction";
+import { ToastContainer, toast } from "react-toastify";
+import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
+import { createLoanBen, contractorben, projectlist } from "../../../redux/Actions/ContractorGuarantorAction";
+import MainForm from "../../../Components/shared/Forms/MainForm";
 
-
-
-
-// Example: Fetch data from a JSON API
-
-
-
-
-
-
-const ContractorAssignCreate = () => {
+const ContractorGurantorCreate = () => {
     //contractor
     const dispatch = useDispatch();
     // const projectState = useSelector((state) => state.assignContractorReducers);
     // console.log("projectState: ",projectState);
-    const projectState = useSelector((state) => state.assignContractorReducers);
+    const projectState = useSelector((state) => state.guarantorContractorReducers);
     console.log("projectState: ", projectState);
     let navigate = useNavigate();
 
@@ -46,10 +37,67 @@ const ContractorAssignCreate = () => {
 
     });
     console.log("projectState: ", projectState)
-
-
-
     const formsData = [
+        {
+            fieldName: "First Name",
+            fieldType: "text",
+            fieldPlaceholder: "First Name",
+            isRequired: true,
+        },
+        {
+            fieldName: "Last Name",
+            fieldType: "text",
+            fieldPlaceholder: "Last Name",
+            isRequired: true,
+        },
+        {
+            fieldName: "Email",
+            fieldType: "email",
+            fieldPlaceholder: "example@gmail.com",
+            isRequired: true,
+        },
+        {
+            fieldName: "Nid Number",
+            fieldType: "number",
+            fieldPlaceholder: "Nid Number",
+            isRequired: true,
+        },
+        {
+            fieldName: "Present Address",
+            fieldType: "text",
+            fieldPlaceholder: "Present Address (Comma Separated)",
+            isRequired: true,
+        },
+        {
+            fieldName: "Permanent Address",
+            fieldType: "text",
+            fieldPlaceholder: "Permanent Address (Comma Separated)",
+            isRequired: true,
+        },
+        {
+            fieldName: "Profile Picture",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Nid Front",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Nid Back",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Role",
+            fieldType: "text",
+            fieldPlaceholder: "Role",
+            isRequired: true,
+        },
         {
             fieldName: "Contructor id",
             fieldType: "select",
@@ -59,79 +107,7 @@ const ContractorAssignCreate = () => {
                 ...optionsArray
             ],
         },
-        {
-            fieldName: "Project id",
-            fieldType: "select",
-            fieldPlaceholder: "Select a project",
-            isRequired: true,
-            options: [
-                ...optionsArray2
-            ],
-        },
-        {
-            fieldName: "Rate",
-            fieldType: "text",
-            fieldPlaceholder: "Rate",
-            isRequired: true,
-        },
-        {
-            fieldName: "Rate per work",
-            fieldType: "text",
-            fieldPlaceholder: "Rate per work",
-            isRequired: true,
-        },
-        {
-            fieldName: "Unit",
-            fieldType: "text",
-            fieldPlaceholder: "Unit",
-            isRequired: true,
-        },
-        {
-            fieldName: "Work order amount",
-            fieldType: "number",
-            fieldPlaceholder: "Work Order Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Payed Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Payed Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Due Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Due Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Workers",
-            fieldType: "number",
-            fieldPlaceholder: "Workers",
-            isRequired: true,
-        },
-        {
-            fieldName: "Worker payement",
-            fieldType: "number",
-            fieldPlaceholder: "Worker payement",
-            isRequired: true,
-        },
-        {
-            fieldName: "Security Money Percentage",
-            fieldType: "number",
-            fieldPlaceholder: "Percentage(%)",
-            isRequired: true,
-        },
-        {
-            fieldName: "Security Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Security Amount",
-            isRequired: true,
-        },
-
     ];
-
-
     const submitFunction = (data) => {
         // const modifiedData = {
         //     ...data,
@@ -158,7 +134,7 @@ const ContractorAssignCreate = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/contractor-assign");
+                navigate("/contractor-guarantor");
             }, 3000);
         }
 
@@ -176,21 +152,19 @@ const ContractorAssignCreate = () => {
             });
         }
     }, [projectState, navigate]);
-
     return (
         <>
             <div className="flex items-center justify-between gap-4 mb-4">
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/contractor-assign"}
+                        to={"/contractor-guarantor"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
                     </Link>
                 </div>
             </div>
-
             <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
                 <MainForm
                     formsData={formsData}
@@ -215,4 +189,4 @@ const ContractorAssignCreate = () => {
     );
 };
 
-export default ContractorAssignCreate;
+export default ContractorGurantorCreate;

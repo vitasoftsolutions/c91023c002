@@ -5,22 +5,21 @@ import Swal from "sweetalert2";
 import {
     deleteLoanBeneficiary,
     fetchLoanBeneList,
-} from "../../../redux/Actions/AssignContractorAction";
+} from "../../../redux/Actions/PaymentContractorAction";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import customName from "../helper"
 const t_head = [
     { name: "Name" },
     { name: "Project" },
-    { name: "Date" },
     
-    { name: "Due Amount" },
-    { name: "Payed Amount" },
-    { name: "Rate" },
+    { name: "Date" },
+    { name: "Worker" },
+    { name: "Payment" },
     { name: "Status" },
     { name: "Action" },
 ];
 
-const ContractorAssignList = () => {
+const ContractorPaymentList = () => {
     const [name, setName] = useState("")
     
     
@@ -37,9 +36,8 @@ const ContractorAssignList = () => {
         first_name: item.contructor_id,
         project: item.project_id,
         date: item.created_at,
-        payed_amount: item.payed_amount,
-        due_amount: item.due_amount,
-        rate: item.rate,
+        worker: item.worker,
+        payment: item.payment,
         status: item.status,
     }));
     const tableData = {
@@ -92,8 +90,8 @@ const ContractorAssignList = () => {
     return (
         <div className="max-w-screen">
             <TableHeader
-                title={"Assign Contractor"}
-                redirectLink={"/contractor-assign/create"}
+                title={"Contractor Payment"}
+                redirectLink={"/contractor-payment/create"}
                 url_endpoint={"/export-csv/?model=PhoneNumber&app_label=globalapp2"}
             />
             <GlobalTable
@@ -104,7 +102,7 @@ const ContractorAssignList = () => {
                 current_page={current_page}
                 page_number={page_number}
                 deleteFunction={deleteFunction}
-                editLink={"/contractor-assign/edit"}
+                editLink={"/contractor-payment/edit"}
                 erp_modalCol={12}
                 photoSection={false}
             />
@@ -112,4 +110,4 @@ const ContractorAssignList = () => {
     );
 };
 
-export default ContractorAssignList;
+export default ContractorPaymentList;

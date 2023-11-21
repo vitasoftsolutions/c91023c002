@@ -7,16 +7,17 @@ import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { ToastContainer, toast } from "react-toastify";
 import {
     createLoanBen, contractorben, projectlist, fetchLoanBene, updateLoanBeneficiary
-} from "../../../redux/Actions/AssignContractorAction";
+} from "../../../redux/Actions/ContractorGuarantorAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-const ContractorAssignEdit = () => {
+
+const ContractorGuarantorEdit = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const reduxState = useSelector((state) => state.assignContractorReducers);
+    const reduxState = useSelector((state) => state.paymentContractorReducers);
     const location = useLocation();
     const state = reduxState.sData;
 
-    console.log("sate: ",state)
+    console.log("sate: ", state)
 
     useEffect(() => {
         dispatch(fetchLoanBene(location.state));
@@ -38,91 +39,81 @@ const ContractorAssignEdit = () => {
         dispatch(projectlist());
     }, [dispatch]);
     const optionsArray2 = reduxState.project_data.map(element => {
-        
+
         return { value: parseInt(element.id), label: element.name };
 
     });
     console.log("projectState: ", reduxState)
     const formsData = [
         {
+            fieldName: "First Name",
+            fieldType: "text",
+            fieldPlaceholder: "First Name",
+            isRequired: true,
+        },
+        {
+            fieldName: "Last Name",
+            fieldType: "text",
+            fieldPlaceholder: "Last Name",
+            isRequired: true,
+        },
+        {
+            fieldName: "Email",
+            fieldType: "email",
+            fieldPlaceholder: "example@gmail.com",
+            isRequired: true,
+        },
+        {
+            fieldName: "Nid Number",
+            fieldType: "number",
+            fieldPlaceholder: "Nid Number",
+            isRequired: true,
+        },
+        {
+            fieldName: "Present Address",
+            fieldType: "text",
+            fieldPlaceholder: "Present Address (Comma Separated)",
+            isRequired: true,
+        },
+        {
+            fieldName: "Permanent Address",
+            fieldType: "text",
+            fieldPlaceholder: "Permanent Address (Comma Separated)",
+            isRequired: true,
+        },
+        {
+            fieldName: "Profile Picture",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Nid Front",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Nid Back",
+            fieldType: "file",
+            fieldPlaceholder: "Upload Image",
+            isRequired: false,
+        },
+        {
+            fieldName: "Role",
+            fieldType: "text",
+            fieldPlaceholder: "Role",
+            isRequired: true,
+        },
+        {
             fieldName: "Contructor id",
             fieldType: "select",
             fieldPlaceholder: "Select a contractor",
-            isRequired: false,
+            isRequired: true,
             options: [
                 ...optionsArray
             ],
         },
-        {
-            fieldName: "Project id",
-            fieldType: "select",
-            fieldPlaceholder: "Select a project",
-            isRequired: false,
-            options: [
-                ...optionsArray2
-            ],
-        },
-        {
-            fieldName: "Rate",
-            fieldType: "text",
-            fieldPlaceholder: "Rate",
-            isRequired: false,
-        },
-        {
-            fieldName: "Rate per work",
-            fieldType: "text",
-            fieldPlaceholder: "Rate per work",
-            isRequired: false,
-        },
-        {
-            fieldName: "Unit",
-            fieldType: "text",
-            fieldPlaceholder: "Unit",
-            isRequired: false,
-        },
-        {
-            fieldName: "Work order amount",
-            fieldType: "number",
-            fieldPlaceholder: "Work Order Amount",
-            isRequired: false,
-        },
-        {
-            fieldName: "Payed Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Payed Amount",
-            isRequired: false,
-        },
-        {
-            fieldName: "Due Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Due Amount",
-            isRequired: false,
-        },
-        {
-            fieldName: "Workers",
-            fieldType: "number",
-            fieldPlaceholder: "Workers",
-            isRequired: false,
-        },
-        {
-            fieldName: "Worker payement",
-            fieldType: "number",
-            fieldPlaceholder: "Worker payement",
-            isRequired: false,
-        },
-        {
-            fieldName: "Security Money Percentage",
-            fieldType: "number",
-            fieldPlaceholder: "Percentage(%)",
-            isRequired: false,
-        },
-        {
-            fieldName: "Security Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Security Amount",
-            isRequired: false,
-        },
-
     ];
     const submitFunction = (data) => {
         if (state) {
@@ -132,17 +123,21 @@ const ContractorAssignEdit = () => {
                 status: data.status ? data.status : state.status,
                 contructor_id: data.contructor_id ? data.contructor_id : state.contructor_id,
                 project_id: data.project_id ? data.project_id : state.project_id,
-                rate: data.rate ? data.rate : state.rate,
-                rate_per_work: data.rate_per_work ? data.rate_per_work : state.rate_per_work,
-                unit: data.unit ? data.unit : state.unit,
-                work_order_amount: data.work_order_amount ? data.work_order_amount : state.work_order_amount,
-                payed_amount: data.payed_amount? data.payed_amount : state.payed_amount,
-                due_amount: data.due_amount ? data.due_amount : state.due_amount,
-                workers: data.workers ? data.workers : state.workers,
-                worker_payement: data.worker_payment ? data.worker_payement : state.worker_payement,
-                security_money_percentage: data.security_money_percentage ? data.security_money_percentage : state.security_money_percentage,
-                security_amount: data.security_amount ? data.security_amount : state.security_amount,
-                
+                worker: data.worker ? data.worker : state.worker,
+                role: data.role ? data.eole : state.role,
+                //author_id: data.author_id ? data.author_id : state.author_id,
+                email: data.email ? data.email : state.email,
+                first_name: data.first_name ? data.first_name : state.first_name,
+                is_deleted: data.is_deleted ? data.is_deleted : state.is_deleted,
+                last_name: data.last_name ? data.last_name : state.last_name,
+                nid_number: data.nid_number ? data.nid_number : state.nid_number,
+                permanent_address: data.permanent_address
+                    ? data.permanent_address
+                    : state.permanent_address,
+                present_address: data.present_address
+                    ? data.present_address
+                    : state.present_address,
+
             };
             dispatch(
                 updateLoanBeneficiary({
@@ -168,7 +163,7 @@ const ContractorAssignEdit = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/contractor-assign");
+                navigate("/contractor-guarantor");
             }, 3000);
         }
     }, [reduxState.isUpdate, navigate]);
@@ -179,7 +174,7 @@ const ContractorAssignEdit = () => {
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/contractor-assign"}
+                        to={"/contractor-guarantor"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
@@ -209,5 +204,4 @@ const ContractorAssignEdit = () => {
         </>
     );
 };
-
-export default ContractorAssignEdit;
+export default ContractorGuarantorEdit;

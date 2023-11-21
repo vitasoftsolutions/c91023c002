@@ -477,6 +477,38 @@ const Menus = [
         icons: <BsFillPersonPlusFill />,
         to: "/contractor-assign",
       },
+      {
+        title: "Contractor Payment",
+        icons: <BsFillPersonPlusFill />,
+        to: "/contractor-payment",
+      },
+      {
+        title: "Contractor Guarantors",
+        icons: <BsFillPersonPlusFill />,
+        to: "/contractor-guarantor",
+      },
+    ],
+  },
+  {
+    title: "Suppliers",
+    icons: <MdOutlineManageAccounts />,
+    subMenus: [
+      {
+        title: "Beneficaries",
+        icons: <FaRegListAlt />,
+        to: "/suppliers-beneficaries",
+      },
+      {
+        title: "Brands",
+        icons: <BsFillPersonPlusFill />,
+        to: "/brands",
+      },
+      {
+        title: "Materials",
+        icons: <BsFillPersonPlusFill />,
+        to: "/",
+      },
+      
     ],
   },
 ];
