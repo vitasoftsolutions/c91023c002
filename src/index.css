@@ -32,7 +32,7 @@ input[type=number] {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #3498db; /* Set your desired scrollbar color here */
+  background: transparent; /* Set your desired scrollbar color here */
   border-radius: 3px;
 }
 
@@ -58,5 +58,3 @@ input[type=number] {
 .min-h-50vh{
   min-height: 50vh !important;
 }
-
- 
