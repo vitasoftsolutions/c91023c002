@@ -33,6 +33,7 @@ import flateRentReducer from "./slices/_flateRentSlice";
 import rentCollectionReducer from "./slices/_rentCollectionSlice";
 import repairRecordsReducer from "./slices/_repairRecordsSlice";
 import projectProgressReducer from "./slices/_projectProgressSlice";
+import leavesReducer from "./slices/_leavesSlice";
 
 
 
@@ -41,6 +42,7 @@ export const store = configureStore({
     loanBeneficiary: loanBeneficiary,
     // 
     propertyReducer: propertyReducer,
+    leavesReducer: leavesReducer,
     propertyPurchaseReducer: propertyPurchaseReducer,
     flateRentReducer: flateRentReducer,
     rentCollectionReducer: rentCollectionReducer,

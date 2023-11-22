@@ -100,6 +100,9 @@ import PropertyInstallmentedit from "../pages/Dashboard/PropertyInstallment/Prop
 import ExpenseByproplists from "../pages/Dashboard/ExpenseByProperty/ExpenseByproplists";
 import Expensebypropertycreate from "../pages/Dashboard/ExpenseByProperty/Expensebypropertycreate";
 import ExpenseBypropertyedit from "../pages/Dashboard/ExpenseByProperty/ExpenseBypropertyedit";
+import LeavesList from "../pages/Dashboard/Leaves/LeavesList";
+import CreateLeaves from "../pages/Dashboard/Leaves/CreateLeaves";
+import EditLeaves from "../pages/Dashboard/Leaves/EditLeaves";
 
 export const router = createBrowserRouter([
   {
@@ -621,6 +624,31 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditRentCollection />
+          </PrivetRoute>
+        ),
+      },      
+      // Leaves
+      {
+        path: "/leaves",
+        element: (
+          <PrivetRoute>
+            <LeavesList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/leaves/leaves-crete",
+        element: (
+          <PrivetRoute>
+            <CreateLeaves />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/leaves/edit-leaves",
+        element: (
+          <PrivetRoute>
+            <EditLeaves />
           </PrivetRoute>
         ),
       },      

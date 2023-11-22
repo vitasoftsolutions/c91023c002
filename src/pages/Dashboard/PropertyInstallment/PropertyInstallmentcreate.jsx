@@ -35,13 +35,18 @@ const PropertyInstallmentcreate = () => {
         return { value: parseInt(element.id), label: element.name };
 
     });
+    const optionsArray3 = projectState.purchase_id.map(element => {
+        console.log(typeof element.id)
+        return { value: parseInt(element.id), label: element.id };
+
+    });
     console.log("projectState: ", projectState)
 
 
 
     const formsData = [
         {
-            fieldName: "Contructor id",
+            fieldName: "Property Id",
             fieldType: "select",
             fieldPlaceholder: "Select a contractor",
             isRequired: true,
@@ -59,65 +64,27 @@ const PropertyInstallmentcreate = () => {
             ],
         },
         {
-            fieldName: "Rate",
+            fieldName: "Purchase id",
+            fieldType: "select",
+            fieldPlaceholder: "Select a project",
+            isRequired: true,
+            options: [
+                ...optionsArray3
+            ],
+        },
+        {
+            fieldName: "Installment Date",
+            fieldType: "date",
+            fieldPlaceholder: "Date",
+            isRequired: true,
+        },
+        {
+            fieldName: "Amount",
             fieldType: "text",
-            fieldPlaceholder: "Rate",
+            fieldPlaceholder: "Amount",
             isRequired: true,
         },
-        {
-            fieldName: "Rate per work",
-            fieldType: "text",
-            fieldPlaceholder: "Rate per work",
-            isRequired: true,
-        },
-        {
-            fieldName: "Unit",
-            fieldType: "text",
-            fieldPlaceholder: "Unit",
-            isRequired: true,
-        },
-        {
-            fieldName: "Work order amount",
-            fieldType: "number",
-            fieldPlaceholder: "Work Order Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Payed Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Payed Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Due Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Due Amount",
-            isRequired: true,
-        },
-        {
-            fieldName: "Workers",
-            fieldType: "number",
-            fieldPlaceholder: "Workers",
-            isRequired: true,
-        },
-        {
-            fieldName: "Worker payement",
-            fieldType: "number",
-            fieldPlaceholder: "Worker payement",
-            isRequired: true,
-        },
-        {
-            fieldName: "Security Money Percentage",
-            fieldType: "number",
-            fieldPlaceholder: "Percentage(%)",
-            isRequired: true,
-        },
-        {
-            fieldName: "Security Amount",
-            fieldType: "number",
-            fieldPlaceholder: "Security Amount",
-            isRequired: true,
-        },
+        
 
     ];
 
@@ -148,7 +115,7 @@ const PropertyInstallmentcreate = () => {
                 theme: "light",
             });
             setTimeout(() => {
-                navigate("/contractor-assign");
+                navigate("/property-installment");
             }, 3000);
         }
 
@@ -173,7 +140,7 @@ const PropertyInstallmentcreate = () => {
                 <Breadcrumb />
                 <div className="flex space-x-4">
                     <Link
-                        to={"/contractor-assign"}
+                        to={"/property-installment"}
                         className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
                     >
                         <BsArrowLeftShort /> Back
