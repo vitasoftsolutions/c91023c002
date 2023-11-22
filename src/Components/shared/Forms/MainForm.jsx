@@ -80,7 +80,7 @@ const MainForm = ({
       // Check if the field is hidden
       if (field.isHidden) {
         // If hidden, set its value from the defaultValue
-        data[field.fieldName] = field.defaultValue;
+        data[field.fieldName.toLowerCase().replace(/\s+/g, "_")] = field.defaultValue;
       }
     });
   

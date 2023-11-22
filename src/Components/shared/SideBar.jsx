@@ -104,6 +104,11 @@ const Menus = [
           to: "/attendance",
         },
         {
+          title: "Leaves",
+          icons: <FaMoneyCheckDollar />,
+          to: "/leaves",
+        },
+        {
           title: "Salaries",
           icons: <FaMoneyCheckDollar />,
           to: "/salary",

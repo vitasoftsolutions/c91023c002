@@ -94,6 +94,9 @@ import ProjectProgressList from "../pages/Dashboard/ProjectProgress/ProjectProgr
 import CreateProjectProgress from "../pages/Dashboard/ProjectProgress/CreateProjectProgress";
 import RepairRecordsList from "../pages/Dashboard/RepairRecords/RepairRecordsList";
 import CreateRepairRecords from "../pages/Dashboard/RepairRecords/CreateRepairRecords";
+import LeavesList from "../pages/Dashboard/Leaves/LeavesList";
+import CreateLeaves from "../pages/Dashboard/Leaves/CreateLeaves";
+import EditLeaves from "../pages/Dashboard/Leaves/EditLeaves";
 
 export const router = createBrowserRouter([
   {
@@ -615,6 +618,31 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditRentCollection />
+          </PrivetRoute>
+        ),
+      },      
+      // Leaves
+      {
+        path: "/leaves",
+        element: (
+          <PrivetRoute>
+            <LeavesList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/leaves/leaves-crete",
+        element: (
+          <PrivetRoute>
+            <CreateLeaves />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/leaves/edit-leaves",
+        element: (
+          <PrivetRoute>
+            <EditLeaves />
           </PrivetRoute>
         ),
       },      
