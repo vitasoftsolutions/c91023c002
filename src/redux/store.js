@@ -26,6 +26,7 @@ import TypesModuleSliceReducers from "./slices/TypesModuleSlice";
 import expenseSliceReducers from "./slices/ExpenseSlice";
 import incomeSliceReducers from "./slices/IncomeSlice";
 import leavesReducer from "./slices/leavesSlice";
+import propertySliceReducers from "./slices/PropertyInstallmentSlice";
 // 
 import propertyReducer from "./slices/propertySlice";
 import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
@@ -35,6 +36,7 @@ import repairRecordsReducer from "./slices/repairRecordsSlice";
 import projectProgressReducer from "./slices/projectProgressSlice";
 import expenseByPropertyReducer from "./slices/ExpenseByPropertySlice";
 import warehouseItemsReducer from "./slices/_warehouseItemsSlice";
+
 
 
 export const store = configureStore({
@@ -76,5 +78,6 @@ export const store = configureStore({
     TypesModuleSliceReducers:TypesModuleSliceReducers,
     expenseSliceReducers:expenseSliceReducers,
     incomeSliceReducers:incomeSliceReducers,
+    propertySliceReducers:propertySliceReducers,
   },
 });

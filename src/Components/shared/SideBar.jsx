@@ -204,7 +204,7 @@ const Menus = [
         {
           title: "Property Installment",
           icons: <FaMoneyCheckDollar />,
-          to: "/Property-installment",
+          to: "/property-installment",
         },
         {
           title: "Expense by property",

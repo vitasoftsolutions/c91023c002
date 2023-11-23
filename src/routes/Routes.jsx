@@ -94,6 +94,12 @@ import ProjectProgressList from "../pages/Dashboard/ProjectProgress/ProjectProgr
 import CreateProjectProgress from "../pages/Dashboard/ProjectProgress/CreateProjectProgress";
 import RepairRecordsList from "../pages/Dashboard/RepairRecords/RepairRecordsList";
 import CreateRepairRecords from "../pages/Dashboard/RepairRecords/CreateRepairRecords";
+import PropertyInstallmentlist from "../pages/Dashboard/PropertyInstallment/PropertyInstallmentlist";
+import PropertyInstallmentcreate from "../pages/Dashboard/PropertyInstallment/PropertyInstallmentcreate";
+import PropertyInstallmentedit from "../pages/Dashboard/PropertyInstallment/PropertyInstallmentedit";
+import ExpenseByproplists from "../pages/Dashboard/ExpenseByProperty/ExpenseByproplists";
+import Expensebypropertycreate from "../pages/Dashboard/ExpenseByProperty/Expensebypropertycreate";
+import ExpenseBypropertyedit from "../pages/Dashboard/ExpenseByProperty/ExpenseBypropertyedit";
 import LeavesList from "../pages/Dashboard/Leaves/LeavesList";
 import CreateLeaves from "../pages/Dashboard/Leaves/CreateLeaves";
 import EditLeaves from "../pages/Dashboard/Leaves/EditLeaves";
@@ -938,6 +944,54 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <Incomesedit></Incomesedit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/property-installment",
+        element: (
+          <PrivetRoute>
+            <PropertyInstallmentlist></PropertyInstallmentlist>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/property-installment/create",
+        element: (
+          <PrivetRoute>
+            <PropertyInstallmentcreate></PropertyInstallmentcreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/property-installment/edit",
+        element: (
+          <PrivetRoute>
+            <PropertyInstallmentedit></PropertyInstallmentedit>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense-by-property",
+        element: (
+          <PrivetRoute>
+            <ExpenseByproplists></ExpenseByproplists>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense-by-property/create",
+        element: (
+          <PrivetRoute>
+            <Expensebypropertycreate></Expensebypropertycreate>
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense-by-property/edit",
+        element: (
+          <PrivetRoute>
+            <ExpenseBypropertyedit></ExpenseBypropertyedit>
           </PrivetRoute>
         ),
       },
