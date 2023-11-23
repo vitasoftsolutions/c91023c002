@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createLoanBen,
-  deleteLoanBeneficiary,
-  fetchLoanBene,
-  fetchLoanBeneList,
-  fetchWorkProgressAllList,
-  searchLoanBeneficiaries,
-  sortByAZLoanBen,
-  sortByDateLoanBen,
-  updateLoanBeneficiary,
-} from "../Actions/WorkProgressAction";
+  createWarehouseItems,
+  deleteWarehouseItems,
+  fetchWarehouseItems,
+  fetchWarehouseItemsAllList,
+  fetchWarehouseItemsList,
+  searchWarehouseItems,
+  sortByAZWarehouseItems,
+  sortByDateWarehouseItems,
+  updateWarehouseItems,
+} from "../Actions/_WarehouseItemsAction";
 
-const WorkProgressSlice = createSlice({
-  name: "Work Progress",
+const warehouseItemsSlice = createSlice({
+  name: "createWarehouseItemsSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,14 +29,32 @@ const WorkProgressSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch LoanBen list
-      .addCase(fetchLoanBeneList.pending, (state) => {
+      // Fetch WarehouseItems all list
+      .addCase(fetchWarehouseItemsAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
+      .addCase(fetchWarehouseItemsAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchWarehouseItemsAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Fetch WarehouseItems list
+      .addCase(fetchWarehouseItemsList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchWarehouseItemsList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -46,142 +64,121 @@ const WorkProgressSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLoanBeneList.rejected, (state, action) => {
+      .addCase(fetchWarehouseItemsList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-
-      // fetch WorkProgress AllList
-      // Fetch projectProgress all list
-      .addCase(fetchWorkProgressAllList.pending, (state) => {
-        state.isLoading = true;
-        state.isUpdate = false;
-        state.isError = false;
-        state.sData = [];
-      })
-      .addCase(fetchWorkProgressAllList.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isCreated = false;
-        state.isUpdate = false;
-        state.isError = false;
-        state.data = action.payload.data;
-      })
-      .addCase(fetchWorkProgressAllList.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = action.error.message;
-      })
-
-      // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      // Fetch s WarehouseItems
+      .addCase(fetchWarehouseItems.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchWarehouseItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchWarehouseItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      // Create WarehouseItems
+      .addCase(createWarehouseItems.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createWarehouseItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createWarehouseItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      // Update WarehouseItems
+      .addCase(updateWarehouseItems.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateWarehouseItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateWarehouseItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      // Delete WarehouseItems
+      .addCase(deleteWarehouseItems.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteWarehouseItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteWarehouseItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLoanBeneficiaries.pending, (state) => {
+      .addCase(searchWarehouseItems.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
+      .addCase(searchWarehouseItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
+      .addCase(searchWarehouseItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateLoanBen.pending, (state) => {
+      .addCase(sortByDateWarehouseItems.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByDateWarehouseItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateLoanBen.rejected, (state, action) => {
+      .addCase(sortByDateWarehouseItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZLoanBen.pending, (state) => {
+      .addCase(sortByAZWarehouseItems.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByAZWarehouseItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZLoanBen.rejected, (state, action) => {
+      .addCase(sortByAZWarehouseItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default WorkProgressSlice.reducer;
+export default warehouseItemsSlice.reducer;

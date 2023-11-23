@@ -79,6 +79,39 @@ export const fetchRenterBeneficariesList = createAsyncThunk(
 //
 //
 //
+//
+export const fetchRenterBeneficariesAllList = createAsyncThunk(
+  "fetchRenterBeneficariesAllList",
+  async (payload) => {
+    console.log(payload, "payload")
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios GET request with the headers
+    const response = await axios.get(
+      `${base_url}/renter-beneficaries/`,{headers});
+
+    const response_token = response.data.results.token;
+    const result = jwtDecode(response_token);
+
+    const data = result.data;
+    // Return the data and pagination information
+    return {
+      data,
+    };
+  }
+);
+
+//
+//
+//
+//
 export const fetchRenterBene = createAsyncThunk("fetchRenterBene", async (id) => {
   // Get the JWT token from session storage
   const token = sessionStorage.getItem("jwt_token");

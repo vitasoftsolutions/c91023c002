@@ -6,7 +6,7 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { createLeaves } from "../../../redux/Actions/_LeavesAction";
+import { createLeaves } from "../../../redux/Actions/LeavesAction";
 
 
 

@@ -1,18 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  createLoanBen,
-  deleteLoanBeneficiary,
-  fetchLoanBene,
-  fetchLoanBeneList,
-  fetchWorkProgressAllList,
-  searchLoanBeneficiaries,
-  sortByAZLoanBen,
-  sortByDateLoanBen,
-  updateLoanBeneficiary,
-} from "../Actions/WorkProgressAction";
+import { createRentCollection, deleteRentCollection, fetchRentCollection, fetchRentCollectionAllList, fetchRentCollectionList, searchRentCollection, sortByAZRentCollection, sortByDateRentCollection, updateRentCollection } from "../Actions/RentCollectionAction";
 
-const WorkProgressSlice = createSlice({
-  name: "Work Progress",
+const rentCollectionSlice = createSlice({
+  name: "createRentCollectionSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,14 +19,32 @@ const WorkProgressSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch LoanBen list
-      .addCase(fetchLoanBeneList.pending, (state) => {
+      // Fetch RentCollection all list
+      .addCase(fetchRentCollectionAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
+      .addCase(fetchRentCollectionAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchRentCollectionAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Fetch RentCollection list
+      .addCase(fetchRentCollectionList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchRentCollectionList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -46,142 +54,121 @@ const WorkProgressSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLoanBeneList.rejected, (state, action) => {
+      .addCase(fetchRentCollectionList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-
-      // fetch WorkProgress AllList
-      // Fetch projectProgress all list
-      .addCase(fetchWorkProgressAllList.pending, (state) => {
-        state.isLoading = true;
-        state.isUpdate = false;
-        state.isError = false;
-        state.sData = [];
-      })
-      .addCase(fetchWorkProgressAllList.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isCreated = false;
-        state.isUpdate = false;
-        state.isError = false;
-        state.data = action.payload.data;
-      })
-      .addCase(fetchWorkProgressAllList.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = action.error.message;
-      })
-
-      // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      // Fetch s RentCollection
+      .addCase(fetchRentCollection.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchRentCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchRentCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      // Create RentCollection
+      .addCase(createRentCollection.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createRentCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createRentCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      // Update RentCollection
+      .addCase(updateRentCollection.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateRentCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateRentCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      // Delete RentCollection
+      .addCase(deleteRentCollection.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteRentCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteRentCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLoanBeneficiaries.pending, (state) => {
+      .addCase(searchRentCollection.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
+      .addCase(searchRentCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
+      .addCase(searchRentCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateLoanBen.pending, (state) => {
+      .addCase(sortByDateRentCollection.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByDateRentCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateLoanBen.rejected, (state, action) => {
+      .addCase(sortByDateRentCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZLoanBen.pending, (state) => {
+      .addCase(sortByAZRentCollection.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByAZRentCollection.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZLoanBen.rejected, (state, action) => {
+      .addCase(sortByAZRentCollection.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default WorkProgressSlice.reducer;
+export default rentCollectionSlice.reducer;

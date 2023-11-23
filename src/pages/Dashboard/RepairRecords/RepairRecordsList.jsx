@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteRepairRecords, fetchRepairRecordsList } from "../../../redux/Actions/_RepairRecordsAction";
+import { deleteRepairRecords, fetchRepairRecordsList } from "../../../redux/Actions/RepairRecordsAction";
 
 const t_head = [
-  { name: "Code" },
-  { name: "Size" },
+  { name: "Reason" },
+  { name: "Amount" },
+  { name: "Expensed by" },
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
@@ -21,8 +22,9 @@ const RepairRecordsList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    code: item.code,
-    size: item.size,
+    reason: item.reason,
+    amount: item.amount,
+    expensed_by: item.expensed_by,
     date: item.created_at,
     status: item.status,
   }));

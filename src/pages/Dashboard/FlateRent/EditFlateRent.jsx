@@ -7,17 +7,32 @@ import { ToastContainer, toast } from "react-toastify";
 import {
   fetchFlateRent,
   updateFlateRent,
-} from "../../../redux/Actions/_FlateRentAction";
+} from "../../../redux/Actions/FlateRentAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchRenterBeneficariesAllList } from "../../../redux/Actions/RenterBenAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
 
 function EditFlateRent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // State
   const reduxState = useSelector((state) => state.flateRentReducer);
+  const propertyState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const renterState = useSelector(
+    (state) => state.renterBeneficiaryReducer.data
+  );
+  // State
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state);
+
+  useEffect(() => {
+    dispatch(fetchRenterBeneficariesAllList());
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchFlateRent(location.state));
@@ -39,28 +54,37 @@ function EditFlateRent() {
       defaultValue: state.due_amount,
     },
     {
-      // TODO: Renter id ??
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
       defaultValue: state.project_id,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
     {
-      // TODO: Renter id ??
       fieldName: "Property id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Property id",
       isRequired: true,
       defaultValue: state.property_id,
+      options: propertyState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
     },
     {
-      // TODO: Renter id ??
       fieldName: "Renter id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Renter id",
       isRequired: true,
       defaultValue: state.renter_id,
+      options: renterState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name}  ${dt.last_name}`,
+      })),
     },
   ];
 

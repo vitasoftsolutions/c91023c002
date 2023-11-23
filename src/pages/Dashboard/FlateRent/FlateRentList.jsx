@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteFlateRent, fetchFlateRentList } from "../../../redux/Actions/_FlateRentAction";
+import { deleteFlateRent, fetchFlateRentList } from "../../../redux/Actions/FlateRentAction";
 
 const t_head = [
-  { name: "Name" },
-  { name: "Image" },
-  { name: "Join Date" },
-  { name: "E-mail" },
+  { name: "Advanced Amount" },
+  { name: "Due mount" },
+  { name: "Created Date" },
   { name: "Status" },
   { name: "Actions" },
 ];
@@ -17,14 +16,14 @@ const t_head = [
 const FlateRentList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.flateRentReducer);
+  console.log(state, "state")
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    first_name: item.first_name + " " + item.last_name,
-    image: item.profile_picture,
+    advanced_amount: item.advanced_amount,
+    due_amount: item.due_amount,
     date: item.created_at,
-    email: item.email,
     status: item.status,
   }));
   const tableData = {
@@ -80,7 +79,7 @@ const FlateRentList = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Property"}
+        title={"Flatrent"}
         redirectLink={"/flat-rent/flat-rent-crete"}
         // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
@@ -94,9 +93,9 @@ const FlateRentList = () => {
         page_number={page_number}
         deleteFunction={deleteFunction}
         editLink={"/flat-rent/edit-flat-rent"}
-        erp_modalCol={6}
-        photoSection={true}
-        nidSection={true}
+        erp_modalCol={12}
+        photoSection={false}
+        nidSection={false}
       />
     </div>
   );

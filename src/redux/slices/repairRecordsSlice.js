@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createProjectProgress,
-  deleteProjectProgress,
-  fetchProjectProgress,
-  fetchProjectProgressAllList,
-  fetchProjectProgressList,
-  searchProjectProgress,
-  sortByAZProjectProgress,
-  sortByDateProjectProgress,
-  updateProjectProgress,
-} from "../Actions/_ProjectProgressAction";
+  createRepairRecords,
+  deleteRepairRecords,
+  fetchRepairRecords,
+  fetchRepairRecordsAllList,
+  fetchRepairRecordsList,
+  searchRepairRecords,
+  sortByAZRepairRecords,
+  sortByDateRepairRecords,
+  updateRepairRecords,
+} from "../Actions/RepairRecordsAction";
 
-const projectProgressSlice = createSlice({
-  name: "createProjectProgressSlice",
+const repairRecordsSlice = createSlice({
+  name: "createRepairRecordsSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,32 +29,32 @@ const projectProgressSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch projectProgress all list
-      .addCase(fetchProjectProgressAllList.pending, (state) => {
+      // Fetch RepairRecords all list
+      .addCase(fetchRepairRecordsAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchProjectProgressAllList.fulfilled, (state, action) => {
+      .addCase(fetchRepairRecordsAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchProjectProgressAllList.rejected, (state, action) => {
+      .addCase(fetchRepairRecordsAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch ProjectProgress list
-      .addCase(fetchProjectProgressList.pending, (state) => {
+      // Fetch RepairRecords list
+      .addCase(fetchRepairRecordsList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchProjectProgressList.fulfilled, (state, action) => {
+      .addCase(fetchRepairRecordsList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -64,121 +64,121 @@ const projectProgressSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchProjectProgressList.rejected, (state, action) => {
+      .addCase(fetchRepairRecordsList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch s ProjectProgress
-      .addCase(fetchProjectProgress.pending, (state) => {
+      // Fetch s RepairRecords
+      .addCase(fetchRepairRecords.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchProjectProgress.fulfilled, (state, action) => {
+      .addCase(fetchRepairRecords.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchProjectProgress.rejected, (state, action) => {
+      .addCase(fetchRepairRecords.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create ProjectProgress
-      .addCase(createProjectProgress.pending, (state) => {
+      // Create RepairRecords
+      .addCase(createRepairRecords.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createProjectProgress.fulfilled, (state, action) => {
+      .addCase(createRepairRecords.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createProjectProgress.rejected, (state, action) => {
+      .addCase(createRepairRecords.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update ProjectProgress
-      .addCase(updateProjectProgress.pending, (state) => {
+      // Update RepairRecords
+      .addCase(updateRepairRecords.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateProjectProgress.fulfilled, (state, action) => {
+      .addCase(updateRepairRecords.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateProjectProgress.rejected, (state, action) => {
+      .addCase(updateRepairRecords.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete ProjectProgress
-      .addCase(deleteProjectProgress.pending, (state) => {
+      // Delete RepairRecords
+      .addCase(deleteRepairRecords.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteProjectProgress.fulfilled, (state, action) => {
+      .addCase(deleteRepairRecords.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteProjectProgress.rejected, (state, action) => {
+      .addCase(deleteRepairRecords.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchProjectProgress.pending, (state) => {
+      .addCase(searchRepairRecords.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchProjectProgress.fulfilled, (state, action) => {
+      .addCase(searchRepairRecords.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchProjectProgress.rejected, (state, action) => {
+      .addCase(searchRepairRecords.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateProjectProgress.pending, (state) => {
+      .addCase(sortByDateRepairRecords.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateProjectProgress.fulfilled, (state, action) => {
+      .addCase(sortByDateRepairRecords.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateProjectProgress.rejected, (state, action) => {
+      .addCase(sortByDateRepairRecords.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZProjectProgress.pending, (state) => {
+      .addCase(sortByAZRepairRecords.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZProjectProgress.fulfilled, (state, action) => {
+      .addCase(sortByAZRepairRecords.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZProjectProgress.rejected, (state, action) => {
+      .addCase(sortByAZRepairRecords.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default projectProgressSlice.reducer;
+export default repairRecordsSlice.reducer;

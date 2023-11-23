@@ -3,28 +3,34 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteRentCollection, fetchRentCollectionList } from "../../../redux/Actions/RentCollectionAction";
+import {
+  deleteExpenseByProperty,
+  fetchExpenseByPropertyList,
+} from "../../../redux/Actions/ExpenseByPropertyAction";
 
 const t_head = [
-  { name: "Rent amount" },
-  { name: "Due amount" },
+  { name: "Expenser name" },
+  { name: "Receipt" },
+  { name: "Amount" },
   { name: "Created at" },
+  { name: "Expense Date" },
   { name: "Status" },
   { name: "Actions" },
 ];
 
-const RentCollectionList = () => {
+const ExpenseByPropertyList = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.rentCollectionReducer);
-
-  console.log(state)
+  const state = useSelector((state) => state.expenseByPropertyReducer);
   // allDataList
+  console.log("first", state);
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    rent_amount: item.rent_amount,
-    due_amount: item.due_amount,
+    expenser_name: item.expenser_name,
+    image: item.reciept,
+    amount: item.amount,
     date: item.created_at,
+    expense_date: item.expense_date,
     status: item.status,
   }));
   const tableData = {
@@ -47,11 +53,11 @@ const RentCollectionList = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchRentCollectionList(current_page));
+    dispatch(fetchExpenseByPropertyList(current_page));
   }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchRentCollectionList(newPage));
+    dispatch(fetchExpenseByPropertyList(newPage));
   };
 
   // console.log(state, "state_ page");
@@ -67,7 +73,7 @@ const RentCollectionList = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteRentCollection(id));
+        dispatch(deleteExpenseByProperty(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
@@ -80,8 +86,8 @@ const RentCollectionList = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Rent Collection"}
-        redirectLink={"/rent-collections/rent-collections-crete"}
+        title={"Expense By Property"}
+        redirectLink={"/expense-by-property/expense-by-property-crete"}
         // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
@@ -93,7 +99,7 @@ const RentCollectionList = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/rent-collections/edit-rent-collections"}
+        editLink={"/expense-by-property/edit-expense-by-property"}
         erp_modalCol={12}
         photoSection={false}
         nidSection={false}
@@ -102,4 +108,4 @@ const RentCollectionList = () => {
   );
 };
 
-export default RentCollectionList;
+export default ExpenseByPropertyList;

@@ -1,8 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createProperty, deleteProperty, fetchProperty, fetchPropertyAllList, fetchPropertyList, searchProperty, sortByAZProperty, sortByDateProperty, updateProperty } from "../Actions/_PropertyAction";
+import {
+  createExpenseByProperty,
+  deleteExpenseByProperty,
+  fetchExpenseByProperty,
+  fetchExpenseByPropertyAllList,
+  fetchExpenseByPropertyList,
+  searchExpenseByProperty,
+  sortByAZExpenseByProperty,
+  sortByDateExpenseByProperty,
+  updateExpenseByProperty,
+} from "../Actions/ExpenseByPropertyAction";
 
-const propertySlice = createSlice({
-  name: "createPropertySlice",
+const expenseByProperty = createSlice({
+  name: "createExpenseByProperty",
   initialState: {
     isLoading: false,
     data: [],
@@ -19,32 +29,32 @@ const propertySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch property all list
-      .addCase(fetchPropertyAllList.pending, (state) => {
+      // Fetch ExpenseByProperty all list
+      .addCase(fetchExpenseByPropertyAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchPropertyAllList.fulfilled, (state, action) => {
+      .addCase(fetchExpenseByPropertyAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchPropertyAllList.rejected, (state, action) => {
+      .addCase(fetchExpenseByPropertyAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch property list
-      .addCase(fetchPropertyList.pending, (state) => {
+      // Fetch ExpenseByProperty list
+      .addCase(fetchExpenseByPropertyList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchPropertyList.fulfilled, (state, action) => {
+      .addCase(fetchExpenseByPropertyList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -54,121 +64,121 @@ const propertySlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchPropertyList.rejected, (state, action) => {
+      .addCase(fetchExpenseByPropertyList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch s Property
-      .addCase(fetchProperty.pending, (state) => {
+      // Fetch s ExpenseByProperty
+      .addCase(fetchExpenseByProperty.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchProperty.fulfilled, (state, action) => {
+      .addCase(fetchExpenseByProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchProperty.rejected, (state, action) => {
+      .addCase(fetchExpenseByProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create Property
-      .addCase(createProperty.pending, (state) => {
+      // Create ExpenseByProperty
+      .addCase(createExpenseByProperty.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createProperty.fulfilled, (state, action) => {
+      .addCase(createExpenseByProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createProperty.rejected, (state, action) => {
+      .addCase(createExpenseByProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update Property
-      .addCase(updateProperty.pending, (state) => {
+      // Update ExpenseByProperty
+      .addCase(updateExpenseByProperty.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateProperty.fulfilled, (state, action) => {
+      .addCase(updateExpenseByProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateProperty.rejected, (state, action) => {
+      .addCase(updateExpenseByProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete Property
-      .addCase(deleteProperty.pending, (state) => {
+      // Delete ExpenseByProperty
+      .addCase(deleteExpenseByProperty.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteProperty.fulfilled, (state, action) => {
+      .addCase(deleteExpenseByProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteProperty.rejected, (state, action) => {
+      .addCase(deleteExpenseByProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchProperty.pending, (state) => {
+      .addCase(searchExpenseByProperty.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchProperty.fulfilled, (state, action) => {
+      .addCase(searchExpenseByProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchProperty.rejected, (state, action) => {
+      .addCase(searchExpenseByProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateProperty.pending, (state) => {
+      .addCase(sortByDateExpenseByProperty.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateProperty.fulfilled, (state, action) => {
+      .addCase(sortByDateExpenseByProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateProperty.rejected, (state, action) => {
+      .addCase(sortByDateExpenseByProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZProperty.pending, (state) => {
+      .addCase(sortByAZExpenseByProperty.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZProperty.fulfilled, (state, action) => {
+      .addCase(sortByAZExpenseByProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZProperty.rejected, (state, action) => {
+      .addCase(sortByAZExpenseByProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default propertySlice.reducer;
+export default expenseByProperty.reducer;

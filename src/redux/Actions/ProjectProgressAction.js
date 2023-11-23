@@ -40,7 +40,7 @@ export const fetchProjectProgressList = createAsyncThunk(
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
-    const { perPage } = getState().ProjectProgressReducer;
+    const { perPage } = getState().projectProgressReducer;
 
     // Define the headers
     const headers = {

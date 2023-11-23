@@ -1,82 +1,122 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchProjectProgress, updateProjectProgress } from "../../../redux/Actions/ProjectProgressAction";
-import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
-import { fetchWorkProgressAllList } from "../../../redux/Actions/WorkProgressAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
+import {
+  fetchExpenseByProperty,
+  updateExpenseByProperty,
+} from "../../../redux/Actions/ExpenseByPropertyAction";
 
-function EditProjectProgress() {
+function EditExpenseByProperty() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.projectProgressReducer);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
-  const wpState = useSelector((state) => state.workprogressReducers.data);
+  const reduxState = useSelector((state) => state.expenseByPropertyReducer);
+  const propertyState = useSelector((state) => state.propertyReducer.data);
   const location = useLocation();
   const state = reduxState.sData;
 
   console.log(state);
 
   useEffect(() => {
-    dispatch(fetchProjectProgress(location.state));
+    dispatch(fetchExpenseByProperty(location.state));
   }, [location.state, dispatch]);
 
-
   useEffect(() => {
-    dispatch(fetchProjectsAllList());
-    dispatch(fetchWorkProgressAllList());
+    dispatch(fetchPropertyAllList());
   }, [dispatch]);
 
-
+  //
   const formsData = [
     {
-      fieldName: "Note",
+      fieldName: "Reason",
       fieldType: "text",
-      fieldPlaceholder: "Note",
+      fieldPlaceholder: "Reason",
       isRequired: true,
-      hasWidth:3,
-      defaultValue: state.note,
+      hasWidth: 2,
+      defaultValue: state.reason,
     },
     {
-      fieldName: "Project id",
-      fieldType: "select",
-      fieldPlaceholder: "Project id",
+      fieldName: "Amount",
+      fieldType: "number",
+      fieldPlaceholder: "Amount",
       isRequired: true,
-       options: projectsState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
-      hasWidth:3,
-      defaultValue: state.project_id,
+      defaultValue: state.amount,
     },
     {
-      fieldName: "Wp ids",
-      fieldType: "select",
-      fieldPlaceholder: "Wp ids",
+      fieldName: "Expenser name",
+      fieldType: "text",
+      fieldPlaceholder: "Expenser name",
       isRequired: true,
-      options: wpState?.map((dt) => ({
+      defaultValue: state.expenser_name,
+      hasWidth: 2,
+    },
+    {
+      fieldName: "Expense date",
+      fieldType: "date",
+      fieldPlaceholder: "Expense date",
+      isRequired: true,
+      defaultValue: state.expense_date,
+    },
+    {
+      fieldName: "Property id",
+      fieldType: "select",
+      fieldPlaceholder: "Property id",
+      isRequired: true,
+      defaultValue: state.property_id,
+      hasWidth: 2,
+      options: propertyState?.map((dt) => ({
         value: dt.id.toString(),
-        label: dt.name,
+        label: dt.code,
       })),
-      hasWidth:3,
-      defaultValue: state.wp_ids,
+    },
+    {
+      fieldName: "Type",
+      fieldType: "select",
+      fieldPlaceholder: "Type",
+      isRequired: false,
+      defaultValue: state.type,
+    },
+    {
+      fieldName: "Reciept",
+      fieldType: "file",
+      fieldPlaceholder: "Reciept",
+      isRequired: true,
+      defaultValue: state.reciept,
     },
   ];
 
   const submitFunction = (data) => {
+    const reciept = data.reciept ? data.reciept : "";
+
     if (state) {
       const updateData = {
-        note: data.note ? data.note : state.note,
-        project_id: data.project_id ? data.project_id : state.project_id,
-        wp_ids: data.wp_ids ? data.wp_ids : state.wp_ids,
+        author_id: data.author_id ? data.author_id : state.author_id,
+        // 
+        reason: data.reason ? data.reason : state.reason,
+        amount: data.amount ? data.amount : state.amount,
+        expenser_name: data.expenser_name ? data.expenser_name : state.expenser_name,
+        expense_date: data.expense_date ? data.expense_date : state.expense_date,
+        property_id: data.property_id ? data.property_id : state.property_id,
+        type: data.type ? data.type : state.type,
         status: data.status ? data.status : state.status,
       };
 
+      // Dispatch when reciept length is greater than 0
+      if (reciept !== "") {
+        dispatch(
+          updateExpenseByProperty({
+            id: state.id,
+            data: { ...updateData, reciept: reciept },
+          })
+        );
+      }
+
       dispatch(
-        updateProjectProgress({
+        updateExpenseByProperty({
           id: state.id,
           data: updateData,
         })
@@ -99,7 +139,7 @@ function EditProjectProgress() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/project-progress");
+        navigate("/expense-by-property");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -110,7 +150,7 @@ function EditProjectProgress() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/project-progress"}
+            to={"/expense-by-property"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -142,4 +182,4 @@ function EditProjectProgress() {
   );
 }
 
-export default EditProjectProgress;
+export default EditExpenseByProperty;

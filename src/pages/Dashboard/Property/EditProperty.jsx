@@ -4,21 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import {
-  fetchFlateRent,
-  updateFlateRent,
-} from "../../../redux/Actions/_FlateRentAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchProperty, updateProperty } from "../../../redux/Actions/_PropertyAction";
+import { fetchProperty, updateProperty } from "../../../redux/Actions/PropertyAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
 
 function EditProperty() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.propertyReducer);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  // 
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state);
+  useEffect(() => {
+    dispatch(fetchProjectsAllList());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchProperty(location.state));
@@ -48,10 +49,14 @@ function EditProperty() {
     },
     {
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
       defaultValue: state.project_id,
+      options: projectsState.map(dt => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
     {
       fieldName: "type",
@@ -97,7 +102,7 @@ function EditProperty() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/flat-rent");
+        navigate("/property");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -108,7 +113,7 @@ function EditProperty() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/flat-rent"}
+            to={"/property"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back

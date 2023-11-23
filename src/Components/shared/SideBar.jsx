@@ -209,7 +209,7 @@ const Menus = [
         {
           title: "Expense by property",
           icons: <FaMoneyCheckDollar />,
-          to: "/expense-property",
+          to: "/expense-by-property",
         },
       ],
     },

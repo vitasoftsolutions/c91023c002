@@ -71,6 +71,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData, nidSection
                     key !== "roles" &&
                     key !== "logo" &&
                     key !== "document" &&
+                    key !== "reciept" &&
                     key !== "status" && (
                       <li key={key}>
                         <b>

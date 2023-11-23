@@ -4,64 +4,93 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
+import jwtDecode from "jwt-decode";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { createProjectProgress } from "../../../redux/Actions/ProjectProgressAction";
-import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
-import { fetchWorkProgressAllList } from "../../../redux/Actions/WorkProgressAction";
+import { createExpenseByProperty } from "../../../redux/Actions/ExpenseByPropertyAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
 
-
-function CreateProjectProgress() {
+function CreateExpenseByProperty() {
   const dispatch = useDispatch();
-  const propertyState = useSelector((state) => state.projectProgressReducer);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
-  const wpState = useSelector((state) => state.workprogressReducers.data);
+  const loanState = useSelector((state) => state.expenseByPropertyReducer);
+  const propertyState = useSelector((state) => state.propertyReducer.data);
   const navigate = useNavigate();
 
-  console.log(wpState, "wpState")
-
   const submitFunction = (data) => {
-    dispatch(createProjectProgress(data));
+    dispatch(createExpenseByProperty(data));
   };
 
   useEffect(() => {
-    dispatch(fetchProjectsAllList());
-    dispatch(fetchWorkProgressAllList());
+    dispatch(fetchPropertyAllList());
   }, [dispatch]);
 
+  // Get the user
+  const token = sessionStorage.getItem("jwt_token");
+  const result = jwtDecode(token);
+  const userId = result.user_id;
+
+  //
   const formsData = [
     {
-      fieldName: "Note",
+      fieldName: "Reason",
       fieldType: "text",
-      fieldPlaceholder: "Note",
+      fieldPlaceholder: "Reason",
       isRequired: true,
-      hasWidth:3,
+      hasWidth: 2,
     },
     {
-      fieldName: "Project id",
-      fieldType: "select",
-      fieldPlaceholder: "Project id",
+      fieldName: "Amount",
+      fieldType: "number",
+      fieldPlaceholder: "Amount",
       isRequired: true,
-      hasWidth:3,
-      options: projectsState?.map((dt) => ({
+    },
+    {
+      fieldName: "Expenser name",
+      fieldType: "text",
+      fieldPlaceholder: "Expenser name",
+      isRequired: true,
+      hasWidth: 2,
+    },
+    {
+      fieldName: "Expense date",
+      fieldType: "date",
+      fieldPlaceholder: "Expense date",
+      isRequired: true,
+    },
+    {
+      fieldName: "Property id",
+      fieldType: "select",
+      fieldPlaceholder: "Property id",
+      isRequired: true,
+      hasWidth: 2,
+      options: propertyState?.map((dt) => ({
         value: dt.id.toString(),
-        label: dt.name,
+        label: dt.code,
       })),
     },
     {
-      fieldName: "Wp ids",
+      fieldName: "Type",
       fieldType: "select",
-      fieldPlaceholder: "Wp ids",
+      fieldPlaceholder: "Type",
+      isRequired: false,
+    },
+    {
+      fieldName: "Reciept",
+      fieldType: "file",
+      fieldPlaceholder: "Reciept",
       isRequired: true,
-      hasWidth:3,
-      options: wpState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
+    },
+    {
+      fieldName: "Author id",
+      fieldType: "number",
+      fieldPlaceholder: "Author id",
+      defaultValue: userId,
+      isRequired: true,
+      isHidden: true,
     },
   ];
 
   useEffect(() => {
-    if (propertyState.isCreated) {
+    if (loanState.isCreated) {
       toast("Successfully done", {
         position: "top-center",
         autoClose: 2000,
@@ -73,12 +102,12 @@ function CreateProjectProgress() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/project-progress");
+        navigate("/expense-by-property");
       }, 3000);
     }
 
-    if (propertyState.isError) {
-      toast.error(propertyState.data[0], {
+    if (loanState.isError) {
+      toast.error(loanState.data[0], {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -89,7 +118,7 @@ function CreateProjectProgress() {
         theme: "light",
       });
     }
-  }, [propertyState.isError, propertyState.data, propertyState.isCreated, navigate]);
+  }, [loanState.isError, loanState.data, loanState.isCreated, navigate]);
 
   return (
     <>
@@ -97,7 +126,7 @@ function CreateProjectProgress() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/project-progress"}
+            to={"/expense-by-property"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -128,4 +157,4 @@ function CreateProjectProgress() {
   );
 }
 
-export default CreateProjectProgress;
+export default CreateExpenseByProperty;

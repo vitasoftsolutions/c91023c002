@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteLeaves, fetchLeavesList } from "../../../redux/Actions/_LeavesAction";
+import { deleteLeaves, fetchLeavesList } from "../../../redux/Actions/LeavesAction";
 
 const t_head = [
   { name: "Apply Date" },

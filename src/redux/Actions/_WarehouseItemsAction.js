@@ -6,27 +6,27 @@ import { base_url } from "../../Components/shared/Url";
 //
 //
 //
+// https://erpcons.vitasoftsolutions.com/property-purchase/
 //
-//
-export const createCustomerBen = createAsyncThunk(
-  "createCustomerBen",
+export const createWarehouseItems = createAsyncThunk(
+  "createWarehouseItems",
   async (payload) => {
     console.log(payload, "_____")
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
 
       const response = await axios.post(
-        `${base_url}/customers-beneficaries/`,
+        `${base_url}/property-purchase/`,
         payload,
         { headers }
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Customer beneficiary");
+      throw new Error("Failed to Create WarehouseItems");
     }
   }
 );
@@ -34,50 +34,13 @@ export const createCustomerBen = createAsyncThunk(
 //
 //
 //
-//
-//
-//
-//
-export const fetchCustomerBeneAllList = createAsyncThunk(
-  "fetchCustomerBeneAllList",
-  async (payload) => {
-    console.log(payload, "payload")
-    // Get the JWT token from session storage
-    const token = sessionStorage.getItem("jwt_token");
-
-    // Define the headers
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-
-    // Make the Axios GET request with the headers
-    const response = await axios.get(
-      `${base_url}/customers-beneficaries/`,{headers});
-
-    const response_token = response.data.results.token;
-    const result = jwtDecode(response_token);
-
-    const data = result.data;
-    console.log(data, "_d_a_t_a")
-
-    // Return the data and pagination information
-    return {
-      data,
-    };
-  }
-);
-//
-//
-//
-//
-export const fetchCustomerBeneList = createAsyncThunk(
-  "fetchCustomerBeneList",
+export const fetchWarehouseItemsList = createAsyncThunk(
+  "fetchWarehouseItemsList",
   async (page, { getState }) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
-    const { perPage } = getState().loanBeneficiary;
+    const { perPage } = getState().warehouseItemsReducer;
 
     // Define the headers
     const headers = {
@@ -87,7 +50,7 @@ export const fetchCustomerBeneList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/customers-beneficaries/?limit=${perPage}&offset=${
+      `${base_url}/property-purchase/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
@@ -116,7 +79,39 @@ export const fetchCustomerBeneList = createAsyncThunk(
 //
 //
 //
-export const fetchCustomersBene = createAsyncThunk("fetchCustomersBene", async (id) => {
+export const fetchWarehouseItemsAllList = createAsyncThunk(
+  "fetchWarehouseItemsAllList",
+  async (payload) => {
+    console.log(payload, "payload")
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the Axios GET request with the headers
+    const response = await axios.get(
+      `${base_url}/property-purchase/`,{headers});
+
+    const response_token = response.data.results.token;
+    const result = jwtDecode(response_token);
+
+    const data = result.data;
+    // Return the data and pagination information
+    return {
+      data,
+    };
+  }
+);
+
+//
+//
+//
+//
+export const fetchWarehouseItems = createAsyncThunk("fetchWarehouseItems", async (id) => {
   console.log("getState()");
   console.log(id, "getState()");
 
@@ -129,7 +124,7 @@ export const fetchCustomersBene = createAsyncThunk("fetchCustomersBene", async (
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/customers-beneficaries/${id}/`, {
+  const response = await axios.get(`${base_url}/property-purchase/${id}/`, {
     headers,
   });
 
@@ -137,7 +132,7 @@ export const fetchCustomersBene = createAsyncThunk("fetchCustomersBene", async (
 
   console.log(data, "data__");
 
-  // Return the data 
+  // Return the data
   return { data };
 });
 
@@ -145,8 +140,8 @@ export const fetchCustomersBene = createAsyncThunk("fetchCustomersBene", async (
 //
 //
 //
-export const deleteCustomerBen = createAsyncThunk(
-  "deleteCustomerBen",
+export const deleteWarehouseItems = createAsyncThunk(
+  "deleteWarehouseItems",
   async (payload) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -159,7 +154,7 @@ export const deleteCustomerBen = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/customers-beneficaries/${payload}/`,
+      `${base_url}/property-purchase/${payload}/`,
       { headers }
     );
 
@@ -171,8 +166,8 @@ export const deleteCustomerBen = createAsyncThunk(
 //
 //
 //
-export const updateCustomerBeneficiary = createAsyncThunk(
-  "updateCustomerBeneficiary",
+export const updateWarehouseItems = createAsyncThunk(
+  "updateWarehouseItems",
   async (payload) => {
     console.log(payload, "payload");
     // Get the JWT token from session storage
@@ -186,7 +181,7 @@ export const updateCustomerBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/customers-beneficaries/${payload.id}/`,
+      `${base_url}/property-purchase/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -199,8 +194,8 @@ export const updateCustomerBeneficiary = createAsyncThunk(
 //
 //
 //
-export const searchLoanBeneficiaries = createAsyncThunk(
-  "searchLoanBeneficiaries",
+export const searchWarehouseItems = createAsyncThunk(
+  "searchWarehouseItems",
   async (firstName) => {
     try {
       // Get the JWT token from session storage
@@ -212,7 +207,7 @@ export const searchLoanBeneficiaries = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/loan-beneficaries/`;
+      let apiUrl = `${base_url}/property-purchase/`;
 
       // Check if firstName is not empty, then append the search query
       if (firstName) {
@@ -241,8 +236,8 @@ export const searchLoanBeneficiaries = createAsyncThunk(
 //
 //
 //
-export const sortByDateLoanBen = createAsyncThunk(
-  "sortByDateLoanBen",
+export const sortByDateWarehouseItems = createAsyncThunk(
+  "sortByDateWarehouseItems",
   async (date) => {
     try {
       // Get the JWT token from session storage
@@ -254,7 +249,7 @@ export const sortByDateLoanBen = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/loan-beneficaries/`;
+      let apiUrl = `${base_url}/property-purchase/`;
 
       // Check if date is not empty, then append the search query
       if (date) {
@@ -282,8 +277,8 @@ export const sortByDateLoanBen = createAsyncThunk(
 //
 //
 //
-export const sortByAZLoanBen = createAsyncThunk(
-  "sortByAZLoanBen",
+export const sortByAZWarehouseItems = createAsyncThunk(
+  "sortByAZWarehouseItems",
   async (sortOrder) => {
     try {
       // Get the JWT token from session storage
@@ -295,7 +290,7 @@ export const sortByAZLoanBen = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/loan-beneficaries/`;
+      let apiUrl = `${base_url}/property-purchase/`;
 
       // Check if sortOrder is not empty, then append the search query
       if (sortOrder) {

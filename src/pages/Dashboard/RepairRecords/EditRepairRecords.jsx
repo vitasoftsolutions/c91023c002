@@ -8,12 +8,21 @@ import MainForm from "../../../Components/shared/Forms/MainForm";
 import {
   fetchRepairRecords,
   updateRepairRecords,
-} from "../../../redux/Actions/_RepairRecordsAction";
+} from "../../../redux/Actions/RepairRecordsAction";
+import { fetchRenterBeneficariesAllList } from "../../../redux/Actions/RenterBenAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
 
-function EditProjectProgress() {
+function EditRepairRecords() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.repairRecordsReducer);
+  //
+  const propertyState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const renterState = useSelector(
+    (state) => state.renterBeneficiaryReducer.data
+  );
   const location = useLocation();
   const state = reduxState.sData;
 
@@ -22,6 +31,12 @@ function EditProjectProgress() {
   useEffect(() => {
     dispatch(fetchRepairRecords(location.state));
   }, [location.state, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchRenterBeneficariesAllList());
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+  }, [dispatch]);
 
   const formsData = [
     {
@@ -40,30 +55,46 @@ function EditProjectProgress() {
     },
     {
       fieldName: "Expensed by",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Expensed by",
       isRequired: true,
       defaultValue: state.expensed_by,
+      options: [
+        { value: "Admin", label: "Admin" },
+        { value: "Renter", label: "Renter" },
+      ],
     },
     {
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
       defaultValue: state.project_id,
     },
     {
       fieldName: "Property id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Property id",
       isRequired: true,
+      options: propertyState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
       defaultValue: state.property_id,
     },
     {
       fieldName: "Renter id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Expensed by",
       isRequired: true,
+      options: renterState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name}  ${dt.last_name}`,
+      })),
       defaultValue: state.renter_id,
     },
   ];
@@ -147,4 +178,4 @@ function EditProjectProgress() {
   );
 }
 
-export default EditProjectProgress;
+export default EditRepairRecords;

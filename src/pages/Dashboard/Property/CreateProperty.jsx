@@ -5,16 +5,23 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { createProperty } from "../../../redux/Actions/_PropertyAction";
+import { createProperty } from "../../../redux/Actions/PropertyAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
 
 
 function CreateProperty() {
   const dispatch = useDispatch();
   const propertyState = useSelector((state) => state.propertyReducer);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+
   const navigate = useNavigate();
   const submitFunction = (data) => {
     dispatch(createProperty(data));
   };
+
+  useEffect(() => {
+    dispatch(fetchProjectsAllList());
+  }, [dispatch]);
 
   const formsData = [
     {
@@ -37,15 +44,19 @@ function CreateProperty() {
     },
     {
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
+      options: projectsState.map(dt => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
     {
       fieldName: "type",
       fieldType: "text",
       fieldPlaceholder: "type",
-      isRequired: true,
+      isRequired: false,
     },
   ];
 

@@ -6,8 +6,10 @@ import Swal from "sweetalert2";
 import { deletePropertyPurchase, fetchPropertyPurchaseList } from "../../../redux/Actions/_PropertyPurchaseAction";
 
 const t_head = [
-  { name: "Code" },
-  { name: "Size" },
+  { name: "Amount" },
+  { name: "Down payment" },
+  { name: "Due payment" },
+  { name: "Installment" },
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
@@ -16,12 +18,15 @@ const t_head = [
 const PropertyPurchaseList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.propertyPurchaseReducer);
+  console.log(state, "propertyPurchaseReducer")
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    code: item.code,
-    size: item.size,
+    amount: item.amount,
+    down_payment: item.down_payment,
+    due_amount: item.due_amount,
+    installment: item.installment,
     date: item.created_at,
     status: item.status,
   }));
@@ -91,7 +96,7 @@ const PropertyPurchaseList = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/property/edit-property"}
+        editLink={"/property-purchase/edit-property-purchase"}
         erp_modalCol={12}
         photoSection={false}
         nidSection={false}

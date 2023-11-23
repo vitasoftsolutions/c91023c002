@@ -97,6 +97,11 @@ import CreateRepairRecords from "../pages/Dashboard/RepairRecords/CreateRepairRe
 import LeavesList from "../pages/Dashboard/Leaves/LeavesList";
 import CreateLeaves from "../pages/Dashboard/Leaves/CreateLeaves";
 import EditLeaves from "../pages/Dashboard/Leaves/EditLeaves";
+import ExpenseByPropertyList from "../pages/Dashboard/ExpenseByProperty/ExpenseByPropertyList";
+import CreateExpenseByProperty from "../pages/Dashboard/ExpenseByProperty/CreateExpenseByProperty";
+import EditExpenseByProperty from "../pages/Dashboard/ExpenseByProperty/EditExpenseByProperty";
+import EditRepairRecords from "../pages/Dashboard/RepairRecords/EditRepairRecords";
+import EditProjectProgress from "../pages/Dashboard/ProjectProgress/EditProjectProgress";
 
 export const router = createBrowserRouter([
   {
@@ -567,7 +572,7 @@ export const router = createBrowserRouter([
         path: "/repear-records/edit-repear-records",
         element: (
           <PrivetRoute>
-            <EditRentCollection />
+            <EditRepairRecords />
           </PrivetRoute>
         ),
       },      
@@ -592,7 +597,7 @@ export const router = createBrowserRouter([
         path: "/project-progress/edit-project-progress",
         element: (
           <PrivetRoute>
-            <EditRentCollection />
+            <EditProjectProgress />
           </PrivetRoute>
         ),
       },      
@@ -643,6 +648,31 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditLeaves />
+          </PrivetRoute>
+        ),
+      },      
+      // expense By Property
+      {
+        path: "/expense-by-property",
+        element: (
+          <PrivetRoute>
+            <ExpenseByPropertyList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense-by-property/expense-by-property-crete",
+        element: (
+          <PrivetRoute>
+            <CreateExpenseByProperty />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/expense-by-property/edit-expense-by-property",
+        element: (
+          <PrivetRoute>
+            <EditExpenseByProperty />
           </PrivetRoute>
         ),
       },      

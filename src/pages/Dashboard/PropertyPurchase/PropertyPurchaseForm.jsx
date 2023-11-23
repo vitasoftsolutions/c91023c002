@@ -4,23 +4,21 @@ import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import Select from "react-select";
 
-const MainForm = ({
+const PropertyPurchaseForm = ({
   formsData,
   defaultValues,
   submitFunction,
   isState,
-  isValue,
 }) => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
+    control,
   } = useForm({
     defaultValues: defaultValues,
     mode: "onChange",
   });
-
   // Style
   const customStyles = {
     menu: (provided, state) => ({
@@ -42,6 +40,11 @@ const MainForm = ({
     },
   };
   // Style
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "facilities",
+  });
 
   const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});
@@ -76,32 +79,43 @@ const MainForm = ({
   const onSubmit = (data) => {
     console.log(data, "data");
 
-    // Iterate through formsData and add each field to the data object
+    const formData = { ...data };
+
     formsData.forEach((field) => {
-      // Check if the field is hidden
-      if (field.isHidden) {
-        // If hidden, set its value from the defaultValue
-        data[field.fieldName.toLowerCase().replace(/\s+/g, "_")] =
-          field.defaultValue;
+      const fieldName = field.fieldName.toLowerCase().replace(/\s+/g, "_");
+
+      if (field.fieldType === "select" && field.multiSelect) {
+        // Ensure the value is an array
+        formData[fieldName] = Array.isArray(formData[fieldName])
+          ? formData[fieldName]
+          : formData[fieldName]
+          ? [formData[fieldName]]
+          : [];
       }
     });
 
-    // Convert field names with spaces to field names with underscores in the data object
-    Object.keys(data).forEach((key) => {
-      if (key.includes(" ")) {
-        const newKey = key.replace(/ /g, "_").toLowerCase();
-        data[newKey] = data[key];
-        delete data[key];
-      }
-    });
+    // Convert facilities array to an object
+    const facilitiesObject = data.facilities.reduce((acc, facility, index) => {
+      acc[index] = facility;
+      return acc;
+    }, {});
 
-    // Add file data to the data object
-    const formDataWithFiles = { ...data, ...fileData };
+    // Create a new data object with facilities as an object
+    const formDataWithObject = {
+      ...formData,
+      facilities: facilitiesObject,
+      ...fileData,
+    };
 
-    console.log(formDataWithFiles, "formDataWithFiles");
+    // const formDataWithFiles = { ...data, ...fileData };
 
-    submitFunction(formDataWithFiles);
+    console.log(formDataWithObject, "formDataWithFiles");
+
+    submitFunction(formDataWithObject);
   };
+
+  //   END SUBMIT
+  //   END SUBMIT
 
   const handleFileChange = (fieldName, e) => {
     const file = e.target.files[0];
@@ -136,9 +150,7 @@ const MainForm = ({
   };
 
   const renderField = (field, index) => {
-    if (field.isHidden) {
-      return null;
-    }
+    // console.log(field.defaultValue);
     return (
       <div
         className={`${
@@ -156,15 +168,37 @@ const MainForm = ({
         </label>
         {field.fieldType === "select" && field.multiSelect ? (
           <>
-            <Select
-              isMulti
+            <Controller
+              control={control}
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+                validate: (value) =>
+                  value.length > 0 || "This field is required.",
+              })}
+              defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-              options={field.options}
-              styles={customStyles}
-              classNamePrefix="select"
+              render={({ field: { onChange, value, ref } }) => (
+                <Select
+                  isMulti
+                  inputRef={ref}
+                  classNamePrefix="select"
+                  styles={customStyles}
+                  options={field.options}
+                  value={field?.options?.filter((option) =>
+                    value.includes(option.value)
+                  )}
+                  onChange={(selectedOptions) =>
+                    onChange(selectedOptions.map((option) => option.value))
+                  }
+                />
+              )}
             />
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-              <span className="text-red-600">This field is required.</span>
+              <span className="text-red-600">
+                {
+                  errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                    .message
+                }
+              </span>
             )}
           </>
         ) : field.fieldType === "select" ? (
@@ -288,24 +322,23 @@ const MainForm = ({
             )}
           </div>
         ) : (
-          <>
-            <input
-              type={field.fieldType}
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-                required: !isState && field.isRequired,
-              })}
-              placeholder={field.fieldPlaceholder}
-              className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
-              defaultValue={isState || isValue ? field.defaultValue : ""}
-            />
-            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-              <span className="text-red-600">This field is required.</span>
-            )}
-          </>
+          <input
+            type={field.fieldType}
+            {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+              required: !isState && field.isRequired,
+            })}
+            placeholder={field.fieldPlaceholder}
+            className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
+            defaultValue={isState && field.defaultValue}
+          />
         )}
       </div>
     );
   };
+
+  if (fields.length === 0) {
+    append({ facilities: "", name: "", relation: "" });
+  }
 
   return (
     <>
@@ -337,6 +370,125 @@ const MainForm = ({
           </div>
         )}
 
+        <h5 className="text-black col-span-3 font-extrabold text-start">
+          Add a Facilities
+        </h5>
+
+        {/* Mobile Numbers */}
+        <div className="mb-4 col-span-3">
+          {errors.facilities && (
+            <span className="text-red-500">
+              At least one Facilities is required
+            </span>
+          )}
+          <div className="">
+            {fields.map((field, index) => (
+              <div key={field.id} className="w-full grid grid-cols-3 gap-2">
+                <div className="col-span-3 md:col-span-1">
+                  <label
+                    htmlFor={`facilities[${index}].number`}
+                    className="block text-black mb-1 font-bold"
+                  >
+                    Number
+                  </label>
+                  <input
+                    type={"number"}
+                    {...register(`facilities[${index}].number`, {
+                      required: false,
+                    })}
+                    defaultValue={isState && field.defaultValue}
+                    placeholder="Facilities"
+                    className="w-full rounded-md py-2 px-3 focus:outline-none"
+                  />
+                  <div className="mb-4 col-span-3">
+                    {errors.facilities && (
+                      <span className="text-red-500">Add a mobile number</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-span-3 md:col-span-1">
+                  <label
+                    htmlFor={`facilities[${index}].name`}
+                    className="block text-black mb-1 font-bold"
+                  >
+                    Name
+                  </label>
+                  <input
+                    {...register(`facilities[${index}].name`, {
+                      required: false,
+                    })}
+                    placeholder="Name"
+                    className="w-full rounded-md py-2 px-3 focus:outline-none"
+                  />
+                  <div className="mb-4 col-span-3">
+                    {errors.facilities && (
+                      <span className="text-red-500">Add Name</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-span-3 md:col-span-1">
+                  <label
+                    htmlFor={`facilities[${index}].relation`}
+                    className="block text-black mb-1 font-bold"
+                  >
+                    Relation
+                  </label>
+                  <div className="md:flex border-b-2 border-gray-400 pb-5 md:pb-0 md:border-none items-center">
+                    <input
+                      {...register(`facilities[${index}].relation`, {
+                        required: false,
+                      })}
+                      placeholder="Relation"
+                      className="w-full rounded-md py-2 px-3 focus:outline-none"
+                    />
+                    {index > 0 && (
+                      <div className="md:ml-3 text-center md:mt-0 mt-3">
+                        <button
+                          className="bg-red-500 text-white p-2 rounded-md"
+                          type="button"
+                          onClick={() => remove(index)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            className="feather feather-x"
+                          >
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mb-4 col-span-3">
+                    {errors.facilities && (
+                      <span className="text-red-500">Add Relation</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-center">
+            <button
+              type="button"
+              onClick={() => append({ number: "", name: "", relation: "" })}
+              className="mt-2 btn mx-auto"
+            >
+              Add Number +
+            </button>
+          </div>
+        </div>
+
         {/* Submit Button */}
         <div className="mb-4 col-span-3">
           <input
@@ -363,4 +515,4 @@ const MainForm = ({
   );
 };
 
-export default MainForm;
+export default PropertyPurchaseForm;

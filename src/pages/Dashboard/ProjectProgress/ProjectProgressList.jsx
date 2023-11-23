@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteProjectProgress, fetchProjectProgressList } from "../../../redux/Actions/_ProjectProgressAction";
+import { deleteProjectProgress, fetchProjectProgressList } from "../../../redux/Actions/ProjectProgressAction";
 
 const t_head = [
-  { name: "Code" },
-  { name: "Size" },
+  { name: "Note" },
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
@@ -16,13 +15,12 @@ const t_head = [
 const ProjectProgressList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.projectProgressReducer);
-  console.log(state);
+  console.log(state, "state");
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    code: item.code,
-    size: item.size,
+    note: item.note,
     date: item.created_at,
     status: item.status,
   }));

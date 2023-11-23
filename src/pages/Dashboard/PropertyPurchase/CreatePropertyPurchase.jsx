@@ -6,37 +6,142 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import { createPropertyPurchase } from "../../../redux/Actions/_PropertyPurchaseAction";
+import jwtDecode from "jwt-decode";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
+import { fetchCustomerBeneAllList } from "../../../redux/Actions/CustomerBenAction";
+import PropertyPurchaseForm from "./PropertyPurchaseForm";
 
 function CreatePropertyPurchase() {
   const dispatch = useDispatch();
   const propertyState = useSelector((state) => state.propertyPurchaseReducer);
+  //
+  const customersState = useSelector((state) => state.customersBenReducer.data);
+  const propertysState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  //
   const navigate = useNavigate();
   const submitFunction = (data) => {
     dispatch(createPropertyPurchase(data));
   };
 
+  useEffect(() => {
+    dispatch(fetchCustomerBeneAllList());
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+  }, [dispatch]);
+
+  // Get the user
+  const token = sessionStorage.getItem("jwt_token");
+  const result = jwtDecode(token);
+  const userId = result.user_id;
+
   const formsData = [
     {
+      fieldName: "Amount",
+      fieldType: "number",
+      fieldPlaceholder: "Amount",
+      isRequired: true,
+    },
+    {
+      fieldName: "Down payment",
+      fieldType: "number",
+      fieldPlaceholder: "Down payment",
+      isRequired: true,
+    },
+    {
+      fieldName: "Installment",
+      fieldType: "number",
+      fieldPlaceholder: "Installment",
+      isRequired: true,
+    },
+    {
+      fieldName: "Installment Duration",
+      fieldType: "number",
+      fieldPlaceholder: "Installment Duration",
+      isRequired: true,
+    },
+    {
+      fieldName: "Due amount",
+      fieldType: "number",
+      fieldPlaceholder: "Due amount",
+      isRequired: true,
+    },
+    {
+      fieldName: "Due installment",
+      fieldType: "number",
+      fieldPlaceholder: "Due amount",
+      isRequired: true,
+    },
+    // {
+    //   fieldName: "Facilities",
+    //   fieldType: "number",
+    //   fieldPlaceholder: "Facilities",
+    //   isRequired: true,
+    // },
+    {
+      fieldName: "Final return",
+      fieldType: "date",
+      fieldPlaceholder: "Final return",
+      isRequired: true,
+    },
+    {
+      fieldName: "Handover status",
+      fieldType: "select",
+      fieldPlaceholder: "Handover status",
+      isRequired: true,
+      options: [
+        { value: true, label: "Yes" },
+        { value: false, label: "No" },
+      ],
+    },
+    {
+      fieldName: "Customer id",
+      fieldType: "select",
+      fieldPlaceholder: "Customer id",
+      isRequired: true,
+      // customersState
+      options: customersState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name} ${dt.last_name}`,
+      })),
+    },
+    {
+      fieldName: "Author id",
+      fieldType: "number",
+      fieldPlaceholder: "Author id",
+      defaultValue: userId,
+      isRequired: true,
+      isHidden: true,
+    },
+    // {
+    //   fieldName: "Payment type",
+    //   fieldType: "text",
+    //   fieldPlaceholder: "Payment type",
+    //   // id
+    //   isRequired: false,
+    // },
+    {
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
+      multiSelect: true,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
       isRequired: true,
-      hasWidth: 3,
     },
     {
-      fieldName: "Note",
-      fieldType: "text",
-      fieldPlaceholder: "Note",
+      fieldName: "Property id",
+      fieldType: "select",
+      fieldPlaceholder: "Property id",
+      multiSelect: true,
       isRequired: true,
-      hasWidth: 3,
-    },
-    // TODO: What is wp_ids
-    {
-      fieldName: "Wp Ids",
-      fieldType: "text",
-      fieldPlaceholder: "Wp Ids",
-      isRequired: true,
-      hasWidth: 3,
+      options: propertysState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
     },
   ];
 
@@ -90,7 +195,7 @@ function CreatePropertyPurchase() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <MainForm
+        <PropertyPurchaseForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}

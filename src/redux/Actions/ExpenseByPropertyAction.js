@@ -6,10 +6,10 @@ import { base_url } from "../../Components/shared/Url";
 //
 //
 //
-// https://erpcons.vitasoftsolutions.com/repair-records/
+// https://erpcons.vitasoftsolutions.com/expense-by-property/
 //
-export const createRepairRecords = createAsyncThunk(
-  "createRepairRecords",
+export const createExpenseByProperty = createAsyncThunk(
+  "createExpenseByProperty",
   async (payload) => {
     // console.log(payload, "_____")
     try {
@@ -20,13 +20,13 @@ export const createRepairRecords = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${base_url}/repair-records/`,
+        `${base_url}/expense-by-property/`,
         payload,
         { headers }
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create RepairRecords");
+      throw new Error("Failed to Create ExpenseByProperty");
     }
   }
 );
@@ -34,13 +34,13 @@ export const createRepairRecords = createAsyncThunk(
 //
 //
 //
-export const fetchRepairRecordsList = createAsyncThunk(
-  "fetchRepairRecordsList",
+export const fetchExpenseByPropertyList = createAsyncThunk(
+  "fetchExpenseByPropertyList",
   async (page, { getState }) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
-    const { perPage } = getState().repairRecordsReducer;
+    const { perPage } = getState().expenseByPropertyReducer;
 
     // Define the headers
     const headers = {
@@ -50,7 +50,7 @@ export const fetchRepairRecordsList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/repair-records/?limit=${perPage}&offset=${
+      `${base_url}/expense-by-property/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
@@ -79,8 +79,8 @@ export const fetchRepairRecordsList = createAsyncThunk(
 //
 //
 //
-export const fetchRepairRecordsAllList = createAsyncThunk(
-  "fetchRepairRecordsAllList",
+export const fetchExpenseByPropertyAllList = createAsyncThunk(
+  "fetchExpenseByPropertyAllList",
   async (payload) => {
     console.log(payload, "payload")
     // Get the JWT token from session storage
@@ -94,7 +94,7 @@ export const fetchRepairRecordsAllList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/repair-records/`,{headers});
+      `${base_url}/expense-by-property/`,{headers});
 
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
@@ -111,7 +111,7 @@ export const fetchRepairRecordsAllList = createAsyncThunk(
 //
 //
 //
-export const fetchRepairRecords = createAsyncThunk("fetchRepairRecords", async (id) => {
+export const fetchExpenseByProperty = createAsyncThunk("fetchExpenseByProperty", async (id) => {
   console.log("getState()");
   console.log(id, "getState()");
 
@@ -124,7 +124,7 @@ export const fetchRepairRecords = createAsyncThunk("fetchRepairRecords", async (
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/repair-records/${id}/`, {
+  const response = await axios.get(`${base_url}/expense-by-property/${id}/`, {
     headers,
   });
 
@@ -140,8 +140,8 @@ export const fetchRepairRecords = createAsyncThunk("fetchRepairRecords", async (
 //
 //
 //
-export const deleteRepairRecords = createAsyncThunk(
-  "deleteRepairRecords",
+export const deleteExpenseByProperty = createAsyncThunk(
+  "deleteExpenseByProperty",
   async (payload) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -154,7 +154,7 @@ export const deleteRepairRecords = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/repair-records/${payload}/`,
+      `${base_url}/expense-by-property/${payload}/`,
       { headers }
     );
 
@@ -166,8 +166,8 @@ export const deleteRepairRecords = createAsyncThunk(
 //
 //
 //
-export const updateRepairRecords = createAsyncThunk(
-  "updateRepairRecords",
+export const updateExpenseByProperty = createAsyncThunk(
+  "updateExpenseByProperty",
   async (payload) => {
     console.log(payload, "payload");
     // Get the JWT token from session storage
@@ -181,7 +181,7 @@ export const updateRepairRecords = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/repair-records/${payload.id}/`,
+      `${base_url}/expense-by-property/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -194,8 +194,8 @@ export const updateRepairRecords = createAsyncThunk(
 //
 //
 //
-export const searchRepairRecords = createAsyncThunk(
-  "searchRepairRecords",
+export const searchExpenseByProperty = createAsyncThunk(
+  "searchExpenseByProperty",
   async (firstName) => {
     try {
       // Get the JWT token from session storage
@@ -207,7 +207,7 @@ export const searchRepairRecords = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/repair-records/`;
+      let apiUrl = `${base_url}/expense-by-property/`;
 
       // Check if firstName is not empty, then append the search query
       if (firstName) {
@@ -236,8 +236,8 @@ export const searchRepairRecords = createAsyncThunk(
 //
 //
 //
-export const sortByDateRepairRecords = createAsyncThunk(
-  "sortByDateRepairRecords",
+export const sortByDateExpenseByProperty = createAsyncThunk(
+  "sortByDateExpenseByProperty",
   async (date) => {
     try {
       // Get the JWT token from session storage
@@ -249,7 +249,7 @@ export const sortByDateRepairRecords = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/repair-records/`;
+      let apiUrl = `${base_url}/expense-by-property/`;
 
       // Check if date is not empty, then append the search query
       if (date) {
@@ -277,8 +277,8 @@ export const sortByDateRepairRecords = createAsyncThunk(
 //
 //
 //
-export const sortByAZRepairRecords = createAsyncThunk(
-  "sortByAZRepairRecords",
+export const sortByAZExpenseByProperty = createAsyncThunk(
+  "sortByAZExpenseByProperty",
   async (sortOrder) => {
     try {
       // Get the JWT token from session storage
@@ -290,7 +290,7 @@ export const sortByAZRepairRecords = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/repair-records/`;
+      let apiUrl = `${base_url}/expense-by-property/`;
 
       // Check if sortOrder is not empty, then append the search query
       if (sortOrder) {

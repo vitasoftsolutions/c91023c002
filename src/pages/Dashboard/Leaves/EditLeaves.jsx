@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import { fetchLeaves, updateLeaves } from "../../../redux/Actions/_LeavesAction";
+import { fetchLeaves, updateLeaves } from "../../../redux/Actions/LeavesAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 
 function EditLeaves() {

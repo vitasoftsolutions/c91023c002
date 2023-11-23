@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createFlateRent,
-  deleteFlateRent,
-  fetchFlateRent,
-  fetchFlateRentAllList,
-  fetchFlateRentList,
-  searchFlateRent,
-  sortByAZFlateRent,
-  sortByDateFlateRent,
-  updateFlateRent,
-} from "../Actions/_FlateRentAction";
+  createLeaves,
+  deleteLeaves,
+  fetchLeaves,
+  fetchLeavesAllList,
+  fetchLeavesList,
+  searchLeaves,
+  sortByAZLeaves,
+  sortByDateLeaves,
+  updateLeaves,
+} from "../Actions/LeavesAction";
 
-const flateRentSlice = createSlice({
-  name: "createFlateRentSlice",
+const leavesSlice = createSlice({
+  name: "createLeavesSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,32 +29,32 @@ const flateRentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch FlateRent all list
-      .addCase(fetchFlateRentAllList.pending, (state) => {
+      // Fetch Leaves all list
+      .addCase(fetchLeavesAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchFlateRentAllList.fulfilled, (state, action) => {
+      .addCase(fetchLeavesAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchFlateRentAllList.rejected, (state, action) => {
+      .addCase(fetchLeavesAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch FlateRent list
-      .addCase(fetchFlateRentList.pending, (state) => {
+      // Fetch Leaves list
+      .addCase(fetchLeavesList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchFlateRentList.fulfilled, (state, action) => {
+      .addCase(fetchLeavesList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -64,121 +64,121 @@ const flateRentSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchFlateRentList.rejected, (state, action) => {
+      .addCase(fetchLeavesList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch s FlateRent
-      .addCase(fetchFlateRent.pending, (state) => {
+      // Fetch s Leaves
+      .addCase(fetchLeaves.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchFlateRent.fulfilled, (state, action) => {
+      .addCase(fetchLeaves.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchFlateRent.rejected, (state, action) => {
+      .addCase(fetchLeaves.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create FlateRent
-      .addCase(createFlateRent.pending, (state) => {
+      // Create Leaves
+      .addCase(createLeaves.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createFlateRent.fulfilled, (state, action) => {
+      .addCase(createLeaves.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createFlateRent.rejected, (state, action) => {
+      .addCase(createLeaves.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update FlateRent
-      .addCase(updateFlateRent.pending, (state) => {
+      // Update Leaves
+      .addCase(updateLeaves.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateFlateRent.fulfilled, (state, action) => {
+      .addCase(updateLeaves.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateFlateRent.rejected, (state, action) => {
+      .addCase(updateLeaves.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete FlateRent
-      .addCase(deleteFlateRent.pending, (state) => {
+      // Delete Leaves
+      .addCase(deleteLeaves.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteFlateRent.fulfilled, (state, action) => {
+      .addCase(deleteLeaves.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteFlateRent.rejected, (state, action) => {
+      .addCase(deleteLeaves.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchFlateRent.pending, (state) => {
+      .addCase(searchLeaves.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchFlateRent.fulfilled, (state, action) => {
+      .addCase(searchLeaves.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchFlateRent.rejected, (state, action) => {
+      .addCase(searchLeaves.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateFlateRent.pending, (state) => {
+      .addCase(sortByDateLeaves.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateFlateRent.fulfilled, (state, action) => {
+      .addCase(sortByDateLeaves.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateFlateRent.rejected, (state, action) => {
+      .addCase(sortByDateLeaves.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZFlateRent.pending, (state) => {
+      .addCase(sortByAZLeaves.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZFlateRent.fulfilled, (state, action) => {
+      .addCase(sortByAZLeaves.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZFlateRent.rejected, (state, action) => {
+      .addCase(sortByAZLeaves.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default flateRentSlice.reducer;
+export default leavesSlice.reducer;

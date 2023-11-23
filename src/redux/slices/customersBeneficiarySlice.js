@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createCustomerBen, deleteCustomerBen, fetchCustomerBeneList, fetchCustomersBene, updateCustomerBeneficiary } from "../Actions/CustomerBenAction";
+import { createCustomerBen, deleteCustomerBen, fetchCustomerBeneAllList, fetchCustomerBeneList, fetchCustomersBene, updateCustomerBeneficiary } from "../Actions/CustomerBenAction";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
@@ -29,6 +29,24 @@ const customersBeneficiarySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    // fetch Customer Bene AllList
+      .addCase(fetchCustomerBeneAllList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchCustomerBeneAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchCustomerBeneAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
       // Fetch Customer BeneList list
       .addCase(fetchCustomerBeneList.pending, (state) => {
         state.isLoading = true;

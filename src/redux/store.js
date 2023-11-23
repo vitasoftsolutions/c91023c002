@@ -25,14 +25,16 @@ import supplierBenSliceReducers from "./slices/SupplierBenSlice";
 import TypesModuleSliceReducers from "./slices/TypesModuleSlice";
 import expenseSliceReducers from "./slices/ExpenseSlice";
 import incomeSliceReducers from "./slices/IncomeSlice";
+import leavesReducer from "./slices/leavesSlice";
 // 
-import propertyReducer from "./slices/_propertySlice";
+import propertyReducer from "./slices/propertySlice";
 import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
-import flateRentReducer from "./slices/_flateRentSlice";
-import rentCollectionReducer from "./slices/_rentCollectionSlice";
-import repairRecordsReducer from "./slices/_repairRecordsSlice";
-import projectProgressReducer from "./slices/_projectProgressSlice";
-import leavesReducer from "./slices/_leavesSlice";
+import flateRentReducer from "./slices/flateRentSlice";
+import rentCollectionReducer from "./slices/rentCollectionSlice";
+import repairRecordsReducer from "./slices/repairRecordsSlice";
+import projectProgressReducer from "./slices/projectProgressSlice";
+import expenseByPropertyReducer from "./slices/ExpenseByPropertySlice";
+import warehouseItemsReducer from "./slices/_warehouseItemsSlice";
 
 
 export const store = configureStore({
@@ -40,12 +42,14 @@ export const store = configureStore({
     loanBeneficiary: loanBeneficiary,
     // 
     propertyReducer: propertyReducer,
+    warehouseItemsReducer: warehouseItemsReducer,
     leavesReducer: leavesReducer,
     propertyPurchaseReducer: propertyPurchaseReducer,
     flateRentReducer: flateRentReducer,
     rentCollectionReducer: rentCollectionReducer,
     repairRecordsReducer: repairRecordsReducer,
     projectProgressReducer: projectProgressReducer,
+    expenseByPropertyReducer: expenseByPropertyReducer,
     // 
     loanLogsReducer: loanLogsReducer,
     renterBeneficiaryReducer: renterBeneficiaryReducer,

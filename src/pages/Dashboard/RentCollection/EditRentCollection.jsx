@@ -5,18 +5,33 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchRentCollection, updateRentCollection } from "../../../redux/Actions/_RentCollectionAction";
+import { fetchRentCollection, updateRentCollection } from "../../../redux/Actions/RentCollectionAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
+import { fetchRenterBeneficariesAllList } from "../../../redux/Actions/RenterBenAction";
 
 function EditRentCollection() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.rentCollectionReducer);
+  const propertyState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const renterState = useSelector(
+    (state) => state.renterBeneficiaryReducer.data
+  );
+  
   const location = useLocation();
   const state = reduxState.sData;
 
   useEffect(() => {
     dispatch(fetchRentCollection(location.state));
   }, [location.state, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+    dispatch(fetchRenterBeneficariesAllList());
+  }, [dispatch]);
 
   const formsData = [
     {
@@ -41,26 +56,35 @@ function EditRentCollection() {
       defaultValue: state.rent_date,
     },
     {
-      fieldName: "Project id",
-      fieldType: "text",
-      fieldPlaceholder: "Project id",
-      isRequired: true,
-      defaultValue: state.project_id,
-    },
-    {
       fieldName: "Property id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Property id",
       isRequired: true,
-      defaultValue: state.property_id,
+      options: propertyState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
+    },
+    {
+      fieldName: "Project id",
+      fieldType: "select",
+      fieldPlaceholder: "Project id",
+      isRequired: true,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
     {
       fieldName: "Renter id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Renter id",
       isRequired: true,
-      defaultValue: state.renter_id,
-    },
+      options: renterState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name}  ${dt.last_name}`,
+      })),
+    }
   ];
 
   const submitFunction = (data) => {

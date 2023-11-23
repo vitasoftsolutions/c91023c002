@@ -11,11 +11,11 @@ import { base_url } from "../../Components/shared/Url";
 export const createPropertyPurchase = createAsyncThunk(
   "createPropertyPurchase",
   async (payload) => {
-    // console.log(payload, "_____")
+    console.log(payload, "_____")
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
 

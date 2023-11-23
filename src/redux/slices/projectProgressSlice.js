@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createLeaves,
-  deleteLeaves,
-  fetchLeaves,
-  fetchLeavesAllList,
-  fetchLeavesList,
-  searchLeaves,
-  sortByAZLeaves,
-  sortByDateLeaves,
-  updateLeaves,
-} from "../Actions/_LeavesAction";
+  createProjectProgress,
+  deleteProjectProgress,
+  fetchProjectProgress,
+  fetchProjectProgressAllList,
+  fetchProjectProgressList,
+  searchProjectProgress,
+  sortByAZProjectProgress,
+  sortByDateProjectProgress,
+  updateProjectProgress,
+} from "../Actions/ProjectProgressAction";
 
-const leavesSlice = createSlice({
-  name: "createLeavesSlice",
+const projectProgressSlice = createSlice({
+  name: "createProjectProgressSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,32 +29,32 @@ const leavesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch Leaves all list
-      .addCase(fetchLeavesAllList.pending, (state) => {
+      // Fetch projectProgress all list
+      .addCase(fetchProjectProgressAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchLeavesAllList.fulfilled, (state, action) => {
+      .addCase(fetchProjectProgressAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchLeavesAllList.rejected, (state, action) => {
+      .addCase(fetchProjectProgressAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch Leaves list
-      .addCase(fetchLeavesList.pending, (state) => {
+      // Fetch ProjectProgress list
+      .addCase(fetchProjectProgressList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchLeavesList.fulfilled, (state, action) => {
+      .addCase(fetchProjectProgressList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -64,121 +64,121 @@ const leavesSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLeavesList.rejected, (state, action) => {
+      .addCase(fetchProjectProgressList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch s Leaves
-      .addCase(fetchLeaves.pending, (state) => {
+      // Fetch s ProjectProgress
+      .addCase(fetchProjectProgress.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLeaves.fulfilled, (state, action) => {
+      .addCase(fetchProjectProgress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLeaves.rejected, (state, action) => {
+      .addCase(fetchProjectProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create Leaves
-      .addCase(createLeaves.pending, (state) => {
+      // Create ProjectProgress
+      .addCase(createProjectProgress.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLeaves.fulfilled, (state, action) => {
+      .addCase(createProjectProgress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLeaves.rejected, (state, action) => {
+      .addCase(createProjectProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update Leaves
-      .addCase(updateLeaves.pending, (state) => {
+      // Update ProjectProgress
+      .addCase(updateProjectProgress.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLeaves.fulfilled, (state, action) => {
+      .addCase(updateProjectProgress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLeaves.rejected, (state, action) => {
+      .addCase(updateProjectProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete Leaves
-      .addCase(deleteLeaves.pending, (state) => {
+      // Delete ProjectProgress
+      .addCase(deleteProjectProgress.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLeaves.fulfilled, (state, action) => {
+      .addCase(deleteProjectProgress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLeaves.rejected, (state, action) => {
+      .addCase(deleteProjectProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLeaves.pending, (state) => {
+      .addCase(searchProjectProgress.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLeaves.fulfilled, (state, action) => {
+      .addCase(searchProjectProgress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLeaves.rejected, (state, action) => {
+      .addCase(searchProjectProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateLeaves.pending, (state) => {
+      .addCase(sortByDateProjectProgress.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateLeaves.fulfilled, (state, action) => {
+      .addCase(sortByDateProjectProgress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateLeaves.rejected, (state, action) => {
+      .addCase(sortByDateProjectProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZLeaves.pending, (state) => {
+      .addCase(sortByAZProjectProgress.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZLeaves.fulfilled, (state, action) => {
+      .addCase(sortByAZProjectProgress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZLeaves.rejected, (state, action) => {
+      .addCase(sortByAZProjectProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default leavesSlice.reducer;
+export default projectProgressSlice.reducer;

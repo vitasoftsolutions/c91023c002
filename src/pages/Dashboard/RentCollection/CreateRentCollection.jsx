@@ -5,16 +5,31 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { createRentCollection } from "../../../redux/Actions/_RentCollectionAction";
+import { createRentCollection } from "../../../redux/Actions/RentCollectionAction";
 import jwtDecode from "jwt-decode";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
+import { fetchRenterBeneficariesAllList } from "../../../redux/Actions/RenterBenAction";
 
 function CreateRentCollection() {
   const dispatch = useDispatch();
-  const propertyState = useSelector((state) => state.rentCollectionReducer);
+  const rentState = useSelector((state) => state.rentCollectionReducer);
+  const propertyState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const renterState = useSelector(
+    (state) => state.renterBeneficiaryReducer.data
+  );
+  
   const navigate = useNavigate();
   const submitFunction = (data) => {
     dispatch(createRentCollection(data));
   };
+
+  useEffect(() => {
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+    dispatch(fetchRenterBeneficariesAllList());
+  }, [dispatch]);
 
   // Get the user
   const token = sessionStorage.getItem("jwt_token");
@@ -42,15 +57,23 @@ function CreateRentCollection() {
     },
     {
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
     {
       fieldName: "Property id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Property id",
       isRequired: true,
+      options: propertyState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
     },
     {
       fieldName: "Author id",
@@ -62,14 +85,18 @@ function CreateRentCollection() {
     },
     {
       fieldName: "Renter id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Renter id",
       isRequired: true,
+      options: renterState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name}  ${dt.last_name}`,
+      })),
     },
   ];
 
   useEffect(() => {
-    if (propertyState.isCreated) {
+    if (rentState.isCreated) {
       toast("Successfully done", {
         position: "top-center",
         autoClose: 2000,
@@ -85,8 +112,8 @@ function CreateRentCollection() {
       }, 3000);
     }
 
-    if (propertyState.isError) {
-      toast.error(propertyState.data[0], {
+    if (rentState.isError) {
+      toast.error(rentState.data[0], {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -98,9 +125,9 @@ function CreateRentCollection() {
       });
     }
   }, [
-    propertyState.isError,
-    propertyState.data,
-    propertyState.isCreated,
+    rentState.isError,
+    rentState.data,
+    rentState.isCreated,
     navigate,
   ]);
 

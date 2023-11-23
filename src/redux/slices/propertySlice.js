@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createRepairRecords,
-  deleteRepairRecords,
-  fetchRepairRecords,
-  fetchRepairRecordsAllList,
-  fetchRepairRecordsList,
-  searchRepairRecords,
-  sortByAZRepairRecords,
-  sortByDateRepairRecords,
-  updateRepairRecords,
-} from "../Actions/_RepairRecordsAction";
+  createProperty,
+  deleteProperty,
+  fetchProperty,
+  fetchPropertyAllList,
+  fetchPropertyList,
+  searchProperty,
+  sortByAZProperty,
+  sortByDateProperty,
+  updateProperty,
+} from "../Actions/PropertyAction";
 
-const repairRecordsSlice = createSlice({
-  name: "createRepairRecordsSlice",
+const propertySlice = createSlice({
+  name: "createPropertySlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,32 +29,32 @@ const repairRecordsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch RepairRecords all list
-      .addCase(fetchRepairRecordsAllList.pending, (state) => {
+      // Fetch property all list
+      .addCase(fetchPropertyAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchRepairRecordsAllList.fulfilled, (state, action) => {
+      .addCase(fetchPropertyAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchRepairRecordsAllList.rejected, (state, action) => {
+      .addCase(fetchPropertyAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch RepairRecords list
-      .addCase(fetchRepairRecordsList.pending, (state) => {
+      // Fetch property list
+      .addCase(fetchPropertyList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchRepairRecordsList.fulfilled, (state, action) => {
+      .addCase(fetchPropertyList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -64,121 +64,121 @@ const repairRecordsSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchRepairRecordsList.rejected, (state, action) => {
+      .addCase(fetchPropertyList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch s RepairRecords
-      .addCase(fetchRepairRecords.pending, (state) => {
+      // Fetch s Property
+      .addCase(fetchProperty.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchRepairRecords.fulfilled, (state, action) => {
+      .addCase(fetchProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchRepairRecords.rejected, (state, action) => {
+      .addCase(fetchProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create RepairRecords
-      .addCase(createRepairRecords.pending, (state) => {
+      // Create Property
+      .addCase(createProperty.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createRepairRecords.fulfilled, (state, action) => {
+      .addCase(createProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createRepairRecords.rejected, (state, action) => {
+      .addCase(createProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update RepairRecords
-      .addCase(updateRepairRecords.pending, (state) => {
+      // Update Property
+      .addCase(updateProperty.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateRepairRecords.fulfilled, (state, action) => {
+      .addCase(updateProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateRepairRecords.rejected, (state, action) => {
+      .addCase(updateProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete RepairRecords
-      .addCase(deleteRepairRecords.pending, (state) => {
+      // Delete Property
+      .addCase(deleteProperty.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteRepairRecords.fulfilled, (state, action) => {
+      .addCase(deleteProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteRepairRecords.rejected, (state, action) => {
+      .addCase(deleteProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchRepairRecords.pending, (state) => {
+      .addCase(searchProperty.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchRepairRecords.fulfilled, (state, action) => {
+      .addCase(searchProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchRepairRecords.rejected, (state, action) => {
+      .addCase(searchProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateRepairRecords.pending, (state) => {
+      .addCase(sortByDateProperty.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateRepairRecords.fulfilled, (state, action) => {
+      .addCase(sortByDateProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateRepairRecords.rejected, (state, action) => {
+      .addCase(sortByDateProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZRepairRecords.pending, (state) => {
+      .addCase(sortByAZProperty.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZRepairRecords.fulfilled, (state, action) => {
+      .addCase(sortByAZProperty.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZRepairRecords.rejected, (state, action) => {
+      .addCase(sortByAZProperty.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default repairRecordsSlice.reducer;
+export default propertySlice.reducer;

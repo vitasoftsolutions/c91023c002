@@ -16,11 +16,6 @@ function CreateSalaries() {
     dispatch(createLoanBen(data));
   };
 
-  const typesState = [
-    { id: 1, name: "Test 1" },
-    { id: 2, name: "Test 2" },
-    { id: 3, name: "Test 3" },
-  ];
 
   const formsData = [
     {
@@ -77,17 +72,7 @@ function CreateSalaries() {
       fieldPlaceholder: "Upload Image",
       isRequired: false,
     },
-    {
-      fieldName: "Project type",
-      fieldType: "select",
-      fieldPlaceholder: "Select a role",
-      isRequired: true,
-      multiSelect: true,
-      options: typesState.map((type) => ({
-        value: type.id,
-        label: type.name,
-      })),
-    },
+    
   ];
 
   useEffect(() => {

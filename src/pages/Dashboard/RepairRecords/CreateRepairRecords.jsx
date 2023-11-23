@@ -6,15 +6,30 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import jwtDecode from "jwt-decode";
-import { createRepairRecords } from "../../../redux/Actions/_RepairRecordsAction";
+import { createRepairRecords } from "../../../redux/Actions/RepairRecordsAction";
+import { fetchRenterBeneficariesAllList } from "../../../redux/Actions/RenterBenAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
 
 function CreateRepairRecords() {
   const dispatch = useDispatch();
-  const propertyState = useSelector((state) => state.projectProgressReducer);
+  const projectPState = useSelector((state) => state.repairRecordsReducer);
+  //
+  const propertyState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const renterState = useSelector(
+    (state) => state.renterBeneficiaryReducer.data
+  );
   const navigate = useNavigate();
   const submitFunction = (data) => {
     dispatch(createRepairRecords(data));
   };
+
+  useEffect(() => {
+    dispatch(fetchRenterBeneficariesAllList());
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+  }, [dispatch]);
 
   // Get the user
   const token = sessionStorage.getItem("jwt_token");
@@ -27,6 +42,7 @@ function CreateRepairRecords() {
       fieldType: "text",
       fieldPlaceholder: "Reason",
       isRequired: true,
+      hasWidth: 2,
     },
     {
       fieldName: "Amount",
@@ -36,27 +52,45 @@ function CreateRepairRecords() {
     },
     {
       fieldName: "Expensed by",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Expensed by",
       isRequired: true,
+      hasWidth: 2,
+      options: [
+        { value: "Admin", label: "Admin" },
+        { value: "Renter", label: "Renter" },
+      ],
     },
     {
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
     {
       fieldName: "Property id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Property id",
       isRequired: true,
+      hasWidth: 2,
+      options: propertyState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
     },
     {
       fieldName: "Renter id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Expensed by",
       isRequired: true,
+      options: renterState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name}  ${dt.last_name}`,
+      })),
     },
     {
       fieldName: "Author id",
@@ -69,7 +103,7 @@ function CreateRepairRecords() {
   ];
 
   useEffect(() => {
-    if (propertyState.isCreated) {
+    if (projectPState.isCreated) {
       toast("Successfully done", {
         position: "top-center",
         autoClose: 2000,
@@ -85,8 +119,8 @@ function CreateRepairRecords() {
       }, 3000);
     }
 
-    if (propertyState.isError) {
-      toast.error(propertyState.data[0], {
+    if (projectPState.isError) {
+      toast.error(projectPState.data[0], {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -98,9 +132,9 @@ function CreateRepairRecords() {
       });
     }
   }, [
-    propertyState.isError,
-    propertyState.data,
-    propertyState.isCreated,
+    projectPState.isError,
+    projectPState.data,
+    projectPState.isCreated,
     navigate,
   ]);
 

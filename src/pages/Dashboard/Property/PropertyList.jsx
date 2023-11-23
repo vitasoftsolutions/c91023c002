@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import {
   deleteProperty,
   fetchPropertyList,
-} from "../../../redux/Actions/_PropertyAction";
+} from "../../../redux/Actions/PropertyAction";
 
 const t_head = [
   { name: "Code" },

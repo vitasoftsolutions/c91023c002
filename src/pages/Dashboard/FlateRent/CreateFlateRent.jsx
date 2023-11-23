@@ -6,16 +6,30 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import jwtDecode from "jwt-decode";
-import { createFlateRent } from "../../../redux/Actions/_FlateRentAction";
-
+import { createFlateRent } from "../../../redux/Actions/FlateRentAction";
+import { fetchRenterBeneficariesAllList } from "../../../redux/Actions/RenterBenAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
 
 function CreateFlateRent() {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.flateRentReducer);
+  const propertyState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const renterState = useSelector(
+    (state) => state.renterBeneficiaryReducer.data
+  );
   const navigate = useNavigate();
+
   const submitFunction = (data) => {
     dispatch(createFlateRent(data));
   };
+
+  useEffect(() => {
+    dispatch(fetchRenterBeneficariesAllList());
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+  }, [dispatch]);
 
   // Get the user
   const token = sessionStorage.getItem("jwt_token");
@@ -36,18 +50,24 @@ function CreateFlateRent() {
       isRequired: true,
     },
     {
-      // TODO: Renter id ??
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
     {
-      // TODO: Renter id ??
       fieldName: "Property id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Property id",
       isRequired: true,
+      options: propertyState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
     },
     {
       fieldName: "Author id",
@@ -58,11 +78,14 @@ function CreateFlateRent() {
       isHidden: true,
     },
     {
-      // TODO: Renter id ??
       fieldName: "Renter id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Renter id",
       isRequired: true,
+      options: renterState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name}  ${dt.last_name}`,
+      })),
     },
   ];
 

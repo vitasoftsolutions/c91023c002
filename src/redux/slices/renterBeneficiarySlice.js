@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  deleteLoanBeneficiary,
-  fetchLoanBene,
   searchLoanBeneficiaries,
   sortByAZLoanBen,
   sortByDateLoanBen,
-  updateLoanBeneficiary,
 } from "../Actions/loanBenAction";
-import { createRenterBene, deleteRenterBen, fetchRenterBene, fetchRenterBeneficariesList, updateRentBen } from "../Actions/RenterBenAction";
+import {
+  createRenterBene,
+  deleteRenterBen,
+  fetchRenterBene,
+  fetchRenterBeneficariesAllList,
+  fetchRenterBeneficariesList,
+  updateRentBen,
+} from "../Actions/RenterBenAction";
 
 const renterBeneficiarySlice = createSlice({
   name: "createRenterBeneficiary",
@@ -27,6 +31,24 @@ const renterBeneficiarySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Fetch Renter Beneficaries AllList
+      .addCase(fetchRenterBeneficariesAllList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchRenterBeneficariesAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchRenterBeneficariesAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
       // Fetch rentBen list
       .addCase(fetchRenterBeneficariesList.pending, (state) => {
         state.isLoading = true;

@@ -9,7 +9,14 @@ import {
   sortByDateLoanBen,
   updateLoanBeneficiary,
 } from "../Actions/loanBenAction";
-import { createProjects, deleteProjects, fetchProject, fetchProjects, updateProject } from "../Actions/ProjectsAction";
+import {
+  createProjects,
+  deleteProjects,
+  fetchProject,
+  fetchProjects,
+  fetchProjectsAllList,
+  updateProject,
+} from "../Actions/ProjectsAction";
 
 const projectsSlice = createSlice({
   name: "createProjects",
@@ -29,6 +36,24 @@ const projectsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // fetch Projects AllList
+      .addCase(fetchProjectsAllList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchProjectsAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchProjectsAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
       // Fetch Projects list
       .addCase(fetchProjects.pending, (state) => {
         state.isLoading = true;
