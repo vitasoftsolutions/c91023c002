@@ -1,8 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createWarehouseItems, deleteWarehouseItems, fetchWarehouseItems, fetchWarehouseItemsAllList, fetchWarehouseItemsList, searchWarehouseItems, sortByAZWarehouseItems, sortByDateWarehouseItems, updateWarehouseItems } from "../Actions/_WarehouseItemsAction";
+import {
+  createWarehouseDispatch,
+  deleteWarehouseDispatch,
+  fetchWarehouseDispatch,
+  fetchWarehouseDispatchAllList,
+  fetchWarehouseDispatchList,
+  searchWarehouseDispatch,
+  sortByAZWarehouseDispatch,
+  sortByDateWarehouseDispatch,
+  updateWarehouseDispatch,
+} from "../Actions/_WarehouseDispatchAction";
 
-const warehouseItemsSlice = createSlice({
-  name: "createWarehouseItemsSlice",
+const warehouseDispatchSlice = createSlice({
+  name: "createWarehouseDispatchSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -19,33 +29,32 @@ const warehouseItemsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch warehouseItems all list
-      .addCase(fetchWarehouseItemsAllList.pending, (state) => {
+      // Fetch WarehouseDispatch all list
+      .addCase(fetchWarehouseDispatchAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchWarehouseItemsAllList.fulfilled, (state, action) => {
+      .addCase(fetchWarehouseDispatchAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchWarehouseItemsAllList.rejected, (state, action) => {
+      .addCase(fetchWarehouseDispatchAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch warehouseItems list
-      .addCase(fetchWarehouseItemsList.pending, (state) => {
+      // Fetch WarehouseDispatch list
+      .addCase(fetchWarehouseDispatchList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
-        state.data = [];
       })
-      .addCase(fetchWarehouseItemsList.fulfilled, (state, action) => {
+      .addCase(fetchWarehouseDispatchList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -55,122 +64,121 @@ const warehouseItemsSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchWarehouseItemsList.rejected, (state, action) => {
+      .addCase(fetchWarehouseDispatchList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
-        state.data = [];
       })
-      // Fetch s WarehouseItems
-      .addCase(fetchWarehouseItems.pending, (state) => {
+      // Fetch s WarehouseDispatch
+      .addCase(fetchWarehouseDispatch.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchWarehouseItems.fulfilled, (state, action) => {
+      .addCase(fetchWarehouseDispatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchWarehouseItems.rejected, (state, action) => {
+      .addCase(fetchWarehouseDispatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create WarehouseItems
-      .addCase(createWarehouseItems.pending, (state) => {
+      // Create WarehouseDispatch
+      .addCase(createWarehouseDispatch.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createWarehouseItems.fulfilled, (state, action) => {
+      .addCase(createWarehouseDispatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createWarehouseItems.rejected, (state, action) => {
+      .addCase(createWarehouseDispatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update WarehouseItems
-      .addCase(updateWarehouseItems.pending, (state) => {
+      // Update WarehouseDispatch
+      .addCase(updateWarehouseDispatch.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateWarehouseItems.fulfilled, (state, action) => {
+      .addCase(updateWarehouseDispatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateWarehouseItems.rejected, (state, action) => {
+      .addCase(updateWarehouseDispatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete WarehouseItems
-      .addCase(deleteWarehouseItems.pending, (state) => {
+      // Delete WarehouseDispatch
+      .addCase(deleteWarehouseDispatch.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteWarehouseItems.fulfilled, (state, action) => {
+      .addCase(deleteWarehouseDispatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteWarehouseItems.rejected, (state, action) => {
+      .addCase(deleteWarehouseDispatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchWarehouseItems.pending, (state) => {
+      .addCase(searchWarehouseDispatch.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchWarehouseItems.fulfilled, (state, action) => {
+      .addCase(searchWarehouseDispatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchWarehouseItems.rejected, (state, action) => {
+      .addCase(searchWarehouseDispatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateWarehouseItems.pending, (state) => {
+      .addCase(sortByDateWarehouseDispatch.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateWarehouseItems.fulfilled, (state, action) => {
+      .addCase(sortByDateWarehouseDispatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateWarehouseItems.rejected, (state, action) => {
+      .addCase(sortByDateWarehouseDispatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZWarehouseItems.pending, (state) => {
+      .addCase(sortByAZWarehouseDispatch.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZWarehouseItems.fulfilled, (state, action) => {
+      .addCase(sortByAZWarehouseDispatch.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZWarehouseItems.rejected, (state, action) => {
+      .addCase(sortByAZWarehouseDispatch.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default warehouseItemsSlice.reducer;
+export default warehouseDispatchSlice.reducer;

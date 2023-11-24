@@ -156,15 +156,34 @@ const MainForm = ({
         </label>
         {field.fieldType === "select" && field.multiSelect ? (
           <>
-            <Select
-              isMulti
+            <Controller
+              control={control}
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
+              defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-              options={field.options}
-              styles={customStyles}
-              classNamePrefix="select"
+              render={({ field: { onChange, value, ref } }) => (
+                <Select
+                  isMulti
+                  inputRef={ref}
+                  classNamePrefix="select"
+                  styles={customStyles}
+                  options={field.options}
+                  value={field?.options?.filter((option) =>
+                    value.includes(option.value)
+                  )}
+                  onChange={(selectedOptions) =>
+                    onChange(selectedOptions.map((option) => option.value))
+                  }
+                />
+              )}
             />
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-              <span className="text-red-600">This field is required.</span>
+              <span className="text-red-600">
+                {
+                  errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                    .message
+                }
+              </span>
             )}
           </>
         ) : field.fieldType === "select" ? (

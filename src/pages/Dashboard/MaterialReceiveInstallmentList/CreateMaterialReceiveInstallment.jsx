@@ -4,51 +4,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import { createBusinessProfile } from "../../../redux/Actions/BusinessProfileAction";
-import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
+import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchMaterialPurchaseAllList } from "../../../redux/Actions/MaterialPurchaseAction";
+import { createMaterialReceiveInstallment } from "../../../redux/Actions/MaterialReceiveInstallmentAction";
 
-const formsData = [
-  {
-    fieldName: "Name",
-    fieldType: "text",
-    fieldPlaceholder: "Name",
-    isRequired: true,
-  },
-  {
-    fieldName: "Address",
-    fieldType: "text",
-    fieldPlaceholder: "Address",
-    isRequired: true,
-  },
-  {
-    fieldName: "License Number",
-    fieldType: "text",
-    fieldPlaceholder: "License Number",
-    isRequired: true,
-  },
-  {
-    fieldName: "Reg Number",
-    fieldType: "text",
-    fieldPlaceholder: "Reg Number",
-    isRequired: true,
-  },
-    {
-      fieldName: "Logo",
-      fieldType: "file",
-      fieldPlaceholder: "Logo",
-      isRequired: true,
-    },
-  
-];
-
-function CreateBusinessProfile() {
+function CreateMaterialReceiveInstallment() {
   const dispatch = useDispatch();
-  const loanState = useSelector((state) => state.businessProfileReducer);
+  const loanState = useSelector((state) => state.materialReceiveInstallmentReducer);
+  //
+  const materialState = useSelector(
+    (state) => state.materialPurchaseReducer.data
+  );
   const navigate = useNavigate();
 
   const submitFunction = (data) => {
-    dispatch(createBusinessProfile(data));
+    dispatch(createMaterialReceiveInstallment(data));
   };
+
+  // fetch Material Purchase AllList
+  useEffect(() => {
+    dispatch(fetchMaterialPurchaseAllList());
+  }, [dispatch]);
+
+  const formsData = [
+    {
+      fieldName: "Recieve date",
+      fieldType: "date",
+      fieldPlaceholder: "Recieve date",
+      isRequired: true,
+    },
+    {
+      fieldName: "Quantity",
+      fieldType: "number",
+      fieldPlaceholder: "Quantity",
+      isRequired: true,
+    },
+    {
+      fieldName: "Purchase id",
+      fieldType: "select",
+      fieldPlaceholder: "Purchase id",
+      isRequired: false,
+      options: materialState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.purchase_code,
+      })),
+    },
+  ];
 
   useEffect(() => {
     if (loanState.isCreated) {
@@ -63,7 +64,7 @@ function CreateBusinessProfile() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/business-profile");
+        navigate("/material-receive-installment");
       }, 3000);
     }
 
@@ -87,7 +88,7 @@ function CreateBusinessProfile() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/business-profile"}
+            to={"/material-receive-installment"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -95,7 +96,7 @@ function CreateBusinessProfile() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <BeneficiaryForm
+        <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
@@ -118,4 +119,4 @@ function CreateBusinessProfile() {
   );
 }
 
-export default CreateBusinessProfile;
+export default CreateMaterialReceiveInstallment;

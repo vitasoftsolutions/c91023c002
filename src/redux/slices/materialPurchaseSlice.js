@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createWarehouseItems, deleteWarehouseItems, fetchWarehouseItems, fetchWarehouseItemsAllList, fetchWarehouseItemsList, searchWarehouseItems, sortByAZWarehouseItems, sortByDateWarehouseItems, updateWarehouseItems } from "../Actions/_WarehouseItemsAction";
+import { createMaterialPurchase, deleteMaterialPurchase, fetchMaterialPurchase, fetchMaterialPurchaseAllList, fetchMaterialPurchaseList, searchMaterialPurchase, sortByAZMaterialPurchase, sortByDateMaterialPurchase, updateMaterialPurchase } from "../Actions/MaterialPurchaseAction";
 
-const warehouseItemsSlice = createSlice({
-  name: "createWarehouseItemsSlice",
+const materialPurchaseSlice = createSlice({
+  name: "createMaterialPurchaseSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -19,33 +19,33 @@ const warehouseItemsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch warehouseItems all list
-      .addCase(fetchWarehouseItemsAllList.pending, (state) => {
+      // Fetch MaterialPurchase all list
+      .addCase(fetchMaterialPurchaseAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchWarehouseItemsAllList.fulfilled, (state, action) => {
+      .addCase(fetchMaterialPurchaseAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchWarehouseItemsAllList.rejected, (state, action) => {
+      .addCase(fetchMaterialPurchaseAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch warehouseItems list
-      .addCase(fetchWarehouseItemsList.pending, (state) => {
+      // Fetch MaterialPurchase list
+      .addCase(fetchMaterialPurchaseList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
         state.data = [];
       })
-      .addCase(fetchWarehouseItemsList.fulfilled, (state, action) => {
+      .addCase(fetchMaterialPurchaseList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -55,122 +55,122 @@ const warehouseItemsSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchWarehouseItemsList.rejected, (state, action) => {
+      .addCase(fetchMaterialPurchaseList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.data = [];
       })
-      // Fetch s WarehouseItems
-      .addCase(fetchWarehouseItems.pending, (state) => {
+      // Fetch s MaterialPurchase
+      .addCase(fetchMaterialPurchase.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchWarehouseItems.fulfilled, (state, action) => {
+      .addCase(fetchMaterialPurchase.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchWarehouseItems.rejected, (state, action) => {
+      .addCase(fetchMaterialPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create WarehouseItems
-      .addCase(createWarehouseItems.pending, (state) => {
+      // Create MaterialPurchase
+      .addCase(createMaterialPurchase.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createWarehouseItems.fulfilled, (state, action) => {
+      .addCase(createMaterialPurchase.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createWarehouseItems.rejected, (state, action) => {
+      .addCase(createMaterialPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update WarehouseItems
-      .addCase(updateWarehouseItems.pending, (state) => {
+      // Update MaterialPurchase
+      .addCase(updateMaterialPurchase.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateWarehouseItems.fulfilled, (state, action) => {
+      .addCase(updateMaterialPurchase.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateWarehouseItems.rejected, (state, action) => {
+      .addCase(updateMaterialPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete WarehouseItems
-      .addCase(deleteWarehouseItems.pending, (state) => {
+      // Delete MaterialPurchase
+      .addCase(deleteMaterialPurchase.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteWarehouseItems.fulfilled, (state, action) => {
+      .addCase(deleteMaterialPurchase.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteWarehouseItems.rejected, (state, action) => {
+      .addCase(deleteMaterialPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchWarehouseItems.pending, (state) => {
+      .addCase(searchMaterialPurchase.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchWarehouseItems.fulfilled, (state, action) => {
+      .addCase(searchMaterialPurchase.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchWarehouseItems.rejected, (state, action) => {
+      .addCase(searchMaterialPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateWarehouseItems.pending, (state) => {
+      .addCase(sortByDateMaterialPurchase.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateWarehouseItems.fulfilled, (state, action) => {
+      .addCase(sortByDateMaterialPurchase.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateWarehouseItems.rejected, (state, action) => {
+      .addCase(sortByDateMaterialPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZWarehouseItems.pending, (state) => {
+      .addCase(sortByAZMaterialPurchase.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZWarehouseItems.fulfilled, (state, action) => {
+      .addCase(sortByAZMaterialPurchase.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZWarehouseItems.rejected, (state, action) => {
+      .addCase(sortByAZMaterialPurchase.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default warehouseItemsSlice.reducer;
+export default materialPurchaseSlice.reducer;

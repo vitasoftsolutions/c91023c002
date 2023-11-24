@@ -1,8 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createWarehouseItems, deleteWarehouseItems, fetchWarehouseItems, fetchWarehouseItemsAllList, fetchWarehouseItemsList, searchWarehouseItems, sortByAZWarehouseItems, sortByDateWarehouseItems, updateWarehouseItems } from "../Actions/_WarehouseItemsAction";
+import {
+  createProductInventory,
+  deleteProductInventory,
+  fetchProductInventory,
+  fetchProductInventoryAllList,
+  fetchProductInventoryList,
+  searchProductInventory,
+  sortByAZProductInventory,
+  sortByDateProductInventory,
+  updateProductInventory,
+} from "../Actions/ProductInventoryAction";
 
-const warehouseItemsSlice = createSlice({
-  name: "createWarehouseItemsSlice",
+const productInventorySlice = createSlice({
+  name: "createProductInventorySlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -19,33 +29,33 @@ const warehouseItemsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch warehouseItems all list
-      .addCase(fetchWarehouseItemsAllList.pending, (state) => {
+      // Fetch ProductInventory all list
+      .addCase(fetchProductInventoryAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchWarehouseItemsAllList.fulfilled, (state, action) => {
+      .addCase(fetchProductInventoryAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
       })
-      .addCase(fetchWarehouseItemsAllList.rejected, (state, action) => {
+      .addCase(fetchProductInventoryAllList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch warehouseItems list
-      .addCase(fetchWarehouseItemsList.pending, (state) => {
+      // Fetch ProductInventory list
+      .addCase(fetchProductInventoryList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
         state.data = [];
       })
-      .addCase(fetchWarehouseItemsList.fulfilled, (state, action) => {
+      .addCase(fetchProductInventoryList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -55,122 +65,121 @@ const warehouseItemsSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchWarehouseItemsList.rejected, (state, action) => {
+      .addCase(fetchProductInventoryList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
-        state.data = [];
       })
-      // Fetch s WarehouseItems
-      .addCase(fetchWarehouseItems.pending, (state) => {
+      // Fetch s ProductInventory
+      .addCase(fetchProductInventory.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchWarehouseItems.fulfilled, (state, action) => {
+      .addCase(fetchProductInventory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchWarehouseItems.rejected, (state, action) => {
+      .addCase(fetchProductInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create WarehouseItems
-      .addCase(createWarehouseItems.pending, (state) => {
+      // Create ProductInventory
+      .addCase(createProductInventory.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createWarehouseItems.fulfilled, (state, action) => {
+      .addCase(createProductInventory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createWarehouseItems.rejected, (state, action) => {
+      .addCase(createProductInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update WarehouseItems
-      .addCase(updateWarehouseItems.pending, (state) => {
+      // Update ProductInventory
+      .addCase(updateProductInventory.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateWarehouseItems.fulfilled, (state, action) => {
+      .addCase(updateProductInventory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateWarehouseItems.rejected, (state, action) => {
+      .addCase(updateProductInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete WarehouseItems
-      .addCase(deleteWarehouseItems.pending, (state) => {
+      // Delete ProductInventory
+      .addCase(deleteProductInventory.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteWarehouseItems.fulfilled, (state, action) => {
+      .addCase(deleteProductInventory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteWarehouseItems.rejected, (state, action) => {
+      .addCase(deleteProductInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchWarehouseItems.pending, (state) => {
+      .addCase(searchProductInventory.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchWarehouseItems.fulfilled, (state, action) => {
+      .addCase(searchProductInventory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchWarehouseItems.rejected, (state, action) => {
+      .addCase(searchProductInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateWarehouseItems.pending, (state) => {
+      .addCase(sortByDateProductInventory.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateWarehouseItems.fulfilled, (state, action) => {
+      .addCase(sortByDateProductInventory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateWarehouseItems.rejected, (state, action) => {
+      .addCase(sortByDateProductInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZWarehouseItems.pending, (state) => {
+      .addCase(sortByAZProductInventory.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZWarehouseItems.fulfilled, (state, action) => {
+      .addCase(sortByAZProductInventory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZWarehouseItems.rejected, (state, action) => {
+      .addCase(sortByAZProductInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default warehouseItemsSlice.reducer;
+export default productInventorySlice.reducer;

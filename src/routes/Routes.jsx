@@ -108,6 +108,24 @@ import CreateExpenseByProperty from "../pages/Dashboard/ExpenseByProperty/Create
 import EditExpenseByProperty from "../pages/Dashboard/ExpenseByProperty/EditExpenseByProperty";
 import EditRepairRecords from "../pages/Dashboard/RepairRecords/EditRepairRecords";
 import EditProjectProgress from "../pages/Dashboard/ProjectProgress/EditProjectProgress";
+import WarehouseItemsList from "../pages/Dashboard/WarehouseItems/warehouseItemsList";
+import CreateWarehouseItems from "../pages/Dashboard/WarehouseItems/CreatewarehouseItems";
+import EditWarehouseItems from "../pages/Dashboard/WarehouseItems/EditwarehouseItems";
+import MaterialPurchaseList from "../pages/Dashboard/MaterialPurchase/MaterialPurchaseList";
+import EditMaterialPurchase from "../pages/Dashboard/MaterialPurchase/EditMaterialPurchase";
+import CreateMaterialPurchase from "../pages/Dashboard/MaterialPurchase/CreateMaterialPurchase";
+import MaterialPaymentInstallmentList from "../pages/Dashboard/MaterialPaymentInstallment/MaterialPaymentInstallmentList";
+import EditMaterialPaymentInstallment from "../pages/Dashboard/MaterialPaymentInstallment/EditMaterialPaymentInstallment";
+import CreateMaterialPaymentInstallment from "../pages/Dashboard/MaterialPaymentInstallment/CreateMaterialPaymentInstallment";
+import CreateMaterialDispatch from "../pages/Dashboard/MaterialDispatch/CreateMaterialDispatch";
+import EditMaterialDispatch from "../pages/Dashboard/MaterialDispatch/EditMaterialDispatch";
+import MaterialDispatchList from "../pages/Dashboard/MaterialDispatch/MaterialDispatchList";
+import MaterialReceiveInstallmentList from "../pages/Dashboard/MaterialReceiveInstallmentList/MaterialReceiveInstallmentList";
+import CreateMaterialReceiveInstallment from "../pages/Dashboard/MaterialReceiveInstallmentList/CreateMaterialReceiveInstallment";
+import EditMaterialReceiveInstallment from "../pages/Dashboard/MaterialReceiveInstallmentList/EditMaterialReceiveInstallment";
+import ProductInventoryList from "../pages/Dashboard/ProductInventory/ProductInventoryList";
+import EditProductInventory from "../pages/Dashboard/ProductInventory/EditProductInventory";
+import CreateProductInventory from "../pages/Dashboard/ProductInventory/CreateProductInventory";
 
 export const router = createBrowserRouter([
   {
@@ -629,6 +647,156 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditRentCollection />
+          </PrivetRoute>
+        ),
+      },      
+      // Material Payment Installment
+      {
+        path: "/material-payment-installment",
+        element: (
+          <PrivetRoute>
+            <MaterialPaymentInstallmentList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-payment-installment/material-payment-installment-crete",
+        element: (
+          <PrivetRoute>
+            <CreateMaterialPaymentInstallment />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-payment-installment/edit-material-payment-installment",
+        element: (
+          <PrivetRoute>
+            <EditMaterialPaymentInstallment />
+          </PrivetRoute>
+        ),
+      },      
+      // Product Inventory
+      {
+        path: "/product-inventory",
+        element: (
+          <PrivetRoute>
+            <ProductInventoryList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/product-inventory/product-inventory-crete",
+        element: (
+          <PrivetRoute>
+            <CreateProductInventory />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/product-inventory/edit-product-inventory",
+        element: (
+          <PrivetRoute>
+            <EditProductInventory />
+          </PrivetRoute>
+        ),
+      },      
+      // Material Purchase
+      {
+        path: "/material-receive-installment",
+        element: (
+          <PrivetRoute>
+            <MaterialReceiveInstallmentList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-receive-installment/material-receive-installment-crete",
+        element: (
+          <PrivetRoute>
+            <CreateMaterialReceiveInstallment />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-receive-installment/edit-material-receive-installment",
+        element: (
+          <PrivetRoute>
+            <EditMaterialReceiveInstallment />
+          </PrivetRoute>
+        ),
+      },      
+      // Material Purchase
+      {
+        path: "/material-dispatch",
+        element: (
+          <PrivetRoute>
+            <MaterialDispatchList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-dispatch/material-dispatch-crete",
+        element: (
+          <PrivetRoute>
+            <CreateMaterialDispatch />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-dispatch/edit-material-dispatch",
+        element: (
+          <PrivetRoute>
+            <EditMaterialDispatch />
+          </PrivetRoute>
+        ),
+      },      
+      // Material Purchase
+      {
+        path: "/material-purchase",
+        element: (
+          <PrivetRoute>
+            <MaterialPurchaseList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-purchase/material-purchase-crete",
+        element: (
+          <PrivetRoute>
+            <CreateMaterialPurchase />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-purchase/edit-material-purchase",
+        element: (
+          <PrivetRoute>
+            <EditMaterialPurchase />
+          </PrivetRoute>
+        ),
+      },      
+      // Warehouse Items
+      {
+        path: "/warehouse-items",
+        element: (
+          <PrivetRoute>
+            <WarehouseItemsList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/warehouse-items/warehouse-items-crete",
+        element: (
+          <PrivetRoute>
+            <CreateWarehouseItems />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/warehouse-items/edit-warehouse-items",
+        element: (
+          <PrivetRoute>
+            <EditWarehouseItems />
           </PrivetRoute>
         ),
       },      

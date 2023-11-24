@@ -6,12 +6,12 @@ import { base_url } from "../../Components/shared/Url";
 //
 //
 //
-// https://erpcons.vitasoftsolutions.com/property-purchase/
+// https://erpcons.vitasoftsolutions.com/warehouse-items/
 //
 export const createWarehouseItems = createAsyncThunk(
   "createWarehouseItems",
   async (payload) => {
-    console.log(payload, "_____")
+    // console.log(payload, "_____")
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
@@ -20,7 +20,7 @@ export const createWarehouseItems = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${base_url}/property-purchase/`,
+        `${base_url}/warehouse-items/`,
         payload,
         { headers }
       );
@@ -50,7 +50,7 @@ export const fetchWarehouseItemsList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/property-purchase/?limit=${perPage}&offset=${
+      `${base_url}/warehouse-items/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
@@ -94,7 +94,7 @@ export const fetchWarehouseItemsAllList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/property-purchase/`,{headers});
+      `${base_url}/warehouse-items/`,{headers});
 
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
@@ -124,7 +124,7 @@ export const fetchWarehouseItems = createAsyncThunk("fetchWarehouseItems", async
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/property-purchase/${id}/`, {
+  const response = await axios.get(`${base_url}/warehouse-items/${id}/`, {
     headers,
   });
 
@@ -154,7 +154,7 @@ export const deleteWarehouseItems = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/property-purchase/${payload}/`,
+      `${base_url}/warehouse-items/${payload}/`,
       { headers }
     );
 
@@ -181,7 +181,7 @@ export const updateWarehouseItems = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/property-purchase/${payload.id}/`,
+      `${base_url}/warehouse-items/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -207,7 +207,7 @@ export const searchWarehouseItems = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/property-purchase/`;
+      let apiUrl = `${base_url}/warehouse-items/`;
 
       // Check if firstName is not empty, then append the search query
       if (firstName) {
@@ -249,7 +249,7 @@ export const sortByDateWarehouseItems = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/property-purchase/`;
+      let apiUrl = `${base_url}/warehouse-items/`;
 
       // Check if date is not empty, then append the search query
       if (date) {
@@ -290,7 +290,7 @@ export const sortByAZWarehouseItems = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/property-purchase/`;
+      let apiUrl = `${base_url}/warehouse-items/`;
 
       // Check if sortOrder is not empty, then append the search query
       if (sortOrder) {

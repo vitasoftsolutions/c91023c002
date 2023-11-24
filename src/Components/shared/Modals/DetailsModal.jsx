@@ -66,6 +66,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData, nidSection
                     key !== "is_verified" &&
                     key !== "password" &&
                     key !== "groups" &&
+                    key !== "facilities" &&
                     key !== "user_permissions" &&
                     key !== "is_superuser" &&
                     key !== "roles" &&

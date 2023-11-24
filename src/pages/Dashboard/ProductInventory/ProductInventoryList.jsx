@@ -3,30 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deletePropertyPurchase, fetchPropertyPurchaseList } from "../../../redux/Actions/_PropertyPurchaseAction";
+import { deleteProductInventory, fetchProductInventoryList } from "../../../redux/Actions/ProductInventoryAction";
 
 const t_head = [
-  { name: "Amount" },
-  { name: "Down payment" },
-  { name: "Due payment" },
-  { name: "Installment" },
-  { name: "Created at" },
+  { name: "Quantity" },
+  { name: "Created Date" },
   { name: "Status" },
   { name: "Actions" },
 ];
 
-const PropertyPurchaseList = () => {
+const ProductInventoryList = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.propertyPurchaseReducer);
-  console.log(state, "propertyPurchaseReducer")
+  const state = useSelector((state) => state.productInventoryReducer);
+  console.log(state)
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    amount: item.amount,
-    down_payment: item.down_payment,
-    due_amount: item.due_amount,
-    installment: item.installment,
+    quantity: item.quantity ,
     date: item.created_at,
     status: item.status,
   }));
@@ -50,11 +44,11 @@ const PropertyPurchaseList = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchPropertyPurchaseList(current_page));
+    dispatch(fetchProductInventoryList(current_page));
   }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchPropertyPurchaseList(newPage));
+    dispatch(fetchProductInventoryList(newPage));
   };
 
   // console.log(state, "state_ page");
@@ -70,7 +64,7 @@ const PropertyPurchaseList = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deletePropertyPurchase(id));
+        dispatch(deleteProductInventory(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
@@ -83,8 +77,8 @@ const PropertyPurchaseList = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Property Purchase"}
-        redirectLink={"/property-purchase/property-purchase-crete"}
+        title={"Product Inventory"}
+        redirectLink={"/product-inventory/product-inventory-crete"}
         // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
@@ -95,8 +89,8 @@ const PropertyPurchaseList = () => {
         handlePageChange={handlePageChange}
         current_page={current_page}
         page_number={page_number}
-        deleteFunction={deleteFunction} 
-        editLink={"/property-purchase/edit-property-purchase"}
+        deleteFunction={deleteFunction}
+        editLink={"/product-inventory/edit-product-inventory"}
         erp_modalCol={12}
         photoSection={false}
         nidSection={false}
@@ -105,4 +99,4 @@ const PropertyPurchaseList = () => {
   );
 };
 
-export default PropertyPurchaseList;
+export default ProductInventoryList;

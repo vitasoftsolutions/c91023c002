@@ -170,10 +170,7 @@ const PropertyPurchaseForm = ({
           <>
             <Controller
               control={control}
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
-                validate: (value) =>
-                  value.length > 0 || "This field is required.",
-              })}
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"),)}
               defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (

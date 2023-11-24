@@ -10,6 +10,7 @@ import {
   updateLoanBeneficiary,
   contractorben,
   projectlist,
+  fetchSupplierBeneficariesAllList,
 } from "../Actions/SupplierBenAction";
 
 const supplierBenSlice = createSlice({
@@ -34,6 +35,25 @@ const supplierBenSlice = createSlice({
     builder
       //projectlist
       //Conben
+      // fetch Supplier Beneficaries AllList
+      .addCase(fetchSupplierBeneficariesAllList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchSupplierBeneficariesAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchSupplierBeneficariesAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // 
       .addCase(projectlist.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;

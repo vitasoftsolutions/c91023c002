@@ -27,24 +27,34 @@ import expenseSliceReducers from "./slices/ExpenseSlice";
 import incomeSliceReducers from "./slices/IncomeSlice";
 import leavesReducer from "./slices/leavesSlice";
 import propertySliceReducers from "./slices/PropertyInstallmentSlice";
-// 
+//
 import propertyReducer from "./slices/propertySlice";
-import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
 import flateRentReducer from "./slices/flateRentSlice";
 import rentCollectionReducer from "./slices/rentCollectionSlice";
 import repairRecordsReducer from "./slices/repairRecordsSlice";
 import projectProgressReducer from "./slices/projectProgressSlice";
 import expenseByPropertyReducer from "./slices/ExpenseByPropertySlice";
+import materialPurchaseReducer from "./slices/materialPurchaseSlice";
+import materialPaymentInstallmentReducer from "./slices/materialPaymentInstallmentSlice";
+import materialDispatchReducer from "./slices/materialDispatchSlice";
+import productInventoryReducer from "./slices/productInventorySlice";
+import materialReceiveInstallmentReducer from "./slices/materialReceiveInstallmentSlice";
 import warehouseItemsReducer from "./slices/_warehouseItemsSlice";
-
-
+import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
+import warehouseDispatchReducer from "./slices/_warehouseDispatchSlice";
 
 export const store = configureStore({
   reducer: {
     loanBeneficiary: loanBeneficiary,
-    // 
+    //
     propertyReducer: propertyReducer,
+    materialPaymentInstallmentReducer: materialPaymentInstallmentReducer,
+    materialReceiveInstallmentReducer: materialReceiveInstallmentReducer,
+    warehouseDispatchReducer: warehouseDispatchReducer,
+    productInventoryReducer: productInventoryReducer,
     warehouseItemsReducer: warehouseItemsReducer,
+    materialDispatchReducer: materialDispatchReducer,
+    materialPurchaseReducer: materialPurchaseReducer,
     leavesReducer: leavesReducer,
     propertyPurchaseReducer: propertyPurchaseReducer,
     flateRentReducer: flateRentReducer,
@@ -52,7 +62,7 @@ export const store = configureStore({
     repairRecordsReducer: repairRecordsReducer,
     projectProgressReducer: projectProgressReducer,
     expenseByPropertyReducer: expenseByPropertyReducer,
-    // 
+    //
     loanLogsReducer: loanLogsReducer,
     renterBeneficiaryReducer: renterBeneficiaryReducer,
     loanTransactionsReducer: loanTransactionsReducer,
@@ -69,15 +79,15 @@ export const store = configureStore({
     attendanceReducers: attendanceReducers,
     applabelReducer: applabelReducer,
     typesReducers: typesReducers,
-    workprogressReducers:workprogressReducers,
-    ContractorBenReducers:ContractorBenReducers,
-    assignContractorReducers:assignContractorReducers,
-    paymentContractorReducers:paymentContractorReducers,
-    guarantorContractorReducers:guarantorContractorReducers,
-    supplierBenSliceReducers:supplierBenSliceReducers,
-    TypesModuleSliceReducers:TypesModuleSliceReducers,
-    expenseSliceReducers:expenseSliceReducers,
-    incomeSliceReducers:incomeSliceReducers,
-    propertySliceReducers:propertySliceReducers,
+    workprogressReducers: workprogressReducers,
+    ContractorBenReducers: ContractorBenReducers,
+    assignContractorReducers: assignContractorReducers,
+    paymentContractorReducers: paymentContractorReducers,
+    guarantorContractorReducers: guarantorContractorReducers,
+    supplierBenSliceReducers: supplierBenSliceReducers,
+    TypesModuleSliceReducers: TypesModuleSliceReducers,
+    expenseSliceReducers: expenseSliceReducers,
+    incomeSliceReducers: incomeSliceReducers,
+    propertySliceReducers: propertySliceReducers,
   },
 });

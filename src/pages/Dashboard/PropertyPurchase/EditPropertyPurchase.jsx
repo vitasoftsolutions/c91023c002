@@ -5,12 +5,24 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchPropertyPurchase, updatePropertyPurchase } from "../../../redux/Actions/_PropertyPurchaseAction";
+import {
+  fetchPropertyPurchase,
+  updatePropertyPurchase,
+} from "../../../redux/Actions/_PropertyPurchaseAction";
+import PropertyPurchaseForm from "./PropertyPurchaseForm";
+import { fetchCustomerBeneAllList } from "../../../redux/Actions/CustomerBenAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchPropertyAllList } from "../../../redux/Actions/PropertyAction";
 
 function EditPropertyPurchase() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.propertyPurchaseReducer);
+  //
+  const customersState = useSelector((state) => state.customersBenReducer.data);
+  const propertysState = useSelector((state) => state.propertyReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.data);
+  //
   const location = useLocation();
   const state = reduxState.sData;
 
@@ -20,40 +32,167 @@ function EditPropertyPurchase() {
     dispatch(fetchPropertyPurchase(location.state));
   }, [location.state, dispatch]);
 
+  //
+
+  useEffect(() => {
+    dispatch(fetchCustomerBeneAllList());
+    dispatch(fetchProjectsAllList());
+    dispatch(fetchPropertyAllList());
+  }, [dispatch]);
+
   const formsData = [
     {
+      fieldName: "Amount",
+      fieldType: "number",
+      fieldPlaceholder: "Amount",
+      defaultValue: state.amount,
+    },
+    {
+      fieldName: "Down payment",
+      fieldType: "number",
+      fieldPlaceholder: "Down payment",
+      defaultValue: state.down_payment,
+    },
+    {
+      fieldName: "Installment",
+      fieldType: "number",
+      fieldPlaceholder: "Installment",
+      defaultValue: state.installment,
+    },
+    {
+      fieldName: "Installment Duration",
+      fieldType: "number",
+      fieldPlaceholder: "Installment Duration",
+      defaultValue: state.installment_duration,
+    },
+    {
+      fieldName: "Due amount",
+      fieldType: "number",
+      fieldPlaceholder: "Due amount",
+      defaultValue: state.due_amount,
+    },
+    {
+      fieldName: "Due installment",
+      fieldType: "number",
+      fieldPlaceholder: "Due amount",
+      defaultValue: state.due_installment,
+    },
+    // {
+    //   fieldName: "Facilities",
+    //   fieldType: "number",
+    //   fieldPlaceholder: "Facilities",
+    //
+    // defaultValue: state.wp_ids,
+    // },
+    {
+      fieldName: "Final return",
+      fieldType: "date",
+      fieldPlaceholder: "Final return",
+      defaultValue: state.final_return,
+    },
+    {
+      fieldName: "Handover status",
+      fieldType: "select",
+      fieldPlaceholder: "Handover status",
+      defaultValue: state.handover_status,
+      options: [
+        { value: true, label: "Yes" },
+        { value: false, label: "No" },
+      ],
+    },
+    {
+      fieldName: "Customer id",
+      fieldType: "select",
+      fieldPlaceholder: "Customer id",
+      defaultValue: state.customer_id,
+      // customersState
+      options: customersState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: `${dt.first_name} ${dt.last_name}`,
+      })),
+    },
+    {
       fieldName: "Project id",
-      fieldType: "text",
+      fieldType: "select",
       fieldPlaceholder: "Project id",
-      isRequired: true,
-      hasWidth: 3,
+      multiSelect: true,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
       defaultValue: state.project_id,
     },
     {
-      fieldName: "Note",
-      fieldType: "text",
-      fieldPlaceholder: "Note",
-      isRequired: true,
-      hasWidth: 3,
-      defaultValue: state.note,
-    },
-    // TODO: What is wp_ids
-    {
-      fieldName: "Wp Ids",
-      fieldType: "text",
-      fieldPlaceholder: "Wp Ids",
-      isRequired: true,
-      hasWidth: 3,
-      defaultValue: state.wp_ids,
+      fieldName: "Property id",
+      fieldType: "select",
+      fieldPlaceholder: "Property id",
+      multiSelect: true,
+      defaultValue: state.property_id,
+      options: propertysState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.code,
+      })),
     },
   ];
 
   const submitFunction = (data) => {
     if (state) {
       const updateData = {
-        project_id: data.project_id ? data.project_id : state.project_id,
-        note: data.note ? data.note : state.note,
-        wp_ids: data.wp_ids ? data.wp_ids : state.side,
+        amount: data.amount
+          ? data.amount
+          : data.amount === ""
+          ? state.amount
+          : state.amount,
+        down_payment: data.down_payment
+          ? data.down_payment
+          : data.down_payment === ""
+          ? state.down_payment
+          : state.down_payment,
+        installment: data.installment
+          ? data.installment
+          : data.installment === ""
+          ? state.installment
+          : state.installment,
+        installment_duration: data.installment_duration
+          ? data.installment_duration
+          : data.installment_duration === ""
+          ? state.installment_duration
+          : state.installment_duration,
+        due_amount: data.due_amount
+          ? data.due_amount
+          : data.due_amount === ""
+          ? state.due_amount
+          : state.due_amount,
+        due_installment: data.due_installment
+          ? data.due_installment
+          : data.due_installment === ""
+          ? state.due_installment
+          : state.due_installment,
+        final_return: data.final_return
+          ? data.final_return
+          : data.final_return === ""
+          ? state.final_return
+          : state.final_return,
+        handover_status: data.handover_status
+          ? data.handover_status
+          : data.handover_status === ""
+          ? state.handover_status
+          : state.handover_status,
+        customer_id: data.customer_id
+          ? data.customer_id
+          : data.customer_id === ""
+          ? state.customer_id
+          : state.customer_id,
+        project_id: data.project_id
+          ? data.project_id
+          : data.project_id === ""
+          ? state.project_id
+          : state.project_id,
+        property_id: data.property_id
+          ? data.property_id
+          : data.property_id === ""
+          ? state.property_id
+          : state.property_id,
         status: data.status ? data.status : state.status,
       };
 
@@ -100,7 +239,7 @@ function EditPropertyPurchase() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <MainForm
+        <PropertyPurchaseForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}

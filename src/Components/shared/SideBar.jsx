@@ -287,7 +287,7 @@ const Menus = [
         {
           title: "Material Receive Installment",
           icons: <TbFileSettings />,
-          to: "/material-recive-installment",
+          to: "/material-receive-installment",
         },
       ],
     },
