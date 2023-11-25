@@ -108,7 +108,7 @@ import CreateExpenseByProperty from "../pages/Dashboard/ExpenseByProperty/Create
 import EditExpenseByProperty from "../pages/Dashboard/ExpenseByProperty/EditExpenseByProperty";
 import EditRepairRecords from "../pages/Dashboard/RepairRecords/EditRepairRecords";
 import EditProjectProgress from "../pages/Dashboard/ProjectProgress/EditProjectProgress";
-import WarehouseItemsList from "../pages/Dashboard/WarehouseItems/warehouseItemsList";
+import WarehouseItemsList from "../pages/Dashboard/WarehouseItems/WarehouseItemsList";
 import CreateWarehouseItems from "../pages/Dashboard/WarehouseItems/CreatewarehouseItems";
 import EditWarehouseItems from "../pages/Dashboard/WarehouseItems/EditwarehouseItems";
 import MaterialPurchaseList from "../pages/Dashboard/MaterialPurchase/MaterialPurchaseList";
