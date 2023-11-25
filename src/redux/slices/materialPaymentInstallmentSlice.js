@@ -9,7 +9,7 @@ import {
   sortByAZMaterialPaymentInstallment,
   sortByDateMaterialPaymentInstallment,
   updateMaterialPaymentInstallment,
-} from "../Actions/MaterialPaymentinstallmentAction";
+} from "../Actions/MaterialPaymentInstallmentAction";
 
 const materialPaymentInstallmentSlice = createSlice({
   name: "createMaterialPaymentInstallmentSlice",
