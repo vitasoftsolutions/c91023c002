@@ -224,9 +224,9 @@ const Menus = [
           to: "/suppliers-beneficaries",
         },
         {
-          title: "Materials Dispatch from project",
+          title: "Materials",
           icons: <FaMoneyCheckDollar />,
-          to: "/materials_dispatch_from_project",
+          to: "/materials",
         },
         {
           title: "Brands",

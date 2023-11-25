@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createBrands, deleteBrands, fetchBrand, fetchBrands, fetchBrandsAllData, updateBrands } from "../Actions/BrandsAction";
 import {
-  createLoanBen,
-  deleteLoanBeneficiary,
-  fetchLoanBene,
-  fetchLoanBeneList,
-  searchLoanBeneficiaries,
-  sortByAZLoanBen,
-  sortByDateLoanBen,
-  updateLoanBeneficiary,
-} from "../Actions/loanBenAction";
+  createMaterials,
+  deleteMaterials,
+  fetchMaterial,
+  fetchMaterialsList,
+  fetchMaterialsListAllData,
+  searchMaterials,
+  sortByAZMaterials,
+  sortByDateMaterials,
+  updateMaterials,
+} from "../Actions/_MaterialsAction";
 
-const brandsSlice = createSlice({
-  name: "createBrands",
+const materialsSlice = createSlice({
+  name: "createMaterialsSlice",
   initialState: {
     isLoading: false,
     data: [],
@@ -29,32 +29,32 @@ const brandsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    // fetch Brands All Data
-    .addCase(fetchBrandsAllData.pending, (state) => {
-      state.isLoading = true;
-      state.isUpdate = false;
-      state.isError = false;
-      state.sData = [];
-    })
-    .addCase(fetchBrandsAllData.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isCreated = false;
-      state.isUpdate = false;
-      state.isError = false;
-      state.data = action.payload.data;
-    })
-    .addCase(fetchBrandsAllData.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = action.error.message;
-    })
-      // Fetch LoanBen list
-      .addCase(fetchBrands.pending, (state) => {
+      // Fetch Materials all list
+      .addCase(fetchMaterialsListAllData.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchBrands.fulfilled, (state, action) => {
+      .addCase(fetchMaterialsListAllData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchMaterialsListAllData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Fetch Materials list
+      .addCase(fetchMaterialsList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchMaterialsList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -64,121 +64,121 @@ const brandsSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchBrands.rejected, (state, action) => {
+      .addCase(fetchMaterialsList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch LoanBen
-      .addCase(fetchBrand.pending, (state) => {
+      // Fetch s Materials
+      .addCase(fetchMaterial.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchBrand.fulfilled, (state, action) => {
+      .addCase(fetchMaterial.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchBrand.rejected, (state, action) => {
+      .addCase(fetchMaterial.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create Brand
-      .addCase(createBrands.pending, (state) => {
+      // Create Materials
+      .addCase(createMaterials.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createBrands.fulfilled, (state, action) => {
+      .addCase(createMaterials.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createBrands.rejected, (state, action) => {
+      .addCase(createMaterials.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateBrands.pending, (state) => {
+      // Update Materials
+      .addCase(updateMaterials.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateBrands.fulfilled, (state, action) => {
+      .addCase(updateMaterials.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateBrands.rejected, (state, action) => {
+      .addCase(updateMaterials.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete loan
-      .addCase(deleteBrands.pending, (state) => {
+      // Delete Materials
+      .addCase(deleteMaterials.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteBrands.fulfilled, (state, action) => {
+      .addCase(deleteMaterials.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteBrands.rejected, (state, action) => {
+      .addCase(deleteMaterials.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLoanBeneficiaries.pending, (state) => {
+      .addCase(searchMaterials.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
+      .addCase(searchMaterials.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
+      .addCase(searchMaterials.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateLoanBen.pending, (state) => {
+      .addCase(sortByDateMaterials.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByDateMaterials.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateLoanBen.rejected, (state, action) => {
+      .addCase(sortByDateMaterials.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZLoanBen.pending, (state) => {
+      .addCase(sortByAZMaterials.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByAZMaterials.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZLoanBen.rejected, (state, action) => {
+      .addCase(sortByAZMaterials.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default brandsSlice.reducer;
+export default materialsSlice.reducer;

@@ -42,12 +42,14 @@ import materialReceiveInstallmentReducer from "./slices/materialReceiveInstallme
 import warehouseItemsReducer from "./slices/_warehouseItemsSlice";
 import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
 import warehouseDispatchReducer from "./slices/_warehouseDispatchSlice";
+import materialsReducer from "./slices/_materialsSlice";
 
 export const store = configureStore({
   reducer: {
     loanBeneficiary: loanBeneficiary,
     //
     propertyReducer: propertyReducer,
+    materialsReducer: materialsReducer,
     materialPaymentInstallmentReducer: materialPaymentInstallmentReducer,
     materialReceiveInstallmentReducer: materialReceiveInstallmentReducer,
     warehouseDispatchReducer: warehouseDispatchReducer,

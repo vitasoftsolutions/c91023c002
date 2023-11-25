@@ -126,6 +126,8 @@ import EditMaterialReceiveInstallment from "../pages/Dashboard/MaterialReceiveIn
 import ProductInventoryList from "../pages/Dashboard/ProductInventory/ProductInventoryList";
 import EditProductInventory from "../pages/Dashboard/ProductInventory/EditProductInventory";
 import CreateProductInventory from "../pages/Dashboard/ProductInventory/CreateProductInventory";
+import MaterialsList from "../pages/Dashboard/Materials/MaterialsList";
+import CreateMaterials from "../pages/Dashboard/Materials/CreateMaterials";
 
 export const router = createBrowserRouter([
   {
@@ -672,6 +674,31 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditMaterialPaymentInstallment />
+          </PrivetRoute>
+        ),
+      },      
+      // Product Inventory
+      {
+        path: "/materials",
+        element: (
+          <PrivetRoute>
+            <MaterialsList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/materials/materials-crete",
+        element: (
+          <PrivetRoute>
+            <CreateMaterials />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/materials/edit-materials",
+        element: (
+          <PrivetRoute>
+            <EditProductInventory />
           </PrivetRoute>
         ),
       },      
