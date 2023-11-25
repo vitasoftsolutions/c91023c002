@@ -5,29 +5,21 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchMaterialPurchaseAllList } from "../../../redux/Actions/MaterialPurchaseAction";
 import {
   fetchProductInventory,
-  fetchProductInventoryAllList,
   updateProductInventory,
 } from "../../../redux/Actions/ProductInventoryAction";
 import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
-import { fetchWarehouseItemsAllList } from "../../../redux/Actions/_WarehouseItemsAction";
+import { fetchMaterialsListAllData } from "../../../redux/Actions/MaterialsAction";
 
 function EditProductInventory() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.productInventoryReducer);
   //
-  const materialState = useSelector(
-    (state) => state.materialPurchaseReducer.data
-  );
-  console.log(materialState);
   const projectsState = useSelector((state) => state.projectsReducer.data);
-  const warehouseState = useSelector(
-    (state) => state.warehouseItemsReducer.data
-  );
-
+  const materialState = useSelector((state) => state.materialsReducer.data);
+  //
   const location = useLocation();
   const state = reduxState.sData;
 
@@ -37,10 +29,8 @@ function EditProductInventory() {
 
   // fetch Material Purchase AllList
   useEffect(() => {
-    // dispatch(fetchMaterialPurchaseAllList());
     dispatch(fetchProjectsAllList());
-    // dispatch(fetchProductInventoryAllList());
-    // dispatch(fetchWarehouseItemsAllList());
+    dispatch(fetchMaterialsListAllData());
   }, [dispatch]);
 
   const formsData = [
@@ -139,11 +129,10 @@ function EditProductInventory() {
       isRequired: false,
       defaultValue: state.materials,
       multiSelect: true,
-      // TODO: Materials not Doen
-      // options: materialState?.map((dt) => ({
-      //   value: dt.id.toString(),
-      //   label: dt.purchase_code,
-      // })),
+      options: materialState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
   ];
 

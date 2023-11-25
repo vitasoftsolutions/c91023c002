@@ -7,13 +7,16 @@ import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import { createProductInventory } from "../../../redux/Actions/ProductInventoryAction";
 import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchMaterialsListAllData } from "../../../redux/Actions/MaterialsAction";
 
 function CreateProductInventory() {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.productInventoryReducer);
   //
   const projectsState = useSelector((state) => state.projectsReducer.data);
+  const materialState = useSelector((state) => state.materialsReducer.data);
 
+  console.log(materialState, "materialState")
 
   const navigate = useNavigate();
 
@@ -23,10 +26,8 @@ function CreateProductInventory() {
 
   // fetch Material Purchase AllList
   useEffect(() => {
-    // dispatch(fetchMaterialPurchaseAllList());
     dispatch(fetchProjectsAllList());
-    // dispatch(fetchProductInventoryAllList());
-    // dispatch(fetchWarehouseItemsAllList());
+    dispatch(fetchMaterialsListAllData());
   }, [dispatch]);
 
   const formsData = [
@@ -112,11 +113,11 @@ function CreateProductInventory() {
       fieldPlaceholder: "Materials",
       isRequired: false,
       multiSelect: true,
-      // TODO: Materials not Doen
-      // options: materialState?.map((dt) => ({
-      //   value: dt.id.toString(),
-      //   label: dt.purchase_code,
-      // })),
+      // TODO: Materials not Done
+      options: materialState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
   ];
 
