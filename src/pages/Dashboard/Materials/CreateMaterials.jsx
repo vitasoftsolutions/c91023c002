@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import PropertyPurchaseForm from "../PropertyPurchase/PropertyPurchaseForm";
-import { createProductInventory } from "../../../redux/Actions/ProductInventoryAction";
 import { fetchBrandsAllData } from "../../../redux/Actions/BrandsAction";
 import { createMaterials } from "../../../redux/Actions/_MaterialsAction";
 import MaterialsForm from "./MaterialsForm";

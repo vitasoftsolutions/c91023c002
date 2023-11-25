@@ -5,181 +5,84 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchMaterialPurchaseAllList } from "../../../redux/Actions/MaterialPurchaseAction";
 import {
   fetchProductInventory,
-  fetchProductInventoryAllList,
   updateProductInventory,
 } from "../../../redux/Actions/ProductInventoryAction";
-import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
-import { fetchWarehouseItemsAllList } from "../../../redux/Actions/_WarehouseItemsAction";
+import MaterialsForm from "./MaterialsForm";
+import { fetchBrandsAllData } from "../../../redux/Actions/BrandsAction";
+import {
+  fetchMaterial,
+  updateMaterials,
+} from "../../../redux/Actions/_MaterialsAction";
 
-function EditProductInventory() {
+function EditMaterials() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.productInventoryReducer);
+  const reduxState = useSelector((state) => state.materialsReducer);
   //
-  const materialState = useSelector(
-    (state) => state.materialPurchaseReducer.data
-  );
-  console.log(materialState);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
-  const warehouseState = useSelector(
-    (state) => state.warehouseItemsReducer.data
-  );
+  const brandsState = useSelector((state) => state.brandsReducer.data);
 
   const location = useLocation();
   const state = reduxState.sData;
 
   useEffect(() => {
-    dispatch(fetchProductInventory(location.state));
+    dispatch(fetchMaterial(location.state));
   }, [location.state, dispatch]);
 
   // fetch Material Purchase AllList
   useEffect(() => {
-    // dispatch(fetchMaterialPurchaseAllList());
-    dispatch(fetchProjectsAllList());
-    // dispatch(fetchProductInventoryAllList());
-    // dispatch(fetchWarehouseItemsAllList());
+    dispatch(fetchBrandsAllData());
   }, [dispatch]);
 
   const formsData = [
     {
-      fieldName: "SR name",
+      fieldName: "Name",
       fieldType: "text",
-      fieldPlaceholder: "SR name",
+      fieldPlaceholder: "Name",
       isRequired: false,
-      defaultValue: state.sr_name,
+      defaultValue: state.name,
     },
     {
-      fieldName: "SR Number",
+      fieldName: "Description",
       fieldType: "text",
-      fieldPlaceholder: "SR Number",
+      fieldPlaceholder: "Description",
       isRequired: false,
-      defaultValue: state.sr_number,
+      defaultValue: state.description,
     },
     {
-      fieldName: "Purchase code",
-      fieldType: "text",
-      fieldPlaceholder: "Purchase code",
-      isRequired: false,
-      defaultValue: state.purchase_code,
-    },
-    {
-      fieldName: "Amount",
+      fieldName: "Dimenssion",
       fieldType: "number",
-      fieldPlaceholder: "Amount",
+      fieldPlaceholder: "Dimenssion",
       isRequired: true,
-      defaultValue: state.amount,
+      defaultValue: state.dimenssion,
     },
     {
-      fieldName: "Amount Due",
-      fieldType: "number",
-      fieldPlaceholder: "Amount Due",
-      isRequired: false,
-      defaultValue: state.amount_due,
-    },
-    {
-      fieldName: "Amount Advance",
-      fieldType: "number",
-      fieldPlaceholder: "Amount Advance",
-      isRequired: true,
-      defaultValue: state.amount_advance,
-    },
-    {
-      fieldName: "Quantity",
-      fieldType: "number",
-      fieldPlaceholder: "Quantity",
-      isRequired: true,
-      defaultValue: state.quantity,
-    },
-    {
-      fieldName: "Recieved Quantity",
-      fieldType: "number",
-      fieldPlaceholder: "Recieved Quantity",
-      isRequired: false,
-      defaultValue: state.recieved_quantity,
-    },
-    {
-      fieldName: "Due Quantity",
-      fieldType: "number",
-      fieldPlaceholder: "Due Quantity",
-      isRequired: false,
-      defaultValue: state.due_quantity,
-    },
-    {
-      fieldName: "Use Quantity",
-      fieldType: "number",
-      fieldPlaceholder: "Use Quantity",
-      isRequired: false,
-      defaultValue: state.use_quantity,
-    },
-    {
-      fieldName: "Purchase for",
+      fieldName: "Brand",
       fieldType: "select",
-      fieldPlaceholder: "Purchase for",
+      fieldPlaceholder: "Brand",
       isRequired: false,
-      defaultValue: state.purchase_for,
-      options: projectsState?.map((dt) => ({
+      multiSelect: true,
+      defaultValue: state.brand,
+      options: brandsState?.map((dt) => ({
         value: dt.id.toString(),
         label: dt.name,
       })),
-    },
-    {
-      fieldName: "Vendor id",
-      fieldType: "text",
-      fieldPlaceholder: "Vendor id",
-      isRequired: false,
-      defaultValue: state.vendor_id,
-    },
-    {
-      fieldName: "Materials",
-      fieldType: "select",
-      fieldPlaceholder: "Materials",
-      isRequired: false,
-      defaultValue: state.materials,
-      multiSelect: true,
-      // TODO: Materials not Doen
-      // options: materialState?.map((dt) => ({
-      //   value: dt.id.toString(),
-      //   label: dt.purchase_code,
-      // })),
     },
   ];
 
   const submitFunction = (data) => {
     if (state) {
       const updateData = {
-        sr_name: data.sr_name ? data.sr_name : state.sr_name,
-        sr_number: data.sr_number ? data.sr_number : state.sr_number,
-        purchase_code: data.purchase_code
-          ? data.purchase_code
-          : state.purchase_code,
-        amount: data.amount ? data.amount : state.amount,
-        amount_due: data.amount_due ? data.amount_due : state.amount_due,
-        amount_advance: data.amount_advance
-          ? data.amount_advance
-          : state.amount_advance,
-        quantity: data.quantity ? data.quantity : state.quantity,
-        recieved_quantity: data.recieved_quantity
-          ? data.recieved_quantity
-          : state.recieved_quantity,
-        due_quantity: data.due_quantity
-          ? data.due_quantity
-          : state.due_quantity,
-        use_quantity: data.use_quantity
-          ? data.use_quantity
-          : state.use_quantity,
-        purchase_for: data.purchase_for
-          ? data.purchase_for
-          : state.purchase_for,
-        vendor_id: data.vendor_id ? data.vendor_id : state.vendor_id,
-        materials: data.materials ? data.materials : state.materials,
+        name: data.name ? data.name : state.name,
+        description: data.description ? data.description : state.description,
+        dimenssion: data.dimenssion ? data.dimenssion : state.dimenssion,
+        brand: data.brand ? data.brand : state.brand,
         status: data.status ? data.status : state.status,
       };
 
       dispatch(
-        updateProductInventory({
+        updateMaterials({
           id: state.id,
           data: updateData,
         })
@@ -202,7 +105,7 @@ function EditProductInventory() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/product-inventory");
+        navigate("/materials");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -213,7 +116,7 @@ function EditProductInventory() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/product-inventory"}
+            to={"/materials"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -221,7 +124,7 @@ function EditProductInventory() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <MainForm
+        <MaterialsForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
@@ -245,4 +148,4 @@ function EditProductInventory() {
   );
 }
 
-export default EditProductInventory;
+export default EditMaterials;

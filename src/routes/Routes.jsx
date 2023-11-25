@@ -128,6 +128,7 @@ import EditProductInventory from "../pages/Dashboard/ProductInventory/EditProduc
 import CreateProductInventory from "../pages/Dashboard/ProductInventory/CreateProductInventory";
 import MaterialsList from "../pages/Dashboard/Materials/MaterialsList";
 import CreateMaterials from "../pages/Dashboard/Materials/CreateMaterials";
+import EditMaterials from "../pages/Dashboard/Materials/EditMaterials";
 
 export const router = createBrowserRouter([
   {
@@ -698,7 +699,7 @@ export const router = createBrowserRouter([
         path: "/materials/edit-materials",
         element: (
           <PrivetRoute>
-            <EditProductInventory />
+            <EditMaterials />
           </PrivetRoute>
         ),
       },      
