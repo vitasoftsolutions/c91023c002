@@ -358,11 +358,11 @@ const MaterialsForm = ({
               id="statusInput"
               name="status"
               {...register("status")}
-              defaultValue={isState?.status ? "true" : "false"}
+              defaultValue={isState?.status}
               className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
             >
-              <option value="true">Active</option>
-              <option value="false">Inactive</option>
+              <option value={true}>Active</option>
+              <option value={false}>Inactive</option>
             </select>
           </div>
         )}

@@ -170,7 +170,7 @@ const PropertyPurchaseForm = ({
           <>
             <Controller
               control={control}
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"),)}
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
               defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (
@@ -358,11 +358,11 @@ const PropertyPurchaseForm = ({
               id="statusInput"
               name="status"
               {...register("status")}
-              defaultValue={isState?.status ? "true" : "false"}
+              defaultValue={isState?.status}
               className="w-full border-red-600 rounded-md py-2 px-3 focus:outline-none"
             >
-              <option value="true">Active</option>
-              <option value="false">Inactive</option>
+              <option value={true}>Active</option>
+              <option value={false}>Inactive</option>
             </select>
           </div>
         )}

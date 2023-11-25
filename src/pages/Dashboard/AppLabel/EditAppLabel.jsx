@@ -28,6 +28,7 @@ const EditAppLabel = () => {
             fieldType: "text",
             fieldPlaceholder: "Name",
             isRequired: true,
+      defaultValue: state.name,
             hasWidth: 3
         }];
     const submitFunction = (data) => {

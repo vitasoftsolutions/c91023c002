@@ -27,7 +27,7 @@ const PropertyInstallmentedit = () => {
     useEffect(() => {
         dispatch(contractorben());
     }, [dispatch]);
-    const optionsArray = reduxState.property_data.map(element => {
+    const optionsArray = reduxState?.property_data?.map(element => {
         return { value: parseInt(element.id), label: element.first_name + " " + element.last_name };
     });
     console.log(optionsArray)
@@ -38,13 +38,13 @@ const PropertyInstallmentedit = () => {
     useEffect(() => {
         dispatch(projectlist());
     }, [dispatch]);
-    const optionsArray2 = reduxState.project_data.map(element => {
+    const optionsArray2 = reduxState?.project_data?.map(element => {
 
         return { value: parseInt(element.id), label: element.name };
 
     });
     console.log("projectState: ", reduxState)
-    const optionsArray3 = reduxState.purchase_id.map(element => {
+    const optionsArray3 = reduxState?.purchase_id?.map(element => {
         console.log(typeof element.id)
         return { value: parseInt(element.id), label: element.id };
 
@@ -59,6 +59,7 @@ const PropertyInstallmentedit = () => {
             fieldType: "select",
             fieldPlaceholder: "Select a contractor",
             isRequired: false,
+      defaultValue: state.property_id,
             options: [
                 ...optionsArray
             ],
@@ -68,6 +69,7 @@ const PropertyInstallmentedit = () => {
             fieldType: "select",
             fieldPlaceholder: "Select a project",
             isRequired: false,
+      defaultValue: state.project_id,
             options: [
                 ...optionsArray2
             ],
@@ -77,6 +79,7 @@ const PropertyInstallmentedit = () => {
             fieldType: "select",
             fieldPlaceholder: "Select a project",
             isRequired: false,
+      defaultValue: state.purchase_id,
             options: [
                 ...optionsArray3
             ],
@@ -86,23 +89,25 @@ const PropertyInstallmentedit = () => {
             fieldType: "date",
             fieldPlaceholder: "Date",
             isRequired: false,
+      defaultValue: state.installment_date,
         },
         {
             fieldName: "Amount",
             fieldType: "text",
             fieldPlaceholder: "Amount",
             isRequired: false,
+      defaultValue: state.amount,
         },
         
 
     ];
     const submitFunction = (data) => {
         if (state) {
-            console.log(data.contructor_id, "From update page");
+            console.log(data.property_id, "From update page");
             const updatedData = {
                 id: state.id,
                 status: data.status ? data.status : state.status,
-                contructor_id: data.contructor_id ? data.contructor_id : state.contructor_id,
+                property_id: data.property_id ? data.property_id : state.property_id,
                 project_id: data.project_id ? data.project_id : state.project_id,
                 purchase_id: data.purchase_id ? data.purchase_id : state.purchase_id,
                 amount: data.amount ? data.amount : state.amount,

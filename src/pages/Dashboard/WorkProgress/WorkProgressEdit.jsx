@@ -29,6 +29,7 @@ const WorkProgressEdit = () => {
             fieldType: "text",
             fieldPlaceholder: "Name",
             isRequired: true,
+      defaultValue: state.name,
             hasWidth: 3
         },
         {
@@ -36,6 +37,7 @@ const WorkProgressEdit = () => {
             fieldType: "text",
             fieldPlaceholder: "Percentage(%)",
             isRequired: true,
+      defaultValue: state.percentage,
             hasWidth:3
         },
     ];

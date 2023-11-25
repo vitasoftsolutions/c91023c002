@@ -60,6 +60,7 @@ const DetailsModal = ({ onClose, erp_modalCol, photoSection, allData, nidSection
                     key !== "employee_id" &&
                     key !== "last_login" &&
                     key !== "appointment" &&
+                    key !== "documents" &&
                     key !== "is_active" &&
                     key !== "is_admin" &&
                     key !== "is_staff" &&
