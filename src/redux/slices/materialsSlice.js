@@ -9,7 +9,7 @@ import {
   sortByAZMaterials,
   sortByDateMaterials,
   updateMaterials,
-} from "../Actions/_MaterialsAction";
+} from "../Actions/MaterialsAction";
 
 const materialsSlice = createSlice({
   name: "createMaterialsSlice",

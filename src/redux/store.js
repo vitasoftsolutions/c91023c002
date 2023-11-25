@@ -42,7 +42,7 @@ import materialReceiveInstallmentReducer from "./slices/materialReceiveInstallme
 import warehouseItemsReducer from "./slices/_warehouseItemsSlice";
 import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
 import warehouseDispatchReducer from "./slices/_warehouseDispatchSlice";
-import materialsReducer from "./slices/_materialsSlice";
+import materialsReducer from "./slices/materialsSlice";
 
 export const store = configureStore({
   reducer: {

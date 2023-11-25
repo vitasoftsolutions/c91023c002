@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import { fetchBrandsAllData } from "../../../redux/Actions/BrandsAction";
-import { createMaterials } from "../../../redux/Actions/_MaterialsAction";
+import { createMaterials } from "../../../redux/Actions/MaterialsAction";
 import MaterialsForm from "./MaterialsForm";
 
 function CreateMaterials() {

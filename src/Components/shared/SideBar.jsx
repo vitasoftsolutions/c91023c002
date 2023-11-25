@@ -906,11 +906,11 @@ const SideBar = () => {
   }, []);
 
   return (
-    <div className="mt-10 bg-white h-full">
+    <div className="mt-10 bg-white min-h-full">
       <div
         className={`${
           open ? "w-60" : "w-20 "
-        } shadow-xl shadow-blue-200 h-full relative duration-300`}
+        } shadow-xl shadow-blue-200 min-h-[100vh] pb-10 relative duration-300`}
       >
         <img
           src="/image/control.png"

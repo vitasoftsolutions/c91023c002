@@ -14,7 +14,7 @@ import { fetchBrandsAllData } from "../../../redux/Actions/BrandsAction";
 import {
   fetchMaterial,
   updateMaterials,
-} from "../../../redux/Actions/_MaterialsAction";
+} from "../../../redux/Actions/MaterialsAction";
 
 function EditMaterials() {
   const dispatch = useDispatch();

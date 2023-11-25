@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteMaterials, fetchMaterialsList } from "../../../redux/Actions/_MaterialsAction";
+import { deleteMaterials, fetchMaterialsList } from "../../../redux/Actions/MaterialsAction";
 
 const t_head = [
   { name: "Name" },

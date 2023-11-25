@@ -9,7 +9,7 @@ const LayoutMain = () => {
         <TopNav />
       </div>
       <div className="min-h-[100vh] flex">
-        <div className="min-h-[100vh] overflow-y-scroll overflow-x-hidden pr-3">      
+        <div className="h-[100vh] relative overflow-y-scroll overflow-x-hidden pr-3">      
             <SideBar />
         </div>
         <div className="flex-1 max-w-full overflow-hidden mx-2 mt-20 my-0 md:mx-10">
