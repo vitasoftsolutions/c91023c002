@@ -83,6 +83,7 @@ const ContractorBenLists = () => {
       <TableHeader
         title={"Beneficiary"}
         redirectLink={"/contractor-beneficaries/create"}
+        // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
       <GlobalTable
@@ -94,7 +95,7 @@ const ContractorBenLists = () => {
         page_number={page_number}
         deleteFunction={deleteFunction}
         editLink={"/contractor-beneficaries/edit"}
-        erp_modalCol={6}
+        erp_modalCol={12}
         photoSection={true}
       />
     </div>

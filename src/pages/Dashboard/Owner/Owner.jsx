@@ -94,7 +94,7 @@ function Owner() {
         page_number={page_number}
         deleteFunction={deleteFunction}
         editLink={"/owner/editeowner"}
-        erp_modalCol={6}
+        erp_modalCol={12}
         photoSection={true}
       />
     </div>
