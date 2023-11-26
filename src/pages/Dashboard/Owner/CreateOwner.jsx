@@ -96,7 +96,7 @@ function CreateOwner() {
     // Error
     if (reduxState.isError) {
       // Perform actions after the update is successful
-      toast.error(reduxState.isError, {
+      toast.error(reduxState.massage, {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,

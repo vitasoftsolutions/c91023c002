@@ -9,8 +9,8 @@ import {
 } from "../../../redux/Actions/PropertyAction";
 
 const t_head = [
+  { name: "Project Name" },
   { name: "Code" },
-  { name: "Size" },
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
@@ -24,8 +24,8 @@ const PropertyList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    project_id: item.project_id,
     code: item.code,
-    size: item.size,
     date: item.created_at,
     status: item.status,
   }));

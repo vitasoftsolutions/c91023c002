@@ -6,10 +6,10 @@ import Swal from "sweetalert2";
 import { deletePropertyPurchase, fetchPropertyPurchaseList } from "../../../redux/Actions/_PropertyPurchaseAction";
 
 const t_head = [
+  { name: "Property Name" },
+  { name: "Project Name" },
+  { name: "Customer Name" },
   { name: "Amount" },
-  { name: "Down payment" },
-  { name: "Due payment" },
-  { name: "Installment" },
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
@@ -23,10 +23,10 @@ const PropertyPurchaseList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    property_name: item?.property_id?.map((pi)=>pi),
+    project_name: item?.project_id?.map((pi)=>pi),
+    customer_id: item.customer_id,
     amount: item.amount,
-    down_payment: item.down_payment,
-    due_amount: item.due_amount,
-    installment: item.installment,
     date: item.created_at,
     status: item.status,
   }));
