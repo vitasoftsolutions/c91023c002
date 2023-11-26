@@ -19,6 +19,7 @@ const MaterialsForm = ({
     defaultValues: defaultValues,
     mode: "onChange",
   });
+
   // Style
   const customStyles = {
     menu: (provided, state) => ({
@@ -149,8 +150,88 @@ const MaterialsForm = ({
     setSelectedFiles(updatedSelectedFiles);
   };
 
+  const FeaturesArrayField = ({
+    isStateFeatures,
+    register,
+    remove,
+    errors,
+  }) => (
+    <div className="mb-4 col-span-3">
+      {errors.features && (
+        <span className="text-red-500">At least one feature is required</span>
+      )}
+      {console.log(isStateFeatures, "feature, featureIndex")}
+      <div className="">
+        {Object.values(isStateFeatures).map((feature, featureIndex) => {
+          return (
+            <div key={featureIndex} className="w-full grid grid-cols-4 gap-2">
+              <div className="col-span-3 md:col-span-4">
+                <label
+                  htmlFor={`features[${featureIndex}].name`}
+                  className="block text-black mb-1 font-bold"
+                >
+                  Name
+                </label>
+                <div className="md:flex border-b-2 border-gray-400 pb-5 md:pb-0 md:border-none items-center">
+                  <input
+                    {...register(`features[${featureIndex}].name`, {
+                      required: false,
+                    })}
+                    placeholder="Name"
+                    className="w-full rounded-md py-2 px-3 focus:outline-none"
+                    defaultValue={feature.name !== undefined ? feature.name : ""}
+                  />
+                  {featureIndex > 0 && (
+                    <div className="md:ml-3 text-center md:mt-0 mt-3">
+                      <button
+                        className="bg-red-500 text-white p-2 rounded-md"
+                        type="button"
+                        onClick={() => remove(featureIndex)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          className="feather feather-x"
+                        >
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4 col-span-3">
+                  {errors.features && (
+                    <span className="text-red-500">Add a Name</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex justify-center">
+        <button
+          type="button"
+          onClick={() => append({ name: "" })}
+          className="mt-2 btn mx-auto"
+        >
+          Add a Name +
+        </button>
+      </div>
+    </div>
+  );
+
   const renderField = (field, index) => {
-    // console.log(field.defaultValue);
+    console.log(field.defaultValue);
     return (
       <div
         className={`${
@@ -170,7 +251,7 @@ const MaterialsForm = ({
           <>
             <Controller
               control={control}
-              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"),)}
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
               defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (
@@ -334,7 +415,7 @@ const MaterialsForm = ({
   };
 
   if (fields.length === 0) {
-    append({ features: "", name: "", relation: "" });
+    append({ name: "" });
   }
 
   return (
@@ -372,120 +453,86 @@ const MaterialsForm = ({
         </h5>
 
         {/* Mobile Numbers */}
-        <div className="mb-4 col-span-3">
-          {errors.features && (
-            <span className="text-red-500">
-              At least one features is required
-            </span>
-          )}
-          <div className="">
-            {fields.map((field, index) => (
-              <div key={field.id} className="w-full grid grid-cols-3 gap-2">
-                <div className="col-span-3 md:col-span-1">
-                  <label
-                    htmlFor={`features[${index}].number`}
-                    className="block text-black mb-1 font-bold"
-                  >
-                    Number
-                  </label>
-                  <input
-                    type={"number"}
-                    {...register(`features[${index}].number`, {
-                      required: false,
-                    })}
-                    defaultValue={isState && field.defaultValue}
-                    placeholder="features"
-                    className="w-full rounded-md py-2 px-3 focus:outline-none"
-                  />
-                  <div className="mb-4 col-span-3">
-                    {errors.features && (
-                      <span className="text-red-500">Add a mobile number</span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-span-3 md:col-span-1">
-                  <label
-                    htmlFor={`features[${index}].name`}
-                    className="block text-black mb-1 font-bold"
-                  >
-                    Name
-                  </label>
-                  <input
-                    {...register(`features[${index}].name`, {
-                      required: false,
-                    })}
-                    placeholder="Name"
-                    className="w-full rounded-md py-2 px-3 focus:outline-none"
-                  />
-                  <div className="mb-4 col-span-3">
-                    {errors.features && (
-                      <span className="text-red-500">Add Name</span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-span-3 md:col-span-1">
-                  <label
-                    htmlFor={`features[${index}].relation`}
-                    className="block text-black mb-1 font-bold"
-                  >
-                    Relation
-                  </label>
-                  <div className="md:flex border-b-2 border-gray-400 pb-5 md:pb-0 md:border-none items-center">
-                    <input
-                      {...register(`features[${index}].relation`, {
-                        required: false,
-                      })}
-                      placeholder="Relation"
-                      className="w-full rounded-md py-2 px-3 focus:outline-none"
-                    />
-                    {index > 0 && (
-                      <div className="md:ml-3 text-center md:mt-0 mt-3">
-                        <button
-                          className="bg-red-500 text-white p-2 rounded-md"
-                          type="button"
-                          onClick={() => remove(index)}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            className="feather feather-x"
+        {!isState && (
+          <div className="mb-4 col-span-3">
+            {errors.features && (
+              <span className="text-red-500">
+                At least one features is required
+              </span>
+            )}
+            <div className="">
+              {fields.map((field, index) => (
+                <div key={field.id} className="w-full grid grid-cols-4 gap-2">
+                  <div className="col-span-3 md:col-span-4">
+                    <label
+                      htmlFor={`features[${index}].relation`}
+                      className="block text-black mb-1 font-bold"
+                    >
+                      Name
+                    </label>
+                    <div className="md:flex border-b-2 border-gray-400 pb-5 md:pb-0 md:border-none items-center">
+                      <input
+                        {...register(`features[${index}].name`, {
+                          required: false,
+                        })}
+                        placeholder="Name"
+                        className="w-full rounded-md py-2 px-3 focus:outline-none"
+                      />
+                      {index > 0 && (
+                        <div className="md:ml-3 text-center md:mt-0 mt-3">
+                          <button
+                            className="bg-red-500 text-white p-2 rounded-md"
+                            type="button"
+                            onClick={() => remove(index)}
                           >
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                          </svg>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <div className="mb-4 col-span-3">
-                    {errors.features && (
-                      <span className="text-red-500">Add Relation</span>
-                    )}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              className="feather feather-x"
+                            >
+                              <line x1="18" y1="6" x2="6" y2="18"></line>
+                              <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className="mb-4 col-span-3">
+                      {errors.features && (
+                        <span className="text-red-500">Add A Name</span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => append({ name: "" })}
+                className="mt-2 btn mx-auto"
+              >
+                Add A Name +
+              </button>
+            </div>
           </div>
-          <div className="flex justify-center">
-            <button
-              type="button"
-              onClick={() => append({ number: "", name: "", relation: "" })}
-              className="mt-2 btn mx-auto"
-            >
-              Add Number +
-            </button>
-          </div>
-        </div>
+        )}
 
+        {isState && (
+          <FeaturesArrayField
+            isStateFeatures={isState?.features || []}
+            register={register}
+            remove={remove}
+            errors={errors}
+          />
+        )}
         {/* Submit Button */}
         <div className="mb-4 col-span-3">
           <input

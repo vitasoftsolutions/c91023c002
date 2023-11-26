@@ -77,6 +77,7 @@ function EditMaterials() {
         name: data.name ? data.name : state.name,
         description: data.description ? data.description : state.description,
         dimenssion: data.dimenssion ? data.dimenssion : state.dimenssion,
+        features: data.features ? data.features : state.features,
         brand: data.brand ? data.brand : state.brand,
         status: data.status ? data.status : state.status,
       };
