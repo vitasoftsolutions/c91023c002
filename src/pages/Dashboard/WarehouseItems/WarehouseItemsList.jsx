@@ -6,10 +6,11 @@ import Swal from "sweetalert2";
 import { deleteWarehouseItems, fetchWarehouseItemsList } from "../../../redux/Actions/_WarehouseItemsAction";
 
 const t_head = [
+  { name: "Purchase Code" },
+  { name: "Inventory Id" },
   { name: "Quantity" },
   { name: "Due Quantity" },
   { name: "Created Date" },
-  { name: "E-mail" },
   { name: "Status" },
   { name: "Actions" },
 ];
@@ -22,10 +23,13 @@ const WarehouseItemsList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    purchase_id: item.purchase_id ,
+    inventory_id: item.inventory_id ,
+
+
     quantity: item.quantity ,
     due_quantity: item.due_quantity,
     date: item.created_at,
-    email: item.email,
     status: item.status,
   }));
   const tableData = {

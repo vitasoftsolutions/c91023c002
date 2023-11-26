@@ -53,12 +53,6 @@ function CreateMaterialPurchase() {
       isRequired: true,
     },
     {
-      fieldName: "Amount Due",
-      fieldType: "number",
-      fieldPlaceholder: "Amount Due",
-      isRequired: false,
-    },
-    {
       fieldName: "Amount Advance",
       fieldType: "number",
       fieldPlaceholder: "Amount Advance",
@@ -74,12 +68,6 @@ function CreateMaterialPurchase() {
       fieldName: "Recieved Quantity",
       fieldType: "number",
       fieldPlaceholder: "Recieved Quantity",
-      isRequired: false,
-    },
-    {
-      fieldName: "Due Quantity",
-      fieldType: "number",
-      fieldPlaceholder: "Due Quantity",
       isRequired: false,
     },
     {

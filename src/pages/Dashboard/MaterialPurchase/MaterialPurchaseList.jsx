@@ -6,10 +6,12 @@ import Swal from "sweetalert2";
 import { deleteMaterialPurchase, fetchMaterialPurchaseList } from "../../../redux/Actions/MaterialPurchaseAction";
 
 const t_head = [
+  { name: "Purchase code" },
+  { name: "Vendor id" },
+  { name: "Purchase for" },
   { name: "Amount" },
   { name: "Quantity" },
-  { name: "Due Quantity" },
-  { name: "Created Date" },
+  { name: "Created At" },
   { name: "Status" },
   { name: "Actions" },
 ];
@@ -22,9 +24,11 @@ const MaterialPurchaseList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    purchase_code: item.purchase_code ,
+    vendor_id: item.vendor_id ,
+    purchase_for: item.purchase_for ,
     amount: item.amount ,
     quantity: item.quantity ,
-    due_quantity: item.due_quantity,
     date: item.created_at,
     status: item.status,
   }));

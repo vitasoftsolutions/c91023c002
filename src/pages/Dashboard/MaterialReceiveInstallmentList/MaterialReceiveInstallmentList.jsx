@@ -3,9 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteMaterialReceiveInstallment, fetchMaterialReceiveInstallmentList } from "../../../redux/Actions/MaterialReceiveInstallmentAction";
+import {
+  deleteMaterialReceiveInstallment,
+  fetchMaterialReceiveInstallmentList,
+} from "../../../redux/Actions/MaterialReceiveInstallmentAction";
 
 const t_head = [
+  { name: "Purchase Id" },
   { name: "Quantity" },
   { name: "Created Date" },
   { name: "Status" },
@@ -15,12 +19,13 @@ const t_head = [
 const MaterialReceiveInstallmentList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.materialReceiveInstallmentReducer);
-  console.log(state)
+  console.log(state);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    quantity: item.quantity ,
+    purchase_id: item.purchase_id,
+    quantity: item.quantity,
     date: item.created_at,
     status: item.status,
   }));
@@ -78,7 +83,9 @@ const MaterialReceiveInstallmentList = () => {
     <div className="max-w-screen">
       <TableHeader
         title={"Material receive installment"}
-        redirectLink={"/material-receive-installment/material-receive-installment-crete"}
+        redirectLink={
+          "/material-receive-installment/material-receive-installment-crete"
+        }
         // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
@@ -90,7 +97,9 @@ const MaterialReceiveInstallmentList = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/material-receive-installment/edit-material-receive-installment"}
+        editLink={
+          "/material-receive-installment/edit-material-receive-installment"
+        }
         erp_modalCol={12}
         photoSection={false}
         nidSection={false}

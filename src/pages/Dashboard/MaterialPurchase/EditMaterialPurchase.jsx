@@ -59,13 +59,6 @@ function EditMaterialPurchase() {
       defaultValue: state.amount,
     },
     {
-      fieldName: "Amount Due",
-      fieldType: "number",
-      fieldPlaceholder: "Amount Due",
-      isRequired: false,
-      defaultValue: state.amount_due,
-    },
-    {
       fieldName: "Amount Advance",
       fieldType: "number",
       fieldPlaceholder: "Amount Advance",
@@ -85,13 +78,6 @@ function EditMaterialPurchase() {
       fieldPlaceholder: "Recieved Quantity",
       isRequired: false,
       defaultValue: state.recieved_quantity,
-    },
-    {
-      fieldName: "Due Quantity",
-      fieldType: "number",
-      fieldPlaceholder: "Due Quantity",
-      isRequired: false,
-      defaultValue: state.due_quantity,
     },
     {
       fieldName: "Purchase for",
