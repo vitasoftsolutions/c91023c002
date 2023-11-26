@@ -62,30 +62,6 @@ function CreatePropertyPurchase() {
       isRequired: true,
     },
     {
-      fieldName: "Due amount",
-      fieldType: "number",
-      fieldPlaceholder: "Due amount",
-      isRequired: true,
-    },
-    {
-      fieldName: "Due installment",
-      fieldType: "number",
-      fieldPlaceholder: "Due amount",
-      isRequired: true,
-    },
-    // {
-    //   fieldName: "Facilities",
-    //   fieldType: "number",
-    //   fieldPlaceholder: "Facilities",
-    //   isRequired: true,
-    // },
-    {
-      fieldName: "Final return",
-      fieldType: "date",
-      fieldPlaceholder: "Final return",
-      isRequired: true,
-    },
-    {
       fieldName: "Handover status",
       fieldType: "select",
       fieldPlaceholder: "Handover status",
@@ -114,13 +90,6 @@ function CreatePropertyPurchase() {
       isRequired: true,
       isHidden: true,
     },
-    // {
-    //   fieldName: "Payment type",
-    //   fieldType: "text",
-    //   fieldPlaceholder: "Payment type",
-    //   // id
-    //   isRequired: false,
-    // },
     {
       fieldName: "Project id",
       fieldType: "select",

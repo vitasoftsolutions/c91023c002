@@ -79,6 +79,26 @@ const PropertyPurchaseForm = ({
   const onSubmit = (data) => {
     console.log(data, "data");
 
+
+     // Iterate through formsData and add each field to the data object
+     formsData.forEach((field) => {
+      // Check if the field is hidden
+      if (field.isHidden) {
+        // If hidden, set its value from the defaultValue
+        data[field.fieldName.toLowerCase().replace(/\s+/g, "_")] =
+          field.defaultValue;
+      }
+    });
+
+    // Convert field names with spaces to field names with underscores in the data object
+    Object.keys(data).forEach((key) => {
+      if (key.includes(" ")) {
+        const newKey = key.replace(/ /g, "_").toLowerCase();
+        data[newKey] = data[key];
+        delete data[key];
+      }
+    });
+
     const formData = { ...data };
 
     formsData.forEach((field) => {
@@ -150,7 +170,9 @@ const PropertyPurchaseForm = ({
   };
 
   const renderField = (field, index) => {
-    // console.log(field.defaultValue);
+    if (field.isHidden) {
+      return null;
+    }
     return (
       <div
         className={`${

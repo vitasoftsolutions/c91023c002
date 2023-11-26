@@ -64,32 +64,7 @@ function EditPropertyPurchase() {
       fieldType: "number",
       fieldPlaceholder: "Installment Duration",
       defaultValue: state.installment_duration,
-    },
-    {
-      fieldName: "Due amount",
-      fieldType: "number",
-      fieldPlaceholder: "Due amount",
-      defaultValue: state.due_amount,
-    },
-    {
-      fieldName: "Due installment",
-      fieldType: "number",
-      fieldPlaceholder: "Due amount",
-      defaultValue: state.due_installment,
-    },
-    // {
-    //   fieldName: "Facilities",
-    //   fieldType: "number",
-    //   fieldPlaceholder: "Facilities",
-    //
-    // defaultValue: state.wp_ids,
-    // },
-    {
-      fieldName: "Final return",
-      fieldType: "date",
-      fieldPlaceholder: "Final return",
-      defaultValue: state.final_return,
-    },
+    },    
     {
       fieldName: "Handover status",
       fieldType: "select",
