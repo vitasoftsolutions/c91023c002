@@ -6,6 +6,8 @@ import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import { deleteLoanInstallments, fetchLoanInstallments } from "../../../redux/Actions/LoanInstallmentAction";
 
 const t_head = [
+  { name: "Giver Name" },
+  { name: "Taker Name" },
   { name: "Amount" },
   { name: "Document" },
   { name: "Created at" },
@@ -22,6 +24,8 @@ function LoanInstallment() {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    giver_name:  item.giver_name,
+    taker_name:  item.taker_name,
     amount:  item.amount,
     image: item.document,
     date: item.created_at,

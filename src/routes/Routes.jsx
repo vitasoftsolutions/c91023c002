@@ -129,6 +129,9 @@ import CreateProductInventory from "../pages/Dashboard/ProductInventory/CreatePr
 import MaterialsList from "../pages/Dashboard/Materials/MaterialsList";
 import CreateMaterials from "../pages/Dashboard/Materials/CreateMaterials";
 import EditMaterials from "../pages/Dashboard/Materials/EditMaterials";
+import CreateMaterialDispatchInventory from "../pages/Dashboard/MaterialDispatchInventory/CreateMaterialDispatchInventory";
+import MaterialDispatchInventoryList from "../pages/Dashboard/MaterialDispatchInventory/MaterialDispatchInventoryList";
+import EditMaterialDispatchInventory from "../pages/Dashboard/MaterialDispatchInventory/EditMaterialDispatchInventory";
 
 export const router = createBrowserRouter([
   {
@@ -725,6 +728,31 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <EditProductInventory />
+          </PrivetRoute>
+        ),
+      },      
+      // material-dispatch-inventory
+      {
+        path: "/material-dispatch-inventory",
+        element: (
+          <PrivetRoute>
+            <MaterialDispatchInventoryList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-dispatch-inventory/material-dispatch-inventory-crete",
+        element: (
+          <PrivetRoute>
+            <CreateMaterialDispatchInventory />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/material-dispatch-inventory/edit-material-dispatch-inventory",
+        element: (
+          <PrivetRoute>
+            <EditMaterialDispatchInventory />
           </PrivetRoute>
         ),
       },      

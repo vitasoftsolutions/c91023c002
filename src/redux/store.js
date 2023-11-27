@@ -43,6 +43,8 @@ import warehouseItemsReducer from "./slices/_warehouseItemsSlice";
 import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
 import warehouseDispatchReducer from "./slices/_warehouseDispatchSlice";
 import materialsReducer from "./slices/materialsSlice";
+import materialDispatchInventoryReducer from "./slices/materialDispatchInventorySlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -66,6 +68,7 @@ export const store = configureStore({
     expenseByPropertyReducer: expenseByPropertyReducer,
     //
     loanLogsReducer: loanLogsReducer,
+    materialDispatchInventoryReducer: materialDispatchInventoryReducer,
     renterBeneficiaryReducer: renterBeneficiaryReducer,
     loanTransactionsReducer: loanTransactionsReducer,
     loanInstallmentReducer: loanInstallmentReducer,

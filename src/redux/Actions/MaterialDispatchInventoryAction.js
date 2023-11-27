@@ -6,11 +6,11 @@ import { base_url } from "../../Components/shared/Url";
 //
 //
 //
-// https://erpcons.vitasoftsolutions.com/warehouse-dispatch/
+// https://erpcons.vitasoftsolutions.com/material-dispatch/
 //
-// MaterialDispatch
-export const createMaterialDispatch = createAsyncThunk(
-  "createMaterialDispatch",
+// MaterialDispatchInventory
+export const createMaterialDispatchInventory = createAsyncThunk(
+  "createMaterialDispatchInventory",
   async (payload) => {
     try {
       const token = sessionStorage.getItem("jwt_token");
@@ -20,13 +20,13 @@ export const createMaterialDispatch = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${base_url}/warehouse-dispatch/`,
+        `${base_url}/material-dispatch/`,
         payload,
         { headers }
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create MaterialDispatch");
+      throw new Error("Failed to Create MaterialDispatchInventory");
     }
   }
 );
@@ -34,13 +34,13 @@ export const createMaterialDispatch = createAsyncThunk(
 //
 //
 //
-export const fetchMaterialDispatchList = createAsyncThunk(
-  "fetchMaterialDispatchList",
+export const fetchMaterialDispatchInventoryList = createAsyncThunk(
+  "fetchMaterialDispatchInventoryList",
   async (page, { getState }) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
-    const { perPage } = getState().materialDispatchReducer;
+    const { perPage } = getState().materialDispatchInventoryReducer;
 
     // Define the headers
     const headers = {
@@ -50,7 +50,7 @@ export const fetchMaterialDispatchList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/warehouse-dispatch/?limit=${perPage}&offset=${
+      `${base_url}/material-dispatch/?limit=${perPage}&offset=${
         (page - 1) * perPage
       }`,
       {
@@ -79,8 +79,8 @@ export const fetchMaterialDispatchList = createAsyncThunk(
 //
 //
 //
-export const fetchMaterialDispatchAllList = createAsyncThunk(
-  "fetchMaterialDispatchAllList",
+export const fetchMaterialDispatchInventoryAllList = createAsyncThunk(
+  "fetchMaterialDispatchInventoryAllList",
   async (payload) => {
     console.log(payload, "payload")
     // Get the JWT token from session storage
@@ -94,7 +94,7 @@ export const fetchMaterialDispatchAllList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/warehouse-dispatch/`,{headers});
+      `${base_url}/material-dispatch/`,{headers});
 
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
@@ -111,7 +111,7 @@ export const fetchMaterialDispatchAllList = createAsyncThunk(
 //
 //
 //
-export const fetchMaterialDispatch = createAsyncThunk("fetchMaterialDispatch", async (id) => {
+export const fetchMaterialDispatchInventory = createAsyncThunk("fetchMaterialDispatchInventory", async (id) => {
   console.log("getState()");
   console.log(id, "getState()");
 
@@ -124,7 +124,7 @@ export const fetchMaterialDispatch = createAsyncThunk("fetchMaterialDispatch", a
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/warehouse-dispatch/${id}/`, {
+  const response = await axios.get(`${base_url}/material-dispatch/${id}/`, {
     headers,
   });
 
@@ -140,8 +140,8 @@ export const fetchMaterialDispatch = createAsyncThunk("fetchMaterialDispatch", a
 //
 //
 //
-export const deleteMaterialDispatch = createAsyncThunk(
-  "deleteMaterialDispatch",
+export const deleteMaterialDispatchInventory = createAsyncThunk(
+  "deleteMaterialDispatchInventory",
   async (payload) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -154,7 +154,7 @@ export const deleteMaterialDispatch = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/warehouse-dispatch/${payload}/`,
+      `${base_url}/material-dispatch/${payload}/`,
       { headers }
     );
 
@@ -166,8 +166,8 @@ export const deleteMaterialDispatch = createAsyncThunk(
 //
 //
 //
-export const updateMaterialDispatch = createAsyncThunk(
-  "updateMaterialDispatch",
+export const updateMaterialDispatchInventory = createAsyncThunk(
+  "updateMaterialDispatchInventory",
   async (payload) => {
     console.log(payload, "payload");
     // Get the JWT token from session storage
@@ -181,7 +181,7 @@ export const updateMaterialDispatch = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/warehouse-dispatch/${payload.id}/`,
+      `${base_url}/material-dispatch/${payload.id}/`,
       payload.data,
       { headers }
     );
@@ -194,8 +194,8 @@ export const updateMaterialDispatch = createAsyncThunk(
 //
 //
 //
-export const searchMaterialDispatch = createAsyncThunk(
-  "searchMaterialDispatch",
+export const searchMaterialDispatchInventory = createAsyncThunk(
+  "searchMaterialDispatchInventory",
   async (firstName) => {
     try {
       // Get the JWT token from session storage
@@ -207,7 +207,7 @@ export const searchMaterialDispatch = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/warehouse-dispatch/`;
+      let apiUrl = `${base_url}/material-dispatch/`;
 
       // Check if firstName is not empty, then append the search query
       if (firstName) {
@@ -236,8 +236,8 @@ export const searchMaterialDispatch = createAsyncThunk(
 //
 //
 //
-export const sortByDateMaterialDispatch = createAsyncThunk(
-  "sortByDateMaterialDispatch",
+export const sortByDateMaterialDispatchInventory = createAsyncThunk(
+  "sortByDateMaterialDispatchInventory",
   async (date) => {
     try {
       // Get the JWT token from session storage
@@ -249,7 +249,7 @@ export const sortByDateMaterialDispatch = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/warehouse-dispatch/`;
+      let apiUrl = `${base_url}/material-dispatch/`;
 
       // Check if date is not empty, then append the search query
       if (date) {
@@ -277,8 +277,8 @@ export const sortByDateMaterialDispatch = createAsyncThunk(
 //
 //
 //
-export const sortByAZMaterialDispatch = createAsyncThunk(
-  "sortByAZMaterialDispatch",
+export const sortByAZMaterialDispatchInventory = createAsyncThunk(
+  "sortByAZMaterialDispatchInventory",
   async (sortOrder) => {
     try {
       // Get the JWT token from session storage
@@ -290,7 +290,7 @@ export const sortByAZMaterialDispatch = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/warehouse-dispatch/`;
+      let apiUrl = `${base_url}/material-dispatch/`;
 
       // Check if sortOrder is not empty, then append the search query
       if (sortOrder) {

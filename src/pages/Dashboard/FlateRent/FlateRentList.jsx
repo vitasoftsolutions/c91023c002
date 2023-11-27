@@ -6,8 +6,10 @@ import Swal from "sweetalert2";
 import { deleteFlateRent, fetchFlateRentList } from "../../../redux/Actions/FlateRentAction";
 
 const t_head = [
+  { name: "Property Name" },
+  { name: "Project Name" },
+  { name: "Renter Name" },
   { name: "Advanced Amount" },
-  { name: "Due mount" },
   { name: "Created Date" },
   { name: "Status" },
   { name: "Actions" },
@@ -21,8 +23,10 @@ const FlateRentList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    property_id: item.property_id,
+    project_id: item.project_id,
+    renter_id: item.renter_id,
     advanced_amount: item.advanced_amount,
-    due_amount: item.due_amount,
     date: item.created_at,
     status: item.status,
   }));

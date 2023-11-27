@@ -7,8 +7,10 @@ import { deleteRepairRecords, fetchRepairRecordsList } from "../../../redux/Acti
 
 const t_head = [
   { name: "Reason" },
+  { name: "Property Name" },
+  { name: "Project Name" },
+  { name: "Renter Name" },
   { name: "Amount" },
-  { name: "Expensed by" },
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
@@ -23,8 +25,10 @@ const RepairRecordsList = () => {
   const newData = state?.data?.map((item) => ({
     id: item.id,
     reason: item.reason,
+    property_id: item.property_id,
+    project_id: item.project_id,
+    renter_id: item.renter_id,
     amount: item.amount,
-    expensed_by: item.expensed_by,
     date: item.created_at,
     status: item.status,
   }));

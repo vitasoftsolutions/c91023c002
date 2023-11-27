@@ -9,7 +9,7 @@ import {
 } from "../../../redux/Actions/MaterialReceiveInstallmentAction";
 
 const t_head = [
-  { name: "Purchase Id" },
+  { name: "Purchase Code" },
   { name: "Quantity" },
   { name: "Created Date" },
   { name: "Status" },

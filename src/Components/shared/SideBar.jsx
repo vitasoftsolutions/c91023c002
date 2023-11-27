@@ -299,7 +299,7 @@ const Menus = [
         {
           title: "Material Dispatch",
           icons: <FaMoneyCheckDollar />,
-          to: "/material-dispatch",
+          to: "/material-dispatch-inventory",
         },
         {
           title: "Product Inventory",

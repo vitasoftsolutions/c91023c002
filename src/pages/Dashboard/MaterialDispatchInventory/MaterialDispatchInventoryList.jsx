@@ -3,31 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteRentCollection, fetchRentCollectionList } from "../../../redux/Actions/RentCollectionAction";
+import { deleteMaterialDispatchInventory, fetchMaterialDispatchInventoryList } from "../../../redux/Actions/MaterialDispatchInventoryAction";
 
 const t_head = [
-  { name: "Property Name" },
+  { name: "Inventory Item" },
   { name: "Project Name" },
-  { name: "Renter Name" },
-  { name: "Rent amount" },
-  { name: "Created at" },
+  { name: "Quantity" },
+  { name: "Check Status" },
+  { name: "Created Date" },
   { name: "Status" },
   { name: "Actions" },
 ];
 
-const RentCollectionList = () => {
+const MaterialDispatchInventoryList = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.rentCollectionReducer);
-
+  const state = useSelector((state) => state.materialDispatchInventoryReducer);
   console.log(state)
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    property_id: item.property_id,
+    inventory_item_id: item.inventory_item_id,
     project_id: item.project_id,
-    renter_id: item.renter_id,
-    rent_amount: item.rent_amount,
+    quantity: item.quantity ,
+    check_status: item.check_status ,
     date: item.created_at,
     status: item.status,
   }));
@@ -51,11 +50,11 @@ const RentCollectionList = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchRentCollectionList(current_page));
+    dispatch(fetchMaterialDispatchInventoryList(current_page));
   }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchRentCollectionList(newPage));
+    dispatch(fetchMaterialDispatchInventoryList(newPage));
   };
 
   // console.log(state, "state_ page");
@@ -71,7 +70,7 @@ const RentCollectionList = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteRentCollection(id));
+        dispatch(deleteMaterialDispatchInventory(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
@@ -84,8 +83,8 @@ const RentCollectionList = () => {
   return (
     <div className="max-w-screen">
       <TableHeader
-        title={"Rent Collection"}
-        redirectLink={"/rent-collections/rent-collections-crete"}
+        title={"Material Inventory Dispatch"}
+        redirectLink={"/material-dispatch-inventory/material-dispatch-inventory-crete"}
         // TODO:
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
       />
@@ -97,7 +96,7 @@ const RentCollectionList = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/rent-collections/edit-rent-collections"}
+        editLink={"/material-dispatch-inventory/edit-material-dispatch-inventory"}
         erp_modalCol={12}
         photoSection={false}
         nidSection={false}
@@ -106,4 +105,4 @@ const RentCollectionList = () => {
   );
 };
 
-export default RentCollectionList;
+export default MaterialDispatchInventoryList;
