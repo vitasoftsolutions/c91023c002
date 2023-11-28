@@ -23,8 +23,8 @@ const WarehouseItemsList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    purchase_id: item.purchase_id ,
-    inventory_id: item.inventory_id ,
+    purchase_id: item.purchase_code ,
+    inventory_id: item.inventory_name ,
 
 
     quantity: item.quantity ,

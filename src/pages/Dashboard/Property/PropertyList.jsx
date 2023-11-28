@@ -24,7 +24,7 @@ const PropertyList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    project_id: item.project_id,
+    project_id: item.project_name,
     code: item.code,
     date: item.created_at,
     status: item.status,

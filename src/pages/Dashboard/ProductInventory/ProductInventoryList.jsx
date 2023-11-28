@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { deleteProductInventory, fetchProductInventoryList } from "../../../redux/Actions/ProductInventoryAction";
 
 const t_head = [
+  { name: "Project Name" },
   { name: "Quantity" },
   { name: "Created Date" },
   { name: "Status" },
@@ -20,6 +21,7 @@ const ProductInventoryList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    inventory_name: item.inventory_name,
     quantity: item.quantity ,
     date: item.created_at,
     status: item.status,

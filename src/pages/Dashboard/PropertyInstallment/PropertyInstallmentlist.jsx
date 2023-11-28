@@ -34,8 +34,8 @@ const PropertyInstallmentlist = () => {
     console.log(state.data)
     const newData = state?.data?.map((item) => ({
         id: item.id,
-        first_name: item.property_id,
-        project: item.project_id,
+        first_name: item.property_code,
+        project: item.project_name,
         date: item.created_at,
         installment_date: item.installment_date,
         amount: item.amount,

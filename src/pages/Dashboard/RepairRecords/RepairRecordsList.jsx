@@ -25,9 +25,9 @@ const RepairRecordsList = () => {
   const newData = state?.data?.map((item) => ({
     id: item.id,
     reason: item.reason,
-    property_id: item.property_id,
-    project_id: item.project_id,
-    renter_id: item.renter_id,
+    property_id: item.property_name,
+    project_id: item.project_name,
+    renter_id: item.renter_name,
     amount: item.amount,
     date: item.created_at,
     status: item.status,

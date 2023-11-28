@@ -7,23 +7,26 @@ import {
     fetchLoanBeneList,
 } from "../../../redux/Actions/AssignContractorAction";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
-import customName from "../helper"
+import getData from "../helper"
 const t_head = [
     { name: "Name" },
     { name: "Project" },
     { name: "Date" },
-    
+
     { name: "Due Amount" },
     { name: "Payed Amount" },
     { name: "Rate" },
     { name: "Status" },
     { name: "Action" },
 ];
-
+async function main() {
+    const data = await getData();
+    return "data cmng"
+}
 const ContractorAssignList = () => {
     const [name, setName] = useState("")
-    
-    
+
+
 
     console.log("name: ", name)
     const dispatch = useDispatch();
@@ -33,9 +36,10 @@ const ContractorAssignList = () => {
     const allDataList = state.data;
     console.log(state.data)
     const newData = state?.data?.map((item) => ({
+
         id: item.id,
-        first_name: item.contructor_id,
-        project: item.project_id,
+        first_name: item.contractor_name,
+        project: item.project_name,
         date: item.created_at,
         payed_amount: item.payed_amount,
         due_amount: item.due_amount,

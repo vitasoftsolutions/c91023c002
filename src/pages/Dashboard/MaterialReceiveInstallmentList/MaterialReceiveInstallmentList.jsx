@@ -24,7 +24,7 @@ const MaterialReceiveInstallmentList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    purchase_id: item.purchase_id,
+    purchase_id: item.purchase_code,
     quantity: item.quantity,
     date: item.created_at,
     status: item.status,

@@ -23,9 +23,9 @@ const PropertyPurchaseList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    property_name: item?.property_id?.map((pi)=>pi),
-    project_name: item?.project_id?.map((pi)=>pi),
-    customer_id: item.customer_id,
+    property_name: item?.property_code?.map((pi)=>pi+" "),
+    project_name: item?.project_name?.map((pi)=>pi+" "),
+    customer_id: item.customer_name,
     amount: item.amount,
     date: item.created_at,
     status: item.status,

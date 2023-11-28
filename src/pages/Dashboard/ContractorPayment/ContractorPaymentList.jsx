@@ -33,8 +33,8 @@ const ContractorPaymentList = () => {
     console.log(state.data)
     const newData = state?.data?.map((item) => ({
         id: item.id,
-        first_name: item.contructor_id,
-        project: item.project_id,
+        first_name: item.contractor_name,
+        project: item.project_name,
         date: item.created_at,
         worker: item.worker,
         payment: item.payment,

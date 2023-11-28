@@ -22,7 +22,7 @@ const MaterialPaymentInstallmentList = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    purchase_id: item.purchase_id ,
+    purchase_id: item.purchase_code ,
     amount: item.amount ,
     payment_date: item.payment_date ,
     date: item.created_at,

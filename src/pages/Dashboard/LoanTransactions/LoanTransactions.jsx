@@ -9,6 +9,8 @@ import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import { deleteTransaction, fetchLoanTransactions } from "../../../redux/Actions/LoanTransactionsAction";
 
 const t_head = [
+  { name: "Giver Name" },
+  { name: "Taker Name" },
   { name: "Interested Amount" },
   { name: "Return Amount" },
   { name: "Current Amount" },
@@ -26,6 +28,8 @@ function LoanTransactions() {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
+    giver_name:  item.giver_name,
+    taker_name:  item.taker_name,
     interested_amount: item.interested_amount,
     return_amount: item.return_amount,
     current_amount: item.current_amount,

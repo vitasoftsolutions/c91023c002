@@ -7,7 +7,7 @@ import { deleteMaterialPurchase, fetchMaterialPurchaseList } from "../../../redu
 
 const t_head = [
   { name: "Purchase code" },
-  { name: "Vendor id" },
+  { name: "Vendor Name" },
   { name: "Purchase for" },
   { name: "Amount" },
   { name: "Quantity" },
@@ -25,8 +25,8 @@ const MaterialPurchaseList = () => {
   const newData = state?.data?.map((item) => ({
     id: item.id,
     purchase_code: item.purchase_code ,
-    vendor_id: item.vendor_id ,
-    purchase_for: item.purchase_for ,
+    vendor_id: item.vendor_name ,
+    purchase_for: item.purchase_for_name ,
     amount: item.amount ,
     quantity: item.quantity ,
     date: item.created_at,
