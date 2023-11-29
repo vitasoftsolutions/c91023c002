@@ -19,9 +19,11 @@ export const createCustomerBen = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
+      const submittedData = { ...payload, status: true };
+
       const response = await axios.post(
         `${base_url}/customers-beneficaries/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;

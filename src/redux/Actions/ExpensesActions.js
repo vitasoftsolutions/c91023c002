@@ -19,9 +19,11 @@ export const createLoanBen = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
+    const submittedData = { ...payload, status: true };
+
       const response = await axios.post(
         `${base_url}/expenses/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;
@@ -238,8 +240,8 @@ export const updateLoanBeneficiary = createAsyncThunk(
 //
 //
 //
-export const searchLoanBeneficiaries = createAsyncThunk(
-  "searchLoanBeneficiaries",
+export const searchExpenses = createAsyncThunk(
+  "searchExpenses",
   async (firstName) => {
     try {
       // Get the JWT token from session storage
@@ -280,8 +282,8 @@ export const searchLoanBeneficiaries = createAsyncThunk(
 //
 //
 //
-export const sortByDateLoanBen = createAsyncThunk(
-  "sortByDateLoanBen",
+export const sortByDateexpenses = createAsyncThunk(
+  "sortByDateexpenses",
   async (date) => {
     try {
       // Get the JWT token from session storage
@@ -321,8 +323,8 @@ export const sortByDateLoanBen = createAsyncThunk(
 //
 //
 //
-export const sortByAZLoanBen = createAsyncThunk(
-  "sortByAZLoanBen",
+export const sortByAZExpenses = createAsyncThunk(
+  "sortByAZExpenses",
   async (sortOrder) => {
     try {
       // Get the JWT token from session storage

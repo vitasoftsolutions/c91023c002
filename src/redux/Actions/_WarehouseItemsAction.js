@@ -19,9 +19,11 @@ export const createWarehouseItems = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
+      const submittedData = { ...payload, status: true };
+
       const response = await axios.post(
         `${base_url}/warehouse-items/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;
@@ -278,39 +280,38 @@ export const sortByDateWarehouseItems = createAsyncThunk(
 //
 //
 export const sortByAZWarehouseItems = createAsyncThunk(
-  "sortByAZWarehouseItems",
-  async (sortOrder) => {
-    try {
-      // Get the JWT token from session storage
-      const token = sessionStorage.getItem("jwt_token");
-
-      // Define the headers
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-
-      let apiUrl = `${base_url}/warehouse-items/`;
-
-      // Check if sortOrder is not empty, then append the search query
-      if (sortOrder) {
-        apiUrl += `?order=${sortOrder}`;
+    "sortByAZWarehouseItems",
+    async ({ sortOrder, page }, { getState }) => {
+      const { perPage } = getState().loanBeneficiary;
+      try {
+        // Get the JWT token from session storage
+        const token = sessionStorage.getItem("jwt_token");
+  
+        // Define the headers
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+  
+        // Build the API URL with sorting and pagination parameters
+        const apiUrl = `${base_url}/warehouse-items/?order=${sortOrder}&limit=${perPage}&offset=${(page - 1) * perPage}`;
+  
+        // Make the Axios GET request with the headers
+        const response = await axios.get(apiUrl, {
+          headers,
+        });
+  
+        const response_token = response.data.results.token;
+        const result = jwtDecode(response_token);
+  
+        const data = result.data;
+        // Return the data
+        return data;
+      } catch (error) {
+        // Handle errors and return an appropriate message
+        const errorMessage = (error.response && error.response.data) || error.message;
+        throw new Error(errorMessage);
       }
-
-      // Make the Axios GET request with the headers
-      const response = await axios.get(apiUrl, {
-        headers,
-      });
-
-      const response_token = response.data.results.token;
-      const result = jwtDecode(response_token);
-
-      const data = result.data;
-      // Return the data
-      return data;
-    } catch (error) {
-      const massage = (error.response && error.response.data) || error.massage;
-      return massage;
     }
-  }
-);
+  );
+  

@@ -5,18 +5,20 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchMaterialPurchaseAllList } from "../../../redux/Actions/MaterialPurchaseAction";
-import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
 import { createMaterialDispatch } from "../../../redux/Actions/MaterialDispatchAction";
-import { fetchProductInventoryAllList } from "../../../redux/Actions/ProductInventoryAction";
+import { fetchMaterialsListAllData } from "../../../redux/Actions/MaterialsAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchWarehouseItemsAllList } from "../../../redux/Actions/_WarehouseItemsAction";
 
 function CreateMaterialDispatch() {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.materialDispatchReducer);
   //
   const projectsState = useSelector((state) => state.projectsReducer.data);
-  const productInv = useSelector((state) => state.productInventoryReducer.data);
+  const warehouseState = useSelector((state) => state.warehouseItemsReducer.data);
+  const materialState = useSelector((state) => state.materialsReducer.data);
 
+console.log(warehouseState , "warehouseState")
 
   // Navigation
   const navigate = useNavigate();
@@ -27,9 +29,9 @@ function CreateMaterialDispatch() {
 
   // fetch Material Purchase AllList
   useEffect(() => {
-    dispatch(fetchMaterialPurchaseAllList());
+    dispatch(fetchMaterialsListAllData());
     dispatch(fetchProjectsAllList());
-    dispatch(fetchProductInventoryAllList());
+    dispatch(fetchWarehouseItemsAllList());
   }, [dispatch]);
 
   const formsData = [
@@ -41,19 +43,19 @@ function CreateMaterialDispatch() {
     },
     {
      
-      fieldName: "Inventory item id",
+      fieldName: "Warehouse Item Id",
       fieldType: "select",
-      fieldPlaceholder: "Inventory item id",
+      fieldPlaceholder: "Warehouse Item Id",
       isRequired: false,
-      options: productInv?.map((dt) => ({
+      options: warehouseState?.map((dt) => ({
         value: dt.id.toString(),
         label: dt.id,
       })),
     },
     {
-      fieldName: "Project id",
+      fieldName: "Project Id",
       fieldType: "select",
-      fieldPlaceholder: "Project id",
+      fieldPlaceholder: "Project Id",
       isRequired: false,
       options: projectsState?.map((dt) => ({
         value: dt.id.toString(),
@@ -68,8 +70,6 @@ function CreateMaterialDispatch() {
       options: [
         { value: "Check in", label: "Check in" },
         { value: "Check out", label: "Check out" },
-        { value: "Return", label: "Return" },
-        { value: "Swap", label: "Swap" },
       ],
     },
     {
@@ -78,11 +78,10 @@ function CreateMaterialDispatch() {
       fieldPlaceholder: "Metarial",
       isRequired: true,
       multiSelect: true,
-      // TODO: Metarial not Doen
-      // options: materialState?.map((dt) => ({
-      //   value: dt.id.toString(),
-      //   label: dt.purchase_code,
-      // })),
+      options: materialState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
   ];
 

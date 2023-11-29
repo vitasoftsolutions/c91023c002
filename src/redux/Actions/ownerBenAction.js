@@ -76,8 +76,9 @@ export const createOwner = createAsyncThunk("createOwner", async (payload) => {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     };
+    const submittedData = { ...payload, status: true };
 
-    const response = await axios.post(`${base_url}/owner-beneficaries/`, payload, {
+    const response = await axios.post(`${base_url}/owner-beneficaries/`, submittedData, {
       headers,
     });
     return response.data;

@@ -19,9 +19,11 @@ export const createLoanInstallment = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
+      const submittedData = { ...payload, status: true };
+
       const response = await axios.post(
         `${base_url}/loan-installment/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;
