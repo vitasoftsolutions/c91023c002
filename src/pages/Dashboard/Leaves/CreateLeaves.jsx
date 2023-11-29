@@ -38,12 +38,7 @@ function CreateLeaves() {
     fieldPlaceholder: "To date",
     isRequired: true,
   },
-  {
-    fieldName: "Days",
-    fieldType: "number",
-    fieldPlaceholder: "Days",
-    isRequired: true,
-  },
+  
   {
     fieldName: "Leave Type",
     fieldType: "text",
