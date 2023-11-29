@@ -19,9 +19,11 @@ export const createRepairRecords = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
+      const submittedData = { ...payload, status: true };
+
       const response = await axios.post(
         `${base_url}/repair-records/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;

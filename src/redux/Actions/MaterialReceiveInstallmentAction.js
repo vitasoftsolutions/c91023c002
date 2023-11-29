@@ -18,10 +18,11 @@ export const createMaterialReceiveInstallment = createAsyncThunk(
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
+      const submittedData = { ...payload, status: true };
 
       const response = await axios.post(
         `${base_url}/material-installment/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;

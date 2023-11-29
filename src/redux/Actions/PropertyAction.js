@@ -19,9 +19,11 @@ export const createProperty = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
+      const submittedData = { ...payload, status: true };
+
       const response = await axios.post(
         `${base_url}/property/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;

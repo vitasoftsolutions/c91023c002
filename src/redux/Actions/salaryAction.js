@@ -18,10 +18,11 @@ export const createSalary = createAsyncThunk(
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       };
+      const submittedData = { ...payload, status: true };
 
       const response = await axios.post(
         `${base_url}/salaries/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
@@ -6,7 +6,17 @@ import Swal from "sweetalert2";
 import {
   deleteLoanBeneficiary,
   fetchLoanBeneList,
+  searchLoanBeneficiaries,
+  sortByAZLoanBen,
+  sortByDateLoanBen,
 } from "../../../redux/Actions/loanBenAction";
+import { useLocation } from "react-router-dom";
+import {
+  fetchPhoneList,
+  searchPhoneByName,
+  sortByAZPhone,
+  sortByDatePhone,
+} from "../../../redux/Actions/PhoneAction";
 
 const t_head = [
   { name: "Name" },
@@ -19,6 +29,7 @@ const t_head = [
 
 const LoanBeneficiaryList = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const state = useSelector((state) => state.loanBeneficiary);
   // allDataList
   const allDataList = state.data;
@@ -79,6 +90,45 @@ const LoanBeneficiaryList = () => {
   };
 
   //
+  const handleSearch = (data) => {
+    if (data.text === "") {
+      // If the search field is empty, fetch all data
+      dispatch(fetchLoanBeneList(current_page));
+      dispatch(fetchPhoneList(1));
+    } else if (pathname === "/beneficiarylist") {
+      dispatch(searchLoanBeneficiaries(data.text));
+    } else if (pathname === "/phone") {
+      dispatch(searchPhoneByName(data.text));
+    }
+  };
+
+  const handleSortByDate = (value) => {
+    if (!value) {
+      pathname === "/beneficiarylist"
+        ? dispatch(fetchLoanBeneList(current_page))
+        : "";
+    }
+    if (pathname === "/beneficiarylist") {
+      dispatch(sortByDateLoanBen(value));
+    }
+  };
+
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortButtonText, setSortButtonText] = useState("Sort By A to Z");
+
+  // handleAtoZClick
+  const handleAtoZClick = () => {
+    // Toggle the sorting order
+    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newSortOrder);
+    // Toggle the button text
+    const newText =
+      newSortOrder === "asc" ? "Sort By A to Z" : "Sort By Z to A";
+    setSortButtonText(newText);
+
+    // You can now use the `newSortOrder` value in your sorting logic
+    pathname === "/beneficiarylist" ?  dispatch(sortByAZLoanBen({ sortOrder, current_page})) : "";
+  };
   //
   return (
     <div className="max-w-screen">
@@ -86,6 +136,10 @@ const LoanBeneficiaryList = () => {
         title={"Beneficiary"}
         redirectLink={"/beneficiarylist/loan-beneficiary-crete"}
         url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        onSearch={handleSearch}
+        onSortByDate={handleSortByDate}
+        onSortByAZ={handleAtoZClick}
+        sortButtonText={sortButtonText}
       />
       <GlobalTable
         t_head={t_head}

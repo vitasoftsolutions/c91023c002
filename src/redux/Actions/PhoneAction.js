@@ -93,8 +93,9 @@ export const createPhone = createAsyncThunk("createPhone", async (payload) => {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     };
+    const submittedData = { ...payload, status: true };
 
-    const response = await axios.post(`${base_url}/phone/`, payload, {
+    const response = await axios.post(`${base_url}/phone/`, submittedData, {
       headers,
     });
     return response;

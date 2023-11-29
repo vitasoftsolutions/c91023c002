@@ -5,36 +5,37 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchMaterialPurchaseAllList } from "../../../redux/Actions/MaterialPurchaseAction";
-import {
-  fetchMaterialDispatch,
-  updateMaterialDispatch,
-} from "../../../redux/Actions/MaterialDispatchAction";
 import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import {
+  fetchMaterialDispatchInventory,
+  updateMaterialDispatchInventory,
+} from "../../../redux/Actions/MaterialDispatchInventoryAction";
+import { fetchMaterialsListAllData } from "../../../redux/Actions/MaterialsAction";
+import { fetchProductInventoryAllList } from "../../../redux/Actions/ProductInventoryAction";
 
 function EditMaterialDispatchInventory() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.materialDispatchInventoryReducer);
-  //
-  const materialState = useSelector(
-    (state) => state.materialPurchaseReducer.data
+  const reduxState = useSelector(
+    (state) => state.materialDispatchInventoryReducer
   );
-  console.log(materialState);
+  //
   const projectsState = useSelector((state) => state.projectsReducer.data);
+  const productInv = useSelector((state) => state.productInventoryReducer.data);
+  const materialState = useSelector((state) => state.materialsReducer.data);
 
   const location = useLocation();
   const state = reduxState.sData;
 
   useEffect(() => {
-    dispatch(fetchMaterialDispatch(location.state));
+    dispatch(fetchMaterialDispatchInventory(location.state));
   }, [location.state, dispatch]);
-
 
   // fetch Material Purchase AllList
   useEffect(() => {
-    dispatch(fetchMaterialPurchaseAllList());
+    dispatch(fetchMaterialsListAllData());
     dispatch(fetchProjectsAllList());
+    dispatch(fetchProductInventoryAllList());
   }, [dispatch]);
 
   const formsData = [
@@ -44,24 +45,6 @@ function EditMaterialDispatchInventory() {
       fieldPlaceholder: "Quantity",
       isRequired: true,
       defaultValue: state.quantity,
-    },
-    {
-      fieldName: "Inventory item id",
-      fieldType: "text",
-      fieldPlaceholder: "Inventory item id",
-      isRequired: false,
-      defaultValue: state.inventory_item_id,
-    },
-    {
-      fieldName: "Project id",
-      fieldType: "select",
-      fieldPlaceholder: "Project id",
-      isRequired: false,
-      defaultValue: state.project_id,
-      options: projectsState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
     },
     {
       fieldName: "Check status",
@@ -77,16 +60,38 @@ function EditMaterialDispatchInventory() {
       ],
     },
     {
+      fieldName: "Inventory item id",
+      fieldType: "select",
+      fieldPlaceholder: "Inventory item id",
+      isRequired: false,
+      defaultValue: state.inventory_item_id,
+      options: productInv?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.id,
+      })),
+    },
+    {
+      fieldName: "Project id",
+      fieldType: "select",
+      fieldPlaceholder: "Project id",
+      isRequired: false,
+      defaultValue: state.project_id,
+      options: projectsState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
+    },
+    {
       fieldName: "Metarial",
       fieldType: "select",
       fieldPlaceholder: "Metarial",
       isRequired: true,
       defaultValue: state.metarial,
-      // TODO: Metarial not Doen
-      // options: materialState?.map((dt) => ({
-      //   value: dt.id.toString(),
-      //   label: dt.purchase_code,
-      // })),
+      multiSelect: true,
+      options: materialState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.name,
+      })),
     },
   ];
 
@@ -102,7 +107,7 @@ function EditMaterialDispatchInventory() {
       };
 
       dispatch(
-        updateMaterialDispatch({
+        updateMaterialDispatchInventory({
           id: state.id,
           data: updateData,
         })
@@ -125,7 +130,7 @@ function EditMaterialDispatchInventory() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/material-dispatch");
+        navigate("/material-dispatch-inventory");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -136,7 +141,7 @@ function EditMaterialDispatchInventory() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/material-dispatch"}
+            to={"/material-dispatch-inventory"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back

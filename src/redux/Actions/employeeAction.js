@@ -80,7 +80,9 @@ export const createEmployee = createAsyncThunk("createEmployee", async (payload)
       Authorization: `Bearer ${token}`,
     };
 
-    const response = await axios.post(`${base_url}/employee/`, payload, {
+    const submittedData = { ...payload, status: true };
+
+    const response = await axios.post(`${base_url}/employee/`, submittedData, {
       headers,
     });
     return response.data;

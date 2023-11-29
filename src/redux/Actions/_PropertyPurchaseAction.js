@@ -11,7 +11,7 @@ import { base_url } from "../../Components/shared/Url";
 export const createPropertyPurchase = createAsyncThunk(
   "createPropertyPurchase",
   async (payload) => {
-    console.log(payload, "_____")
+    console.log(payload, "_____");
     try {
       const token = sessionStorage.getItem("jwt_token");
       const headers = {
@@ -19,9 +19,11 @@ export const createPropertyPurchase = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
+      const submittedData = { ...payload, status: true };
+
       const response = await axios.post(
         `${base_url}/property-purchase/`,
-        payload,
+        submittedData,
         { headers }
       );
       return response.data;
@@ -82,7 +84,7 @@ export const fetchPropertyPurchaseList = createAsyncThunk(
 export const fetchPropertyPurchaseAllList = createAsyncThunk(
   "fetchPropertyPurchaseAllList",
   async (payload) => {
-    console.log(payload, "payload")
+    console.log(payload, "payload");
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
@@ -93,8 +95,9 @@ export const fetchPropertyPurchaseAllList = createAsyncThunk(
     };
 
     // Make the Axios GET request with the headers
-    const response = await axios.get(
-      `${base_url}/property-purchase/`,{headers});
+    const response = await axios.get(`${base_url}/property-purchase/`, {
+      headers,
+    });
 
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
@@ -111,30 +114,33 @@ export const fetchPropertyPurchaseAllList = createAsyncThunk(
 //
 //
 //
-export const fetchPropertyPurchase = createAsyncThunk("fetchPropertyPurchase", async (id) => {
-  console.log("getState()");
-  console.log(id, "getState()");
+export const fetchPropertyPurchase = createAsyncThunk(
+  "fetchPropertyPurchase",
+  async (id) => {
+    console.log("getState()");
+    console.log(id, "getState()");
 
-  // Get the JWT token from session storage
-  const token = sessionStorage.getItem("jwt_token");
-  // Define the headers
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
 
-  // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/property-purchase/${id}/`, {
-    headers,
-  });
+    // Make the Axios GET request with the headers
+    const response = await axios.get(`${base_url}/property-purchase/${id}/`, {
+      headers,
+    });
 
-  const data = response.data;
+    const data = response.data;
 
-  console.log(data, "data__");
+    console.log(data, "data__");
 
-  // Return the data
-  return { data };
-});
+    // Return the data
+    return { data };
+  }
+);
 
 //
 //
@@ -279,7 +285,8 @@ export const sortByDatePropertyPurchase = createAsyncThunk(
 //
 export const sortByAZPropertyPurchase = createAsyncThunk(
   "sortByAZPropertyPurchase",
-  async (sortOrder) => {
+  async ({ sortOrder, page }, { getState }) => {
+    const { perPage } = getState().loanBeneficiary;
     try {
       // Get the JWT token from session storage
       const token = sessionStorage.getItem("jwt_token");
@@ -290,12 +297,10 @@ export const sortByAZPropertyPurchase = createAsyncThunk(
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/property-purchase/`;
-
-      // Check if sortOrder is not empty, then append the search query
-      if (sortOrder) {
-        apiUrl += `?order=${sortOrder}`;
-      }
+      // Build the API URL with sorting and pagination parameters
+      const apiUrl = `${base_url}/property-purchase/?order=${sortOrder}&limit=${perPage}&offset=${
+        (page - 1) * perPage
+      }`;
 
       // Make the Axios GET request with the headers
       const response = await axios.get(apiUrl, {
@@ -309,8 +314,10 @@ export const sortByAZPropertyPurchase = createAsyncThunk(
       // Return the data
       return data;
     } catch (error) {
-      const massage = (error.response && error.response.data) || error.massage;
-      return massage;
+      // Handle errors and return an appropriate message
+      const errorMessage =
+        (error.response && error.response.data) || error.message;
+      throw new Error(errorMessage);
     }
   }
 );

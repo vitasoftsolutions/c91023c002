@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteMaterialPaymentInstallment, fetchMaterialPaymentInstallmentList } from "../../../redux/Actions/MaterialPaymentInstallmentAction";
 import { deleteMaterialDispatch, fetchMaterialDispatchList } from "../../../redux/Actions/MaterialDispatchAction";
 
 const t_head = [
-  { name: "Amount" },
-  { name: "Payment Date" },
+  { name: "Warehouse Item" },
+  { name: "Project Name" },
+  { name: "Quantity" },
   { name: "Created Date" },
   { name: "Status" },
   { name: "Actions" },
@@ -21,9 +21,10 @@ const MaterialDispatchList = () => {
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
+    warehouse_item_id: item.warehouse_item_id,
     id: item.id,
-    amount: item.amount ,
-    payment_date: item.payment_date ,
+    project_id: item.project_id,
+    quantity: item.quantity,
     date: item.created_at,
     status: item.status,
   }));

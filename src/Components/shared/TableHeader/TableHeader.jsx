@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GoTasklist } from "react-icons/go";
 import { FaFileImport, FaFileExport } from "react-icons/fa";
 import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
@@ -6,80 +6,22 @@ import { Link, useLocation } from "react-router-dom";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { AiOutlinePlus } from "react-icons/ai";
 import ImportModal from "../Modals/ImportModal";
-import { useState } from "react";
-import { base_url } from "../Url";
 import { useForm } from "react-hook-form";
+import { base_url } from "../Url";
 
-// redux
-import { useDispatch } from "react-redux";
-import {
-  fetchLoanBeneList,
-  searchLoanBeneficiaries,
-  sortByAZLoanBen,
-  sortByDateLoanBen,
-} from "../../../redux/Actions/loanBenAction";
-import {
-  fetchPhoneList,
-  searchPhoneByName,
-  sortByAZPhone,
-  sortByDatePhone,
-} from "../../../redux/Actions/PhoneAction";
-
-function TableHeader({ title, redirectLink, url_endpoint }) {
+function TableHeader({
+  title,
+  redirectLink,
+  url_endpoint,
+  onSearch,
+  onSortByDate,
+  onSortByAZ,
+  sortButtonText,
+}) {
   const { pathname } = useLocation();
-  //
   const { handleSubmit, register } = useForm();
-  //
   const [importModal, setImportModal] = useState(null);
   const [csvData, setCsvData] = useState("");
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [sortButtonText, setSortButtonText] = useState("Sort By A to Z");
-
-  const dispatch = useDispatch();
-
-  const onSubmit = (data) => {
-    if (data.text === "") {
-      // If the search field is empty, fetch all data
-      dispatch(fetchLoanBeneList(1));
-      dispatch(fetchPhoneList(1));
-    }
-    if (pathname === "/beneficiarylist") {
-      dispatch(searchLoanBeneficiaries(data.text));
-    }
-    if (pathname === "/phone") {
-      dispatch(searchPhoneByName(data.text));
-    }
-  };
-
-  // submitDate
-  const handleDateChange = (event) => {
-    const { value } = event.target;
-    if (!value) {
-      pathname === "/beneficiarylist" ? dispatch(fetchLoanBeneList(1)) : "";
-      pathname === "/phone" ? dispatch(fetchPhoneList(1)) : "";
-    }
-    if (pathname === "/beneficiarylist") {
-      dispatch(sortByDateLoanBen(value));
-    }
-    if (pathname === "/phone") {
-      dispatch(sortByDatePhone(value));
-    }
-  };
-
-  // handleAtoZClick
-  const handleAtoZClick = () => {
-    // Toggle the sorting order
-    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-    setSortOrder(newSortOrder);
-    // Toggle the button text
-    const newText =
-      newSortOrder === "asc" ? "Sort By A to Z" : "Sort By Z to A";
-    setSortButtonText(newText);
-
-    // You can now use the `newSortOrder` value in your sorting logic
-    pathname === "/beneficiarylist" ? dispatch(sortByAZLoanBen(sortOrder)) : "";
-    pathname === "/phone" ? dispatch(sortByAZPhone(sortOrder)) : "";
-  };
 
   useEffect(() => {
     fetchData();
@@ -129,7 +71,6 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
           </Link>
         </div>
         <div className="flex items-center ml-5 gap-2 w-full">
-          {/*  */}
           <div className="bg-white shadow-md shadow-blue-200">
             <div className="dropdown dropdown-start">
               <label
@@ -144,27 +85,25 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
               >
                 <li className="rounded-none">
                   <input
-                    onChange={handleDateChange}
+                    onChange={(event) => onSortByDate(event.target.value)}
                     type="date"
                     className="cursor-pointer border-none outline-none bg-transparent"
                     placeholder="Select date"
                   />
                 </li>
                 <li className="rounded-none">
-                  <button onClick={handleAtoZClick} className="rounded-none">
+                  <button onClick={onSortByAZ} className="rounded-none">
                     {sortButtonText}
                   </button>
                 </li>
               </ul>
             </div>
           </div>
-          {/*  */}
-          {/* // Search */}
+          {/* Search */}
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSearch)}
             className="ml-4 w-full relative"
           >
-            {/* <div className="ml-4 w-full relative"> */}
             <div className="flex">
               <input
                 {...register("text")}
@@ -178,7 +117,6 @@ function TableHeader({ title, redirectLink, url_endpoint }) {
                 <BsSearch />
               </button>
             </div>
-            {/* </div> */}
           </form>
         </div>
       </div>

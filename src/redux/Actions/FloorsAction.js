@@ -17,7 +17,9 @@ export const createFloor = createAsyncThunk("createFloor", async (payload) => {
       Authorization: `Bearer ${token}`,
     };
 
-    const response = await axios.post(`${base_url}/floor/`, payload, {
+    const submittedData = { ...payload, status: true };
+
+    const response = await axios.post(`${base_url}/floor/`, submittedData, {
       headers,
     });
     return response.data;
