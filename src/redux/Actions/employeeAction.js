@@ -133,8 +133,34 @@ export const updateEmployee = createAsyncThunk("createPhone", async (payload) =>
   }
 });
 
+// fetch employee AllList
+export const fetchEmployeeAllList = createAsyncThunk(
+  "fetchEmployeeAllList",
+  async (payload) => {
+    console.log(payload, "payload")
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
 
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
 
+    // Make the Axios GET request with the headers
+    const response = await axios.get(
+      `${base_url}/employee/`,{headers});
+
+    const response_token = response.data.results.token;
+    const result = jwtDecode(response_token);
+
+    const data = result.data;
+    // Return the data and pagination information
+    return {
+      data,
+    };
+  }
+);
 
 // Todo blow all
 

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAttendance } from "../Actions/AttendanceAction";
+import {
+  createAttendance,
+  deleteAttendance,
+  fetchAttendance,
+} from "../Actions/AttendanceAction";
 
 const AttendanceSlice = createSlice({
   name: "AttendanceSlice",
@@ -40,6 +44,36 @@ const AttendanceSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
+      // Delete Attendance
+      .addCase(deleteAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.isDelete = false;
+      })
+      .addCase(deleteAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isDelete = true;
+      })
+      .addCase(deleteAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+        state.isDelete = false;
+      })
+      // Create Attendance
+      .addCase(createAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(createAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+        state.isCreated = true;
+      })
+      .addCase(createAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.data = [action.error.message];
+      });
     //   // Fetch LoanBen
     //   .addCase(fetchLoanBene.pending, (state) => {
     //     state.isLoading = true;
@@ -89,16 +123,16 @@ const AttendanceSlice = createSlice({
     //     state.isUpdate = false;
     //   })
     //   // Delete loan
-    //   .addCase(deleteLoanBeneficiary.pending, (state) => {
+    //   .addCase(deleteAttendance.pending, (state) => {
     //     state.isLoading = true;
     //     state.isError = false;
     //     state.isDelete = false;
     //   })
-    //   .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+    //   .addCase(deleteAttendance.fulfilled, (state, action) => {
     //     state.isLoading = false;
     //     state.isDelete = true;
     //   })
-    //   .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+    //   .addCase(deleteAttendance.rejected, (state, action) => {
     //     state.isLoading = false;
     //     state.isError = action.error.message;
     //     state.isDelete = false;

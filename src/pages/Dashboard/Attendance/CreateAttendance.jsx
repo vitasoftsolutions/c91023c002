@@ -5,25 +5,61 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { createLoanBen } from "../../../redux/Actions/loanBenAction";
-
-const formsData = [
-  {
-    fieldName: "First Name",
-    fieldType: "text",
-    fieldPlaceholder: "First Name",
-    isRequired: true,
-  },
-];
+import { createAttendance } from "../../../redux/Actions/AttendanceAction";
+import { fetchEmployeeAllList } from "../../../redux/Actions/employeeAction";
+import jwtDecode from "jwt-decode";
 
 function CreateAttendance() {
   const dispatch = useDispatch();
-  const loanState = useSelector((state) => state.loanBeneficiary);
+  const loanState = useSelector((state) => state.attendanceReducers);
+  const employeeState = useSelector((state) => state.employeeReducers.data);
   const navigate = useNavigate();
 
   const submitFunction = (data) => {
-    dispatch(createLoanBen(data));
+    dispatch(createAttendance(data));
   };
+
+  console.log(loanState, "loanState");
+
+  useEffect(() => {
+    dispatch(fetchEmployeeAllList());
+  }, [dispatch]);
+
+  // Get the user
+  const token = sessionStorage.getItem("jwt_token");
+  const result = jwtDecode(token);
+  const userId = result.user_id;
+
+  const formsData = [
+    {
+      fieldName: "Work Hour",
+      fieldType: "number",
+      fieldPlaceholder: "Work Hour",
+      isRequired: true,
+      hasWidth: 3,
+    },
+    {
+      fieldName: "Employee id",
+      fieldType: "select",
+      fieldPlaceholder: "Employee id",
+      isRequired: true,
+      hasWidth: 3,
+      options: employeeState?.map((dt) => ({
+        value: dt.id,
+        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
+          dt?.last_name !== null && dt?.last_name
+        } `,
+      })),
+    },
+    {
+      fieldName: "Author",
+      fieldType: "number",
+      fieldPlaceholder: "Author id",
+      defaultValue: userId,
+      isRequired: true,
+      isHidden: true,
+    },
+  ];
 
   useEffect(() => {
     if (loanState.isCreated) {
@@ -38,7 +74,7 @@ function CreateAttendance() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/beneficiarylist");
+        navigate("/attendance");
       }, 3000);
     }
 
@@ -62,7 +98,7 @@ function CreateAttendance() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/beneficiarylist"}
+            to={"/attendance"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -70,7 +106,7 @@ function CreateAttendance() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-      <MainForm
+        <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
