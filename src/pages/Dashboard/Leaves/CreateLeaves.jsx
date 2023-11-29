@@ -7,12 +7,14 @@ import { ToastContainer, toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import { createLeaves } from "../../../redux/Actions/LeavesAction";
+import { fetchEmployeeAllList } from "../../../redux/Actions/employeeAction";
 
 
 
 function CreateLeaves() {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.leavesReducer);
+  const employeeState = useSelector((state) => state.employeeReducers.data);
   const navigate = useNavigate();
 
   const submitFunction = (data) => {
@@ -23,6 +25,10 @@ function CreateLeaves() {
    const token = sessionStorage.getItem("jwt_token");
    const result = jwtDecode(token);
    const userId = result.user_id;
+
+   useEffect(() => {
+    dispatch(fetchEmployeeAllList());
+  }, [dispatch]);
 
   // 
   const formsData = [
@@ -53,9 +59,15 @@ function CreateLeaves() {
   },
   {
     fieldName: "Employee id",
-    fieldType: "number",
+    fieldType: "select",
     fieldPlaceholder: "Employee id",
     isRequired: true,
+    options: employeeState?.map((dt) => ({
+      value: dt.id,
+      label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
+        dt?.last_name !== null && dt?.last_name
+      } `,
+    })),
   },
   {
       fieldName: "Author",

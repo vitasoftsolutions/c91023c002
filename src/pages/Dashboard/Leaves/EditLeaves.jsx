@@ -6,11 +6,13 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import { fetchLeaves, updateLeaves } from "../../../redux/Actions/LeavesAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchEmployeeAllList } from "../../../redux/Actions/employeeAction";
 
 function EditLeaves() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.leavesReducer);
+  const employeeState = useSelector((state) => state.employeeReducers.data);
   const location = useLocation();
   const state = reduxState.sData;
 
@@ -19,6 +21,10 @@ function EditLeaves() {
   useEffect(() => {
     dispatch(fetchLeaves(location.state));
   }, [location.state, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchEmployeeAllList());
+  }, [dispatch]);
 
   const formsData = [
     {
@@ -63,6 +69,19 @@ function EditLeaves() {
       isRequired: true,
       defaultValue: state.employee_id,
     },   
+    {
+      fieldName: "Employee id",
+      fieldType: "select",
+      fieldPlaceholder: "Employee id",
+      isRequired: true,
+      defaultValue: state.employee_id,
+      options: employeeState?.map((dt) => ({
+        value: dt.id,
+        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
+          dt?.last_name !== null && dt?.last_name
+        } `,
+      })),
+    },
     // author
   ];
 

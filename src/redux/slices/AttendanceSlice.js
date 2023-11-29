@@ -3,6 +3,8 @@ import {
   createAttendance,
   deleteAttendance,
   fetchAttendance,
+  fetchSAttendance,
+  updateAttendance,
 } from "../Actions/AttendanceAction";
 
 const AttendanceSlice = createSlice({
@@ -73,24 +75,40 @@ const AttendanceSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
+      })
+      // Fetch fetch S Attendance
+      .addCase(fetchSAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+      })
+      .addCase(fetchSAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sData = action.payload.data;
+        state.isCreated = false;
+        state.isError = false;
+        state.isUpdate = false;
+      })
+      .addCase(fetchSAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Update Attendance
+      .addCase(updateAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.isUpdate = false;
+      })
+      .addCase(updateAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+        state.isUpdate = true;
+      })
+      .addCase(updateAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+        state.isUpdate = false;
       });
-    //   // Fetch LoanBen
-    //   .addCase(fetchLoanBene.pending, (state) => {
-    //     state.isLoading = true;
-    //     state.isUpdate = false;
-    //     state.isError = false;
-    //   })
-    //   .addCase(fetchLoanBene.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.sData = action.payload.data;
-    //     state.isCreated = false;
-    //     state.isError = false;
-    //     state.isUpdate = false;
-    //   })
-    //   .addCase(fetchLoanBene.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = action.error.message;
-    //   })
     //   // Create loan
     //   .addCase(createLoanBen.pending, (state) => {
     //     state.isLoading = true;
@@ -106,22 +124,7 @@ const AttendanceSlice = createSlice({
     //     state.isError = true;
     //     state.data = [action.error.message];
     //   })
-    //   // Update loan
-    //   .addCase(updateLoanBeneficiary.pending, (state) => {
-    //     state.isLoading = true;
-    //     state.isError = false;
-    //     state.isUpdate = false;
-    //   })
-    //   .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.massage = action.payload;
-    //     state.isUpdate = true;
-    //   })
-    //   .addCase(updateLoanBeneficiary.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = action.error.message;
-    //     state.isUpdate = false;
-    //   })
+
     //   // Delete loan
     //   .addCase(deleteAttendance.pending, (state) => {
     //     state.isLoading = true;
