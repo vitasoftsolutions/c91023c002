@@ -141,11 +141,10 @@ const MainForm = ({
     }
     return (
       <div
-        className={`${
-          "hasWidth" in field && field.hasWidth
+        className={`${"hasWidth" in field && field.hasWidth
             ? `col-span-${field.hasWidth}`
             : "col-span-default"
-        } mb-4`}
+          } mb-4`}
         key={index}
       >
         <label
@@ -212,9 +211,8 @@ const MainForm = ({
           </>
         ) : field.fieldType === "file" ? (
           <div
-            className={`relative border-2 border-dashed border-gray-300 p-4 ${
-              dragging ? "bg-gray-100" : ""
-            }`}
+            className={`relative border-2 border-dashed border-gray-300 p-4 ${dragging ? "bg-gray-100" : ""
+              }`}
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -238,7 +236,7 @@ const MainForm = ({
                   <img
                     src={URL.createObjectURL(
                       selectedFiles[
-                        field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
                       ]
                     )}
                     alt="Selected File"
@@ -306,8 +304,26 @@ const MainForm = ({
               </div>
             )}
           </div>
+        ) : field.fieldType === "datetime-local" ? (
+          <>
+            <input
+              type="datetime-local"
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+                required: !isState && field.isRequired,
+              })}
+              placeholder={field.fieldPlaceholder}
+              className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
+              defaultValue={(isState && field.defaultValue)
+                ? new Date(field.defaultValue).toISOString().slice(0, 16)
+                : ""}
+            />
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
+              <span className="text-red-600">This field is required.</span>
+            )}
+          </>
         ) : (
           <>
+            {console.log(field.fieldType, "Date")}
             <input
               type={field.fieldType}
               {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
