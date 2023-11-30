@@ -28,7 +28,8 @@ export const createProductInventory = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create ProductInventory");
+      throw new Error(error.message);
+
     }
   }
 );

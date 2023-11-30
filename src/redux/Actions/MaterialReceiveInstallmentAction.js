@@ -27,7 +27,8 @@ export const createMaterialReceiveInstallment = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create MaterialReceiveInstallment");
+      throw new Error(error.message);
+
     }
   }
 );

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import Select from "react-select";
 
 const MainForm = ({
   formsData,
-  defaultValues,
+  defaultValue: externalDefaultValues,
   submitFunction,
   isState,
   isValue,
@@ -16,39 +16,17 @@ const MainForm = ({
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
-    defaultValues: defaultValues,
-    mode: "onChange",
+    defaultValues: externalDefaultValues || {}, // Provide a default empty object
+    mode: 'onChange',
   });
 
-  // Style
-  const customStyles = {
-    menu: (provided, state) => ({
-      ...provided,
-      width: state.selectProps.width,
-      borderBottom: "1px dotted pink",
-      color: state.selectProps.menuColor,
-    }),
-    control: () => ({
-      width: "100%",
-      backgroundColor: "white",
-      display: "flex",
-      padding: "2px 5px",
-    }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = "opacity 300ms";
-      return { ...provided, opacity, transition };
-    },
-  };
-  // Style
 
-  const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});
-  const [dragging, setDragging] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState({});
+  const [dragging, setDragging] = useState(false);
 
-  // Handel Drop
   const handleDragEnter = (e) => {
     e.preventDefault();
     setDragging(true);
@@ -74,19 +52,13 @@ const MainForm = ({
   };
 
   const onSubmit = (data) => {
-    console.log(data, "data");
-
-    // Iterate through formsData and add each field to the data object
     formsData.forEach((field) => {
-      // Check if the field is hidden
       if (field.isHidden) {
-        // If hidden, set its value from the defaultValue
         data[field.fieldName.toLowerCase().replace(/\s+/g, "_")] =
           field.defaultValue;
       }
     });
 
-    // Convert field names with spaces to field names with underscores in the data object
     Object.keys(data).forEach((key) => {
       if (key.includes(" ")) {
         const newKey = key.replace(/ /g, "_").toLowerCase();
@@ -95,17 +67,12 @@ const MainForm = ({
       }
     });
 
-    // Add file data to the data object
     const formDataWithFiles = { ...data, ...fileData };
-
-    console.log(formDataWithFiles, "formDataWithFiles");
-
     submitFunction(formDataWithFiles);
   };
 
   const handleFileChange = (fieldName, e) => {
     const file = e.target.files[0];
-
     const newFileData = { ...fileData, [fieldName]: file };
 
     setSelectedFiles((prevSelectedFiles) => ({
@@ -113,38 +80,27 @@ const MainForm = ({
       [fieldName]: file,
     }));
 
-    // console.log(newFileData)
-
     setFileData(newFileData);
   };
 
   const removeFile = (fieldName) => {
-    // Create a copy of the existing state objects
-    const newFilePreviews = { ...filePreviews };
     const newFileData = { ...fileData };
-    const updatedSelectedFiles = { ...selectedFiles };
-
-    // Remove the field from the copied state objects
-    delete newFilePreviews[fieldName];
-    delete newFileData[fieldName];
-    delete updatedSelectedFiles[fieldName];
-
-    // Update the state with the modified objects
-    setFilePreviews(newFilePreviews);
+    field.defaultValue = "";
     setFileData(newFileData);
-    setSelectedFiles(updatedSelectedFiles);
   };
 
   const renderField = (field, index) => {
     if (field.isHidden) {
       return null;
     }
+
     return (
       <div
-        className={`${"hasWidth" in field && field.hasWidth
+        className={`${
+          "hasWidth" in field && field.hasWidth
             ? `col-span-${field.hasWidth}`
             : "col-span-default"
-          } mb-4`}
+        } mb-4`}
         key={index}
       >
         <label
@@ -165,7 +121,6 @@ const MainForm = ({
                   isMulti
                   inputRef={ref}
                   classNamePrefix="select"
-                  styles={customStyles}
                   options={field.options}
                   value={field?.options?.filter((option) =>
                     value.includes(option.value)
@@ -178,10 +133,7 @@ const MainForm = ({
             />
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
               <span className="text-red-600">
-                {
-                  errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
-                    .message
-                }
+                {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")].message}
               </span>
             )}
           </>
@@ -192,13 +144,12 @@ const MainForm = ({
               {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
                 required: field.isRequired,
               })}
-              defaultValue={(isState && field.defaultValue) || ""}
+              defaultValue={isState ? field.defaultValue : ""}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (
                 <Select
                   inputRef={ref}
                   classNamePrefix="select"
-                  styles={customStyles}
                   options={field.options}
                   value={field?.options?.find((c) => c.value === value)}
                   onChange={(val) => onChange(val.value)}
@@ -211,33 +162,24 @@ const MainForm = ({
           </>
         ) : field.fieldType === "file" ? (
           <div
-            className={`relative border-2 border-dashed border-gray-300 p-4 ${dragging ? "bg-gray-100" : ""
-              }`}
+            className={`relative border-2 border-dashed border-gray-300 p-4 ${
+              dragging ? "bg-gray-100" : ""
+            }`}
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
-            onDrop={(e) =>
-              handleDrop(e, field.fieldName.toLowerCase().replace(/\s+/g, "_"))
-            }
+            onDrop={(e) => handleDrop(e, field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
           >
-            {selectedFiles[
-              field.fieldName.toLowerCase().replace(/\s+/g, "_")
-            ] ? (
+            {selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")] ? (
               <div>
                 <p>
                   Selected File:
-                  {
-                    selectedFiles[
-                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                    ].name
-                  }
+                  {selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")].name}
                 </p>
                 <div className="w-full h-[150px] rounded-md overflow-hidden">
                   <img
                     src={URL.createObjectURL(
-                      selectedFiles[
-                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                      ]
+                      selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
                     )}
                     alt="Selected File"
                     className="w-full h-full object-cover"
@@ -247,9 +189,7 @@ const MainForm = ({
                   className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
                   type="button"
                   onClick={() =>
-                    removeFile(
-                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                    )
+                    removeFile(field.fieldName.toLowerCase().replace(/\s+/g, "_"))
                   }
                 >
                   Remove
@@ -268,12 +208,7 @@ const MainForm = ({
                 <button
                   className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
                   type="button"
-                  onClick={() => {
-                    // Clear the image by updating the state
-                    const newFileData = { ...fileData };
-                    field.defaultValue = "";
-                    setFileData(newFileData);
-                  }}
+                  onClick={() => removeFile(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
                 >
                   Remove
                 </button>
@@ -293,10 +228,7 @@ const MainForm = ({
                     name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
                     id={`fileInput_${index}`}
                     onChange={(e) =>
-                      handleFileChange(
-                        field.fieldName.toLowerCase().replace(/\s+/g, "_"),
-                        e
-                      )
+                      handleFileChange(field.fieldName.toLowerCase().replace(/\s+/g, "_"), e)
                     }
                     className="hidden"
                   />
@@ -323,7 +255,6 @@ const MainForm = ({
           </>
         ) : (
           <>
-            {console.log(field.fieldType, "Date")}
             <input
               type={field.fieldType}
               {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
@@ -342,8 +273,6 @@ const MainForm = ({
     );
   };
 
-
-
   return (
     <>
       <form
@@ -355,10 +284,7 @@ const MainForm = ({
         {/* Status */}
         {isState && (
           <div className="col-span-3 md:col-span-1 mb-4">
-            <label
-              htmlFor="statusInput"
-              className="block text-black mb-1 font-bold"
-            >
+            <label htmlFor="statusInput" className="block text-black mb-1 font-bold">
               Status
             </label>
             <select

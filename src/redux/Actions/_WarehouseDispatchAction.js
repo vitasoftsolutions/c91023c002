@@ -28,7 +28,7 @@ export const createWarehouseDispatch = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create WarehouseDispatch");
+      throw new Error(error.message);
     }
   }
 );

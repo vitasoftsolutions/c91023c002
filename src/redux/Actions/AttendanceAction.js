@@ -25,7 +25,7 @@ export const createAttendance = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create loan beneficiary");
+      throw new Error(error.message);
     }
   }
 );

@@ -28,7 +28,7 @@ export const createWarehouseItems = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create WarehouseItems");
+      throw new Error(error.message);
     }
   }
 );

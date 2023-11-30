@@ -29,7 +29,7 @@ export const createLeaves = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Leaves");
+      throw new Error(error.message);
     }
   }
 );

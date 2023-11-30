@@ -41,7 +41,7 @@ function CreatePropertyPurchase() {
       fieldName: "Amount",
       fieldType: "number",
       fieldPlaceholder: "Amount",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       fieldName: "Down payment",

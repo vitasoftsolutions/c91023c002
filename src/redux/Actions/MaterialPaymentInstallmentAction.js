@@ -27,8 +27,8 @@ export const createMaterialPaymentInstallment = createAsyncThunk(
         { headers }
       );
       return response.data;
-    } catch (error) {
-      throw new Error("Failed to Create Material Payment Installment");
+    } catch (error) {      throw new Error(error.message);
+
     }
   }
 );
