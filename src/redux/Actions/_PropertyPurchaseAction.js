@@ -29,7 +29,6 @@ export const createPropertyPurchase = createAsyncThunk(
       return response.data;
 
     } catch (error) {
-      console.log(error, "error")
       throw new Error(error.message);
     }
   }
