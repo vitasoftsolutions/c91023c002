@@ -17,6 +17,8 @@ function TableHeader({
   onSortByDate,
   onSortByAZ,
   sortButtonText,
+  model_name,
+  app_label
 }) {
   const { pathname } = useLocation();
   const { handleSubmit, register } = useForm();
@@ -139,6 +141,8 @@ function TableHeader({
           </button>
         </div>
         <ImportModal
+          model_name={model_name}
+          app_label={app_label}
           importModal={importModal}
           onClose={() => setImportModal(null)}
         />
