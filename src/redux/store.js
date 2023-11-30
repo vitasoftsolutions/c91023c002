@@ -10,7 +10,6 @@ import ownerReducers from "./slices/ownerBeneficiarySlice";
 import attendanceReducers from "./slices/AttendanceSlice";
 import applabelReducer from "./slices/AppLabelSlice";
 import projectsReducer from "./slices/ProjectsSlice";
-import typesReducers from "./slices/TypesSlice";
 import workprogressReducers from "./slices/WorkprogressSlice";
 import ContractorBenReducers from "./slices/ContractorBenSlice";
 import assignContractorReducers from "./slices/AssignContractorSlice";
@@ -83,7 +82,6 @@ export const store = configureStore({
     ownerReducers: ownerReducers,
     attendanceReducers: attendanceReducers,
     applabelReducer: applabelReducer,
-    typesReducers: typesReducers,
     workprogressReducers: workprogressReducers,
     ContractorBenReducers: ContractorBenReducers,
     assignContractorReducers: assignContractorReducers,

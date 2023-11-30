@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createLoanBen,
   deleteLoanBeneficiary,
-  fetchLoanBene,
-  fetchLoanBeneList,
   searchLoanBeneficiaries,
   sortByAZLoanBen,
   sortByDateLoanBen,
-  updateLoanBeneficiary,
   contractorben,
   projectlist,
+  createType,
+  fetchType,
+  fetchSType,
+  updateTypes,
 } from "../Actions/TypesModuleAction";
 
 const typesModuleSlice = createSlice({
@@ -17,8 +17,8 @@ const typesModuleSlice = createSlice({
   initialState: {
     isLoading: false,
     data: [],
-    project_data:[],
-    app_data:[],
+    project_data: [],
+    app_data: [],
     sData: [],
     isError: false,
     currentPage: 1,
@@ -56,6 +56,7 @@ const typesModuleSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
+
       //Conben
       .addCase(contractorben.pending, (state) => {
         state.isLoading = true;
@@ -77,14 +78,37 @@ const typesModuleSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
+
+
+      // fetchSType
+
+      // Fetch LoanBen
+      .addCase(fetchSType.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+      })
+      .addCase(fetchSType.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sData = action.payload.data;
+        state.isCreated = false;
+        state.isError = false;
+        state.isUpdate = false;
+      })
+      .addCase(fetchSType.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+
+
       // Fetch LoanBen list
-      .addCase(fetchLoanBeneList.pending, (state) => {
+      .addCase(fetchType.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
       })
-      .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
+      .addCase(fetchType.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
@@ -94,54 +118,38 @@ const typesModuleSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLoanBeneList.rejected, (state, action) => {
+      .addCase(fetchType.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
-        state.isLoading = true;
-        state.isUpdate = false;
-        state.isError = false;
-      })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.sData = action.payload.data;
-        state.isCreated = false;
-        state.isError = false;
-        state.isUpdate = false;
-      })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = action.error.message;
-      })
+
       // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      .addCase(createType.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createType.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createType.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
       // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      .addCase(updateTypes.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateTypes.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateTypes.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
