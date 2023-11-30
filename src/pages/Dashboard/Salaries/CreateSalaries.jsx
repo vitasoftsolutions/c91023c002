@@ -6,73 +6,58 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import { createLoanBen } from "../../../redux/Actions/loanBenAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
+import jwtDecode from "jwt-decode";
+import { fetchEmployeeAllList } from "../../../redux/Actions/employeeAction";
+import { createSalary } from "../../../redux/Actions/salaryAction";
 
 function CreateSalaries() {
   const dispatch = useDispatch();
-  const loanState = useSelector((state) => state.loanBeneficiary);
+  const loanState = useSelector((state) => state.salaryReducer);
+  const employeeState = useSelector((state) => state.employeeReducers.data);
   const navigate = useNavigate();
 
   const submitFunction = (data) => {
-    dispatch(createLoanBen(data));
+    dispatch(createSalary(data));
   };
 
+  useEffect(() => {
+    dispatch(fetchEmployeeAllList());
+  }, [dispatch]);
+
+    // Get the user
+    const token = sessionStorage.getItem("jwt_token");
+    const result = jwtDecode(token);
+    const userId = result.user_id;
 
   const formsData = [
     {
-      fieldName: "First Name",
-      fieldType: "text",
-      fieldPlaceholder: "First Name",
-      isRequired: true,
-    },
-    {
-      fieldName: "Last Name",
-      fieldType: "text",
-      fieldPlaceholder: "Last Name",
-      isRequired: true,
-    },
-    {
-      fieldName: "Email",
-      fieldType: "email",
-      fieldPlaceholder: "example@gmail.com",
-      isRequired: true,
-    },
-    {
-      fieldName: "Nid Number",
+      fieldName: "Salary",
       fieldType: "number",
-      fieldPlaceholder: "Nid Number",
+      fieldPlaceholder: "Salary",
+      hasWidth: 3,
       isRequired: true,
     },
     {
-      fieldName: "Present Address",
-      fieldType: "text",
-      fieldPlaceholder: "Present Address (Comma Separated)",
+      fieldName: "Employee id",
+      fieldType: "select",
+      fieldPlaceholder: "Employee id",
       isRequired: true,
+      hasWidth: 3,
+      options: employeeState?.map((dt) => ({
+        value: dt.id,
+        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
+          dt?.last_name !== null && dt?.last_name
+        } `,
+      })),
     },
     {
-      fieldName: "Permanent Address",
-      fieldType: "text",
-      fieldPlaceholder: "Permanent Address (Comma Separated)",
+      fieldName: "Author",
+      fieldType: "number",
+      fieldPlaceholder: "Author id",
+      defaultValue: userId,
       isRequired: true,
+      isHidden: true,
     },
-    {
-      fieldName: "Profile Picture",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      isRequired: false,
-    },
-    {
-      fieldName: "Nid Front",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      isRequired: false,
-    },
-    {
-      fieldName: "Nid Back",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      isRequired: false,
-    },
-    
   ];
 
   useEffect(() => {

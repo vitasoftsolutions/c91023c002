@@ -9,129 +9,64 @@ import {
   fetchLoanBene,
   updateLoanBeneficiary,
 } from "../../../redux/Actions/loanBenAction";
+import { fetchEmployeeAllList } from "../../../redux/Actions/employeeAction";
+import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchSalarie, updateSalaries } from "../../../redux/Actions/salaryAction";
 
-function EditLoanBen() {
+function EditSalaries() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.loanBeneficiary);
+  const reduxState = useSelector((state) => state.salaryReducer);
+  const employeeState = useSelector((state) => state.employeeReducers.data);
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state)
 
   useEffect(() => {
-    dispatch(fetchLoanBene(location.state));
+    dispatch(fetchSalarie(location.state));
   }, [location.state, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchEmployeeAllList());
+  }, [dispatch]);
 
   const formsData = [
     {
-      fieldName: "First Name",
-      fieldType: "text",
-      fieldPlaceholder: "First Name",
-      defaultValue: state.first_name,
-    },
-    {
-      fieldName: "Last Name",
-      fieldType: "text",
-      fieldPlaceholder: "Last Name",
-      defaultValue: state.last_name,
-    },
-    {
-      fieldName: "Email",
-      fieldType: "email",
-      fieldPlaceholder: "example@gmail.com",
-      defaultValue: state.email,
-    },
-    {
-      fieldName: "Nid Number",
+      fieldName: "Salary",
       fieldType: "number",
-      fieldPlaceholder: "Nid Number",
-      defaultValue: state.nid_number,
+      fieldPlaceholder: "Salary",
+      hasWidth: 3,
+      isRequired: true,
+      defaultValue: state.salary,
     },
     {
-      fieldName: "Present Address",
-      fieldType: "text",
-      fieldPlaceholder: "Present Address (Comma Separated)",
-      defaultValue: state.present_address,
-    },
-    {
-      fieldName: "Permanent Address",
-      fieldType: "text",
-      fieldPlaceholder: "Permanent Address (Comma Separated)",
-      defaultValue: state.permanent_address,
-    },
-    {
-      fieldName: "Profile Picture",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.profile_picture,
-    },
-    {
-      fieldName: "Nid Front",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.nid_front,
-    },
-    {
-      fieldName: "Nid Back",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.nid_back,
+      fieldName: "Employee id",
+      fieldType: "select",
+      fieldPlaceholder: "Employee id",
+      isRequired: true,
+      defaultValue: state.employee_id,
+      hasWidth: 3,
+      options: employeeState?.map((dt) => ({
+        value: dt.id,
+        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
+          dt?.last_name !== null && dt?.last_name
+        } `,
+      })),
     },
   ];
 
   const submitFunction = (data) => {
-    const profile_picture = data.profile_picture ? data.profile_picture : "";
-    const nid_front = data.nid_front ? data.nid_front : "";
-    const nid_back = data.nid_back ? data.nid_back : "";
-
+   
     if (state) {
       const updateData = {
         author_id: data.author_id ? data.author_id : state.author_id,
-        email: data.email ? data.email : state.email,
-        first_name: data.first_name ? data.first_name : state.first_name,
-        is_deleted: data.is_deleted ? data.is_deleted : state.is_deleted,
-        last_name: data.last_name ? data.last_name : state.last_name,
-        nid_number: data.nid_number ? data.nid_number : state.nid_number,
-        permanent_address: data.permanent_address
-          ? data.permanent_address
-          : state.permanent_address,
-        present_address: data.present_address
-          ? data.present_address
-          : state.present_address,
+        salary: data.salary ? data.salary : state.salary,
+        employee_id: data.employee_id ? data.employee_id : state.employee_id,
         status: data.status ? data.status : state.status,
       };
-
-      // Dispatch when profile_picture length is greater than 0
-      if (profile_picture !== "") {
-        dispatch(
-          updateLoanBeneficiary({
-            id: state.id,
-            data: { ...updateData, profile_picture: profile_picture },
-          })
-        );
-      }
-      // Dispatch when nid_front length is greater than 0
-      if (nid_front !== "") {
-        dispatch(
-          updateLoanBeneficiary({
-            id: state.id,
-            data: { ...updateData, nid_front: nid_front },
-          })
-        );
-      }
-      // Dispatch when nid_back length is greater than 0
-      if (nid_back !== "") {
-        dispatch(
-          updateLoanBeneficiary({
-            id: state.id,
-            data: { ...updateData, nid_back: nid_back },
-          })
-        );
-      }
-
+  
       dispatch(
-        updateLoanBeneficiary({
+        updateSalaries({
           id: state.id,
           data: updateData,
         })
@@ -173,7 +108,7 @@ function EditLoanBen() {
         </div>
       </div>
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 rounded-lg md:p-4">
-        <BeneficiaryForm
+        <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
           isReset={true}
@@ -197,4 +132,4 @@ function EditLoanBen() {
   );
 }
 
-export default EditLoanBen;
+export default EditSalaries;
