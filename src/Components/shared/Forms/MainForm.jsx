@@ -22,7 +22,6 @@ const MainForm = ({
     mode: 'onChange',
   });
 
-
   const [fileData, setFileData] = useState({});
   const [selectedFiles, setSelectedFiles] = useState({});
   const [dragging, setDragging] = useState(false);
@@ -94,7 +93,7 @@ const MainForm = ({
       return null;
     }
 
-    return (
+    return ( 
       <div
         className={`${
           "hasWidth" in field && field.hasWidth
@@ -151,11 +150,22 @@ const MainForm = ({
                   inputRef={ref}
                   classNamePrefix="select"
                   options={field.options}
-                  value={field?.options?.find((c) => c.value === value)}
-                  onChange={(val) => onChange(val.value)}
+                  value={
+                    
+                    field.defaultValue !== null
+                      ? field.options[field.defaultValue]
+                      : field.options.find((c) => c.value === value)
+                    
+                  }
+                  is_select
+                  onChange={(val) =>{
+                    onChange(val.value)
+                    field.defaultValue=null
+                  }}
                 />
               )}
             />
+            {console.log("hello",field.defaultValue3)}
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
               <span className="text-red-600">This field is required.</span>
             )}

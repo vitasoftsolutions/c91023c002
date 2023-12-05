@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ function EditLeaves() {
   const employeeState = useSelector((state) => state.employeeReducers.data);
   const location = useLocation();
   const state = reduxState.sData;
-
+  const [index, setIndex] = useState(null)
   console.log(state)
 
   useEffect(() => {
@@ -62,25 +62,27 @@ function EditLeaves() {
       isRequired: true,
       defaultValue: state.reason,
     },
-    {
-      fieldName: "Employee id",
-      fieldType: "number",
-      fieldPlaceholder: "Employee id",
-      isRequired: true,
-      defaultValue: state.employee_id,
-    },   
+    
     {
       fieldName: "Employee id",
       fieldType: "select",
       fieldPlaceholder: "Employee id",
-      isRequired: true,
-      defaultValue: state.employee_id,
-      options: employeeState?.map((dt) => ({
+      
+
+      options: employeeState?.map((dt, index) => (console.log("vl", state.employee_id === dt.id ? index : null),
+      {
+
+        is_select: state.employee_id === dt.id ? "selected" : "",
+        index: state.employee_id === dt.id ? index : null,
         value: dt.id,
-        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
-          dt?.last_name !== null && dt?.last_name
-        } `,
+        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${dt?.last_name !== null && dt?.last_name
+          } `,
       })),
+      
+      defaultValue: state.employee_id
+      ? employeeState.findIndex((dt) => dt.id === state.employee_id)
+      : null,
+      
     },
     // author
   ];
