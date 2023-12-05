@@ -153,11 +153,11 @@ export const projectlist = createAsyncThunk("projectlist", async () => {
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/projects/`, {
+  const response = await axios.get(`${base_url}/projects/?data=all`, {
     headers,
   });
 
-  const response_token = response.data.results.token;
+  const response_token = response.data.token;
 
   const result = jwtDecode(response_token);
 
@@ -166,11 +166,11 @@ export const projectlist = createAsyncThunk("projectlist", async () => {
   console.log(data, "data__");
 
   //contractor
-  const response2 = await axios.get(`${base_url}/contructor-beneficaries/`, {
+  const response2 = await axios.get(`${base_url}/contructor-beneficaries/?data=all`, {
     headers,
   });
 
-  const response_token2 = response2.data.results.token;
+  const response_token2 = response2.data.token;
 
   const result2 = jwtDecode(response_token2);
 

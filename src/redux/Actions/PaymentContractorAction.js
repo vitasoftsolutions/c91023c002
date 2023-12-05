@@ -18,7 +18,7 @@ export const createLoanBen = createAsyncThunk(
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       };
-    const submittedData = { ...payload, status: true };
+      const submittedData = { ...payload, status: true };
 
       const response = await axios.post(
         `${base_url}/contractor-payment/`,
@@ -152,11 +152,11 @@ export const projectlist = createAsyncThunk("projectlist", async () => {
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/projects/`, {
+  const response = await axios.get(`${base_url}/projects/?data=all`, {
     headers,
   });
-
-  const response_token = response.data.results.token;
+  console.log("response: ",response)
+  const response_token = response.data.token;
 
   const result = jwtDecode(response_token);
 
@@ -165,20 +165,20 @@ export const projectlist = createAsyncThunk("projectlist", async () => {
   console.log(data, "data__");
 
   //contractor
-  const response2 = await axios.get(`${base_url}/contructor-beneficaries/`, {
+  const response2 = await axios.get(`${base_url}/contructor-beneficaries/?data=all`, {
     headers,
   });
 
-  const response_token2 = response2.data.results.token;
+  const response_token2 = response2.data.token;
 
   const result2 = jwtDecode(response_token2);
 
   const data2 = result2.data;
-  console.log("data2: ",data2)
+  console.log("data2: ", data2)
   // Return the data 
-  return { 
-    "project_data":data,
-    "con_data":data2 
+  return {
+    "project_data": data,
+    "con_data": data2
   };
 });
 //

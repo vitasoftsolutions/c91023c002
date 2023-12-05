@@ -74,7 +74,7 @@ const AppLabel = () => {
             <TableHeader
                 title={"Label"}
                 redirectLink={"/app-label/create"}
-                url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+                url_endpoint={"/export-csv/?model=AppLabels&app_label=globalapp2"}
             />
             <GlobalTable
                 t_head={t_head}

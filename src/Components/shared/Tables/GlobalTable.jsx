@@ -20,6 +20,7 @@ const GlobalTable = ({
   nidSection
 }) => {
   
+  
   const [allData, setAllData] = useState(null);
 
   if (t_data?.isLoading) {
@@ -29,7 +30,7 @@ const GlobalTable = ({
       </div>
     );
   }
-
+ 
   const handelDelete = (id) => {
     deleteFunction(id);
   };
