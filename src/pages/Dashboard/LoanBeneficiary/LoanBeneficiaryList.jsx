@@ -127,7 +127,7 @@ const LoanBeneficiaryList = () => {
     setSortButtonText(newText);
 
     // You can now use the `newSortOrder` value in your sorting logic
-    pathname === "/beneficiarylist" ?  dispatch(sortByAZLoanBen({ sortOrder, current_page})) : "";
+    pathname === "/beneficiarylist" ? dispatch(sortByAZLoanBen({ sortOrder, current_page })) : "";
   };
   //
   return (
@@ -139,6 +139,10 @@ const LoanBeneficiaryList = () => {
         onSearch={handleSearch}
         onSortByDate={handleSortByDate}
         onSortByAZ={handleAtoZClick}
+        // model_name
+        model_name={'LoanBeneficaries'}
+        // app_label
+        app_label={"loan"}
         sortButtonText={sortButtonText}
       />
       <GlobalTable

@@ -28,7 +28,8 @@ export const createRepairRecords = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create RepairRecords");
+      throw new Error(error.message);
+
     }
   }
 );

@@ -27,7 +27,8 @@ export const createSalary = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create loan beneficiary");
+      throw new Error(error.message);
+
     }
   }
 );
@@ -42,8 +43,6 @@ export const fetchSalaries = createAsyncThunk(
     const token = sessionStorage.getItem("jwt_token");
 
     const { perPage } = getState().salaryReducer;
-
-    console.log(getState())
 
     // Define the headers
     const headers = {
@@ -82,7 +81,7 @@ export const fetchSalaries = createAsyncThunk(
 //
 //
 //
-export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
+export const fetchSalarie = createAsyncThunk("fetchSalarie", async (id) => {
   console.log("getState()");
   console.log(id, "getState()");
 
@@ -95,7 +94,7 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
   };
 
   // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/loan-beneficaries/${id}/`, {
+  const response = await axios.get(`${base_url}/salaries/${id}/`, {
     headers,
   });
 
@@ -111,8 +110,8 @@ export const fetchLoanBene = createAsyncThunk("fetchLoanBene", async (id) => {
 //
 //
 //
-export const deleteLoanBeneficiary = createAsyncThunk(
-  "deleteLoanBeneficiary",
+export const deleteSalaries = createAsyncThunk(
+  "deleteSalaries",
   async (payload) => {
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
@@ -125,7 +124,7 @@ export const deleteLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.delete(
-      `${base_url}/loan-beneficaries/${payload}/`,
+      `${base_url}/salaries/${payload}/`,
       { headers }
     );
 
@@ -137,8 +136,8 @@ export const deleteLoanBeneficiary = createAsyncThunk(
 //
 //
 //
-export const updateLoanBeneficiary = createAsyncThunk(
-  "updateLoanBeneficiary",
+export const updateSalaries = createAsyncThunk(
+  "updateSalaries",
   async (payload) => {
     console.log(payload, "payload");
     // Get the JWT token from session storage
@@ -152,7 +151,7 @@ export const updateLoanBeneficiary = createAsyncThunk(
 
     // Make the Axios PUT request with the headers and payload
     const response = await axios.patch(
-      `${base_url}/loan-beneficaries/${payload.id}/`,
+      `${base_url}/salaries/${payload.id}/`,
       payload.data,
       { headers }
     );

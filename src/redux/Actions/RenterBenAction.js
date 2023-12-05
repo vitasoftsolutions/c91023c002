@@ -28,7 +28,8 @@ export const createRenterBene = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create renter");
+      throw new Error(error.message);
+
     }
   }
 );

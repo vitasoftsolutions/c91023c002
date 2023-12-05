@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAttendance } from "../Actions/AttendanceAction";
+import {
+  createAttendance,
+  deleteAttendance,
+  fetchAttendance,
+  fetchSAttendance,
+  updateAttendance,
+} from "../Actions/AttendanceAction";
 
 const AttendanceSlice = createSlice({
   name: "AttendanceSlice",
@@ -40,23 +46,69 @@ const AttendanceSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
-    //   // Fetch LoanBen
-    //   .addCase(fetchLoanBene.pending, (state) => {
-    //     state.isLoading = true;
-    //     state.isUpdate = false;
-    //     state.isError = false;
-    //   })
-    //   .addCase(fetchLoanBene.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.sData = action.payload.data;
-    //     state.isCreated = false;
-    //     state.isError = false;
-    //     state.isUpdate = false;
-    //   })
-    //   .addCase(fetchLoanBene.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = action.error.message;
-    //   })
+      // Delete Attendance
+      .addCase(deleteAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.isDelete = false;
+      })
+      .addCase(deleteAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isDelete = true;
+      })
+      .addCase(deleteAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+        state.isDelete = false;
+      })
+      // Create Attendance
+      .addCase(createAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(createAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+        state.isCreated = true;
+      })
+      .addCase(createAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.data = [action.error.message];
+      })
+      // Fetch fetch S Attendance
+      .addCase(fetchSAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+      })
+      .addCase(fetchSAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sData = action.payload.data;
+        state.isCreated = false;
+        state.isError = false;
+        state.isUpdate = false;
+      })
+      .addCase(fetchSAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Update Attendance
+      .addCase(updateAttendance.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+        state.isUpdate = false;
+      })
+      .addCase(updateAttendance.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.massage = action.payload;
+        state.isUpdate = true;
+      })
+      .addCase(updateAttendance.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+        state.isUpdate = false;
+      });
     //   // Create loan
     //   .addCase(createLoanBen.pending, (state) => {
     //     state.isLoading = true;
@@ -72,33 +124,18 @@ const AttendanceSlice = createSlice({
     //     state.isError = true;
     //     state.data = [action.error.message];
     //   })
-    //   // Update loan
-    //   .addCase(updateLoanBeneficiary.pending, (state) => {
-    //     state.isLoading = true;
-    //     state.isError = false;
-    //     state.isUpdate = false;
-    //   })
-    //   .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.massage = action.payload;
-    //     state.isUpdate = true;
-    //   })
-    //   .addCase(updateLoanBeneficiary.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = action.error.message;
-    //     state.isUpdate = false;
-    //   })
+
     //   // Delete loan
-    //   .addCase(deleteLoanBeneficiary.pending, (state) => {
+    //   .addCase(deleteAttendance.pending, (state) => {
     //     state.isLoading = true;
     //     state.isError = false;
     //     state.isDelete = false;
     //   })
-    //   .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+    //   .addCase(deleteAttendance.fulfilled, (state, action) => {
     //     state.isLoading = false;
     //     state.isDelete = true;
     //   })
-    //   .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+    //   .addCase(deleteAttendance.rejected, (state, action) => {
     //     state.isLoading = false;
     //     state.isError = action.error.message;
     //     state.isDelete = false;

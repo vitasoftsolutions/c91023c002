@@ -27,7 +27,8 @@ export const createMaterials = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Materials");
+      throw new Error(error.message);
+
     }
   }
 );

@@ -3,6 +3,7 @@ import {
   createEmployee,
   deleteEmployee,
   fetchEmployeeAction,
+  fetchEmployeeAllList,
   fetchSingleEmployee,
   updateEmployee,
 } from "../Actions/employeeAction";
@@ -48,6 +49,25 @@ const employeeSlice = createSlice({
         state.isLoading = false;
         state.isError = action.error.message;
       })
+      // fetchEmployeeAllList
+      .addCase(fetchEmployeeAllList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+      })
+      .addCase(fetchEmployeeAllList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data;
+      })
+      .addCase(fetchEmployeeAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+
       // fetch Single Employee
       .addCase(fetchSingleEmployee.pending, (state) => {
         state.isLoading = true;

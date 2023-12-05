@@ -28,7 +28,8 @@ export const createRentCollection = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create RentCollection");
+      throw new Error(error.message);
+
     }
   }
 );

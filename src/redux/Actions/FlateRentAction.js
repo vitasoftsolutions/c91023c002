@@ -28,7 +28,7 @@ export const createFlateRent = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Flat Rent");
+      throw new Error(error.message);
     }
   }
 );

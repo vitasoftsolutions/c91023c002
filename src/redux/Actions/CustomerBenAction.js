@@ -28,7 +28,7 @@ export const createCustomerBen = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Customer beneficiary");
+      throw new Error(error.message);
     }
   }
 );

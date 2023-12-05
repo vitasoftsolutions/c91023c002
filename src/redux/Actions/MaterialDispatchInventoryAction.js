@@ -28,7 +28,8 @@ export const createMaterialDispatchInventory = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create MaterialDispatchInventory");
+      throw new Error(error.message);
+
     }
   }
 );

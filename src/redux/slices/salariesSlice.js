@@ -9,7 +9,7 @@ import {
   sortByDateLoanBen,
   updateLoanBeneficiary,
 } from "../Actions/loanBenAction";
-import { fetchSalaries } from "../Actions/salaryAction";
+import { createSalary, deleteSalaries, fetchSalarie, fetchSalaries, updateSalaries } from "../Actions/salaryAction";
 
 const salariesSlice = createSlice({
   name: "createSalaries",
@@ -51,64 +51,64 @@ const salariesSlice = createSlice({
         state.isError = action.error.message;
       })
       // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      .addCase(fetchSalarie.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchSalarie.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchSalarie.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      .addCase(createSalary.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createSalary.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createSalary.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
       // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      .addCase(updateSalaries.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateSalaries.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateSalaries.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
       // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      .addCase(deleteSalaries.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteSalaries.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteSalaries.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;

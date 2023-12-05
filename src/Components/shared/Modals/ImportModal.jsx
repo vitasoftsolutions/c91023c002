@@ -5,7 +5,7 @@ import axios from "axios";
 import { base_url } from "../Url";
 import { useLocation } from "react-router-dom";
 
-const ImportModal = ({ importModal, onClose }) => {
+const ImportModal = ({ importModal, onClose,  model_name, app_label}) => {
     const { pathname } = useLocation();
   const { register, handleSubmit } = useForm();
   const [fileName, setFileName] = useState("");
@@ -26,8 +26,8 @@ const ImportModal = ({ importModal, onClose }) => {
   
   const onSubmit = () => {
     const submittedData = {
-      model_name: pathname === "/beneficiarylist" ? "LoanBeneficaries" : pathname === "/phone" ? "PhoneNumber" : "",
-      app_label: pathname === "/beneficiarylist" ? "loan" : pathname === "/phone" ? "globalapp2" : "",
+      model_name: model_name,
+      app_label: app_label,
       file: selectedFile,
     };
     const token = sessionStorage.getItem("jwt_token");

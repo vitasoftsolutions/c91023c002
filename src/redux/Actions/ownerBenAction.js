@@ -83,7 +83,8 @@ export const createOwner = createAsyncThunk("createOwner", async (payload) => {
     });
     return response.data;
   } catch (error) {
-    throw new Error("Failed to Create owner beneficiary");
+    throw new Error(error.message);
+
   }
 });
 

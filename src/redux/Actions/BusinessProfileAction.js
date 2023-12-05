@@ -28,7 +28,7 @@ export const createBusinessProfile = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create business Profile");
+      throw new Error(error.message);
     }
   }
 );
@@ -52,8 +52,7 @@ export const fetchBusinessProfileList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/business-profile/?limit=${perPage}&offset=${
-        (page - 1) * perPage
+      `${base_url}/business-profile/?limit=${perPage}&offset=${(page - 1) * perPage
       }`,
       {
         headers,

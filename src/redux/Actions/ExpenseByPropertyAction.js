@@ -27,7 +27,7 @@ export const createExpenseByProperty = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create ExpenseByProperty");
+      throw new Error(error.message);
     }
   }
 );

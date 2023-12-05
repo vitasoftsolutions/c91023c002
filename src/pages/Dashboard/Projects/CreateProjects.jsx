@@ -6,8 +6,8 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import { createProjects } from "../../../redux/Actions/ProjectsAction";
 import MultiStepForm from "../../../Components/shared/Forms/MultiStepForm";
-import { fetchTypes } from "../../../redux/Actions/TypesAction";
 import Loader from "../../../Components/shared/Loader/Loader";
+import { fetchType } from "../../../redux/Actions/TypesModuleAction";
 
 function CreateProjects() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function CreateProjects() {
   console.log(projectState, "projectState");
 
   useEffect(() => {
-    dispatch(fetchTypes("Project Type"));
+    dispatch(fetchType("Project Type"));
   }, [dispatch]);
 
   const formsData = [

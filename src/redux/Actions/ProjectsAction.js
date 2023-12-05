@@ -26,7 +26,8 @@ export const createProjects = createAsyncThunk(
       console.log(response,"response")
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Projects");
+      throw new Error(error.message);
+
     }
   }
 );

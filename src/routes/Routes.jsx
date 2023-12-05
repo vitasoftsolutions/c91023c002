@@ -132,6 +132,7 @@ import EditMaterials from "../pages/Dashboard/Materials/EditMaterials";
 import CreateMaterialDispatchInventory from "../pages/Dashboard/MaterialDispatchInventory/CreateMaterialDispatchInventory";
 import MaterialDispatchInventoryList from "../pages/Dashboard/MaterialDispatchInventory/MaterialDispatchInventoryList";
 import EditMaterialDispatchInventory from "../pages/Dashboard/MaterialDispatchInventory/EditMaterialDispatchInventory";
+import EditSalaries from "../pages/Dashboard/Salaries/EditSalaries";
 
 export const router = createBrowserRouter([
   {
@@ -390,10 +391,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/brands/edit-brands",
+        path: "/salary/edit-salary",
         element: (
           <PrivetRoute>
-            <EditBrands />
+            <EditSalaries />
           </PrivetRoute>
         ),
       },

@@ -28,7 +28,8 @@ export const createProperty = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to Create Property");
+      throw new Error(error.message);
+
     }
   }
 );

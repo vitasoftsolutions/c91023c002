@@ -4,13 +4,12 @@ import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import { deleteLoanBeneficiary, fetchLoanBeneList } from "../../../redux/Actions/loanBenAction";
 import Swal from "sweetalert2";
-import { fetchAttendance } from "../../../redux/Actions/AttendanceAction";
+import { deleteAttendance, fetchAttendance } from "../../../redux/Actions/AttendanceAction";
 
 const t_head = [
-    { name: "Name" },
-    { name: "Image" },
-    { name: "Join Date" },
-    { name: "E-mail" },
+    { name: "Employee Name" },
+    { name: "Work Hour" },
+    { name: "Date" },
     { name: "Status" },
     { name: "Actions" },
   ];
@@ -23,10 +22,10 @@ function Attendance() {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    first_name: item.first_name + " " + item.last_name,
-    image: item.profile_picture,
-    date: item.created_at,
-    email: item.email,
+    employee_id: item.employee_id,
+    work_hour: item.work_hour,
+    date: item.date,
+    
     status: item.status,
   }));
   const tableData = {
@@ -69,7 +68,7 @@ function Attendance() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteLoanBeneficiary(id));
+        dispatch(deleteAttendance(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }

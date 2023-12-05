@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLoanBeneficiary, fetchLoanBeneList } from '../../../redux/Actions/TypesModuleAction';
+import { deleteLoanBeneficiary, fetchType } from '../../../redux/Actions/TypesModuleAction';
 import Swal from 'sweetalert2';
 import TableHeader from '../../../Components/shared/TableHeader/TableHeader';
 import GlobalTable from '../../../Components/shared/Tables/GlobalTable';
@@ -14,9 +14,9 @@ const t_head = [
 const TypesLists = () => {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.TypesModuleSliceReducers);
-    console.log(state)
+    console.log(state, "satyfay")
     // allDataList
-    const allDataList = state.data;
+    const allDataList = state?.data;
     const newData = state?.data?.map((item) => ({
         id: item.id,
         first_name: item.name,
@@ -41,11 +41,11 @@ const TypesLists = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchLoanBeneList(current_page));
+        dispatch(fetchType(current_page));
     }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
     const handlePageChange = (newPage) => {
-        dispatch(fetchLoanBeneList(newPage));
+        dispatch(fetchType(newPage));
     };
     // console.log(state, "state_ page");
 

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
+  fetchAppLabelAllList,
   fetchLoanBene,
   fetchLoanBeneList,
   searchLoanBeneficiaries,
@@ -28,6 +29,24 @@ const AppLabelSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    // fetchAppLabelAllList
+    .addCase(fetchAppLabelAllList.pending, (state) => {
+      state.isLoading = true;
+      state.isUpdate = false;
+      state.isError = false;
+      state.sData = [];
+    })
+    .addCase(fetchAppLabelAllList.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isCreated = false;
+      state.isUpdate = false;
+      state.isError = false;
+      state.data = action.payload.data;
+    })
+    .addCase(fetchAppLabelAllList.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = action.error.message;
+    })
       // Fetch LoanBen list
       .addCase(fetchLoanBeneList.pending, (state) => {
         state.isLoading = true;
