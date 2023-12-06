@@ -5,14 +5,14 @@ import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
 import {
   deleteLoanBeneficiary,
-  fetchLoanBeneList,
 } from "../../../redux/Actions/loanBenAction";
+import { fetchBusinessProfileList } from "../../../redux/Actions/BusinessProfileAction";
 
 const t_head = [
   { name: "Name" },
-  { name: "Image" },
+  { name: "Logo" },
+  { name: "Address" },
   { name: "Join Date" },
-  { name: "E-mail" },
   { name: "Status" },
   { name: "Actions" },
 ];
@@ -24,10 +24,10 @@ const BusinessProfile = () => {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    first_name: item.first_name + " " + item.last_name,
-    image: item.profile_picture,
+    name: item.name,
+    image: item.logo,
+    address: item.address,
     date: item.created_at,
-    email: item.email,
     status: item.status,
   }));
   const tableData = {
@@ -35,6 +35,8 @@ const BusinessProfile = () => {
     data: newData,
   };
   //
+
+  console.log(state, "state")
 
   // console.log(tableData, "tableData");
 
@@ -50,11 +52,11 @@ const BusinessProfile = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchLoanBeneList(current_page));
+    dispatch(fetchBusinessProfileList(current_page));
   }, [dispatch, current_page, state.isDelete, state.isUpdate]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchLoanBeneList(newPage));
+    dispatch(fetchBusinessProfileList(newPage));
   };
 
   // console.log(state, "state_ page");

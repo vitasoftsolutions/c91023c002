@@ -27,6 +27,21 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Name",
+    fieldType: "text",
+    fieldPlaceholder: "Name",
+    isRequired: true,
+  },
+  {
+    fieldName: "Test 2",
+    fieldType: "text",
+    fieldPlaceholder: "tets 2",
+    isRequired: true,
+  },
+];
+
 const LoanBeneficiaryList = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -127,7 +142,9 @@ const LoanBeneficiaryList = () => {
     setSortButtonText(newText);
 
     // You can now use the `newSortOrder` value in your sorting logic
-    pathname === "/beneficiarylist" ? dispatch(sortByAZLoanBen({ sortOrder, current_page })) : "";
+    pathname === "/beneficiarylist"
+      ? dispatch(sortByAZLoanBen({ sortOrder, current_page }))
+      : "";
   };
   //
   return (
@@ -140,8 +157,8 @@ const LoanBeneficiaryList = () => {
         onSortByDate={handleSortByDate}
         onSortByAZ={handleAtoZClick}
         // model_name
-        model_name={'LoanBeneficaries'}
-        // app_label
+        model_name={"LoanBeneficaries"}
+        formsData={formsData}
         app_label={"loan"}
         sortButtonText={sortButtonText}
       />

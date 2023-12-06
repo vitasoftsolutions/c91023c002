@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { GoTasklist } from "react-icons/go";
 import { FaFileImport, FaFileExport } from "react-icons/fa";
 import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
+import { RxReset } from "react-icons/rx";
 import { Link, useLocation } from "react-router-dom";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -18,12 +20,26 @@ function TableHeader({
   onSortByAZ,
   sortButtonText,
   model_name,
-  app_label
+  app_label,
+  formsData
 }) {
+  //
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm({
+    mode: "onChange",
+  });
+
   const { pathname } = useLocation();
-  const { handleSubmit, register } = useForm();
   const [importModal, setImportModal] = useState(null);
   const [csvData, setCsvData] = useState("");
+  //
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -60,6 +76,50 @@ function TableHeader({
     }
   };
 
+  const closeDropComp = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const renderField = (field, index) => {
+    if (field.isHidden) {
+      return null;
+    }
+    return (
+      <div
+        className={`${
+          "hasWidth" in field && field.hasWidth
+            ? `col-span-${field.hasWidth}`
+            : "col-span-2"
+        } mb-4`}
+        key={index}
+      >
+        <label
+          htmlFor={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+          className="block text-black mb-1 font-bold"
+        >
+          {field.fieldName}
+        </label>
+        <>
+          <input
+            type={field.fieldType}
+            {...register(
+              field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+              {}
+            )}
+            placeholder={field.fieldPlaceholder}
+            className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
+          />
+          {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
+            <span className="text-red-600">This field is required.</span>
+          )}
+        </>
+
+        <button></button>
+      </div>
+    );
+  };
+
+  console.log(isDropdownOpen, "isDropdownOpen");
   return (
     <div className="">
       <div className="flex w-full items-center justify-between">
@@ -102,24 +162,51 @@ function TableHeader({
             </div>
           </div>
           {/* Search */}
-          <form
-            onSubmit={handleSubmit(onSearch)}
-            className="ml-4 w-full relative"
-          >
-            <div className="flex">
-              <input
-                {...register("text")}
-                placeholder="Search..."
-                className="bg-white p-2 pl-6 pr-10 rounded-full border border-gray-300 focus:outline-none w-full"
-              />
-              <button
-                type="submit"
-                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+          <div className="ml-4 w-full relative">
+            <form onSubmit={handleSubmit(onSearch)}>
+              <div
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="bg-white cursor-pointer h-10 text-start p-2 pl-6 pr-10 rounded-full border relative border-gray-300 w-full overflow-hidden"
               >
-                <BsSearch />
-              </button>
-            </div>
-          </form>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500 text-sm">Search . . .</span>
+                  {isDropdownOpen === true && (
+                    <button
+                      onClick={closeDropComp}
+                      className="absolute text-white right-0 bg-erp_danger h-full w-10 top-0 pb-2 text-2xl"
+                    >
+                      &times;
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Conditionally render the dropdown */}
+              {formsData && isDropdownOpen === true && (
+                <div className="absolute  grid grid-cols-4 gap-2 w-full bg-erp_light border-2 z-50 p-4">
+                  {formsData?.map((field, index) => renderField(field, index))}
+                  {/* buttons */}
+                  <div className="flex col-span-4 justify-center gap-4">
+                    <button
+                      type="submit"
+                      className=" flex items-center gap-2 rounded-sm bg-erp_primary text-xl text-erp_light px-4 py-2"
+                    >
+                      Search <BsSearch />
+                    </button>
+                    {/* reset */}
+                    <button
+                      className=" flex items-center gap-2 rounded-sm bg-erp_secondary text-xl text-erp_light px-4 py-2"
+                      onClick={() => reset()}
+                    >
+                      Reset <RxReset />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </form>
+
+          </div>
+          {/*  */}
         </div>
       </div>
       <div className="flex items-center justify-between gap-4 mt-3">
