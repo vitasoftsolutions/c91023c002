@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -6,132 +6,89 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { ToastContainer, toast } from "react-toastify";
 import {
-  fetchLoanBene,
-  updateLoanBeneficiary,
-} from "../../../redux/Actions/loanBenAction";
+  fetchBusinessProfile,
+  updateBusinessProfile,
+} from "../../../redux/Actions/BusinessProfileAction";
 
 function EditBusinessProfile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.loanBeneficiary);
+  const reduxState = useSelector((state) => state.businessProfileReducer);
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state)
+  console.log(state, "popopp");
 
   useEffect(() => {
-    dispatch(fetchLoanBene(location.state));
+    dispatch(fetchBusinessProfile(location.state));
   }, [location.state, dispatch]);
 
   const formsData = [
     {
-      fieldName: "First Name",
+      fieldName: "Name",
       fieldType: "text",
-      fieldPlaceholder: "First Name",
-      defaultValue: state.first_name,
+      fieldPlaceholder: "Name",
+      isRequired: true,
+      defaultValue: state.name,
     },
     {
-      fieldName: "Last Name",
+      fieldName: "Address",
       fieldType: "text",
-      fieldPlaceholder: "Last Name",
-      defaultValue: state.last_name,
+      fieldPlaceholder: "Address",
+      isRequired: true,
+      defaultValue: state.address,
     },
     {
-      fieldName: "Email",
-      fieldType: "email",
-      fieldPlaceholder: "example@gmail.com",
-      defaultValue: state.email,
-    },
-    {
-      fieldName: "Nid Number",
-      fieldType: "number",
-      fieldPlaceholder: "Nid Number",
-      defaultValue: state.nid_number,
-    },
-    {
-      fieldName: "Present Address",
+      fieldName: "License Number",
       fieldType: "text",
-      fieldPlaceholder: "Present Address (Comma Separated)",
-      defaultValue: state.present_address,
+      fieldPlaceholder: "License Number",
+      isRequired: true,
+      defaultValue: state.license_number,
     },
     {
-      fieldName: "Permanent Address",
+      fieldName: "Reg Number",
       fieldType: "text",
-      fieldPlaceholder: "Permanent Address (Comma Separated)",
-      defaultValue: state.permanent_address,
+      fieldPlaceholder: "Reg Number",
+      isRequired: true,
+      defaultValue: state.reg_number,
     },
     {
-      fieldName: "Profile Picture",
+      fieldName: "Logo",
       fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.profile_picture,
-    },
-    {
-      fieldName: "Nid Front",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.nid_front,
-    },
-    {
-      fieldName: "Nid Back",
-      fieldType: "file",
-      fieldPlaceholder: "Upload Image",
-      defaultValue: state.nid_back,
+      fieldPlaceholder: "Logo",
+      isRequired: true,
+      defaultValue: state.logo,
     },
   ];
 
   const submitFunction = (data) => {
-    const profile_picture = data.profile_picture ? data.profile_picture : "";
-    const nid_front = data.nid_front ? data.nid_front : "";
-    const nid_back = data.nid_back ? data.nid_back : "";
+    const logo = data.logo ? data.logo : "";
 
     if (state) {
       const updateData = {
         author_id: data.author_id ? data.author_id : state.author_id,
-        email: data.email ? data.email : state.email,
-        first_name: data.first_name ? data.first_name : state.first_name,
-        is_deleted: data.is_deleted ? data.is_deleted : state.is_deleted,
-        last_name: data.last_name ? data.last_name : state.last_name,
-        nid_number: data.nid_number ? data.nid_number : state.nid_number,
-        permanent_address: data.permanent_address
-          ? data.permanent_address
-          : state.permanent_address,
-        present_address: data.present_address
-          ? data.present_address
-          : state.present_address,
+        name: data.name ? data.name : state.name,
+        address: data.address ? data.address : state.address,
+        license_number: data.license_number
+          ? data.license_number
+          : state.license_number,
+        reg_number: data.reg_number ? data.reg_number : state.reg_number,
         status: data.status ? data.status : state.status,
       };
 
-      // Dispatch when profile_picture length is greater than 0
-      if (profile_picture !== "") {
+     
+      // Dispatch when logo length is greater than 0
+      if (logo !== "") {
         dispatch(
-          updateLoanBeneficiary({
+          updateBusinessProfile({
             id: state.id,
-            data: { ...updateData, profile_picture: profile_picture },
-          })
-        );
-      }
-      // Dispatch when nid_front length is greater than 0
-      if (nid_front !== "") {
-        dispatch(
-          updateLoanBeneficiary({
-            id: state.id,
-            data: { ...updateData, nid_front: nid_front },
-          })
-        );
-      }
-      // Dispatch when nid_back length is greater than 0
-      if (nid_back !== "") {
-        dispatch(
-          updateLoanBeneficiary({
-            id: state.id,
-            data: { ...updateData, nid_back: nid_back },
+            data: { ...updateData, logo: logo },
           })
         );
       }
 
       dispatch(
-        updateLoanBeneficiary({
+        updateBusinessProfile({
           id: state.id,
           data: updateData,
         })
@@ -154,7 +111,7 @@ function EditBusinessProfile() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/beneficiarylist");
+        navigate("/business-profile");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -165,7 +122,7 @@ function EditBusinessProfile() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/beneficiarylist"}
+            to={"/business-profile"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back

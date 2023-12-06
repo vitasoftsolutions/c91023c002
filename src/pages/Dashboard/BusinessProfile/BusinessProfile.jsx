@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import {
-  deleteLoanBeneficiary,
-} from "../../../redux/Actions/loanBenAction";
-import { fetchBusinessProfileList } from "../../../redux/Actions/BusinessProfileAction";
+import { deleteBusinessProfile, fetchBusinessProfileList } from "../../../redux/Actions/BusinessProfileAction";
 
 const t_head = [
   { name: "Name" },
@@ -72,7 +69,7 @@ const BusinessProfile = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteLoanBeneficiary(id));
+        dispatch(deleteBusinessProfile(id));
         if (state.isDelete === true) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
@@ -99,7 +96,7 @@ const BusinessProfile = () => {
         page_number={page_number}
         deleteFunction={deleteFunction}
         editLink={"/business-profile/edit-business-profile"}
-        erp_modalCol={6}
+        erp_modalCol={12}
         photoSection={true}
       />
     </div>
