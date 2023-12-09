@@ -15,8 +15,7 @@ function EditLeaves() {
   const employeeState = useSelector((state) => state.employeeReducers.data);
   const location = useLocation();
   const state = reduxState.sData;
-  const [index, setIndex] = useState(null)
-  console.log(state)
+  console.log(state);
 
   useEffect(() => {
     dispatch(fetchLeaves(location.state));
@@ -62,29 +61,29 @@ function EditLeaves() {
       isRequired: true,
       defaultValue: state.reason,
     },
-    
+
     {
       fieldName: "Employee id",
       fieldType: "select",
       fieldPlaceholder: "Employee id",
-      
-
-      options: employeeState?.map((dt, index) => (console.log("vl", state.employee_id === dt.id ? index : null),
-      {
-
-        is_select: state.employee_id === dt.id ? "selected" : "",
-        index: state.employee_id === dt.id ? index : null,
-        value: dt.id,
-        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${dt?.last_name !== null && dt?.last_name
-          } `,
-      })),
-      
+      options: employeeState?.map(
+        (dt, index) => (
+          // console.log("vl", state.employee_id === dt.id ? index : null),
+          {
+            is_select: state.employee_id === dt.id ? "selected" : "",
+            index: state.employee_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
+              dt?.last_name !== null && dt?.last_name
+            } `,
+          }
+        )
+      ),
       defaultValue: state.employee_id
-      ? employeeState.findIndex((dt) => dt.id === state.employee_id)
-      : null,
-      
+        ? employeeState.findIndex((dt) => dt.id === state.employee_id)
+        : null,
     },
-    // author
+
   ];
 
   const submitFunction = (data) => {

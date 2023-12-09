@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import Select from "react-select";
@@ -14,6 +14,7 @@ const MultiStepForm = ({
     register,
     handleSubmit,
     formState: { errors },
+    control,
     trigger,
   } = useForm({
     defaultValues: defaultValues,
@@ -145,13 +146,32 @@ const MultiStepForm = ({
           {field.fieldName}
         </label>
         {field.fieldType === "select" && field.multiSelect ? (
-          <Select
-            isMulti
-            name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
-            options={field.options}
-            styles={customStyles}
-            classNamePrefix="select"
-          />
+          <Controller
+          control={control}
+          {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
+          defaultValue={(isState && field.defaultValue) || []}
+          name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+          render={({ field: { onChange, value, ref } }) => (
+            // console.log(field.options),
+            <Select
+              isMulti
+              inputRef={ref}
+              classNamePrefix="select"
+              styles={customStyles}
+              options={field.options}
+              value={
+                field.defaultValue !== null
+                  ? field.options.map((dt) => field.options[dt.index])
+                  : field.options.find((c) => c.value === value)
+              }
+              is_select
+              onChange={(val) => {
+                onChange(val?.map((option) => option.value));
+                field.defaultValue = null;
+              }}
+            />
+          )}
+        />
         ) : field.fieldType === "select" ? (
           <>
             <select

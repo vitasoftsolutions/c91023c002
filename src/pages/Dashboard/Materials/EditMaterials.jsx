@@ -4,11 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import MainForm from "../../../Components/shared/Forms/MainForm";
-import {
-  fetchProductInventory,
-  updateProductInventory,
-} from "../../../redux/Actions/ProductInventoryAction";
 import MaterialsForm from "./MaterialsForm";
 import { fetchBrandsAllData } from "../../../redux/Actions/BrandsAction";
 import {
@@ -63,11 +58,26 @@ function EditMaterials() {
       fieldPlaceholder: "Brand",
       isRequired: false,
       multiSelect: true,
-      defaultValue: state.brand,
-      options: brandsState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
+      // brandsState
+      options: brandsState?.map((dt, index) => {
+        const isSelected = state.brand && state.brand?.includes(dt.id);
+        console.log(index + 1, "vl", state.brand?.includes(dt?.id));
+        console.log('fgfg', isSelected ? index : null)
+        return {
+          is_select: isSelected ? "selected" : "",
+          index: isSelected ? index : null,
+          value: dt.id,
+          label: `${dt?.name}`,
+        };
+      }),
+      defaultValue: state.brand
+        ? brandsState?.findIndex((dt) => state.brand?.includes(dt?.id))
+        : null,
+      // defaultValue: state.brand,
+      // options: brandsState?.map((dt) => ({
+      //   value: dt.id.toString(),
+      //   label: dt.name,
+      // })),
     },
   ];
 

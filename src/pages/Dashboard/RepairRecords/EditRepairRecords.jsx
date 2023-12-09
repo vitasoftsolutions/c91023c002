@@ -19,7 +19,7 @@ function EditRepairRecords() {
   const reduxState = useSelector((state) => state.repairRecordsReducer);
   //
   const propertyState = useSelector((state) => state.propertyReducer.data);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.con_data);
   const renterState = useSelector(
     (state) => state.renterBeneficiaryReducer.data
   );
@@ -37,6 +37,11 @@ function EditRepairRecords() {
     dispatch(fetchProjectsAllList());
     dispatch(fetchPropertyAllList());
   }, [dispatch]);
+
+  const optionsArray = [
+    { value: "Admin", label: "Admin" },
+    { value: "Renter", label: "Renter" },
+  ]
 
   const formsData = [
     {
@@ -58,44 +63,69 @@ function EditRepairRecords() {
       fieldType: "select",
       fieldPlaceholder: "Expensed by",
       isRequired: true,
-      defaultValue: state.expensed_by,
-      options: [
-        { value: "Admin", label: "Admin" },
-        { value: "Renter", label: "Renter" },
-      ],
+      options: optionsArray,
+      defaultValue: state.expensed_by
+      ? optionsArray.findIndex((option) => option.value === state.expensed_by)
+      : null,
     },
     {
       fieldName: "Project id",
       fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
-      options: projectsState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
-      defaultValue: state.project_id,
+
+      options: projectsState?.map(
+        (dt, index) => (
+          // console.log("vl", state , dt ),
+          {
+            is_select: state.project_id === dt.id ? "selected" : "",
+            index: state.project_id === dt.id ? index : null,
+            value: dt.id,
+            label: dt.name,
+          }
+        )
+      ),
+      defaultValue: state.project_id
+        ? projectsState?.findIndex((dt) => dt.name === state.project_name)
+        : null,
     },
     {
       fieldName: "Property id",
       fieldType: "select",
       fieldPlaceholder: "Property id",
       isRequired: true,
-      options: propertyState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.code,
-      })),
-      defaultValue: state.property_id,
+      options: propertyState?.map(
+        (dt, index) => (
+          {
+            is_select: state.project_id === dt.id ? "selected" : "",
+            index: state.project_id === dt.id ? index : null,
+            value: dt.id,
+            label: dt.code,
+          }
+        )
+      ),
+      defaultValue: state.project_id
+        ? propertyState?.findIndex((dt) => dt.project_id === state.project_id)
+        : null,
     },
     {
       fieldName: "Renter id",
       fieldType: "select",
       fieldPlaceholder: "Expensed by",
       isRequired: true,
-      options: renterState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: `${dt.first_name}  ${dt.last_name}`,
-      })),
-      defaultValue: state.renter_id,
+      options: renterState?.map(
+        (dt, index) => (
+          {
+            is_select: state.renter_id === dt.id ? "selected" : "",
+            index: state.renter_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${dt.first_name}  ${dt.last_name}`,
+          }
+        )
+      ),
+      defaultValue: state.renter_id
+        ? renterState?.findIndex((dt) => dt.id === state.renter_id)
+        : null,
     },
   ];
 

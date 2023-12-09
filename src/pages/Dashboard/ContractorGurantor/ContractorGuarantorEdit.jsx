@@ -13,6 +13,7 @@ import {
   updateLoanBeneficiary,
 } from "../../../redux/Actions/ContractorGuarantorAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchContructorAllList } from "../../../redux/Actions/ContractorBenAction";
 
 const ContractorGuarantorEdit = () => {
   const dispatch = useDispatch();
@@ -21,32 +22,20 @@ const ContractorGuarantorEdit = () => {
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log("sate: ", state);
+  console.log(state.contractor_id, "state");
 
   useEffect(() => {
     dispatch(fetchLoanBene(location.state));
   }, [location.state, dispatch]);
 
-  //options code
-  useEffect(() => {
-    dispatch(contractorben());
-  }, [dispatch]);
-  const optionsArray = reduxState.con_data.map((element) => {
-    return {
-      value: parseInt(element.id),
-      label: element.first_name + " " + element.last_name,
-    };
-  });
-  console.log(optionsArray);
-  //projects
+  const conBenState = useSelector(
+    (state) => state.ContractorBenReducers.con_data
+  );
 
   useEffect(() => {
-    dispatch(projectlist());
+    dispatch(fetchContructorAllList());
   }, [dispatch]);
-  const optionsArray2 = reduxState.project_data.map((element) => {
-    return { value: parseInt(element.id), label: element.name };
-  });
-  console.log("projectState: ", reduxState);
+
   const formsData = [
     {
       fieldName: "First Name",
@@ -119,25 +108,40 @@ const ContractorGuarantorEdit = () => {
       defaultValue: state.role,
     },
     {
-      fieldName: "Contructor id",
+      fieldName: "Contractor id",
       fieldType: "select",
       fieldPlaceholder: "Select a contractor",
       isRequired: true,
-      defaultValue: state.contructor_id,
-      options: [...optionsArray],
+      options: conBenState?.map(
+        (dt, index) => (
+          // console.log("vl", state.contractor_id, dt.id),
+          {
+            is_select: state.contractor_id === dt.id ? "selected" : "",
+            index: state.contractor_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${
+              dt?.first_name === null
+                ? dt.username
+                : dt?.first_name + " " + dt?.last_name
+            }`,
+          }
+        )
+      ),
+      defaultValue: state.contractor_id
+        ? conBenState?.findIndex((dt) => dt.id === state.contractor_id)
+        : null,
     },
   ];
 
-  
   const submitFunction = (data) => {
     if (state) {
-      console.log(data.contructor_id, "From update page");
+      console.log(data.contractor_id, "From update page");
       const updatedData = {
         id: state.id,
         status: data.status ? data.status : state.status,
-        contructor_id: data.contructor_id
-          ? data.contructor_id
-          : state.contructor_id,
+        contractor_id: data.contractor_id
+          ? data.contractor_id
+          : state.contractor_id,
         project_id: data.project_id ? data.project_id : state.project_id,
         worker: data.worker ? data.worker : state.worker,
         role: data.role ? data.eole : state.role,

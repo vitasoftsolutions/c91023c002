@@ -5,15 +5,25 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchMaterialPurchase, fetchMaterialPurchaseAllList } from "../../../redux/Actions/MaterialPurchaseAction";
-import { fetchMaterialPaymentInstallment, updateMaterialPaymentInstallment } from "../../../redux/Actions/MaterialPaymentInstallmentAction";
+import {
+  fetchMaterialPurchase,
+  fetchMaterialPurchaseAllList,
+} from "../../../redux/Actions/MaterialPurchaseAction";
+import {
+  fetchMaterialPaymentInstallment,
+  updateMaterialPaymentInstallment,
+} from "../../../redux/Actions/MaterialPaymentInstallmentAction";
 
 function EditMaterialPaymentInstallment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.materialPaymentInstallmentReducer);
-  // 
-  const materialState = useSelector((state) => state.materialPurchaseReducer.data);
+  const reduxState = useSelector(
+    (state) => state.materialPaymentInstallmentReducer
+  );
+  //
+  const materialState = useSelector(
+    (state) => state.materialPurchaseReducer.data
+  );
   const location = useLocation();
   const state = reduxState.sData;
 
@@ -28,14 +38,13 @@ function EditMaterialPaymentInstallment() {
     dispatch(fetchMaterialPurchaseAllList());
   }, [dispatch]);
 
-
   const formsData = [
     {
       fieldName: "Amount",
       fieldType: "number",
       fieldPlaceholder: "Amount",
       isRequired: true,
-      hasWidth:3,
+      hasWidth: 3,
       defaultValue: state.amount,
     },
     {
@@ -43,7 +52,7 @@ function EditMaterialPaymentInstallment() {
       fieldType: "date",
       fieldPlaceholder: "Payment date",
       isRequired: true,
-      hasWidth:3,
+      hasWidth: 3,
       defaultValue: state.payment_date,
     },
     {
@@ -51,12 +60,28 @@ function EditMaterialPaymentInstallment() {
       fieldType: "select",
       fieldPlaceholder: "Purchase id",
       isRequired: false,
-      hasWidth:3,
-      options: materialState?.map(dt => ({
-        value: dt?.id?.toString(),
-        label: dt?.purchase_code,
-      })),
-      defaultValue: state.purchase_id,
+      hasWidth: 3,
+
+      options: materialState?.map(
+        (dt, index) => (
+          console.log("vl", state.purchase_id , dt ),
+          {
+            is_select: state.purchase_id === dt.id ? "selected" : "",
+            index: state.purchase_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${dt?.purchase_code}`,
+          }
+        )
+      ),
+      defaultValue: state.purchase_id
+        ? materialState?.findIndex((dt) => dt.id === state.purchase_id)
+        : null,
+
+      // options: materialState?.map(dt => ({
+      //   value: dt?.id?.toString(),
+      //   label: dt?.purchase_code,
+      // })),
+      // defaultValue: state.purchase_id,
     },
   ];
 
@@ -64,8 +89,10 @@ function EditMaterialPaymentInstallment() {
     if (state) {
       const updateData = {
         amount: data.amount ? data.amount : state.amount,
-        payment_date: data.payment_date ? data.payment_date : state.payment_date,
-        purchase_id: data.purchase_id ? data.purchase_id : state.purchase_id,   
+        payment_date: data.payment_date
+          ? data.payment_date
+          : state.payment_date,
+        purchase_id: data.purchase_id ? data.purchase_id : state.purchase_id,
         status: data.status ? data.status : state.status,
       };
 

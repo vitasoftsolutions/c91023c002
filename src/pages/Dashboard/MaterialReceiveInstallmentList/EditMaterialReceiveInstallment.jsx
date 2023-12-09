@@ -6,14 +6,19 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import { fetchMaterialPurchaseAllList } from "../../../redux/Actions/MaterialPurchaseAction";
-import { fetchMaterialReceiveInstallment, updateMaterialReceiveInstallment } from "../../../redux/Actions/MaterialReceiveInstallmentAction";
+import {
+  fetchMaterialReceiveInstallment,
+  updateMaterialReceiveInstallment,
+} from "../../../redux/Actions/MaterialReceiveInstallmentAction";
 
 function EditMaterialReceiveInstallment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.materialReceiveInstallmentReducer);
-   //
-   const materialState = useSelector(
+  const reduxState = useSelector(
+    (state) => state.materialReceiveInstallmentReducer
+  );
+  //
+  const materialState = useSelector(
     (state) => state.materialPurchaseReducer.data
   );
 
@@ -24,45 +29,55 @@ function EditMaterialReceiveInstallment() {
     dispatch(fetchMaterialReceiveInstallment(location.state));
   }, [location.state, dispatch]);
 
- // fetch Material Purchase AllList
- useEffect(() => {
-  dispatch(fetchMaterialPurchaseAllList());
-}, [dispatch]);
+  // fetch Material Purchase AllList
+  useEffect(() => {
+    dispatch(fetchMaterialPurchaseAllList());
+  }, [dispatch]);
 
-const formsData = [
-  {
-    fieldName: "Recieve date",
-    fieldType: "date",
-    fieldPlaceholder: "Recieve date",
-    isRequired: true,
+  const formsData = [
+    {
+      fieldName: "Recieve date",
+      fieldType: "date",
+      fieldPlaceholder: "Recieve date",
+      isRequired: true,
       defaultValue: state.recieve_date,
-  },
-  {
-    fieldName: "Quantity",
-    fieldType: "number",
-    fieldPlaceholder: "Quantity",
-    isRequired: true,
+    },
+    {
+      fieldName: "Quantity",
+      fieldType: "number",
+      fieldPlaceholder: "Quantity",
+      isRequired: true,
       defaultValue: state.quantity,
-  },
-  {
-    fieldName: "Purchase id",
-    fieldType: "select",
-    fieldPlaceholder: "Purchase id",
-    isRequired: false,
-    options: materialState?.map((dt) => ({
-      value: dt.id.toString(),
-      label: dt.purchase_code,
-    })),
-      defaultValue: state.purchase_id,
-  },
-];
-
+    },
+    {
+      fieldName: "Purchase id",
+      fieldType: "select",
+      fieldPlaceholder: "Purchase id",
+      isRequired: false,
+      options: materialState?.map(
+        (dt, index) => (
+          console.log("vl", state.purchase_id, dt),
+          {
+            is_select: state.purchase_id === dt.id ? "selected" : "",
+            index: state.purchase_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${dt?.purchase_code}`,
+          }
+        )
+      ),
+      defaultValue: state.purchase_id
+        ? materialState?.findIndex((dt) => dt.id === state.purchase_id)
+        : null,
+    },
+  ];
 
   const submitFunction = (data) => {
     if (state) {
       const updateData = {
-        recieve_date: data.recieve_date ? data.recieve_date : state.recieve_date,               
-        quantity: data.quantity ? data.quantity : state.quantity,    
+        recieve_date: data.recieve_date
+          ? data.recieve_date
+          : state.recieve_date,
+        quantity: data.quantity ? data.quantity : state.quantity,
         purchase_id: data.purchase_id ? data.purchase_id : state.purchase_id,
         status: data.status ? data.status : state.status,
       };

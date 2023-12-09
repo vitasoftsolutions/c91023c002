@@ -6,71 +6,47 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import {
-  fetchProjectProgress,
-  updateProjectProgress,
-} from "../../../redux/Actions/ProjectProgressAction";
-import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
-import { fetchWorkProgressAllList } from "../../../redux/Actions/WorkProgressAction";
+  fetchRoles,
+  fetchRolesPermission,
+  updateRoles,
+} from "../../../redux/Actions/_RolesAction";
 
-function EditProjectProgress() {
+function EditRoles() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.projectProgressReducer);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
-  const wpState = useSelector((state) => state.workprogressReducers.data);
+  const reduxState = useSelector((state) => state.rolesReducer);
+  const rolePDataState = useSelector((state) => state.rolesReducer.rolePData);
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state);
-
   useEffect(() => {
-    dispatch(fetchProjectProgress(location.state));
+    dispatch(fetchRoles(location.state));
   }, [location.state, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchProjectsAllList());
-    dispatch(fetchWorkProgressAllList());
+    dispatch(fetchRolesPermission());
   }, [dispatch]);
 
   const formsData = [
     {
-      fieldName: "Note",
+      fieldName: "name",
       fieldType: "text",
-      fieldPlaceholder: "Note",
+      fieldPlaceholder: "Type Name Here",
       isRequired: true,
       hasWidth: 3,
-      defaultValue: state.note,
+      defaultValue: state.name,
     },
     {
-      fieldName: "Project id",
+      fieldName: "Permissions",
       fieldType: "select",
-      fieldPlaceholder: "Project id",
+      fieldPlaceholder: "Permissions",
       isRequired: true,
-
-      options: projectsState?.map((dt, index) =>
-        // console.log("vl", state.project_id === dt.id ? index : null),
-        ({
-          is_select: state.project_id === dt.id ? "selected" : "",
-          index: state.project_id === dt.id ? index : null,
-          value: dt.id,
-          label: `${dt?.name === null ? dt.username : dt?.name}`,
-        })
-      ),
-      defaultValue: state.project_id
-        ? projectsState?.findIndex((dt) => dt.id === state.project_id)
-        : null,
       hasWidth: 3,
-    },
-    {
-      fieldName: "Wp ids",
-      fieldType: "select",
-      fieldPlaceholder: "Wp ids",
-      isRequired: true,
       multiSelect: true,
-      options: wpState?.map((dt, index) => {
+      options: rolePDataState?.map((dt, index) => {
         const isSelected =
-          state.wp_ids && state.wp_ids.includes(dt.id);
-        console.log(dt, "isSelected");
+          state.permissions && state.permissions?.includes(dt.id);
+        console.log(index + 1, "vl", state.permissions, dt.id);
         return {
           is_select: isSelected ? "selected" : "",
           index: isSelected ? index : null,
@@ -78,24 +54,22 @@ function EditProjectProgress() {
           label: `${dt?.name}`,
         };
       }),
-      defaultValue: state.wp_ids
-        ? wpState?.findIndex((dt) => state.wp_ids?.includes(dt?.id))
+      defaultValue: state.permissions
+        ? rolePDataState?.findIndex((dt) => state.permissions?.includes(dt?.id))
         : null,
-      hasWidth: 3,
     },
   ];
 
   const submitFunction = (data) => {
     if (state) {
       const updateData = {
-        note: data.note ? data.note : state.note,
-        project_id: data.project_id ? data.project_id : state.project_id,
-        wp_ids: data.wp_ids ? data.wp_ids : state.wp_ids,
+        name: data.name ? data.name : state.name,
+        permissions: data.permissions ? data.permissions : state.permissions,
         status: data.status ? data.status : state.status,
       };
 
       dispatch(
-        updateProjectProgress({
+        updateRoles({
           id: state.id,
           data: updateData,
         })
@@ -118,7 +92,7 @@ function EditProjectProgress() {
         theme: "light",
       });
       setTimeout(() => {
-        navigate("/project-progress");
+        navigate("/roles");
       }, 3000);
     }
   }, [reduxState.isUpdate, navigate]);
@@ -129,7 +103,7 @@ function EditProjectProgress() {
         <Breadcrumb />
         <div className="flex space-x-4">
           <Link
-            to={"/project-progress"}
+            to={"/roles"}
             className="btn btn-sm font-semibold flex gap-2 items-center justify-center bg-erp_primary text-erp_light px-2"
           >
             <BsArrowLeftShort /> Back
@@ -161,4 +135,4 @@ function EditProjectProgress() {
   );
 }
 
-export default EditProjectProgress;
+export default EditRoles;

@@ -19,7 +19,7 @@ const MainForm = ({
     setValue,
   } = useForm({
     defaultValues: externalDefaultValues || {}, // Provide a default empty object
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const [fileData, setFileData] = useState({});
@@ -93,7 +93,7 @@ const MainForm = ({
       return null;
     }
 
-    return ( 
+    return (
       <div
         className={`${
           "hasWidth" in field && field.hasWidth
@@ -116,23 +116,31 @@ const MainForm = ({
               defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (
+                // console.log(field.options),
                 <Select
                   isMulti
                   inputRef={ref}
                   classNamePrefix="select"
                   options={field.options}
-                  value={field?.options?.filter((option) =>
-                    value.includes(option.value)
-                  )}
-                  onChange={(selectedOptions) =>
-                    onChange(selectedOptions.map((option) => option.value))
+                  value={
+                    field.defaultValue !== null
+                      ? field.options.map((dt) => field.options[dt.index])
+                      : field.options.find((c) => c.value === value)
                   }
+                  is_select
+                  onChange={(val) => {
+                    onChange(val?.map((option) => option.value));
+                    field.defaultValue = null;
+                  }}
                 />
               )}
             />
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
               <span className="text-red-600">
-                {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")].message}
+                {
+                  errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                    .message
+                }
               </span>
             )}
           </>
@@ -143,29 +151,27 @@ const MainForm = ({
               {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
                 required: field.isRequired,
               })}
-              defaultValue={isState ? field.defaultValue : ""}
-              name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
+              defaultValue={isState ? field?.defaultValue : ""}
+              name={field?.fieldName?.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (
                 <Select
                   inputRef={ref}
                   classNamePrefix="select"
-                  options={field.options}
+                  options={field?.options}
                   value={
-                    
-                    field.defaultValue !== null
+                    field?.defaultValue !== null
                       ? field.options[field.defaultValue]
-                      : field.options.find((c) => c.value === value)
-                    
+                      : field?.options?.find((c) => c.value === value)
                   }
                   is_select
-                  onChange={(val) =>{
-                    onChange(val.value)
-                    field.defaultValue=null
+                  onChange={(val) => {
+                    onChange(val.value);
+                    field.defaultValue = null;
                   }}
                 />
               )}
             />
-            {console.log("hello",field.defaultValue3)}
+            {/* {console.log("hello", field.defaultValue3)} */}
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
               <span className="text-red-600">This field is required.</span>
             )}
@@ -178,18 +184,28 @@ const MainForm = ({
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
-            onDrop={(e) => handleDrop(e, field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
+            onDrop={(e) =>
+              handleDrop(e, field.fieldName.toLowerCase().replace(/\s+/g, "_"))
+            }
           >
-            {selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")] ? (
+            {selectedFiles[
+              field.fieldName.toLowerCase().replace(/\s+/g, "_")
+            ] ? (
               <div>
                 <p>
                   Selected File:
-                  {selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")].name}
+                  {
+                    selectedFiles[
+                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                    ].name
+                  }
                 </p>
                 <div className="w-full h-[150px] rounded-md overflow-hidden">
                   <img
                     src={URL.createObjectURL(
-                      selectedFiles[field.fieldName.toLowerCase().replace(/\s+/g, "_")]
+                      selectedFiles[
+                        field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                      ]
                     )}
                     alt="Selected File"
                     className="w-full h-full object-cover"
@@ -199,7 +215,9 @@ const MainForm = ({
                   className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
                   type="button"
                   onClick={() =>
-                    removeFile(field.fieldName.toLowerCase().replace(/\s+/g, "_"))
+                    removeFile(
+                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                    )
                   }
                 >
                   Remove
@@ -218,7 +236,11 @@ const MainForm = ({
                 <button
                   className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
                   type="button"
-                  onClick={() => removeFile(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
+                  onClick={() =>
+                    removeFile(
+                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
+                    )
+                  }
                 >
                   Remove
                 </button>
@@ -238,7 +260,10 @@ const MainForm = ({
                     name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
                     id={`fileInput_${index}`}
                     onChange={(e) =>
-                      handleFileChange(field.fieldName.toLowerCase().replace(/\s+/g, "_"), e)
+                      handleFileChange(
+                        field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+                        e
+                      )
                     }
                     className="hidden"
                   />
@@ -255,9 +280,11 @@ const MainForm = ({
               })}
               placeholder={field.fieldPlaceholder}
               className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
-              defaultValue={(isState && field.defaultValue)
-                ? new Date(field.defaultValue).toISOString().slice(0, 16)
-                : ""}
+              defaultValue={
+                isState && field.defaultValue
+                  ? new Date(field.defaultValue).toISOString().slice(0, 16)
+                  : ""
+              }
             />
             {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
               <span className="text-red-600">This field is required.</span>
@@ -294,7 +321,10 @@ const MainForm = ({
         {/* Status */}
         {isState && (
           <div className="col-span-3 md:col-span-1 mb-4">
-            <label htmlFor="statusInput" className="block text-black mb-1 font-bold">
+            <label
+              htmlFor="statusInput"
+              className="block text-black mb-1 font-bold"
+            >
               Status
             </label>
             <select

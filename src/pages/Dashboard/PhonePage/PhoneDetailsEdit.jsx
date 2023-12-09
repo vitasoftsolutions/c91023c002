@@ -14,9 +14,14 @@ function PhoneDetailsEdit() {
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state, "state");
-
-  console.log(reduxState, "reduxState");
+  const roleOpt = [
+    { value: "Contractor", label: "Contractor" },
+    { value: "Suppliers", label: "Suppliers" },
+    { value: "Employee", label: "Employee" },
+    { value: "Land Owners", label: "Land Owners" },
+    { value: "Company Owners", label: "Owner" },
+    { value: "Loan Beneficaries", label: "Loan" },
+  ];
 
   useEffect(() => {
     dispatch(fetchPhone(location.state));
@@ -51,15 +56,11 @@ function PhoneDetailsEdit() {
       fieldName: "Role",
       fieldType: "select",
       fieldPlaceholder: "Select a role",
-      options: [
-        { value: "Contractor", label: "Contractor" },
-        { value: "Suppliers", label: "Suppliers" },
-        { value: "Employee", label: "Employee" },
-        { value: "Land Owners", label: "Land Owners" },
-        { value: "Company Owners", label: "Owner" },
-        { value: "Loan Beneficaries", label: "Loan" },
-      ],
-      defaultValue: state.role,
+      options: roleOpt?.map((dt) => ({
+        value: dt.value,
+        label: dt.label,
+      })),
+      defaultValue: state.role ? roleOpt?.findIndex((dt) => dt.value === state.role) : null,
     },
   ];
 

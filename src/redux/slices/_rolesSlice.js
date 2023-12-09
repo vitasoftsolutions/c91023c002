@@ -1,23 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  createLoanBen,
-  deleteLoanBeneficiary,
-  fetchContructorAllList,
-  fetchLoanBene,
-  fetchLoanBeneList,
-  searchLoanBeneficiaries,
-  sortByAZLoanBen,
-  sortByDateLoanBen,
-  updateLoanBeneficiary,
-} from "../Actions/ContractorBenAction";
+import { createRoles, deleteRoles, fetchRoles, fetchRolesAllList, fetchRolesList, fetchRolesPermission, searchRoles, sortByAZRoles, sortByDateRoles, updateRoles } from "../Actions/_RolesAction";
 
-const ContractorBeneficiarySlice = createSlice({
-  name: "createLoanBeneficiary",
+const RolesSlice = createSlice({
+  name: "createRolesSlice",
   initialState: {
     isLoading: false,
     data: [],
     sData: [],
-    con_data:[],
+    rolePData: [],
     isError: false,
     currentPage: 1,
     totalPages: 1,
@@ -30,156 +20,178 @@ const ContractorBeneficiarySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    // fetchContructorAllList
-    .addCase(fetchContructorAllList.pending, (state) => {
-      state.isLoading = true;
-      state.isUpdate = false;
-      state.isError = false;
-      state.sData = [];
-    })
-    .addCase(fetchContructorAllList.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isCreated = false;
-      state.isUpdate = false;
-      state.isError = false;
-      state.con_data = action.payload.data;
-    })
-    .addCase(fetchContructorAllList.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = action.error.message;
-    })
-      // Fetch LoanBen list
-      .addCase(fetchLoanBeneList.pending, (state) => {
+      // Fetch role permission all list
+      .addCase(fetchRolesPermission.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.rolePData = [];
+      })
+      .addCase(fetchRolesPermission.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.rolePData = action.payload.data;
+      })
+      .addCase(fetchRolesPermission.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Fetch role all list
+      .addCase(fetchRolesAllList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
+        state.rolePData = [];
       })
-      .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
+      .addCase(fetchRolesAllList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
         state.data = action.payload.data;
+      })
+      .addCase(fetchRolesAllList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.error.message;
+      })
+      // Fetch Roles list
+      .addCase(fetchRolesList.pending, (state) => {
+        state.isLoading = true;
+        state.isUpdate = false;
+        state.isError = false;
+        state.sData = [];
+        state.rolePData = [];
+        state.data = [];
+      })
+      .addCase(fetchRolesList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isCreated = false;
+        state.isUpdate = false;
+        state.isError = false;
+        state.data = action.payload.data.results;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLoanBeneList.rejected, (state, action) => {
+      .addCase(fetchRolesList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
+        state.data = [];
       })
-      // Fetch LoanBen
-      .addCase(fetchLoanBene.pending, (state) => {
+      // Fetch s Roles
+      .addCase(fetchRoles.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
       })
-      .addCase(fetchLoanBene.fulfilled, (state, action) => {
+      .addCase(fetchRoles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.sData = action.payload.data;
         state.isCreated = false;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(fetchLoanBene.rejected, (state, action) => {
+      .addCase(fetchRoles.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      // Create loan
-      .addCase(createLoanBen.pending, (state) => {
+      // Create Roles
+      .addCase(createRoles.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(createLoanBen.fulfilled, (state, action) => {
+      .addCase(createRoles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isCreated = true;
       })
-      .addCase(createLoanBen.rejected, (state, action) => {
+      .addCase(createRoles.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.data = [action.error.message];
       })
-      // Update loan
-      .addCase(updateLoanBeneficiary.pending, (state) => {
+      // Update Roles
+      .addCase(updateRoles.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isUpdate = false;
       })
-      .addCase(updateLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(updateRoles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.massage = action.payload;
         state.isUpdate = true;
       })
-      .addCase(updateLoanBeneficiary.rejected, (state, action) => {
+      .addCase(updateRoles.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isUpdate = false;
       })
-      // Delete loan
-      .addCase(deleteLoanBeneficiary.pending, (state) => {
+      // Delete Roles
+      .addCase(deleteRoles.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
         state.isDelete = false;
       })
-      .addCase(deleteLoanBeneficiary.fulfilled, (state, action) => {
+      .addCase(deleteRoles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isDelete = true;
       })
-      .addCase(deleteLoanBeneficiary.rejected, (state, action) => {
+      .addCase(deleteRoles.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLoanBeneficiaries.pending, (state) => {
+      .addCase(searchRoles.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
+      .addCase(searchRoles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
+      .addCase(searchRoles.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
       // sort by date
-      .addCase(sortByDateLoanBen.pending, (state) => {
+      .addCase(sortByDateRoles.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByDateLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByDateRoles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByDateLoanBen.rejected, (state, action) => {
+      .addCase(sortByDateRoles.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
-      .addCase(sortByAZLoanBen.pending, (state) => {
+      .addCase(sortByAZRoles.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(sortByAZLoanBen.fulfilled, (state, action) => {
+      .addCase(sortByAZRoles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(sortByAZLoanBen.rejected, (state, action) => {
+      .addCase(sortByAZRoles.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       });
   },
 });
 
-export default ContractorBeneficiarySlice.reducer;
+export default RolesSlice.reducer;

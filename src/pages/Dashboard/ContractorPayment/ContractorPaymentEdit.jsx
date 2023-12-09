@@ -13,6 +13,8 @@ import {
   updateLoanBeneficiary,
 } from "../../../redux/Actions/PaymentContractorAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchContructorAllList } from "../../../redux/Actions/ContractorBenAction";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
 
 const ContractorPaymentEdit = () => {
   const dispatch = useDispatch();
@@ -21,48 +23,66 @@ const ContractorPaymentEdit = () => {
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log("sate: ", state);
+  //  
+  const projectState = useSelector((state) => state.projectsReducer.con_data);
+  
+    const conBenState = useSelector(
+      (state) => state.ContractorBenReducers.con_data
+    );
+
+    useEffect(() => {
+      dispatch(fetchContructorAllList());
+      dispatch(fetchProjectsAllList());
+    }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchLoanBene(location.state));
   }, [location.state, dispatch]);
 
-  //options code
-  useEffect(() => {
-    dispatch(contractorben());
-  }, [dispatch]);
-  const optionsArray = reduxState.con_data.map((element) => {
-    return {
-      value: parseInt(element.id),
-      label: element.first_name + " " + element.last_name,
-    };
-  });
-  console.log(optionsArray);
-  //projects
-
-  useEffect(() => {
-    dispatch(projectlist());
-  }, [dispatch]);
-  const optionsArray2 = reduxState.project_data.map((element) => {
-    return { value: parseInt(element.id), label: element.name };
-  });
-  console.log("projectState: ", reduxState);
+ 
   const formsData = [
     {
       fieldName: "Contructor id",
       fieldType: "select",
       fieldPlaceholder: "Select a contractor",
       isRequired: false,
-      defaultValue: state.contructor_id,
-      options: [...optionsArray],
+      options: conBenState?.map(
+        (dt, index) => (
+          console.log("vl", state.contructor_id, dt.id),
+          {
+            is_select: state.contructor_id === dt.id ? "selected" : "",
+            index: state.contructor_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${
+              dt?.first_name === null
+                ? dt.username
+                : dt?.first_name + " " + dt?.last_name
+            }`,
+          }
+        )
+      ),
+      defaultValue: state.contructor_id
+        ? conBenState?.findIndex((dt) => dt.id === state.contructor_id)
+        : null,
     },
     {
       fieldName: "Project id",
       fieldType: "select",
       fieldPlaceholder: "Select a project",
       isRequired: false,
-      defaultValue: state.project_id,
-      options: [...optionsArray2],
+      options: projectState?.map((dt, index) =>
+      // console.log("vl", state.project_id === dt.id ? index : null),
+      ({
+        is_select: state.project_id === dt.id ? "selected" : "",
+        index: state.project_id === dt.id ? index : null,
+        value: dt.id,
+        label: `${dt?.name === null ? dt.username : dt?.name}`,
+      })
+    ),
+    defaultValue: state.project_id
+      ? projectState?.findIndex((dt) => dt.id === state.project_id)
+      : null,
+      
     },
     {
       fieldName: "Worker",

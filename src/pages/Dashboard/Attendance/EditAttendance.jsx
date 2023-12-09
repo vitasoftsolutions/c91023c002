@@ -5,7 +5,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchSAttendance, updateAttendance } from "../../../redux/Actions/AttendanceAction";
+import {
+  fetchSAttendance,
+  updateAttendance,
+} from "../../../redux/Actions/AttendanceAction";
 import { fetchEmployeeAllList } from "../../../redux/Actions/employeeAction";
 
 function EditAttendance() {
@@ -16,7 +19,7 @@ function EditAttendance() {
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state);
+  console.log(employeeState, "employeeState");
 
   useEffect(() => {
     dispatch(fetchSAttendance(location.state));
@@ -41,13 +44,33 @@ function EditAttendance() {
       fieldPlaceholder: "Employee id",
       isRequired: true,
       hasWidth: 3,
-      defaultValue: state.employee_id,
-      options: employeeState?.map((dt) => ({
-        value: dt.id,
-        label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
-          dt?.last_name !== null && dt?.last_name
-        } `,
-      })),
+
+      options: employeeState?.map(
+        (dt, index) => (
+          console.log("vl", state.employee_id, dt.id),
+          {
+            is_select: state.employee_id === dt.id ? "selected" : "",
+            index: state.employee_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${
+              dt?.first_name === null
+                ? dt.username
+                : dt?.first_name + " " + dt?.last_name
+            }`,
+          }
+        )
+      ),
+      defaultValue: state.employee_id
+        ? employeeState?.findIndex((dt) => dt.id === state.employee_id)
+        : null,
+
+      // defaultValue: state.employee_id,
+      // options: employeeState?.map((dt) => ({
+      //   value: dt.id,
+      //   label: `${dt?.first_name === null ? dt.username : dt?.first_name} ${
+      //     dt?.last_name !== null && dt?.last_name
+      //   } `,
+      // })),
     },
   ];
 

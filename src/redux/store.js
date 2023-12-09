@@ -43,12 +43,14 @@ import propertyPurchaseReducer from "./slices/_propertyPurchaseSlice";
 import warehouseDispatchReducer from "./slices/_warehouseDispatchSlice";
 import materialsReducer from "./slices/materialsSlice";
 import materialDispatchInventoryReducer from "./slices/materialDispatchInventorySlice";
+import rolesReducer from "./slices/_rolesSlice";
 
 
 export const store = configureStore({
   reducer: {
     loanBeneficiary: loanBeneficiary,
     //
+    rolesReducer: rolesReducer,
     propertyReducer: propertyReducer,
     materialsReducer: materialsReducer,
     materialPaymentInstallmentReducer: materialPaymentInstallmentReducer,

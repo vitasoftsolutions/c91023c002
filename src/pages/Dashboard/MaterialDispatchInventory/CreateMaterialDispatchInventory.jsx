@@ -14,11 +14,11 @@ function CreateMaterialDispatchInventory() {
   const dispatch = useDispatch();
   const loanState = useSelector((state) => state.materialDispatchInventoryReducer);
   //
-  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.con_data);
   const productInv = useSelector((state) => state.productInventoryReducer.data);
   const materialState = useSelector((state) => state.materialsReducer.data);
 
-console.log(materialState, "materialState")
+console.log(projectsState, "projectsState")
 
   // Navigation
   const navigate = useNavigate();

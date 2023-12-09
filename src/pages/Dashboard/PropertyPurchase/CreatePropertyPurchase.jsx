@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
-import MainForm from "../../../Components/shared/Forms/MainForm";
 import { createPropertyPurchase } from "../../../redux/Actions/_PropertyPurchaseAction";
 import jwtDecode from "jwt-decode";
 import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
@@ -18,7 +17,8 @@ function CreatePropertyPurchase() {
   //
   const customersState = useSelector((state) => state.customersBenReducer.data);
   const propertysState = useSelector((state) => state.propertyReducer.data);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
+  // const projectsState = useSelector((state) => state.projectsReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.con_data);
   //
   const navigate = useNavigate();
   const submitFunction = (data) => {
@@ -35,6 +35,8 @@ function CreatePropertyPurchase() {
   const token = sessionStorage.getItem("jwt_token");
   const result = jwtDecode(token);
   const userId = result.user_id;
+
+  console.log(projectsState, "projectsStateprojectsStateprojectsState")
 
   const formsData = [
     {
@@ -95,10 +97,15 @@ function CreatePropertyPurchase() {
       fieldType: "select",
       fieldPlaceholder: "Project id",
       multiSelect: true,
-      options: projectsState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
+      options: projectsState?.map(
+        (dt) => (
+          console.log(dt),
+          {
+            value: dt.id.toString(),
+            label: dt.name,
+          }
+        )
+      ),
       isRequired: true,
     },
     {

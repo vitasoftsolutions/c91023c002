@@ -249,24 +249,28 @@ const MaterialsForm = ({
         </label>
         {field.fieldType === "select" && field.multiSelect ? (
           <>
-            <Controller
+           <Controller
               control={control}
               {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"))}
               defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (
+                // console.log(field.options),
                 <Select
                   isMulti
                   inputRef={ref}
                   classNamePrefix="select"
-                  styles={customStyles}
                   options={field.options}
-                  value={field?.options?.filter((option) =>
-                    value.includes(option.value)
-                  )}
-                  onChange={(selectedOptions) =>
-                    onChange(selectedOptions.map((option) => option.value))
+                  value={
+                    field.defaultValue !== null
+                      ? field.options.map((dt) => field.options[dt.index])
+                      : field.options.find((c) => c.value === value)
                   }
+                  is_select
+                  onChange={(val) => {
+                    onChange(val?.map((option) => option.value));
+                    field.defaultValue = null;
+                  }}
                 />
               )}
             />

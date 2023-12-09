@@ -6,7 +6,10 @@ import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import MainForm from "../../../Components/shared/Forms/MainForm";
 import { fetchSupplierBeneficariesAllList } from "../../../redux/Actions/SupplierBenAction";
-import { fetchMaterialPurchase, updateMaterialPurchase } from "../../../redux/Actions/MaterialPurchaseAction";
+import {
+  fetchMaterialPurchase,
+  updateMaterialPurchase,
+} from "../../../redux/Actions/MaterialPurchaseAction";
 
 function EditMaterialPurchase() {
   const dispatch = useDispatch();
@@ -91,11 +94,27 @@ function EditMaterialPurchase() {
       fieldType: "select",
       fieldPlaceholder: "Vendor id",
       isRequired: false,
-      options: supplierState.map((user) => ({
-        value: user.id.toString(),
-        label: `${user.first_name} ${user.last_name}`,
-      })),
-      defaultValue: state.vendor_id,
+
+      options: supplierState?.map(
+        (dt, index) => (
+          console.log("vl", state , dt ),
+          {
+            is_select: state.vendor_id === dt.id ? "selected" : "",
+            index: state.vendor_id === dt.id ? index : null,
+            value: dt.id.toString(),
+            label: `${dt.first_name} ${dt.last_name}`,
+          }
+        )
+      ),
+      defaultValue: state.vendor_id
+        ? supplierState?.findIndex((dt) => dt.id === state.vendor_id)
+        : null,
+
+      // options: supplierState.map((user) => ({
+      //   value: user.id.toString(),
+      //   label: `${user.first_name} ${user.last_name}`,
+      // })),
+      // defaultValue: state.vendor_id,
     },
   ];
 
@@ -122,7 +141,7 @@ function EditMaterialPurchase() {
         purchase_for: data.purchase_for
           ? data.purchase_for
           : state.purchase_for,
-        vendor_id: data.vendor_id ? data.vendor_id : state.vendor_id,        
+        vendor_id: data.vendor_id ? data.vendor_id : state.vendor_id,
         status: data.status ? data.status : state.status,
       };
 

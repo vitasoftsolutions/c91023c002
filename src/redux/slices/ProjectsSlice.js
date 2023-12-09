@@ -24,6 +24,7 @@ const projectsSlice = createSlice({
     isLoading: false,
     data: [],
     sData: [],
+    con_data:[],
     isError: false,
     currentPage: 1,
     totalPages: 1,
@@ -48,7 +49,7 @@ const projectsSlice = createSlice({
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
-        state.data = action.payload.data;
+        state.con_data = action.payload.data;
       })
       .addCase(fetchProjectsAllList.rejected, (state, action) => {
         state.isLoading = false;

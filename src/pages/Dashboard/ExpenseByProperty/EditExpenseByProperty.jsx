@@ -19,8 +19,6 @@ function EditExpenseByProperty() {
   const location = useLocation();
   const state = reduxState.sData;
 
-  console.log(state);
-
   useEffect(() => {
     dispatch(fetchExpenseByProperty(location.state));
   }, [location.state, dispatch]);

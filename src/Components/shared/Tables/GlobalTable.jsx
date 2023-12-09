@@ -17,10 +17,8 @@ const GlobalTable = ({
   allDataList,
   erp_modalCol,
   photoSection,
-  nidSection
+  nidSection,
 }) => {
-  
-  
   const [allData, setAllData] = useState(null);
 
   if (t_data?.isLoading) {
@@ -30,7 +28,7 @@ const GlobalTable = ({
       </div>
     );
   }
- 
+
   const handelDelete = (id) => {
     deleteFunction(id);
   };
@@ -115,17 +113,19 @@ const GlobalTable = ({
                         </td>
                       )
                   )}
-                  <td className="">
-                    <span
-                      className={`${
-                        t_dt.status === true
-                          ? "text-erp_success"
-                          : "text-erp_danger"
-                      } px-3 py-1 rounded-full max-w-fit flex justify-center items-center bg-blue-50 font-bold`}
-                    >
-                      {t_dt.status === true ? "active" : "inactive"}
-                    </span>
-                  </td>
+                  {t_dt.status && (
+                    <td className="">
+                      <span
+                        className={`${
+                          t_dt.status === true
+                            ? "text-erp_success"
+                            : "text-erp_danger"
+                        } px-3 py-1 rounded-full max-w-fit flex justify-center items-center bg-blue-50 font-bold`}
+                      >
+                        {t_dt.status === true ? "active" : "inactive"}
+                      </span>
+                    </td>
+                  )}
                   <td>
                     <span className="flex gap-3 items-center text-lg">
                       <span className="text-erp_info">

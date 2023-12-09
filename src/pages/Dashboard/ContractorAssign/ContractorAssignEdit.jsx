@@ -3,7 +3,6 @@ import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
-import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { ToastContainer, toast } from "react-toastify";
 import {
   createLoanBen,
@@ -13,14 +12,24 @@ import {
   updateLoanBeneficiary,
 } from "../../../redux/Actions/AssignContractorAction";
 import MainForm from "../../../Components/shared/Forms/MainForm";
+import { fetchProjectsAllList } from "../../../redux/Actions/ProjectsAction";
+import { fetchContructorAllList } from "../../../redux/Actions/ContractorBenAction";
 const ContractorAssignEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const reduxState = useSelector((state) => state.assignContractorReducers);
-  const location = useLocation();
-  const state = reduxState.sData;
+  const contractorState = useSelector(
+    (state) => state.assignContractorReducers
+  );
 
-  console.log("sate: ", state);
+  const conBenState = useSelector(
+    (state) => state.ContractorBenReducers.con_data
+  );
+
+
+  const projectState = useSelector((state) => state.projectsReducer.con_data);
+
+  const location = useLocation();
+  const state = contractorState.sData;
 
   useEffect(() => {
     dispatch(fetchLoanBene(location.state));
@@ -28,40 +37,54 @@ const ContractorAssignEdit = () => {
 
   //options code
   useEffect(() => {
-    dispatch(contractorben());
+    dispatch(fetchContructorAllList());
+    dispatch(fetchProjectsAllList());
   }, [dispatch]);
-  const optionsArray = reduxState.con_data.map((element) => {
-    return {
-      value: parseInt(element.id),
-      label: element.first_name + " " + element.last_name,
-    };
-  });
-  console.log(optionsArray);
-  //projects
+ 
+  
 
-  useEffect(() => {
-    dispatch(projectlist());
-  }, [dispatch]);
-  const optionsArray2 = reduxState.project_data.map((element) => {
-    return { value: parseInt(element.id), label: element.name };
-  });
-  console.log("projectState: ", reduxState);
   const formsData = [
     {
       fieldName: "Contructor id",
       fieldType: "select",
       fieldPlaceholder: "Select a contractor",
       isRequired: false,
-      defaultValue: state.contructor_id,
-      options: [...optionsArray],
+      options: conBenState?.map(
+        (dt, index) => (
+          console.log("vl", state.contructor_id, dt.id),
+          {
+            is_select: state.contructor_id === dt.id ? "selected" : "",
+            index: state.contructor_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${
+              dt?.first_name === null
+                ? dt.username
+                : dt?.first_name + " " + dt?.last_name
+            }`,
+          }
+        )
+      ),
+      defaultValue: state.contructor_id
+        ? conBenState?.findIndex((dt) => dt.id === state.contructor_id)
+        : null,
     },
     {
       fieldName: "Project id",
       fieldType: "select",
       fieldPlaceholder: "Select a project",
       isRequired: false,
-      defaultValue: state.project_id,
-      options: [...optionsArray2],
+      options: projectState?.map((dt, index) =>
+        // console.log("vl", state.project_id === dt.id ? index : null),
+        ({
+          is_select: state.project_id === dt.id ? "selected" : "",
+          index: state.project_id === dt.id ? index : null,
+          value: dt.id,
+          label: `${dt?.name === null ? dt.username : dt?.name}`,
+        })
+      ),
+      defaultValue: state.project_id
+        ? projectState?.findIndex((dt) => dt.id === state.project_id)
+        : null,
     },
     {
       fieldName: "Rate",
@@ -179,7 +202,7 @@ const ContractorAssignEdit = () => {
 
   // In a useEffect or similar, check the updated state
   useEffect(() => {
-    if (reduxState.isUpdate) {
+    if (contractorState.isUpdate) {
       // Perform actions after the update is successful
       toast("Successfully done", {
         position: "top-center",
@@ -195,7 +218,7 @@ const ContractorAssignEdit = () => {
         navigate("/contractor-assign");
       }, 3000);
     }
-  }, [reduxState.isUpdate, navigate]);
+  }, [contractorState.isUpdate, navigate]);
 
   return (
     <>
@@ -214,6 +237,7 @@ const ContractorAssignEdit = () => {
         <MainForm
           formsData={formsData}
           submitFunction={submitFunction}
+          isReset={true}
           isState={state}
         />
       </div>

@@ -97,7 +97,6 @@ import CreateRepairRecords from "../pages/Dashboard/RepairRecords/CreateRepairRe
 import PropertyInstallmentlist from "../pages/Dashboard/PropertyInstallment/PropertyInstallmentlist";
 import PropertyInstallmentcreate from "../pages/Dashboard/PropertyInstallment/PropertyInstallmentcreate";
 import PropertyInstallmentedit from "../pages/Dashboard/PropertyInstallment/PropertyInstallmentedit";
-import ExpenseByproplists from "../pages/Dashboard/ExpenseByProperty/ExpenseByproplists";
 import Expensebypropertycreate from "../pages/Dashboard/ExpenseByProperty/Expensebypropertycreate";
 import ExpenseBypropertyedit from "../pages/Dashboard/ExpenseByProperty/ExpenseBypropertyedit";
 import LeavesList from "../pages/Dashboard/Leaves/LeavesList";
@@ -133,6 +132,9 @@ import CreateMaterialDispatchInventory from "../pages/Dashboard/MaterialDispatch
 import MaterialDispatchInventoryList from "../pages/Dashboard/MaterialDispatchInventory/MaterialDispatchInventoryList";
 import EditMaterialDispatchInventory from "../pages/Dashboard/MaterialDispatchInventory/EditMaterialDispatchInventory";
 import EditSalaries from "../pages/Dashboard/Salaries/EditSalaries";
+import RolesList from "../pages/Dashboard/Roles/RolesList";
+import EditRoles from "../pages/Dashboard/Roles/EditRoles";
+import CreateRoles from "../pages/Dashboard/Roles/CreateRoles";
 
 export const router = createBrowserRouter([
   {
@@ -882,6 +884,31 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },      
+      // roles
+      {
+        path: "/roles",
+        element: (
+          <PrivetRoute>
+            <RolesList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/roles/roles-crete",
+        element: (
+          <PrivetRoute>
+            <CreateRoles />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/roles/edit-roles",
+        element: (
+          <PrivetRoute>
+            <EditRoles />
+          </PrivetRoute>
+        ),
+      },      
       // expense By Property
       {
         path: "/expense-by-property",
@@ -1196,14 +1223,14 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
-      {
-        path: "/expense-by-property",
-        element: (
-          <PrivetRoute>
-            <ExpenseByproplists></ExpenseByproplists>
-          </PrivetRoute>
-        ),
-      },
+      // {
+      //   path: "/expense-by-property",
+      //   element: (
+      //     <PrivetRoute>
+      //       <ExpenseByproplists></ExpenseByproplists>
+      //     </PrivetRoute>
+      //   ),
+      // },
       {
         path: "/expense-by-property/create",
         element: (

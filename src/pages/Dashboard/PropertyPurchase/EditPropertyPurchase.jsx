@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ function EditPropertyPurchase() {
   //
   const customersState = useSelector((state) => state.customersBenReducer.data);
   const propertysState = useSelector((state) => state.propertyReducer.data);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const projectState = useSelector((state) => state.projectsReducer.con_data);
   //
   const location = useLocation();
   const state = reduxState.sData;
@@ -64,7 +64,7 @@ function EditPropertyPurchase() {
       fieldType: "number",
       fieldPlaceholder: "Installment Duration",
       defaultValue: state.installment_duration,
-    },    
+    },
     {
       fieldName: "Handover status",
       fieldType: "select",
@@ -79,34 +79,53 @@ function EditPropertyPurchase() {
       fieldName: "Customer id",
       fieldType: "select",
       fieldPlaceholder: "Customer id",
-      defaultValue: state.customer_id,
-      // customersState
-      options: customersState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: `${dt.first_name} ${dt.last_name}`,
+
+      options: customersState?.map((dt, index) => ({
+        is_select: state.customer_id === dt.id ? "selected" : "",
+        index: state.customer_id === dt.id ? index : null,
+        value: dt.id,
+        label: `${
+          dt?.name === null ? dt.username : dt.first_name + " " + dt.last_name
+        }`,
       })),
+      defaultValue: state.customer_id
+        ? customersState?.findIndex((dt) => dt.id === state.customer_id)
+        : null,
     },
     {
       fieldName: "Project id",
       fieldType: "select",
       fieldPlaceholder: "Project id",
       multiSelect: true,
-      options: projectsState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
+      options: projectState?.map((dt, index) => ({
+        is_select: state.project_id === dt.id ? "selected" : "",
+        index: state.project_id?.map((pi) => (pi === dt.id ? index : null)),
+        value: dt.id,
+        label: `${dt?.name === null ? dt.username : dt?.name}`,
       })),
-      defaultValue: state.project_id,
+      defaultValue: state.project_id
+        ? projectState?.findIndex((dt) => dt.id === state.project_id)
+        : null,
     },
     {
       fieldName: "Property id",
       fieldType: "select",
       fieldPlaceholder: "Property id",
       multiSelect: true,
-      defaultValue: state.property_id,
-      options: propertysState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.code,
-      })),
+      options: propertysState?.map((dt, index) => {
+        const isSelected =
+          state.property_id && state.property_id.includes(dt.id);
+        console.log(isSelected, "isSelected");
+        return {
+          is_select: isSelected ? "selected" : "",
+          index: isSelected ? index : null,
+          value: dt.id,
+          label: `${dt?.code}`,
+        };
+      }),
+      defaultValue: state.property_id
+        ? propertysState?.findIndex((dt) => state.property_id?.includes(dt?.id))
+        : null,
     },
   ];
 

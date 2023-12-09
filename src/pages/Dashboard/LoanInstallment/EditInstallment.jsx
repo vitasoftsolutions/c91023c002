@@ -3,24 +3,21 @@ import { BsArrowLeftShort } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
-import BeneficiaryForm from "../../../Components/shared/Forms/BeneficiaryForm";
 import { ToastContainer, toast } from "react-toastify";
-import {
-  fetchLoanBenAllList,
-  fetchLoanBene,
-  updateLoanBeneficiary,
-} from "../../../redux/Actions/loanBenAction";
+import { fetchLoanBenAllList } from "../../../redux/Actions/loanBenAction";
 import { fetchLoanTransactionAllList } from "../../../redux/Actions/LoanTransactionsAction";
 import jwtDecode from "jwt-decode";
 import MainForm from "../../../Components/shared/Forms/MainForm";
-import { fetchInstallment, updateInstallment } from "../../../redux/Actions/LoanInstallmentAction";
+import {
+  fetchInstallment,
+  updateInstallment,
+} from "../../../redux/Actions/LoanInstallmentAction";
 
 function EditInstallment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const reduxState = useSelector((state) => state.loanInstallmentReducer);
   const loanState = useSelector((state) => state.loanBeneficiary.data);
-  const loanTran = useSelector((state) => state.loanTransactionsReducer.data);
   const location = useLocation();
   const state = reduxState.sData;
 
@@ -34,15 +31,6 @@ function EditInstallment() {
     dispatch(fetchLoanBenAllList());
   }, [dispatch]);
 
-  // fetch Loan Transaction AllList
-  useEffect(() => {
-    dispatch(fetchLoanTransactionAllList());
-  }, [dispatch]);
-
-  // Get the user
-  const token = sessionStorage.getItem("jwt_token");
-  const result = jwtDecode(token);
-  const userId = result.user_id;
 
   const formsData = [
     {
@@ -58,50 +46,51 @@ function EditInstallment() {
       fieldPlaceholder: "Instalment",
       isRequired: true,
       defaultValue: state.instalment,
-
     },
     {
-      fieldName: "Giver id",      
+      fieldName: "Giver id",
       fieldType: "select",
       fieldPlaceholder: "Select a Giver id",
       isRequired: true,
-      options: loanState.map(user => ({
-        value: user.id.toString(),
-        label: user.first_name,
-      })),
-      defaultValue: state.giver_id,
+
+      options: loanState?.map((dt, index) =>
+        // console.log("vl", state.giver_id, dt.id),
+        ({
+          is_select: state.giver_id === dt.id ? "selected" : "",
+          index: state.giver_id === dt.id ? index : null,
+          value: dt.id,
+          label: `${
+            dt?.first_name === null
+              ? dt.username
+              : dt?.first_name + " " + dt?.last_name
+          }`,
+        })
+      ),
+      defaultValue: state.giver_id
+        ? loanState?.findIndex((dt) => dt.id === state.giver_id)
+        : null,
     },
     {
-      fieldName: "Taker id",      
+      fieldName: "Taker id",
       fieldType: "select",
       fieldPlaceholder: "Select a Taker id",
       isRequired: true,
-      options: loanState.map(user => ({
-        value: user.id.toString(),
-        label: user.first_name,
-      })),
-      defaultValue: state.taker_id,
-
-    },
-    {
-      fieldName: "Author id",
-      fieldType: "number",
-      fieldPlaceholder: "Author id",
-      defaultValue: userId,
-      isRequired: true,
-      isHidden: true,
-    },
-    {
-      fieldName: "Loan id",      
-      fieldType: "select",
-      fieldPlaceholder: "Select a Loan id",
-      isRequired: true,
-      options: loanTran.map(loan => ({
-        value: loan.id.toString(),
-        label: loan.amount,
-      })),
-      defaultValue: state.loan_id,
-      
+      options: loanState?.map((dt, index) =>
+        // console.log("vl", state.taker_id, dt.id),
+        ({
+          is_select: state.taker_id === dt.id ? "selected" : "",
+          index: state.taker_id === dt.id ? index : null,
+          value: dt.id,
+          label: `${
+            dt?.first_name === null
+              ? dt.username
+              : dt?.first_name + " " + dt?.last_name
+          }`,
+        })
+      ),
+      defaultValue: state.taker_id
+        ? loanState?.findIndex((dt) => dt.id === state.taker_id)
+        : null,
     },
     {
       fieldName: "Document",

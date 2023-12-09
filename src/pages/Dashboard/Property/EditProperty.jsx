@@ -52,11 +52,19 @@ function EditProperty() {
       fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: true,
-      defaultValue: state.project_id,
-      options: projectsState.map(dt => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
+
+      options: projectsState?.map((dt, index) =>
+      // console.log("vl", state.project_id === dt.id ? index : null),
+      ({
+        is_select: state.project_id === dt.id ? "selected" : "",
+        index: state.project_id === dt.id ? index : null,
+        value: dt.id,
+        label: `${dt?.name === null ? dt.username : dt?.name}`,
+      })
+    ),
+    defaultValue: state.project_id
+      ? projectsState?.findIndex((dt) => dt.id === state.project_id)
+      : null,
     },
     {
       fieldName: "type",

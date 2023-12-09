@@ -94,13 +94,18 @@ export const fetchProjectsAllList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/projects/`,{headers});
+      `${base_url}/projects/?data=all`,{headers});
+      
+      const response_token = response.data.token;
+      const result = jwtDecode(response_token);
+      
+      console.log(result, 'result')
 
-    const response_token = response.data.results.token;
-    const result = jwtDecode(response_token);
+      const data = result.data;
+      // Return the data and pagination information
 
-    const data = result.data;
-    // Return the data and pagination information
+
+
     return {
       data,
     };

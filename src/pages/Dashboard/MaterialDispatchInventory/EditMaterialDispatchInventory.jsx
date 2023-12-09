@@ -20,7 +20,7 @@ function EditMaterialDispatchInventory() {
     (state) => state.materialDispatchInventoryReducer
   );
   //
-  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.con_data);
   const productInv = useSelector((state) => state.productInventoryReducer.data);
   const materialState = useSelector((state) => state.materialsReducer.data);
 
@@ -38,6 +38,13 @@ function EditMaterialDispatchInventory() {
     dispatch(fetchProductInventoryAllList());
   }, [dispatch]);
 
+  const optionsArray = [
+    { value: "Check in", label: "Check in" },
+    { value: "Check out", label: "Check out" },
+    { value: "Return", label: "Return" },
+    { value: "Swap", label: "Swap" },
+  ];
+
   const formsData = [
     {
       fieldName: "Quantity",
@@ -51,47 +58,81 @@ function EditMaterialDispatchInventory() {
       fieldType: "select",
       fieldPlaceholder: "Check status",
       isRequired: false,
-      defaultValue: state.check_status,
-      options: [
-        { value: "Check in", label: "Check in" },
-        { value: "Check out", label: "Check out" },
-        { value: "Return", label: "Return" },
-        { value: "Swap", label: "Swap" },
-      ],
+      options: optionsArray,
+      defaultValue: state.check_status
+        ? optionsArray.findIndex(
+            (option) => option.value === state.check_status
+          )
+        : null,
     },
     {
       fieldName: "Inventory item id",
       fieldType: "select",
       fieldPlaceholder: "Inventory item id",
       isRequired: false,
-      defaultValue: state.inventory_item_id,
-      options: productInv?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.id,
-      })),
+
+      options: productInv?.map(
+        (dt, index) => (
+          console.log("vl", state.inventory_item_id, dt),
+          {
+            is_select: state.inventory_item_id === dt.id ? "selected" : "",
+            index: state.inventory_item_id === dt.id ? index : null,
+            value: dt.id,
+            label: `${dt?.id}`,
+          }
+        )
+      ),
+      defaultValue: state.inventory_item_id
+        ? productInv?.findIndex((dt) => dt.id === state.inventory_item_id)
+        : null,
     },
     {
       fieldName: "Project id",
       fieldType: "select",
       fieldPlaceholder: "Project id",
       isRequired: false,
-      defaultValue: state.project_id,
-      options: projectsState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
+
+      options: projectsState?.map(
+        (dt, index) => (
+          console.log("vl", state.project_id, dt),
+          {
+            is_select: state.project_id === dt.id ? "selected" : "",
+            index: state.project_id === dt.id ? index : null,
+            value: dt.id.toString(),
+            label: dt.name,
+          }
+        )
+      ),
+      defaultValue: state.project_id
+        ? projectsState?.findIndex((dt) => dt.id === state.project_id)
+        : null,
     },
     {
       fieldName: "Metarial",
       fieldType: "select",
       fieldPlaceholder: "Metarial",
       isRequired: true,
-      defaultValue: state.metarial,
       multiSelect: true,
-      options: materialState?.map((dt) => ({
-        value: dt.id.toString(),
-        label: dt.name,
-      })),
+
+      options: materialState?.map((dt, index) => {
+        const isSelected = state.brand && state.brand?.includes(dt.id);
+        console.log(state, 'state');
+        return {
+          is_select: isSelected ? "selected" : "",
+          index: isSelected ? index : null,
+          value: dt.id.toString(),
+            label: dt.name,
+        };
+      }),
+      defaultValue: state.metarial
+        ? materialState?.findIndex((dt) => state.brand?.includes(dt?.id))
+        : null,
+
+      // defaultValue: state.metarial,
+      // options: materialState?.map((dt) => ({
+      //   value: dt.id.toString(),
+      //   label: dt.name,
+      // })),
     },
   ];
 
@@ -99,8 +140,12 @@ function EditMaterialDispatchInventory() {
     if (state) {
       const updateData = {
         quantity: data.quantity ? data.quantity : state.quantity,
-        check_status: data.check_status ? data.check_status : state.check_status,
-        inventory_item_id: data.inventory_item_id ? data.inventory_item_id : state.inventory_item_id,
+        check_status: data.check_status
+          ? data.check_status
+          : state.check_status,
+        inventory_item_id: data.inventory_item_id
+          ? data.inventory_item_id
+          : state.inventory_item_id,
         project_id: data.project_id ? data.project_id : state.project_id,
         metarial: data.metarial ? data.metarial : state.metarial,
         status: data.status ? data.status : state.status,

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { AiOutlineCloudUpload, AiOutlineDrag } from "react-icons/ai";
@@ -79,9 +80,8 @@ const PropertyPurchaseForm = ({
   const onSubmit = (data) => {
     console.log(data, "data");
 
-
-     // Iterate through formsData and add each field to the data object
-     formsData.forEach((field) => {
+    // Iterate through formsData and add each field to the data object
+    formsData.forEach((field) => {
       // Check if the field is hidden
       if (field.isHidden) {
         // If hidden, set its value from the defaultValue
@@ -196,18 +196,23 @@ const PropertyPurchaseForm = ({
               defaultValue={(isState && field.defaultValue) || []}
               name={field.fieldName.toLowerCase().replace(/\s+/g, "_")}
               render={({ field: { onChange, value, ref } }) => (
+                // console.log(field.options),
                 <Select
                   isMulti
                   inputRef={ref}
                   classNamePrefix="select"
                   styles={customStyles}
                   options={field.options}
-                  value={field?.options?.filter((option) =>
-                    value.includes(option.value)
-                  )}
-                  onChange={(selectedOptions) =>
-                    onChange(selectedOptions.map((option) => option.value))
+                  value={
+                    field.defaultValue !== null
+                      ? field.options.map((dt) => field.options[dt.index])
+                      : field.options.find((c) => c.value === value)
                   }
+                  is_select
+                  onChange={(val) => {
+                    onChange(val?.map((option) => option.value));
+                    field.defaultValue = null;
+                  }}
                 />
               )}
             />
@@ -235,8 +240,16 @@ const PropertyPurchaseForm = ({
                   classNamePrefix="select"
                   styles={customStyles}
                   options={field.options}
-                  value={field?.options?.find((c) => c.value === value)}
-                  onChange={(val) => onChange(val.value)}
+                  value={
+                    field.defaultValue !== null
+                      ? field.options[field.defaultValue]
+                      : field.options.find((c) => c.value === value)
+                  }
+                  is_select
+                  onChange={(val) => {
+                    onChange(val.value);
+                    field.defaultValue = null;
+                  }}
                 />
               )}
             />
