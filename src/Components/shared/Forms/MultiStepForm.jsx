@@ -16,6 +16,7 @@ const MultiStepForm = ({
     formState: { errors },
     control,
     trigger,
+    setValue
   } = useForm({
     defaultValues: defaultValues,
     mode: "onChange",
@@ -67,13 +68,15 @@ const MultiStepForm = ({
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
-
+  
     setSelectedFiles((prevSelectedFiles) => ({
       ...prevSelectedFiles,
       [fieldName]: file,
     }));
+  
+    // Update form state with the file data
+    setValue(fieldName.toLowerCase().replace(/\s+/g, "_"), file);
   };
-
   const handleDragOver = (e) => {
     e.preventDefault();
   };

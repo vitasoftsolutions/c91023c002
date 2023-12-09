@@ -3,10 +3,8 @@ import { useState } from "react"; // Import useState from React
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { base_url } from "../Url";
-import { useLocation } from "react-router-dom";
 
-const ImportModal = ({ importModal, onClose,  model_name, app_label}) => {
-    const { pathname } = useLocation();
+const ImportModal = ({ importModal, onClose, model_name, app_label }) => {
   const { register, handleSubmit } = useForm();
   const [fileName, setFileName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -25,6 +23,7 @@ const ImportModal = ({ importModal, onClose,  model_name, app_label}) => {
 
   
   const onSubmit = () => {
+    console.log(model_name, app_label, 'ol_________');
     const submittedData = {
       model_name: model_name,
       app_label: app_label,

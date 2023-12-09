@@ -47,16 +47,16 @@ const GlobalTable = ({
           {/* t head */}
           <thead>
             <tr className="">
-              <th className="pl-6 pt-4 pb-2">
+              {/* <th className="pl-6 pt-4 pb-2">
                 <label>
                   <input
                     type="checkbox"
                     className="checkbox checkbox-xs rounded-none"
                   />
                 </label>
-              </th>
+              </th> */}
               {t_head?.map((th, index) => (
-                <th key={index} className="text-[14px] pt-4 pb-2">
+                <th key={index} className="text-[14px] pt-4 pb-2 pl-10">
                   {th.name}
                 </th>
               ))}
@@ -80,19 +80,19 @@ const GlobalTable = ({
               return (
                 // row
                 <tr key={t_dt.id} className="w-full border-b-[1px]">
-                  <th className="pl-6">
+                  {/* <th className="pl-6">
                     <label>
                       <input
                         type="checkbox"
                         className="checkbox checkbox-xs rounded-none"
                       />
                     </label>
-                  </th>
+                  </th> */}
                   {Object.keys(t_dt).map(
                     (key, index) =>
                       key !== "id" &&
                       key !== "status" && (
-                        <td key={index} className="text-[14px]">
+                        <td key={index} className="text-[14px] pl-10">
                           {key === "date" && t_dt[key] ? (
                             formatDate(t_dt[key])
                           ) : key === "image" ? (

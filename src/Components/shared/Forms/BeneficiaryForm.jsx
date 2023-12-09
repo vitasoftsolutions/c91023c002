@@ -15,6 +15,7 @@ const BeneficiaryForm = ({
     handleSubmit,
     formState: { errors },
     control,
+    setValue
   } = useForm({
     defaultValues: defaultValues,
   });
@@ -64,11 +65,14 @@ const BeneficiaryForm = ({
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
-
+  
     setSelectedFiles((prevSelectedFiles) => ({
       ...prevSelectedFiles,
       [fieldName]: file,
     }));
+  
+    // Update form state with the file data
+    setValue(fieldName.toLowerCase().replace(/\s+/g, "_"), file);
   };
 
   const handleDragOver = (e) => {

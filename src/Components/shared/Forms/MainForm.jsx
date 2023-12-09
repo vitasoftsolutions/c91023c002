@@ -22,9 +22,11 @@ const MainForm = ({
     mode: "onChange",
   });
 
+  const [filePreviews, setFilePreviews] = useState({});
   const [fileData, setFileData] = useState({});
-  const [selectedFiles, setSelectedFiles] = useState({});
   const [dragging, setDragging] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState({});
+
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -39,12 +41,16 @@ const MainForm = ({
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
-
+  
     setSelectedFiles((prevSelectedFiles) => ({
       ...prevSelectedFiles,
       [fieldName]: file,
     }));
+  
+    // Update form state with the file data
+    setValue(fieldName.toLowerCase().replace(/\s+/g, "_"), file);
   };
+  
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -67,11 +73,13 @@ const MainForm = ({
     });
 
     const formDataWithFiles = { ...data, ...fileData };
+    
     submitFunction(formDataWithFiles);
   };
 
   const handleFileChange = (fieldName, e) => {
     const file = e.target.files[0];
+
     const newFileData = { ...fileData, [fieldName]: file };
 
     setSelectedFiles((prevSelectedFiles) => ({
@@ -79,13 +87,27 @@ const MainForm = ({
       [fieldName]: file,
     }));
 
+    // console.log(newFileData)
+
     setFileData(newFileData);
   };
 
   const removeFile = (fieldName) => {
+    
+    // Create a copy of the existing state objects
+    const newFilePreviews = { ...filePreviews };
     const newFileData = { ...fileData };
-    field.defaultValue = "";
+    const updatedSelectedFiles = { ...selectedFiles };
+
+    // Remove the field from the copied state objects
+    delete newFilePreviews[fieldName];
+    delete newFileData[fieldName];
+    delete updatedSelectedFiles[fieldName];
+
+    // Update the state with the modified objects
+    setFilePreviews(newFilePreviews);
     setFileData(newFileData);
+    setSelectedFiles(updatedSelectedFiles);
   };
 
   const renderField = (field, index) => {
@@ -236,11 +258,12 @@ const MainForm = ({
                 <button
                   className="bg-red-500 text-white btn btn-sm hover:text-black p-2 rounded-md mt-2"
                   type="button"
-                  onClick={() =>
-                    removeFile(
-                      field.fieldName.toLowerCase().replace(/\s+/g, "_")
-                    )
-                  }
+                  onClick={() => {
+                    // Clear the image by updating the state
+                    const newFileData = { ...fileData };
+                    field.defaultValue = "";
+                    setFileData(newFileData);
+                  }}
                 >
                   Remove
                 </button>

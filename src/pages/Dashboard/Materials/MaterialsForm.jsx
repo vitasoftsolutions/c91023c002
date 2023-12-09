@@ -15,6 +15,7 @@ const MaterialsForm = ({
     handleSubmit,
     formState: { errors },
     control,
+    setValue
   } = useForm({
     defaultValues: defaultValues,
     mode: "onChange",
@@ -66,11 +67,14 @@ const MaterialsForm = ({
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
-
+  
     setSelectedFiles((prevSelectedFiles) => ({
       ...prevSelectedFiles,
       [fieldName]: file,
     }));
+  
+    // Update form state with the file data
+    setValue(fieldName.toLowerCase().replace(/\s+/g, "_"), file);
   };
 
   const handleDragOver = (e) => {
