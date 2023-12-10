@@ -84,8 +84,9 @@ const BusinessProfile = () => {
       <TableHeader
         title={"Business Profile"}
         redirectLink={"/business-profile/crete-business-profile"}
-        // TODO: Need to add app label
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"businessProfile"}
+        app_label={"profileapp"}
+        url_endpoint={"/export-csv/?model=businessProfile&app_label=profileapp"}
       />
       <GlobalTable
         t_head={t_head}

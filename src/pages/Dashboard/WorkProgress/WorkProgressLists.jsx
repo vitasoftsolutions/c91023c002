@@ -76,7 +76,9 @@ const WorkProgressLists = () => {
             <TableHeader
                 title={"Work Progress"}
                 redirectLink={"/work-progress/create"}
-                url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+                model_name={"workProgress"}
+                app_label={"projects"}
+                url_endpoint={"/export-csv/?model=workProgress&app_label=projects"}
             />
             <GlobalTable
                 t_head={t_head}

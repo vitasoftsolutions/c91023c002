@@ -82,8 +82,9 @@ const LoanLogs = () => {
       <TableHeader
         title={"Logs"}
         redirectLink={"/loan-logs"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"loanLog"}
+        app_label={"loan"}
+        url_endpoint={"/export-csv/?model=loanLog&app_label=loan"}
       />
       <GlobalTable
         t_head={t_head}

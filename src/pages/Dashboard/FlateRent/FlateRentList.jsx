@@ -85,8 +85,9 @@ const FlateRentList = () => {
       <TableHeader
         title={"Flatrent"}
         redirectLink={"/flat-rent/flat-rent-crete"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"flatRent"}
+        app_label={"renter"}
+        url_endpoint={"/export-csv/?model=flatRent&app_label=renter"}
       />
       <GlobalTable
         t_head={t_head}

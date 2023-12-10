@@ -13,9 +13,9 @@ function CreateProjects() {
   const dispatch = useDispatch();
   const projectState = useSelector((state) => state.projectsReducer);
   const navigate = useNavigate();
-  const typesState = useSelector((state) => state.typesReducers.data);
+  const typesState = useSelector((state) => state.typesReducers?.data);
 
-  console.log(projectState, "projectState");
+  // console.log(projectState, "projectState");
 
   useEffect(() => {
     dispatch(fetchType("Project Type"));
@@ -169,9 +169,9 @@ function CreateProjects() {
       fieldPlaceholder: "Select a role",
       isRequired: true,
       multiSelect: true,
-      options: typesState.map((type) => ({
-        value: type.id,
-        label: type.name,
+      options: typesState?.map((type) => ({
+        value: type?.id,
+        label: type?.name,
       })),
     },
   ];

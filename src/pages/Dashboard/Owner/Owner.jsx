@@ -82,7 +82,9 @@ function Owner() {
       <TableHeader
         title={"Owner"}
         redirectLink={"/owner/createowner"}
-        url_endpoint={"/export-csv/?model=Empployee&app_label=users"}
+        model_name={"ownerBeneficariess"}
+        app_label={"owner"}
+        url_endpoint={"/export-csv/?model=ownerBeneficariess&app_label=owner"}
       />
       
       <GlobalTable

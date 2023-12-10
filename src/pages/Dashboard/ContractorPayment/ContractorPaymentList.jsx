@@ -92,7 +92,9 @@ const ContractorPaymentList = () => {
             <TableHeader
                 title={"Contractor Payment"}
                 redirectLink={"/contractor-payment/create"}
-                url_endpoint={"/export-csv/?model=PhoneNumber&app_label=globalapp2"}
+                model_name={"Expense"}
+                app_label={"contractorPaymnet"}
+                url_endpoint={"/export-csv/?model=contractorPaymnet&app_label=contructors"}
             />
             <GlobalTable
                 t_head={t_head}

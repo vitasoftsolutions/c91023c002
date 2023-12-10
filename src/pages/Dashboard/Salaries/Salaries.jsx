@@ -81,8 +81,9 @@ const Salary = () => {
       <TableHeader
         title={"Salaries"}
         redirectLink={"/salary/crete-salaries"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"salaries"}
+        app_label={"hrm"}
+        url_endpoint={"/export-csv/?model=salaries&app_label=hrm"}
       />
       <GlobalTable
         t_head={t_head}

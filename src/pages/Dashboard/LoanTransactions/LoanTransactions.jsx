@@ -88,8 +88,9 @@ function LoanTransactions() {
       <TableHeader
         title={"Transactions"}
         redirectLink={"/loan-transactions/create-loan-transactions"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=Empployee&app_label=users"}
+        model_name={"loanTransactions"}
+        app_label={"loan"}
+        url_endpoint={"/export-csv/?model=loanTransactions&app_label=loan"}
       />
       <GlobalTable
         t_head={t_head}

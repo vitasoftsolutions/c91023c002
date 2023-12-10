@@ -95,7 +95,10 @@ const PropertyInstallmentlist = () => {
             <TableHeader
                 title={"Property Installment"}
                 redirectLink={"/property-installment/create"}
-                url_endpoint={"/export-csv/?model=PhoneNumber&app_label=globalapp2"}
+                model_name={"propertyInstallment"}
+                app_label={"projects"}
+                url_endpoint={"/export-csv/?model=propertyInstallment&app_label=projects"}
+
             />
             <GlobalTable
                 t_head={t_head}

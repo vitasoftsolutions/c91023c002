@@ -84,8 +84,9 @@ const PropertyList = () => {
       <TableHeader
         title={"Property"}
         redirectLink={"/property/property-crete"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"propertyModels"}
+        app_label={"projects"}
+        url_endpoint={"/export-csv/?model=propertyModels&app_label=projects"}
       />
       <GlobalTable
         t_head={t_head}

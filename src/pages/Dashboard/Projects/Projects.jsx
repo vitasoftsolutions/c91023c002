@@ -77,8 +77,9 @@ function Projects() {
       <TableHeader
         title={"Projects"}
         redirectLink={"/projects/crete-projects"}
-        // TODO:Need to add app_label
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"projectInfo"}
+        app_label={"projects"}
+        url_endpoint={"/export-csv/?model=projectInfo&app_label=projects"}
       />
       <DisplayProjects
         allDataList={allDataList}

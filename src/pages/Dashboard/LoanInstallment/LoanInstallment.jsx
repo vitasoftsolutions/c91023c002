@@ -83,8 +83,9 @@ function LoanInstallment() {
       <TableHeader
         title={"Installment"}
         redirectLink={"/loan-installment/create-loan-installment"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=Empployee&app_label=users"}
+        model_name={"loanInstallment"}
+        app_label={"loan"}
+        url_endpoint={"/export-csv/?model=loanInstallment&app_label=loan"}
       />
       <GlobalTable
         t_head={t_head}

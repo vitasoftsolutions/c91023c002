@@ -51,7 +51,9 @@ function Floors() {
       <TableHeader
         title={"Floors"}
         redirectLink={"/floors/floors-crete"}
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"Work progress"}
+        app_label={"hrm"}
+        url_endpoint={"/export-csv/?model=Work progress&app_label=hrm"}
       />
       <div className="bg-white shadow-lg shadow-blue-200 md:mx-10 mb-5 mt-5 rounded-lg md:p-4">
         <div className="w-full mx-auto p-4 grid grid-cols-4 gap-x-4 rounded-md bg-opacity-50 backdrop-blur-md bg-gray-200">

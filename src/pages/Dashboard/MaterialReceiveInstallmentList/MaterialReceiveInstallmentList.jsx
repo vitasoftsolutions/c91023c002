@@ -86,8 +86,9 @@ const MaterialReceiveInstallmentList = () => {
         redirectLink={
           "/material-receive-installment/material-receive-installment-crete"
         }
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"materialInstallment"}
+        app_label={"wearhouse"}
+        url_endpoint={"/export-csv/?model=materialInstallment&app_label=wearhouse"}
       />
       <GlobalTable
         t_head={t_head}

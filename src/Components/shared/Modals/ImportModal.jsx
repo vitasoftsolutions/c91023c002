@@ -23,7 +23,7 @@ const ImportModal = ({ importModal, onClose, model_name, app_label }) => {
 
   
   const onSubmit = () => {
-    console.log(model_name, app_label, 'ol_________');
+    
     const submittedData = {
       model_name: model_name,
       app_label: app_label,

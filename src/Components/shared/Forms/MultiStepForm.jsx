@@ -161,11 +161,11 @@ const MultiStepForm = ({
               inputRef={ref}
               classNamePrefix="select"
               styles={customStyles}
-              options={field.options}
+              options={field?.options}
               value={
                 field.defaultValue !== null
-                  ? field.options.map((dt) => field.options[dt.index])
-                  : field.options.find((c) => c.value === value)
+                  ? field?.options?.map((dt) => field.options[dt.index])
+                  : field?.options?.find((c) => c.value === value)
               }
               is_select
               onChange={(val) => {

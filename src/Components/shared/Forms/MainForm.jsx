@@ -181,8 +181,8 @@ const MainForm = ({
                   classNamePrefix="select"
                   options={field?.options}
                   value={
-                    field?.defaultValue !== null
-                      ? field.options[field.defaultValue]
+                    field.defaultValue && field.defaultValue !== null
+                      ? field?.options[field?.defaultValue]
                       : field?.options?.find((c) => c.value === value)
                   }
                   is_select

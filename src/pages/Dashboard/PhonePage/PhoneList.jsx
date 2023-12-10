@@ -81,7 +81,7 @@ function PhoneList() {
       <TableHeader
         title={"Phone"}
         redirectLink={"/phone/createphone"}
-        url_endpoint={"/export-csv/?model=PhoneNumber&app_label=globalapp2"}
+        url_endpoint={"/export-csv/?model=phoneNumber&app_label=globalapp2"}
       />
       <GlobalTable
         t_head={t_head}

@@ -3,10 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import {
-  deleteLoanBeneficiary,
-  fetchLoanBeneList,
-} from "../../../redux/Actions/loanBenAction";
 import { deleteBrands, fetchBrands } from "../../../redux/Actions/BrandsAction";
 
 const t_head = [
@@ -86,8 +82,10 @@ const Brands = () => {
       <TableHeader
         title={"Brands"}
         redirectLink={"/brands/create-brands"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"brands"}
+        app_label={"suppliers"}
+        url_endpoint={"/export-csv/?model=brands&app_label=suppliers"}
+  
       />
       <GlobalTable
         t_head={t_head}

@@ -27,6 +27,12 @@ const formsData = [
     isRequired: true,
   },
   {
+    fieldName: "Phone Number",
+    fieldType: "number",
+    fieldPlaceholder: "Type phone number here",
+    isRequired: true,
+  },
+  {
     fieldName: "password",
     fieldType: "password",
     fieldPlaceholder: "Type your password here",

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
-import { deleteLoanBeneficiary, fetchLoanBeneList } from "../../../redux/Actions/loanBenAction";
 import Swal from "sweetalert2";
 import { deleteAttendance, fetchAttendance } from "../../../redux/Actions/AttendanceAction";
 
@@ -85,7 +84,10 @@ function Attendance() {
       <TableHeader
         title={"Attendance"}
         redirectLink={"/attendance/createattendance"}
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"attendance"}
+        app_label={"hrm"}
+        url_endpoint={"/export-csv/?model=attendance&app_label=hrm"}
+    
       />
       <GlobalTable
         t_head={t_head}

@@ -7,7 +7,7 @@ import {
     fetchLoanBeneList,
 } from "../../../redux/Actions/ContractorGuarantorAction";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
-import customName from "../helper"
+
 const t_head = [
     { name: "Name" },
     { name: "Image" },
@@ -86,7 +86,9 @@ const ContractorGurantorLists = () => {
             <TableHeader
                 title={"Contractor Guarantor"}
                 redirectLink={"/contractor-guarantor/create"}
-                url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+                model_name={"contractorGarrentor"}
+                app_label={"contructors"}
+                url_endpoint={"/export-csv/?model=contractorGarrentor&app_label=contructors"}            
             />
             <GlobalTable
                 t_head={t_head}

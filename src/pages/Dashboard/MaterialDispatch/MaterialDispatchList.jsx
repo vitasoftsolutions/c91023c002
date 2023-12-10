@@ -83,8 +83,9 @@ const MaterialDispatchList = () => {
       <TableHeader
         title={"Material Dispatch"}
         redirectLink={"/material-dispatch/material-dispatch-crete"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"warehouseMaterialDispatch"}
+        app_label={"wearhouse"}
+        url_endpoint={"/export-csv/?model=warehouseMaterialDispatch&app_label=wearhouse"}
       />
       <GlobalTable
         t_head={t_head}

@@ -86,9 +86,9 @@ const MaterialPurchaseList = () => {
     <div className="max-w-screen">
       <TableHeader
         title={"Material purchase"}
-        redirectLink={"/material-purchase/material-purchase-crete"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        model_name={"materialPurchases"}
+        app_label={"wearhouse"}
+        url_endpoint={"/export-csv/?model=materialPurchases&app_label=wearhouse"}
       />
       <GlobalTable
         t_head={t_head}

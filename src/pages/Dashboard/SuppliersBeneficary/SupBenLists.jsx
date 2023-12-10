@@ -83,7 +83,9 @@ const SupBenLists = () => {
             <TableHeader
                 title={"Beneficiary"}
                 redirectLink={"/suppliers-beneficaries/create"}
-                url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+                model_name={"supplierBeneficaries"}
+                app_label={"suppliers"}
+                url_endpoint={"/export-csv/?model=supplierBeneficaries&app_label=suppliers"}
             />
             <GlobalTable
                 t_head={t_head}
