@@ -85,7 +85,7 @@ const LoginForm = () => {
               {...register("email", { required: true })}
               placeholder="Email"
               className="input input-bordered input-accent w-full"
-              value="admin@gmail.com"
+              // value="viscon@gmail.com"
             />
             {errors?.email && (
               <span className="text-red-500">This field is required</span>
@@ -107,7 +107,7 @@ const LoginForm = () => {
                 {...register("password", { required: true })}
                 className="input input-bordered w-full pr-10"
                 placeholder="Password"
-                value="admin"
+                // value="admin"
                 // onChange={(e) => validatePassword(e.target.value)}
               />
               <button
