@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteFlateRent, fetchFlateRentList } from "../../../redux/Actions/FlateRentAction";
+import {
+  deleteFlateRent,
+  fetchFlateRentList,
+  searchFlateRent,
+} from "../../../redux/Actions/FlateRentAction";
 
 const t_head = [
   { name: "Property Name" },
@@ -15,10 +19,23 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  // {
+  //   fieldName: "Expenser Name",
+  //   fieldType: "text",
+  //   fieldPlaceholder: "Expenser Name",
+  // },
+  // {
+  //   fieldName: "Amount",
+  //   fieldType: "number",
+  //   fieldPlaceholder: "Amount",
+  // },
+];
+
 const FlateRentList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.flateRentReducer);
-  console.log(state, "state")
+  console.log(state, "state");
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
@@ -78,7 +95,21 @@ const FlateRentList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "renter/FlatRent/";
+    const serializer_class = "FlatRent";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchFlateRentList(current_page));
+    } else {
+      dispatch(searchFlateRent(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
@@ -88,6 +119,9 @@ const FlateRentList = () => {
         model_name={"flatRent"}
         app_label={"renter"}
         url_endpoint={"/export-csv/?model=flatRent&app_label=renter"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

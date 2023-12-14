@@ -15,10 +15,12 @@ function CreateRentCollection() {
   const dispatch = useDispatch();
   const rentState = useSelector((state) => state.rentCollectionReducer);
   const propertyState = useSelector((state) => state.propertyReducer.data);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.con_data);
   const renterState = useSelector(
     (state) => state.renterBeneficiaryReducer.data
   );
+
+  console.log(projectsState, "projectsState")
   
   const navigate = useNavigate();
   const submitFunction = (data) => {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteRentCollection, fetchRentCollectionList } from "../../../redux/Actions/RentCollectionAction";
+import { deleteRentCollection, fetchRentCollectionList, searchRentCollection } from "../../../redux/Actions/RentCollectionAction";
 
 const t_head = [
   { name: "Property Name" },
@@ -13,6 +13,20 @@ const t_head = [
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+
+const formsData = [
+  {
+    fieldName: "Due amount",
+    fieldType: "number",
+    fieldPlaceholder: "Due amount",
+  },
+  // {
+  //   fieldName: "Amount",
+  //   fieldType: "number",
+  //   fieldPlaceholder: "Amount",
+  // },
 ];
 
 const RentCollectionList = () => {
@@ -79,7 +93,22 @@ const RentCollectionList = () => {
     });
   };
 
-  //
+ // Filter Code
+ const handleSearch = (formData) => {
+  const allKeysEmpty = Object.values(formData).every(
+    (value) => value === "" || value === null
+  );
+  const app_model = "renter/RentCollection/";
+  const serializer_class = "RentCollection";
+  const searchData = { formData, app_model, serializer_class };
+  if (allKeysEmpty) {
+    // If the search field is empty, fetch all formData
+    dispatch(fetchRentCollectionList(current_page));
+  } else {
+    dispatch(searchRentCollection(searchData));
+  }
+};
+
   //
   return (
     <div className="max-w-screen">
@@ -89,6 +118,9 @@ const RentCollectionList = () => {
         model_name={"rentCollection"}
         app_label={"renter"}
         url_endpoint={"/export-csv/?model=rentCollection&app_label=renter"}
+            // For filters
+            onSearch={handleSearch}
+            formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

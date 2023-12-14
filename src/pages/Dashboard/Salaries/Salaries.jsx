@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteSalaries, fetchSalaries } from "../../../redux/Actions/salaryAction";
+import {
+  deleteSalaries,
+  fetchSalaries,
+  searchLoanBeneficiaries,
+} from "../../../redux/Actions/salaryAction";
 
 const t_head = [
   { name: "Employee Name" },
@@ -13,10 +17,21 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Salary",
+    fieldType: "number",
+    fieldPlaceholder: "Salary",
+  },
+];
+
 const Salary = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.salaryReducer);
   // allDataList
+
+  console.log(state, "state");
+
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
@@ -25,7 +40,7 @@ const Salary = () => {
     date: item.date,
     status: item.status,
   }));
-  // console.log(state, "state") 
+  // console.log(state, "state")
   const tableData = {
     ...state,
     data: newData,
@@ -73,6 +88,22 @@ const Salary = () => {
       }
     });
   };
+  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "hrm/Salaries/";
+    const serializer_class = "Salaries";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchSalaries(current_page));
+    } else {
+      dispatch(searchLoanBeneficiaries(searchData));
+    }
+  };
 
   //
   //
@@ -81,9 +112,13 @@ const Salary = () => {
       <TableHeader
         title={"Salaries"}
         redirectLink={"/salary/crete-salaries"}
+        // For Export & Import
         model_name={"salaries"}
         app_label={"hrm"}
         url_endpoint={"/export-csv/?model=salaries&app_label=hrm"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

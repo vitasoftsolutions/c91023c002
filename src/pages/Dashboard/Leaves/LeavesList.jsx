@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteLeaves, fetchLeavesList } from "../../../redux/Actions/LeavesAction";
+import { deleteLeaves, fetchLeavesList, searchLeaves } from "../../../redux/Actions/LeavesAction";
 
 const t_head = [
   { name: "Apply Date" },
@@ -12,6 +12,19 @@ const t_head = [
   { name: "Days" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "Reason",
+    fieldType: "text",
+    fieldPlaceholder: "Reason",
+  },
+  // {
+  //   fieldName: "Amount",
+  //   fieldType: "number",
+  //   fieldPlaceholder: "Amount",
+  // },
 ];
 
 const LeavesList = () => {
@@ -55,8 +68,6 @@ const LeavesList = () => {
     dispatch(fetchLeavesList(newPage));
   };
 
-  // console.log(state, "state_ page");
-
   const deleteFunction = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -76,16 +87,34 @@ const LeavesList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "hrm/Leaves/";
+    const serializer_class = "Leaves";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchLeavesList(current_page));
+    } else {
+      dispatch(searchLeaves(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Leaves"}
         redirectLink={"/leaves/leaves-crete"}
+        // For Export & Import
         model_name={"leaves"}
         app_label={"hrm"}
         url_endpoint={"/export-csv/?model=leaves&app_label=hrm"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

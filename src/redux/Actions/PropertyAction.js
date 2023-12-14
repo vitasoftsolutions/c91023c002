@@ -29,7 +29,6 @@ export const createProperty = createAsyncThunk(
       return response.data;
     } catch (error) {
       throw new Error(error.message);
-
     }
   }
 );
@@ -53,9 +52,7 @@ export const fetchPropertyList = createAsyncThunk(
 
     // Make the Axios GET request with the headers
     const response = await axios.get(
-      `${base_url}/property/?limit=${perPage}&offset=${
-        (page - 1) * perPage
-      }`,
+      `${base_url}/property/?limit=${perPage}&offset=${(page - 1) * perPage}`,
       {
         headers,
       }
@@ -85,7 +82,7 @@ export const fetchPropertyList = createAsyncThunk(
 export const fetchPropertyAllList = createAsyncThunk(
   "fetchPropertyAllList",
   async (payload) => {
-    console.log(payload, "payload")
+    console.log(payload, "payload");
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
@@ -96,8 +93,7 @@ export const fetchPropertyAllList = createAsyncThunk(
     };
 
     // Make the Axios GET request with the headers
-    const response = await axios.get(
-      `${base_url}/property/`,{headers});
+    const response = await axios.get(`${base_url}/property/`, { headers });
 
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
@@ -156,10 +152,9 @@ export const deleteProperty = createAsyncThunk(
     };
 
     // Make the Axios PUT request with the headers and payload
-    const response = await axios.delete(
-      `${base_url}/property/${payload}/`,
-      { headers }
-    );
+    const response = await axios.delete(`${base_url}/property/${payload}/`, {
+      headers,
+    });
 
     // Return the data from the response
     return response.status;
@@ -199,22 +194,42 @@ export const updateProperty = createAsyncThunk(
 //
 export const searchProperty = createAsyncThunk(
   "searchProperty",
-  async (firstName) => {
+  async (searchData) => {
+    //  https://erpcons.vitasoftsolutions.com/filter/loan/LoanBeneficaries/?data_name=first_name&value=Ifte Samul&data_name=last_name&value=ohy&serializer_class=LoanBeneficariesSerializer&start_date=2023-12-07&end_date=2023-12-31
     try {
       // Get the JWT token from session storage
       const token = sessionStorage.getItem("jwt_token");
-
+      // Get Form Data From Searched Data
+      const formData = searchData.formData;
       // Define the headers
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/property/`;
+      let apiUrl = `${base_url}/filter/${searchData.app_model}`;
 
-      // Check if firstName is not empty, then append the search query
-      if (firstName) {
-        apiUrl += `?first_name=${firstName}`;
+      const searchKeys = Object.keys(formData);
+
+      // Check if formData is not empty, then append the search query
+      if (searchKeys.length > 0) {
+        apiUrl += "?";
+
+        for (let i = 0; i < searchKeys.length; i++) {
+          const key = searchKeys[i];
+          const value = formData[key];
+          apiUrl += `data_name=${key}&value=${value}`;
+
+          // Append '&' if it's not the last key-value pair
+          if (i < searchKeys.length - 1) {
+            apiUrl += "&";
+          }
+        }
+      }
+
+      // Append the serializer_class parameter if it exists
+      if (searchData.serializer_class) {
+        apiUrl += `&serializer_class=${searchData.serializer_class}Serializer`;
       }
 
       // Make the Axios GET request with the headers
@@ -222,8 +237,10 @@ export const searchProperty = createAsyncThunk(
         headers,
       });
 
-      const response_token = response.data.results.token;
+      const response_token = response.data.token;
       const result = jwtDecode(response_token);
+
+      console.log(result, "result");
 
       const data = result.data;
       // Return the data
@@ -234,7 +251,6 @@ export const searchProperty = createAsyncThunk(
     }
   }
 );
-
 //
 //
 //

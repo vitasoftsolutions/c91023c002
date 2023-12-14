@@ -16,7 +16,7 @@ function CreateRepairRecords() {
   const projectPState = useSelector((state) => state.repairRecordsReducer);
   //
   const propertyState = useSelector((state) => state.propertyReducer.data);
-  const projectsState = useSelector((state) => state.projectsReducer.data);
+  const projectsState = useSelector((state) => state.projectsReducer.con_data);
   const renterState = useSelector(
     (state) => state.renterBeneficiaryReducer.data
   );

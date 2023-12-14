@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteMaterialPurchase, fetchMaterialPurchaseList } from "../../../redux/Actions/MaterialPurchaseAction";
+import {
+  deleteMaterialPurchase,
+  fetchMaterialPurchaseList,
+  searchMaterialPurchase,
+} from "../../../redux/Actions/MaterialPurchaseAction";
 
 const t_head = [
   { name: "Purchase code" },
@@ -16,19 +20,32 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Sr Name",
+    fieldType: "text",
+    fieldPlaceholder: "Sr Name",
+  },
+  {
+    fieldName: "Amount",
+    fieldType: "number",
+    fieldPlaceholder: "Amount",
+  },
+];
+
 const MaterialPurchaseList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.materialPurchaseReducer);
-  console.log(state)
+  console.log(state);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    purchase_code: item.purchase_code ,
-    vendor_id: item.vendor_name ,
-    purchase_for: item.purchase_for_name ,
-    amount: item.amount ,
-    quantity: item.quantity ,
+    purchase_code: item.purchase_code,
+    vendor_id: item.vendor_name,
+    purchase_for: item.purchase_for_name,
+    amount: item.amount,
+    quantity: item.quantity,
     date: item.created_at,
     status: item.status,
   }));
@@ -80,15 +97,35 @@ const MaterialPurchaseList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "wearhouse/MaterialPurchases/";
+    const serializer_class = "MaterialPurchases";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchMaterialPurchaseList(current_page));
+    } else {
+      dispatch(searchMaterialPurchase(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Material purchase"}
+        redirectLink={"/material-purchase/material-purchase-crete"}
         model_name={"materialPurchases"}
         app_label={"wearhouse"}
-        url_endpoint={"/export-csv/?model=materialPurchases&app_label=wearhouse"}
+        url_endpoint={
+          "/export-csv/?model=materialPurchases&app_label=wearhouse"
+        }
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

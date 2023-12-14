@@ -4,9 +4,21 @@ import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
 import { deleteRentCollection } from "../../../redux/Actions/RentCollectionAction";
-import { deleteRoles, fetchRolesList } from "../../../redux/Actions/_RolesAction";
+import {
+  deleteRoles,
+  fetchRolesList,
+  searchRoles,
+} from "../../../redux/Actions/_RolesAction";
 
 const t_head = [{ name: "Name" }, { name: "Permissions" }, { name: "Actions" }];
+
+const formsData = [
+  // {
+  //   fieldName: "Name",
+  //   fieldType: "text",
+  //   fieldPlaceholder: "Name",
+  // },
+];
 
 const RolesList = () => {
   const dispatch = useDispatch();
@@ -68,17 +80,33 @@ const RolesList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "auth/Group/";
+    const serializer_class = "Group";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchRolesList(current_page));
+    } else {
+      dispatch(searchRoles(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Roles"}
         redirectLink={"/roles/roles-crete"}
-        model_name={"supplierBeneficaries"}
-        app_label={"suppliers"}
-        url_endpoint={"/export-csv/?model=supplierBeneficaries&app_label=suppliers"}
-   
+        model_name={"Groups"}
+        app_label={"auth"}
+        url_endpoint={"/export-csv/?model=Groups&app_label=auth"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

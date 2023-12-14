@@ -4,7 +4,8 @@ import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import Swal from "sweetalert2";
 import {
   deleteLoanBeneficiary,
-  fetchLoanBeneList,
+  fetchIncomeList,
+  searchIncome,
 } from "../../../redux/Actions/IncomeActions";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 
@@ -17,6 +18,20 @@ const t_head = [
   { name: "Action" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Income Name",
+    fieldType: "text",
+    fieldPlaceholder: "Income Name",
+  },
+  {
+    fieldName: "Amount",
+    fieldType: "number",
+    fieldPlaceholder: "Amount",
+  },
+];
+
+
 //date function
 function extractDate(dateTimeString) {
   // Create a new Date object from the provided string
@@ -28,7 +43,7 @@ function extractDate(dateTimeString) {
   const day = date.getUTCDate();
 
   // Create the formatted date string
-  //const formattedDate = `${year}/${month < 10 ? '0' : ''}${month}/${day < 10 ? '0' : ''}${day}`;
+ 
   const formattedDate = `${day < 10 ? "0" : ""}${day}/${
     month < 10 ? "0" : ""
   }${month}/${year}`;
@@ -37,10 +52,11 @@ function extractDate(dateTimeString) {
 }
 
 const IncomeLists = () => {
-  const [name, setName] = useState("");
 
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.expenseSliceReducers);
+  const state = useSelector((state) => state.incomeSliceReducers);
+
+  console.log(state, "state")
 
   // allDataList
   const allDataList = state.data;
@@ -71,11 +87,11 @@ const IncomeLists = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchLoanBeneList(current_page));
+    dispatch(fetchIncomeList(current_page));
   }, [dispatch, current_page, state.isDelete]);
 
   const handlePageChange = (newPage) => {
-    dispatch(fetchLoanBeneList(newPage));
+    dispatch(fetchIncomeList(newPage));
   };
 
   const deleteFunction = (id) => {
@@ -97,14 +113,35 @@ const IncomeLists = () => {
     });
   };
 
+
+    // Filter Code
+    const handleSearch = (formData) => {
+      const allKeysEmpty = Object.values(formData).every(
+        (value) => value === "" || value === null
+      );
+      const app_model = "accounts/Income/";
+      const serializer_class = "Income";
+      const searchData = { formData, app_model, serializer_class };
+      if (allKeysEmpty) {
+        // If the search field is empty, fetch all formData
+        dispatch(fetchIncomeList(current_page));
+      } else {
+        dispatch(searchIncome(searchData));
+      }
+    };
+
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Incomes"}
         redirectLink={"/income/create"}
+        // For Export & Import
         url_endpoint={"/export-csv/?model=income&app_label=accounts"}
         model_name={"income"}
         app_label={"accounts"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

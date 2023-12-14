@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import {
     deleteLoanBeneficiary,
     fetchLoanBeneList,
+    searchLoanBeneficiaries,
 } from "../../../redux/Actions/ContractorGuarantorAction";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 
@@ -16,6 +17,24 @@ const t_head = [
     { name: "Status" },
     { name: "Actions" },
 ];
+
+const formsData = [
+    {
+      fieldName: "First name",
+      fieldType: "text",
+      fieldPlaceholder: "First Name",
+    },
+    {
+      fieldName: "Last name",
+      fieldType: "text",
+      fieldPlaceholder: "Last Name",
+    },
+    {
+      fieldName: "Email",
+      fieldType: "email",
+      fieldPlaceholder: "Email",
+    },
+  ];
 
 
 const ContractorGurantorLists = () => {
@@ -79,7 +98,23 @@ const ContractorGurantorLists = () => {
         });
     };
 
-    //
+    
+      // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "contructors/ContractorGarrentor/";
+    const serializer_class = 'ContructorsGarrentor';
+    const searchData = { formData, app_model, serializer_class};
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchLoanBeneList(current_page));
+    } else {
+      dispatch(searchLoanBeneficiaries(searchData));
+    }
+  };
+    
     //
     return (
         <div className="max-w-screen">
@@ -88,7 +123,11 @@ const ContractorGurantorLists = () => {
                 redirectLink={"/contractor-guarantor/create"}
                 model_name={"contractorGarrentor"}
                 app_label={"contructors"}
-                url_endpoint={"/export-csv/?model=contractorGarrentor&app_label=contructors"}            
+                // For Export & Import
+                url_endpoint={"/export-csv/?model=contractorGarrentor&app_label=contructors"}       
+              // For filters
+                onSearch={handleSearch}
+                formsData={formsData}
             />
             <GlobalTable
                 t_head={t_head}

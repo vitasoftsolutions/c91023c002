@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteBrands, fetchBrands } from "../../../redux/Actions/BrandsAction";
+import {
+  deleteBrands,
+  fetchBrands,
+  searchLoanBeneficiaries,
+} from "../../../redux/Actions/BrandsAction";
 
 const t_head = [
   { name: "Name" },
@@ -14,10 +18,24 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Name",
+    fieldType: "text",
+    fieldPlaceholder: "Name",
+  },
+  {
+    fieldName: "Location",
+    fieldType: "text",
+    fieldPlaceholder: "Location",
+  },
+];
+
 const Brands = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.brandsReducer);
   // allDataList
+  console.log(state, "statestate");
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
@@ -75,7 +93,21 @@ const Brands = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "suppliers/Brands/";
+    const serializer_class = "Brands";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchBrands(current_page));
+    } else {
+      dispatch(searchLoanBeneficiaries(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
@@ -85,7 +117,9 @@ const Brands = () => {
         model_name={"brands"}
         app_label={"suppliers"}
         url_endpoint={"/export-csv/?model=brands&app_label=suppliers"}
-  
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

@@ -29,16 +29,14 @@ const t_head = [
 
 const formsData = [
   {
-    fieldName: "Name",
+    fieldName: "First Name",
     fieldType: "text",
-    fieldPlaceholder: "Name",
-    isRequired: true,
+    fieldPlaceholder: "First Name",
   },
   {
-    fieldName: "Test 2",
+    fieldName: "Last Name",
     fieldType: "text",
-    fieldPlaceholder: "tets 2",
-    isRequired: true,
+    fieldPlaceholder: "Last Name",
   },
 ];
 
@@ -105,15 +103,18 @@ const LoanBeneficiaryList = () => {
   };
 
   //
-  const handleSearch = (data) => {
-    if (data.text === "") {
-      // If the search field is empty, fetch all data
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "loan/LoanBeneficaries/";
+    const serializer_class = "LoanBeneficaries";
+    const searchData = { formData, app_model, serializer_class};
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
       dispatch(fetchLoanBeneList(current_page));
-      dispatch(fetchPhoneList(1));
-    } else if (pathname === "/beneficiarylist") {
-      dispatch(searchLoanBeneficiaries(data.text));
-    } else if (pathname === "/phone") {
-      dispatch(searchPhoneByName(data.text));
+    } else {
+      dispatch(searchLoanBeneficiaries(searchData));
     }
   };
 
@@ -152,14 +153,16 @@ const LoanBeneficiaryList = () => {
       <TableHeader
         title={"Beneficiary"}
         redirectLink={"/beneficiarylist/loan-beneficiary-crete"}
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
-        onSearch={handleSearch}
-        onSortByDate={handleSortByDate}
-        onSortByAZ={handleAtoZClick}
-        // model_name
-        model_name={"LoanBeneficaries"}
-        formsData={formsData}
+        // For Export & Import
         app_label={"loan"}
+        model_name={"LoanBeneficaries"}
+        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
+        //Optional
+        onSortByAZ={handleAtoZClick}
+        onSortByDate={handleSortByDate}
         sortButtonText={sortButtonText}
       />
       <GlobalTable

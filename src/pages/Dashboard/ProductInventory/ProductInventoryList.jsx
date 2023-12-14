@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteProductInventory, fetchProductInventoryList } from "../../../redux/Actions/ProductInventoryAction";
+import {
+  deleteProductInventory,
+  fetchProductInventoryList,
+  searchProductInventory,
+} from "../../../redux/Actions/ProductInventoryAction";
 
 const t_head = [
   { name: "Project Name" },
@@ -13,16 +17,24 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Quantity",
+    fieldType: "number",
+    fieldPlaceholder: "Quantity",
+  },
+];
+
 const ProductInventoryList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.productInventoryReducer);
-  console.log(state)
+  console.log(state);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
     inventory_name: item.inventory_name,
-    quantity: item.quantity ,
+    quantity: item.quantity,
     date: item.created_at,
     status: item.status,
   }));
@@ -74,7 +86,21 @@ const ProductInventoryList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "wearhouse/WearhouseItem/";
+    const serializer_class = "WearhouseItem";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchProductInventoryList(current_page));
+    } else {
+      dispatch(searchProductInventory(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
@@ -84,6 +110,9 @@ const ProductInventoryList = () => {
         model_name={"wearhouseItem"}
         app_label={"wearhouse"}
         url_endpoint={"/export-csv/?model=wearhouseItem&app_label=wearhouse"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

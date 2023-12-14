@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import {
   deleteLoanBeneficiary,
   fetchLoanBeneList,
+  searchExpenses,
 } from "../../../redux/Actions/ExpensesActions";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 
@@ -15,6 +16,19 @@ const t_head = [
   { name: "Expense Date" },
   { name: "Status" },
   { name: "Action" },
+];
+
+const formsData = [
+  {
+    fieldName: "Expenser Name",
+    fieldType: "text",
+    fieldPlaceholder: "Expenser Name",
+  },
+  {
+    fieldName: "Amount",
+    fieldType: "number",
+    fieldPlaceholder: "Amount",
+  },
 ];
 
 //date function
@@ -98,14 +112,34 @@ const Expenselist = () => {
     });
   };
 
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "accounts/Expense/";
+    const serializer_class = "Expense";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchLoanBeneList(current_page));
+    } else {
+      dispatch(searchExpenses(searchData));
+    }
+  };
+
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Expenses"}
         redirectLink={"/expense/create"}
+        // For Export & Import
         model_name={"Expense"}
         app_label={"accounts"}
         url_endpoint={"/export-csv/?model=Expense&app_label=accounts"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

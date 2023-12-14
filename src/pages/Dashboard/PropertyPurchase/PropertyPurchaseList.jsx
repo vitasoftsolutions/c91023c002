@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deletePropertyPurchase, fetchPropertyPurchaseList } from "../../../redux/Actions/_PropertyPurchaseAction";
+import { deletePropertyPurchase, fetchPropertyPurchaseList, searchPropertyPurchase } from "../../../redux/Actions/_PropertyPurchaseAction";
 
 const t_head = [
   { name: "Property Name" },
@@ -14,6 +14,20 @@ const t_head = [
   { name: "Status" },
   { name: "Actions" },
 ];
+
+const formsData = [
+  // {
+  //   fieldName: "Customer Name",
+  //   fieldType: "text",
+  //   fieldPlaceholder: "Customer Name",
+  // },
+  {
+    fieldName: "Amount",
+    fieldType: "number",
+    fieldPlaceholder: "Amount",
+  },
+];
+
 
 const PropertyPurchaseList = () => {
   const dispatch = useDispatch();
@@ -78,7 +92,21 @@ const PropertyPurchaseList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "projects/PropertyPurchase/";
+    const serializer_class = "PropertyPurchase";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchPropertyPurchaseList(current_page));
+    } else {
+      dispatch(searchPropertyPurchase(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
@@ -88,6 +116,9 @@ const PropertyPurchaseList = () => {
         model_name={"propertyPurchase"}
         app_label={"projects"}
         url_endpoint={"/export-csv/?model=propertyPurchase&app_label=projects"}
+          // For filters
+          onSearch={handleSearch}
+          formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

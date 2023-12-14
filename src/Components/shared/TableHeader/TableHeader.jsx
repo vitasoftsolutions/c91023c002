@@ -8,8 +8,9 @@ import { Link, useLocation } from "react-router-dom";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import { AiOutlinePlus } from "react-icons/ai";
 import ImportModal from "../Modals/ImportModal";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { base_url } from "../Url";
+import Select from "react-select";
 
 function TableHeader({
   title,
@@ -21,7 +22,7 @@ function TableHeader({
   sortButtonText,
   model_name,
   app_label,
-  formsData
+  formsData,
 }) {
   //
   const {
@@ -29,8 +30,8 @@ function TableHeader({
     handleSubmit,
     control,
     formState: { errors },
-    reset,
     setValue,
+    reset
   } = useForm({
     mode: "onChange",
   });
@@ -99,27 +100,56 @@ function TableHeader({
         >
           {field.fieldName}
         </label>
-        <>
-          <input
-            type={field.fieldType}
-            {...register(
-              field.fieldName.toLowerCase().replace(/\s+/g, "_"),
-              {}
-            )}
-            placeholder={field.fieldPlaceholder}
-            className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
-          />
-          {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
-            <span className="text-red-600">This field is required.</span>
-          )}
-        </>
 
-        <button></button>
+        {field.fieldType === "select" ? (
+          <>
+            <Controller
+              control={control}
+              {...register(field.fieldName.toLowerCase().replace(/\s+/g, "_"), {
+                required: field.isRequired,
+              })}
+     
+              name={field?.fieldName?.toLowerCase().replace(/\s+/g, "_")}
+              render={({ field: { onChange, value, ref } }) => (
+                <Select
+                  inputRef={ref}
+                  classNamePrefix="select"
+                  options={field?.options}
+                  value={
+                    field.defaultValue && field.defaultValue !== null
+                      ? field?.options[field?.defaultValue]
+                      : field?.options?.find((c) => c.value === value)
+                  }
+                  is_select
+                  onChange={(val) => {
+                    onChange(val.value);
+                    field.defaultValue = null;
+                  }}
+                />
+              )}
+            />
+   
+          </>
+        ) : (
+          <>
+            <input
+              type={field.fieldType}
+              {...register(
+                field.fieldName.toLowerCase().replace(/\s+/g, "_"),
+                {}
+              )}
+              placeholder={field.fieldPlaceholder}
+              className="w-full border-red-600 rounded-sm py-2 px-3 focus:outline-none"
+            />
+            {errors[field.fieldName.toLowerCase().replace(/\s+/g, "_")] && (
+              <span className="text-red-600">This field is required.</span>
+            )}
+          </>
+        )}
       </div>
     );
   };
 
-  console.log(isDropdownOpen, "isDropdownOpen");
   return (
     <div className="">
       <div className="flex w-full items-center justify-between">
@@ -204,7 +234,6 @@ function TableHeader({
                 </div>
               )}
             </form>
-
           </div>
           {/*  */}
         </div>

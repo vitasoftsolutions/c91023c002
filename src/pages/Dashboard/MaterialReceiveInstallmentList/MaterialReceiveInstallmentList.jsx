@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {
   deleteMaterialReceiveInstallment,
   fetchMaterialReceiveInstallmentList,
+  searchMaterialReceiveInstallment,
 } from "../../../redux/Actions/MaterialReceiveInstallmentAction";
 
 const t_head = [
@@ -14,6 +15,15 @@ const t_head = [
   { name: "Created Date" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "Quantity",
+    fieldType: "text",
+    fieldPlaceholder: "Quantity",
+  },
+
 ];
 
 const MaterialReceiveInstallmentList = () => {
@@ -77,7 +87,21 @@ const MaterialReceiveInstallmentList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "wearhouse/MaterialInstallment/";
+    const serializer_class = "MaterialInstallment";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchMaterialReceiveInstallmentList(current_page));
+    } else {
+      dispatch(searchMaterialReceiveInstallment(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
@@ -89,6 +113,10 @@ const MaterialReceiveInstallmentList = () => {
         model_name={"materialInstallment"}
         app_label={"wearhouse"}
         url_endpoint={"/export-csv/?model=materialInstallment&app_label=wearhouse"}
+
+           // For filters
+           onSearch={handleSearch}
+           formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

@@ -28,7 +28,6 @@ export const createProjectProgress = createAsyncThunk(
       return response.data;
     } catch (error) {
       throw new Error(error.message);
-
     }
   }
 );
@@ -84,7 +83,7 @@ export const fetchProjectProgressList = createAsyncThunk(
 export const fetchProjectProgressAllList = createAsyncThunk(
   "fetchProjectProgressAllList",
   async (payload) => {
-    console.log(payload, "payload")
+    console.log(payload, "payload");
     // Get the JWT token from session storage
     const token = sessionStorage.getItem("jwt_token");
 
@@ -95,8 +94,9 @@ export const fetchProjectProgressAllList = createAsyncThunk(
     };
 
     // Make the Axios GET request with the headers
-    const response = await axios.get(
-      `${base_url}/project-progress/`,{headers});
+    const response = await axios.get(`${base_url}/project-progress/`, {
+      headers,
+    });
 
     const response_token = response.data.results.token;
     const result = jwtDecode(response_token);
@@ -113,30 +113,33 @@ export const fetchProjectProgressAllList = createAsyncThunk(
 //
 //
 //
-export const fetchProjectProgress = createAsyncThunk("fetchProjectProgress", async (id) => {
-  console.log("getState()");
-  console.log(id, "getState()");
+export const fetchProjectProgress = createAsyncThunk(
+  "fetchProjectProgress",
+  async (id) => {
+    console.log("getState()");
+    console.log(id, "getState()");
 
-  // Get the JWT token from session storage
-  const token = sessionStorage.getItem("jwt_token");
-  // Define the headers
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
+    // Get the JWT token from session storage
+    const token = sessionStorage.getItem("jwt_token");
+    // Define the headers
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
 
-  // Make the Axios GET request with the headers
-  const response = await axios.get(`${base_url}/project-progress/${id}/`, {
-    headers,
-  });
+    // Make the Axios GET request with the headers
+    const response = await axios.get(`${base_url}/project-progress/${id}/`, {
+      headers,
+    });
 
-  const data = response.data;
+    const data = response.data;
 
-  console.log(data, "data__");
+    console.log(data, "data__");
 
-  // Return the data
-  return { data };
-});
+    // Return the data
+    return { data };
+  }
+);
 
 //
 //
@@ -198,22 +201,42 @@ export const updateProjectProgress = createAsyncThunk(
 //
 export const searchProjectProgress = createAsyncThunk(
   "searchProjectProgress",
-  async (firstName) => {
+  async (searchData) => {
+    //  https://erpcons.vitasoftsolutions.com/filter/loan/LoanBeneficaries/?data_name=first_name&value=Ifte Samul&data_name=last_name&value=ohy&serializer_class=LoanBeneficariesSerializer&start_date=2023-12-07&end_date=2023-12-31
     try {
       // Get the JWT token from session storage
       const token = sessionStorage.getItem("jwt_token");
-
+      // Get Form Data From Searched Data
+      const formData = searchData.formData;
       // Define the headers
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
 
-      let apiUrl = `${base_url}/project-progress/`;
+      let apiUrl = `${base_url}/filter/${searchData.app_model}`;
 
-      // Check if firstName is not empty, then append the search query
-      if (firstName) {
-        apiUrl += `?first_name=${firstName}`;
+      const searchKeys = Object.keys(formData);
+
+      // Check if formData is not empty, then append the search query
+      if (searchKeys.length > 0) {
+        apiUrl += "?";
+
+        for (let i = 0; i < searchKeys.length; i++) {
+          const key = searchKeys[i];
+          const value = formData[key];
+          apiUrl += `data_name=${key}&value=${value}`;
+
+          // Append '&' if it's not the last key-value pair
+          if (i < searchKeys.length - 1) {
+            apiUrl += "&";
+          }
+        }
+      }
+
+      // Append the serializer_class parameter if it exists
+      if (searchData.serializer_class) {
+        apiUrl += `&serializer_class=${searchData.serializer_class}Serializer`;
       }
 
       // Make the Axios GET request with the headers
@@ -221,8 +244,10 @@ export const searchProjectProgress = createAsyncThunk(
         headers,
       });
 
-      const response_token = response.data.results.token;
+      const response_token = response.data.token;
       const result = jwtDecode(response_token);
+
+      console.log(result, "result");
 
       const data = result.data;
       // Return the data

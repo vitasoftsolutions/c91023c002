@@ -83,10 +83,10 @@ function EditMaterialDispatch() {
       isRequired: true,
       defaultValue: state.metarial,
       // TODO: Metarial not Doen
-      // options: materialState?.map((dt) => ({
-      //   value: dt.id.toString(),
-      //   label: dt.purchase_code,
-      // })),
+      options: materialState?.map((dt) => ({
+        value: dt.id.toString(),
+        label: dt.purchase_code,
+      })),
     },
   ];
 

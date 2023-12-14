@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import Swal from "sweetalert2";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
-import { deleteLoanInstallments, fetchLoanInstallments } from "../../../redux/Actions/LoanInstallmentAction";
+import {
+  deleteLoanInstallments,
+  fetchLoanInstallments,
+  searchLoanBeneficiaries,
+} from "../../../redux/Actions/LoanInstallmentAction";
 
 const t_head = [
   { name: "Giver Name" },
@@ -16,6 +20,14 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Amount",
+    fieldType: "text",
+    fieldPlaceholder: "Amount",
+  },
+];
+
 function LoanInstallment() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.loanInstallmentReducer);
@@ -24,9 +36,9 @@ function LoanInstallment() {
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    giver_name:  item.giver_name,
-    taker_name:  item.taker_name,
-    amount:  item.amount,
+    giver_name: item.giver_name,
+    taker_name: item.taker_name,
+    amount: item.amount,
     image: item.document,
     date: item.created_at,
     instalment: item.instalment,
@@ -76,16 +88,34 @@ function LoanInstallment() {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "loan/LoanInstallment/";
+    const serializer_class = "LoanInstallmenttion";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchLoanInstallments(current_page));
+    } else {
+      dispatch(searchLoanBeneficiaries(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Installment"}
         redirectLink={"/loan-installment/create-loan-installment"}
+        // For Export & Import
         model_name={"loanInstallment"}
         app_label={"loan"}
         url_endpoint={"/export-csv/?model=loanInstallment&app_label=loan"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

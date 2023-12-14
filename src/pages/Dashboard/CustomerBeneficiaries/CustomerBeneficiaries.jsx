@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteCustomerBen, fetchCustomerBeneList } from "../../../redux/Actions/CustomerBenAction";
+import {
+  deleteCustomerBen,
+  fetchCustomerBeneList,
+  searchCustomerBeneList,
+} from "../../../redux/Actions/CustomerBenAction";
 
 const t_head = [
   { name: "Name" },
@@ -14,10 +18,31 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "First Name",
+    fieldType: "text",
+    fieldPlaceholder: "First Name",
+  },
+  {
+    fieldName: "Last Name",
+    fieldType: "text",
+    fieldPlaceholder: "Last Name",
+  },
+  {
+    fieldName: "Email",
+    fieldType: "Email",
+    fieldPlaceholder: "Email",
+  }
+];
+
 const CustomerBeneficiaries = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.customersBenReducer);
   // All DataList
+
+  console.log(state, "state")
+
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
@@ -75,17 +100,37 @@ const CustomerBeneficiaries = () => {
     });
   };
 
-  //
+    // Filter Code
+    const handleSearch = (formData) => {
+      const allKeysEmpty = Object.values(formData).every(
+        (value) => value === "" || value === null
+      );
+      const app_model = "customers/CustomerBeneficaries/";
+      const serializer_class = "CustomerBeneficaries";
+      const searchData = { formData, app_model, serializer_class };
+      if (allKeysEmpty) {
+        // If the search field is empty, fetch all formData
+        dispatch(fetchCustomerBeneList(current_page));
+      } else {
+        dispatch(searchCustomerBeneList(searchData));
+      }
+    };
+  
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Customer"}
         redirectLink={"/customer-beneficiaries/customer-beneficiaries-crete"}
-        model_name={"customerBeneficaries"}
-        app_label={"contructors"}
-        url_endpoint={"/export-csv/?model=customerBeneficaries&app_label=contructors"}
-    
+        // For Export & Import
+        model_name={"CustomerBeneficaries"}
+        app_label={"customers"}
+        url_endpoint={
+          "/export-csv/?model=CustomerBeneficaries&app_label=customers"
+        }
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

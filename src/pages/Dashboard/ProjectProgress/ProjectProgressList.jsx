@@ -3,13 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteProjectProgress, fetchProjectProgressList } from "../../../redux/Actions/ProjectProgressAction";
+import { deleteProjectProgress, fetchProjectProgressList, searchProjectProgress } from "../../../redux/Actions/ProjectProgressAction";
 
 const t_head = [
   { name: "Note" },
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  // {
+  //   fieldName: "Expenser Name",
+  //   fieldType: "text",
+  //   fieldPlaceholder: "Expenser Name",
+  // },
+  // {
+  //   fieldName: "Amount",
+  //   fieldType: "number",
+  //   fieldPlaceholder: "Amount",
+  // },
 ];
 
 const ProjectProgressList = () => {
@@ -73,7 +86,23 @@ const ProjectProgressList = () => {
   };
 
   //
-  //
+
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "projects/ProjectProgress/";
+    const serializer_class = "ProjectProgress";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchProjectProgressList(current_page));
+    } else {
+      dispatch(searchProjectProgress(searchData));
+    }
+  };
+
   return (
     <div className="max-w-screen">
       <TableHeader
@@ -82,6 +111,10 @@ const ProjectProgressList = () => {
         model_name={"projectProgress"}
         app_label={"projects"}
         url_endpoint={"/export-csv/?model=projectProgress&app_label=projects"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
+
       />
       <GlobalTable
         t_head={t_head}

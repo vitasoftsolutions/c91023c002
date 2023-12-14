@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {
   deleteProperty,
   fetchPropertyList,
+  searchProperty,
 } from "../../../redux/Actions/PropertyAction";
 
 const t_head = [
@@ -14,6 +15,14 @@ const t_head = [
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "Project name",
+    fieldType: "text",
+    fieldPlaceholder: "Project name",
+  },
 ];
 
 const PropertyList = () => {
@@ -78,16 +87,37 @@ const PropertyList = () => {
   };
 
   //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "projects/PropertyModels/";
+    const serializer_class = "PropertyModels";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchPropertyList(current_page));
+    } else {
+      dispatch(searchProperty(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Property"}
         redirectLink={"/property/property-crete"}
+        // For Export & Import
         model_name={"propertyModels"}
         app_label={"projects"}
         url_endpoint={"/export-csv/?model=propertyModels&app_label=projects"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
+
+
       <GlobalTable
         t_head={t_head}
         t_data={tableData}

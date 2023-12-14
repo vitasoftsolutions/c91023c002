@@ -6,6 +6,7 @@ import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import {
   deleteOwner,
   fetchOwnerAction,
+  searchPhoneByName,
 } from "../../../redux/Actions/ownerBenAction";
 
 const t_head = [
@@ -15,6 +16,24 @@ const t_head = [
   { name: "E-mail" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "First Name",
+    fieldType: "text",
+    fieldPlaceholder: "First Name",
+  },
+  {
+    fieldName: "Last Name",
+    fieldType: "text",
+    fieldPlaceholder: "Last Name",
+  },
+  {
+    fieldName: "Nid Number",
+    fieldType: "number",
+    fieldPlaceholder: "Nid Number",
+  },
 ];
 
 function Owner() {
@@ -74,7 +93,21 @@ function Owner() {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "owner/OwnerBeneficaries/";
+    const serializer_class = "OwnerBeneficaries";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchOwnerAction(current_page));
+    } else {
+      dispatch(searchPhoneByName(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
@@ -82,11 +115,15 @@ function Owner() {
       <TableHeader
         title={"Owner"}
         redirectLink={"/owner/createowner"}
-        model_name={"ownerBeneficariess"}
+        // For Export & Import
+        model_name={"OwnerBeneficaries"}
         app_label={"owner"}
-        url_endpoint={"/export-csv/?model=ownerBeneficariess&app_label=owner"}
+        url_endpoint={"/export-csv/?model=OwnerBeneficaries&app_label=owner"}
+        // Search
+        onSearch={handleSearch}
+        formsData={formsData}
       />
-      
+
       <GlobalTable
         t_head={t_head}
         t_data={tableData}

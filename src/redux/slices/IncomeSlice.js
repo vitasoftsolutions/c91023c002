@@ -3,13 +3,13 @@ import {
   createLoanBen,
   deleteLoanBeneficiary,
   fetchLoanBene,
-  fetchLoanBeneList,
-  searchLoanBeneficiaries,
   sortByAZLoanBen,
   sortByDateLoanBen,
   updateLoanBeneficiary,
   contractorben,
   projectlist,
+  searchIncome,
+  fetchIncomeList,
 } from "../Actions/IncomeActions";
 
 const incomeSlice = createSlice({
@@ -78,23 +78,25 @@ const incomeSlice = createSlice({
         state.isError = action.error.message;
       })
       // Fetch LoanBen list
-      .addCase(fetchLoanBeneList.pending, (state) => {
+      .addCase(fetchIncomeList.pending, (state) => {
         state.isLoading = true;
         state.isUpdate = false;
         state.isError = false;
         state.sData = [];
+        state.data = [];
       })
-      .addCase(fetchLoanBeneList.fulfilled, (state, action) => {
+      .addCase(fetchIncomeList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isCreated = false;
         state.isUpdate = false;
         state.isError = false;
+        {console.log(action.payload.data, "from silce")}
         state.data = action.payload.data;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.totalData = action.payload.totalData;
       })
-      .addCase(fetchLoanBeneList.rejected, (state, action) => {
+      .addCase(fetchIncomeList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })
@@ -162,18 +164,18 @@ const incomeSlice = createSlice({
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLoanBeneficiaries.pending, (state) => {
+      .addCase(searchIncome.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
+      .addCase(searchIncome.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
+      .addCase(searchIncome.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })

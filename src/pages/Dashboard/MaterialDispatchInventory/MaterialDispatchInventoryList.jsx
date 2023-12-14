@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteMaterialDispatchInventory, fetchMaterialDispatchInventoryList } from "../../../redux/Actions/MaterialDispatchInventoryAction";
+import {
+  deleteMaterialDispatchInventory,
+  fetchMaterialDispatchInventoryList,
+  searchMaterialDispatchInventory,
+} from "../../../redux/Actions/MaterialDispatchInventoryAction";
 
 const t_head = [
   { name: "Inventory Item" },
@@ -15,18 +19,31 @@ const t_head = [
   { name: "Actions" },
 ];
 
+const formsData = [
+  {
+    fieldName: "Check status",
+    fieldType: "text",
+    fieldPlaceholder: "Check status",
+  },
+  {
+    fieldName: "Quantity",
+    fieldType: "number",
+    fieldPlaceholder: "Quantity",
+  },
+];
+
 const MaterialDispatchInventoryList = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.materialDispatchInventoryReducer);
-  console.log(state)
+  console.log(state);
   // allDataList
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
     inventory_item_id: item.inventory_item_id,
     project_id: item.project_id,
-    quantity: item.quantity ,
-    check_status: item.check_status ,
+    quantity: item.quantity,
+    check_status: item.check_status,
     date: item.created_at,
     status: item.status,
   }));
@@ -78,16 +95,38 @@ const MaterialDispatchInventoryList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "wearhouse/WarehouseMaterialDispatch/";
+    const serializer_class = "WarehouseMaterialDispatch";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchMaterialDispatchInventoryList(current_page));
+    } else {
+      dispatch(searchMaterialDispatchInventory(searchData));
+    }
+  };
+
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Material Inventory Dispatch"}
-        redirectLink={"/material-dispatch-inventory/material-dispatch-inventory-crete"}
+        redirectLink={
+          "/material-dispatch-inventory/material-dispatch-inventory-crete"
+        }
         model_name={"warehouseMaterialDispatch"}
         app_label={"wearhouse"}
-        url_endpoint={"/export-csv/?model=warehouseMaterialDispatch&app_label=wearhouse"}
+        url_endpoint={
+          "/export-csv/?model=warehouseMaterialDispatch&app_label=wearhouse"
+        }
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}
@@ -97,7 +136,9 @@ const MaterialDispatchInventoryList = () => {
         current_page={current_page}
         page_number={page_number}
         deleteFunction={deleteFunction}
-        editLink={"/material-dispatch-inventory/edit-material-dispatch-inventory"}
+        editLink={
+          "/material-dispatch-inventory/edit-material-dispatch-inventory"
+        }
         erp_modalCol={12}
         photoSection={false}
         nidSection={false}

@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import {
   fetchPhoneList,
   deletePhone,
+  searchPhoneByName,
 } from "../../../redux/Actions/PhoneAction";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 
@@ -18,6 +19,24 @@ const t_head = [
   { name: "Action" },
 ];
 
+const formsData = [
+  {
+    fieldName: "First Name",
+    fieldType: "text",
+    fieldPlaceholder: "Last Name",
+  },
+  {
+    fieldName: "Last Name",
+    fieldType: "text",
+    fieldPlaceholder: "Last Name",
+  },
+  {
+    fieldName: "Phone number",
+    fieldType: "number",
+    fieldPlaceholder: "Phone number",
+  },
+];
+
 function PhoneList() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.phoneReducers);
@@ -26,7 +45,7 @@ function PhoneList() {
    const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
-    first_name: item.first_name + " " + item.last_name,
+    Last_name: item.first_name + " " + item.last_name,
     date: item.created_at,
     relation: item.relation,
     phone_number: item.phone_number,
@@ -76,12 +95,42 @@ function PhoneList() {
       }
     });
   };
+
+ // Filter Code
+ const handleSearch = (formData) => {
+
+  console.log(formData, "formDataformDataformData")
+
+  const allKeysEmpty = Object.values(formData).every(
+    (value) => value === "" || value === null
+  );
+  const app_model = "globalapp2/PhoneNumber/";
+  const serializer_class = "PhoneNumber";
+  const searchData = { formData, app_model, serializer_class };
+  if (allKeysEmpty) {
+    // If the search field is empty, fetch all formData
+    dispatch(fetchPhoneList(current_page));
+
+    console.log("here")
+  } else {
+    dispatch(searchPhoneByName(searchData));
+    console.log("under")
+  }
+};
+
+
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Phone"}
         redirectLink={"/phone/createphone"}
-        url_endpoint={"/export-csv/?model=phoneNumber&app_label=globalapp2"}
+        // For Export & Import
+        model_name={"PhoneNumber"}
+        app_label={"globalapp2"}
+        url_endpoint={"/export-csv/?model=PhoneNumber&app_label=globalapp2"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

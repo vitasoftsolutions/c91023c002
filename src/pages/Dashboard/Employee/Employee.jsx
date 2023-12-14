@@ -4,6 +4,7 @@ import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import {
   deleteEmployee,
   fetchEmployeeAction,
+  searchPhoneByName,
 } from "../../../redux/Actions/employeeAction";
 import Swal from "sweetalert2";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
@@ -15,6 +16,24 @@ const t_head = [
   { name: "E-mail" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "First name",
+    fieldType: "text",
+    fieldPlaceholder: "First name",
+  },
+  {
+    fieldName: "Last name",
+    fieldType: "text",
+    fieldPlaceholder: "Last name",
+  },
+  {
+    fieldName: "Email",
+    fieldType: "email",
+    fieldPlaceholder: "Email",
+  },
 ];
 
 function Employee() {
@@ -75,7 +94,22 @@ function Employee() {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "users/Employee/";
+    const serializer_class = "Employee";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchEmployeeAction(current_page));
+    } else {
+      dispatch(searchPhoneByName(searchData));
+    }
+  };
+
   //
   return (
     <div className="max-w-screen">
@@ -85,7 +119,9 @@ function Employee() {
         model_name={"employee"}
         app_label={"users"}
         url_endpoint={"/export-csv/?model=employee&app_label=users"}
-   
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

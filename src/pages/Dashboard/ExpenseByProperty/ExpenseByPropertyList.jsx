@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {
   deleteExpenseByProperty,
   fetchExpenseByPropertyList,
+  searchExpenseByProperty,
 } from "../../../redux/Actions/ExpenseByPropertyAction";
 
 const t_head = [
@@ -16,6 +17,19 @@ const t_head = [
   { name: "Expense Date" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "Expenser Name",
+    fieldType: "text",
+    fieldPlaceholder: "Expenser Name",
+  },
+  {
+    fieldName: "Amount",
+    fieldType: "number",
+    fieldPlaceholder: "Amount",
+  },
 ];
 
 const ExpenseByPropertyList = () => {
@@ -81,7 +95,21 @@ const ExpenseByPropertyList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "projects/ExpenseByProperty/";
+    const serializer_class = "ExpensedByproperty";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchExpenseByPropertyList(current_page));
+    } else {
+      dispatch(searchExpenseByProperty(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
@@ -91,6 +119,9 @@ const ExpenseByPropertyList = () => {
         model_name={"expenseByProperty"}
         app_label={"projects"}
         url_endpoint={"/export-csv/?model=expenseByProperty&app_label=projects"}
+         // For filters
+         onSearch={handleSearch}
+         formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

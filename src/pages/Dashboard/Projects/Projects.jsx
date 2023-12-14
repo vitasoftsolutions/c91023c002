@@ -6,9 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProjects,
   fetchProjects,
+  searchLoanBeneficiaries,
 } from "../../../redux/Actions/ProjectsAction";
 import DisplayProjects from "../../../Components/Projects/DisplayProjects";
 
+const formsData = [
+  {
+    fieldName: "Name",
+    fieldType: "text",
+    fieldPlaceholder: "Name",
+  }
+];
 
 function Projects() {
   const dispatch = useDispatch();
@@ -72,14 +80,34 @@ function Projects() {
     });
   };
 
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "projects/ProjectInfo/";
+    const serializer_class = "Project";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchProjects(current_page));
+    } else {
+      dispatch(searchLoanBeneficiaries(searchData));
+    }
+  };
+
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Projects"}
         redirectLink={"/projects/crete-projects"}
+        // For Export & Import
         model_name={"projectInfo"}
         app_label={"projects"}
         url_endpoint={"/export-csv/?model=projectInfo&app_label=projects"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <DisplayProjects
         allDataList={allDataList}

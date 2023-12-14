@@ -5,9 +5,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../../Components/shared/Breadcrumb/Breadcrumb";
 import { ToastContainer, toast } from "react-toastify";
 import {
-  createLoanBen,
-  contractorben,
-  projectlist,
   fetchLoanBene,
   updateLoanBeneficiary,
 } from "../../../redux/Actions/AssignContractorAction";

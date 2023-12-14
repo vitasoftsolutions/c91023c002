@@ -1,6 +1,50 @@
 import Chart_PaymentPerMonth from "../../Components/shared/AllCharts/Chart_PaymentPerMonth";
 import Chart_MostDownloadedIndustry from "../../Components/shared/AllCharts/Chart_MostDownloadedIndustry";
 
+import { FaChartLine, FaRegBookmark } from "react-icons/fa";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { GiArcheryTarget } from "react-icons/gi";
+import { IoPieChartSharp } from "react-icons/io5";
+
+const top_cards = [
+  {
+    icons: <FaChartLine />,
+    content: "Total User",
+    number: "123.40",
+    footer_icons: <FaRegBookmark />,
+    footer_text: "All erp users",
+    bg1: "#DB8282",
+    bg2: "#DDB249",
+  },
+  {
+    icons: <GiArcheryTarget />,
+    content: "Total User",
+    number: "123.40",
+    footer_icons: <FaRegBookmark />,
+    footer_text: "All erp users",
+    bg1: "#84AEC2",
+    bg2: "#6D53DC",
+  },
+  {
+    icons: <FaMoneyBillTrendUp />,
+    content: "Total User",
+    number: "123.40",
+    footer_icons: <FaRegBookmark />,
+    footer_text: "All erp users",
+    bg1: "#04616E",
+    bg2: "#B7D7C9",
+  },
+  {
+    icons: <IoPieChartSharp />,
+    content: "Total User",
+    number: "123.40",
+    footer_icons: <FaRegBookmark />,
+    footer_text: "All erp users",
+    bg1: "#DB8282",
+    bg2: "#E54D24",
+  },
+];
+
 function HomePage() {
   return (
     <div className="flex flex-col items-center min-h-[80vh]">
@@ -8,19 +52,49 @@ function HomePage() {
         Welcome to <span className="text-green-600">ERP</span>
       </h1>
       <div className="p-3 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-4 gap-3 mb-10">
+          {/* Mapping cards */}
+          {top_cards.map((cr, index) => (
+            <div
+              key={index}
+              className={`col-span-1 h-36 rounded-xl`}
+              style={{
+                background: `linear-gradient(to right, ${cr.bg1}, ${cr.bg2})`,
+              }}
+            >
+              <div className="flex border-b-2">
+                <div className="flex justify-center items-center text-white text-3xl bg-gray-300 h-14 w-14 ml-4 mt-4 bg-opacity-60 rounded-md">
+                  <div>{cr.icons}</div>
+                </div>
+                <div className="text-white m-4">
+                  <p>{cr.content}</p>
+                  <h3 className="text-xl font-bold">{cr.number}</h3>
+                </div>
+              </div>
+              {/* Footer */}
+              <div className="flex justify-center items-center gap-3 mt-4 text-white">
+                <div className="flex items-center gap-3">
+                  <span>{cr.footer_icons}</span>
+                  <span>{cr.footer_text}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
           <div className="md:col-span-1">
             <h2 className="text-xl font-semibold text-center text-black border-b-2">
               Cost Per Month
             </h2>
             <Chart_PaymentPerMonth />
           </div>
-          <div className="md:col-span-1">
+          {/* <div className="md:col-span-1">
             <h2 className="text-xl font-semibold text-center text-black border-b-2">
               Customer Per Month
             </h2>
             <Chart_MostDownloadedIndustry />
-          </div>
+          </div> */}
         </div>
         <div className="mt-20 p-3 bg-red-300">
           Copyright © 2012 - 2023 TermsFeed®. All rights reserved.

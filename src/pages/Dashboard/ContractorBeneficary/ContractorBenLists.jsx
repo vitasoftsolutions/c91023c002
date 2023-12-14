@@ -6,7 +6,10 @@ import Swal from "sweetalert2";
 import {
   deleteLoanBeneficiary,
   fetchLoanBeneList,
+  searchLoanBeneficiaries,
 } from "../../../redux/Actions/ContractorBenAction";
+
+
 const t_head = [
   { name: "Name" },
   { name: "Image" },
@@ -15,10 +18,36 @@ const t_head = [
   { name: "Status" },
   { name: "Actions" },
 ];
+
+const formsData = [
+  {
+    fieldName: "First name",
+    fieldType: "text",
+    fieldPlaceholder: "First name",
+  },
+  {
+    fieldName: "Last name",
+    fieldType: "text",
+    fieldPlaceholder: "Last name",
+  },
+  {
+    fieldName: "Email",
+    fieldType: "email",
+    fieldPlaceholder: "Email",
+  },
+  {
+    fieldName: "Nid number",
+    fieldType: "number",
+    fieldPlaceholder: "Nid Number",
+  },
+];
 const ContractorBenLists = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.ContractorBenReducers);
   // allDataList
+
+  console.log(state)
+
   const allDataList = state.data;
   const newData = state?.data?.map((item) => ({
     id: item.id,
@@ -76,15 +105,36 @@ const ContractorBenLists = () => {
     });
   };
 
-  //
-  //
+// 
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "contructors/ContructorsBeneficaries/";
+    const serializer_class = "ContructorsBeneficaries";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchLoanBeneList(current_page));
+    } else {
+      dispatch(searchLoanBeneficiaries(searchData));
+    }
+  };
+
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Beneficiary"}
         redirectLink={"/contractor-beneficaries/create"}
-        // TODO:
-        url_endpoint={"/export-csv/?model=LoanBeneficaries&app_label=loan"}
+        // For Export & Import
+        model_name={"contructorsBeneficaries"}
+        app_label={"contructors"}
+        url_endpoint={"/export-csv/?model=contructorsBeneficaries&app_label=contructors"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
+
       />
       <GlobalTable
         t_head={t_head}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteBusinessProfile, fetchBusinessProfileList } from "../../../redux/Actions/BusinessProfileAction";
+import { deleteBusinessProfile, fetchBusinessProfileList, searchBusinessProfile } from "../../../redux/Actions/BusinessProfileAction";
 
 const t_head = [
   { name: "Name" },
@@ -12,6 +12,14 @@ const t_head = [
   { name: "Join Date" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "Name",
+    fieldType: "text",
+    fieldPlaceholder: "Name",
+  },
 ];
 
 const BusinessProfile = () => {
@@ -77,16 +85,34 @@ const BusinessProfile = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "profileapp/BusinessProfile/";
+    const serializer_class = "Profile";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchBusinessProfileList(current_page));
+    } else {
+      dispatch(searchBusinessProfile(searchData));
+    }
+  };
   //
   return (
     <div className="max-w-screen">
       <TableHeader
         title={"Business Profile"}
         redirectLink={"/business-profile/crete-business-profile"}
+        // For Export & Import
         model_name={"businessProfile"}
         app_label={"profileapp"}
         url_endpoint={"/export-csv/?model=businessProfile&app_label=profileapp"}
+        // For filters
+        onSearch={handleSearch}
+        formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}

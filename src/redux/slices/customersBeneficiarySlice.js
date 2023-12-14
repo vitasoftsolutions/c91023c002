@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createCustomerBen, deleteCustomerBen, fetchCustomerBeneAllList, fetchCustomerBeneList, fetchCustomersBene, updateCustomerBeneficiary } from "../Actions/CustomerBenAction";
+import { createCustomerBen, deleteCustomerBen, fetchCustomerBeneAllList, fetchCustomerBeneList, fetchCustomersBene, searchCustomerBeneList, updateCustomerBeneficiary } from "../Actions/CustomerBenAction";
 import {
   createLoanBen,
   deleteLoanBeneficiary,
@@ -132,18 +132,18 @@ const customersBeneficiarySlice = createSlice({
         state.isDelete = false;
       })
       // Search by name
-      .addCase(searchLoanBeneficiaries.pending, (state) => {
+      .addCase(searchCustomerBeneList.pending, (state) => {
         state.isLoading = true;
         state.data = [];
         state.currentPage = 1;
         state.totalPages = 1;
         state.totalData = 0;
       })
-      .addCase(searchLoanBeneficiaries.fulfilled, (state, action) => {
+      .addCase(searchCustomerBeneList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
       })
-      .addCase(searchLoanBeneficiaries.rejected, (state, action) => {
+      .addCase(searchCustomerBeneList.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.error.message;
       })

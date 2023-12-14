@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../../../Components/shared/TableHeader/TableHeader";
 import GlobalTable from "../../../Components/shared/Tables/GlobalTable";
 import Swal from "sweetalert2";
-import { deleteRepairRecords, fetchRepairRecordsList } from "../../../redux/Actions/RepairRecordsAction";
+import { deleteRepairRecords, fetchRepairRecordsList, searchRepairRecords } from "../../../redux/Actions/RepairRecordsAction";
 
 const t_head = [
   { name: "Reason" },
@@ -14,6 +14,19 @@ const t_head = [
   { name: "Created at" },
   { name: "Status" },
   { name: "Actions" },
+];
+
+const formsData = [
+  {
+    fieldName: "Reason",
+    fieldType: "text",
+    fieldPlaceholder: "Reason",
+  },
+  {
+    fieldName: "Amount",
+    fieldType: "number",
+    fieldPlaceholder: "Amount",
+  },
 ];
 
 const RepairRecordsList = () => {
@@ -80,7 +93,22 @@ const RepairRecordsList = () => {
     });
   };
 
-  //
+  // Filter Code
+  const handleSearch = (formData) => {
+    const allKeysEmpty = Object.values(formData).every(
+      (value) => value === "" || value === null
+    );
+    const app_model = "renter/RepairRecords/";
+    const serializer_class = "RepairRecords";
+    const searchData = { formData, app_model, serializer_class };
+    if (allKeysEmpty) {
+      // If the search field is empty, fetch all formData
+      dispatch(fetchRepairRecordsList(current_page));
+    } else {
+      dispatch(searchRepairRecords(searchData));
+    }
+  };
+
   //
   return (
     <div className="max-w-screen">
@@ -90,6 +118,9 @@ const RepairRecordsList = () => {
         model_name={"repairRecords"}
         app_label={"renter"}
         url_endpoint={"/export-csv/?model=repairRecords&app_label=renter"}
+                // For filters
+                onSearch={handleSearch}
+                formsData={formsData}
       />
       <GlobalTable
         t_head={t_head}
