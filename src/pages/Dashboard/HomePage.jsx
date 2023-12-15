@@ -1,10 +1,15 @@
-import Chart_PaymentPerMonth from "../../Components/shared/AllCharts/Chart_PaymentPerMonth";
-import Chart_MostDownloadedIndustry from "../../Components/shared/AllCharts/Chart_MostDownloadedIndustry";
-
-import { FaChartLine, FaRegBookmark } from "react-icons/fa";
+import {
+  FaChartLine,
+  FaLevelUpAlt,
+  FaRegBookmark,
+  FaUsers,
+} from "react-icons/fa";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GiArcheryTarget } from "react-icons/gi";
 import { IoPieChartSharp } from "react-icons/io5";
+import { MdOutlineWifiTethering } from "react-icons/md";
+import { CiFaceSmile } from "react-icons/ci";
+import MyBarChart from "../../Components/shared/AllCharts/Chart_PaymentPerMonth";
 
 const top_cards = [
   {
@@ -45,6 +50,33 @@ const top_cards = [
   },
 ];
 
+const data_card = [
+  {
+    icons: <FaUsers />,
+    text: "Total Users",
+    number: "31,004",
+    percentage: "4.9%",
+  },
+  {
+    icons: <FaLevelUpAlt />,
+    text: "Total Users",
+    number: "31,004",
+    percentage: "4.9%",
+  },
+  {
+    icons: <MdOutlineWifiTethering />,
+    text: "Total Users",
+    number: "31,004",
+    percentage: "4.9%",
+  },
+  {
+    icons: <CiFaceSmile />,
+    text: "Total Users",
+    number: "31,004",
+    percentage: "4.9%",
+  },
+];
+
 function HomePage() {
   return (
     <div className="flex flex-col items-center min-h-[80vh]">
@@ -82,12 +114,46 @@ function HomePage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-          <div className="md:col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div
+            className="md:col-span-1 shadow-xl shadow-blue-200 pb-8 pr-5"
+            style={{ height: "380px", width: "100%" }}
+          >
             <h2 className="text-xl font-semibold text-center text-black border-b-2">
               Cost Per Month
             </h2>
-            <Chart_PaymentPerMonth />
+            <MyBarChart />
+          </div>
+
+          <div className="md:col-span-1 p-3">
+            <div className="grid grid-cols-4 gap-4">
+              {data_card.map((dt, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="shadow-lg shadow-blue-200 col-span-2 p-4"
+                  >
+                    <div className="flex justify-center">
+                      <div className="bg-blue-200 bg-opacity-60 text-blue-500 w-fit items-center rounded-full p-3">
+                        {dt.icons}
+                      </div>
+                    </div>
+                    {/* Texts */}
+                    <div className="flex justify-center items-center">
+                      <h3 className="text-3xl font-bold text-gray-600">
+                        {dt.number}
+                      </h3>
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <p className="text-xl my-2 text-gray-600">{dt.text}</p>
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <p className="text-red-400">{dt.percentage}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           {/* <div className="md:col-span-1">
             <h2 className="text-xl font-semibold text-center text-black border-b-2">
