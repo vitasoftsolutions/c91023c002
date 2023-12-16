@@ -10,6 +10,7 @@ import { IoPieChartSharp } from "react-icons/io5";
 import { MdOutlineWifiTethering } from "react-icons/md";
 import { CiFaceSmile } from "react-icons/ci";
 import MyBarChart from "../../Components/shared/AllCharts/Chart_PaymentPerMonth";
+import Chart_MostDownloadedIndustry from "../../Components/shared/AllCharts/Chart_MostDownloadedIndustry";
 
 const top_cards = [
   {
@@ -116,13 +117,15 @@ function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div
-            className="md:col-span-1 shadow-xl shadow-blue-200 pb-8 pr-5"
+            className="md:col-span-1 shadow-xl shadow-blue-200 p-5"
             style={{ height: "380px", width: "100%" }}
           >
             <h2 className="text-xl font-semibold text-center text-black border-b-2">
               Cost Per Month
             </h2>
-            <MyBarChart />
+            <div>
+              <Chart_MostDownloadedIndustry />
+            </div>
           </div>
 
           <div className="md:col-span-1 p-3">
@@ -155,15 +158,12 @@ function HomePage() {
               })}
             </div>
           </div>
-          {/* <div className="md:col-span-1">
-            <h2 className="text-xl font-semibold text-center text-black border-b-2">
-              Customer Per Month
-            </h2>
-            <Chart_MostDownloadedIndustry />
-          </div> */}
-        </div>
-        <div className="mt-20 p-3 bg-red-300">
-          Copyright © 2012 - 2023 TermsFeed®. All rights reserved.
+          <div
+            className="md:col-span-2 shadow-xl shadow-blue-200 pb-8 pr-5"
+            style={{ height: "380px", width: "100%" }}
+          >
+            <MyBarChart />
+          </div>
         </div>
       </div>
     </div>

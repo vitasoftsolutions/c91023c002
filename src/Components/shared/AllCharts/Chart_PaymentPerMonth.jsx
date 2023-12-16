@@ -23,7 +23,7 @@ const data = [
 const MyBarChart = () => {
   return (
     <ResponsiveContainer>
-      <BarChart width={600} height={300} data={data}>
+      <BarChart width="100%" height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
