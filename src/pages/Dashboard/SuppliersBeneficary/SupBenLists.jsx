@@ -100,7 +100,7 @@ const SupBenLists = () => {
       (value) => value === "" || value === null
     );
     const app_model = "suppliers/SupplierBeneficaries/";
-    const serializer_class = "SupplierBeneficaries";
+    const serializer_class = "SupliersBeneficaries";
     const searchData = { formData, app_model, serializer_class };
     if (allKeysEmpty) {
       // If the search field is empty, fetch all formData

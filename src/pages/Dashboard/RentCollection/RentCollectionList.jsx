@@ -99,7 +99,7 @@ const RentCollectionList = () => {
     (value) => value === "" || value === null
   );
   const app_model = "renter/RentCollection/";
-  const serializer_class = "RentCollection";
+  const serializer_class = "FRentCollection";
   const searchData = { formData, app_model, serializer_class };
   if (allKeysEmpty) {
     // If the search field is empty, fetch all formData

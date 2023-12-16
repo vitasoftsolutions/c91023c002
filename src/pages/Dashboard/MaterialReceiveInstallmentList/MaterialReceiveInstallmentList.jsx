@@ -93,7 +93,7 @@ const MaterialReceiveInstallmentList = () => {
       (value) => value === "" || value === null
     );
     const app_model = "wearhouse/MaterialInstallment/";
-    const serializer_class = "MaterialInstallment";
+    const serializer_class = "MaterialInstallments";
     const searchData = { formData, app_model, serializer_class };
     if (allKeysEmpty) {
       // If the search field is empty, fetch all formData
