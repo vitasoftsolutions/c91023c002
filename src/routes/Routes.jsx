@@ -154,6 +154,10 @@ export const router = createBrowserRouter([
         element: <Login_Page />,
       },
       {
+        path: "/login/:email/:password",
+        element: <Login_Page />,
+      },
+      {
         path: "/beneficiarylist/loan-beneficiary-crete",
         element: (
           <PrivetRoute>
